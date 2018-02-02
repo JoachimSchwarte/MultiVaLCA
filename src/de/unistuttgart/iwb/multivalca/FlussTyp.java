@@ -1,6 +1,5 @@
 /*	
- * Beispielprojekt LCI (Sachbilanz)
- * Wintersemester 2016/2017
+ * MultiVaLCA
  */
 
 package de.unistuttgart.iwb.multivalca;

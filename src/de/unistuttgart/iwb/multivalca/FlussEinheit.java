@@ -1,6 +1,5 @@
 /*	
- * Beispielprojekt LCI (Sachbilanz)
- * Wintersemester 2016/2017
+ * MultiVaLCA
  */
 
 package de.unistuttgart.iwb.multivalca;
@@ -10,7 +9,7 @@ package de.unistuttgart.iwb.multivalca;
  * eines Flussobjekts annehmen darf.
  *
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.932
+ * @version 0.1
  */
 
 public enum FlussEinheit {
