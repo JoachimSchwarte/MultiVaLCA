@@ -123,7 +123,7 @@ implements FlowValueMaps {
 	 */
 	
 	public void addFluss(Flow fluss,Double wert) {
-		if (fluss.getTyp() == FlowType.Elementar) {
+		if (fluss.getTyp() == FlowType.Elementary) {
 			efv.put(fluss, wert);
 		} else {
 			pfv.put(fluss, wert);

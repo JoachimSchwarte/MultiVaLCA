@@ -13,6 +13,6 @@ package de.unistuttgart.iwb.multivalca;
  */
 
 public enum FlowType {
-	Elementar,
-	Produkt
+	Elementary,
+	Product
 }
