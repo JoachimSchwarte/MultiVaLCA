@@ -12,24 +12,24 @@ import java.util.HashMap;
  * @version 0.1
  */
 
-public class Prozessmodul 
-implements Flussvektoren {
+public class ProcessModule 
+implements FlowValueMaps {
 	
 	// Klassenvariable:
 	
-	private static HashMap<String, Prozessmodul> allInstances = new HashMap<String, Prozessmodul>();
+	private static HashMap<String, ProcessModule> allInstances = new HashMap<String, ProcessModule>();
 	
 	// Instanzvariablen:
 	
 	private String name;
-	private HashMap<Fluss, Double> efv = 
-			new HashMap<Fluss, Double>(); //Elementarflüsse
-	private HashMap<Fluss, Double> pfv = 
-			new HashMap<Fluss, Double>(); //Produktflüsse
+	private HashMap<Flow, Double> efv = 
+			new HashMap<Flow, Double>(); //Elementarflüsse
+	private HashMap<Flow, Double> pfv = 
+			new HashMap<Flow, Double>(); //Produktflüsse
 	
 	// Konstruktor:
 			
-	private Prozessmodul(String name) {
+	private ProcessModule(String name) {
 		super();
 		setName(name);
 		NameCheck.getInstance().addFVName(getName());
@@ -65,7 +65,7 @@ implements Flussvektoren {
 	 * ... alle vorhandenen Prozessmodule
 	 */
 	
-	public static HashMap<String, Prozessmodul> getAllInstances() {
+	public static HashMap<String, ProcessModule> getAllInstances() {
 		return allInstances;
 	}
 	
@@ -77,7 +77,7 @@ implements Flussvektoren {
 	 * ... das gesuchte Prozessmodul
 	 */
 	
-	public static Prozessmodul getInstance(String string) {
+	public static ProcessModule getInstance(String string) {
 		return allInstances.get(string);		
 	}
 	
@@ -92,9 +92,9 @@ implements Flussvektoren {
 	 * ... das Prozessmodul
 	 */
 	
-	public static Prozessmodul instance(String name) {
+	public static ProcessModule instance(String name) {
 		if (allInstances.containsKey(name) == false) {
-			new Prozessmodul(name);
+			new ProcessModule(name);
 		}
 		return allInstances.get(name);
 	}
@@ -122,8 +122,8 @@ implements Flussvektoren {
 	 * Vorzeichen) fliest.
 	 */
 	
-	public void addFluss(Fluss fluss,Double wert) {
-		if (fluss.getTyp() == FlussTyp.Elementar) {
+	public void addFluss(Flow fluss,Double wert) {
+		if (fluss.getTyp() == FlowType.Elementar) {
 			efv.put(fluss, wert);
 		} else {
 			pfv.put(fluss, wert);
@@ -131,7 +131,7 @@ implements Flussvektoren {
 	}
 	
 	@Override
-	public HashMap<Fluss, Double> getElementarflussvektor() {
+	public HashMap<Flow, Double> getElementarflussvektor() {
 		return efv; 
 	}	
 	
@@ -141,7 +141,7 @@ implements Flussvektoren {
 	}
 	
 	@Override
-	public HashMap<Fluss, Double> getProduktflussvektor() {
+	public HashMap<Flow, Double> getProduktflussvektor() {
 		return pfv; 
 	}
 	
@@ -154,7 +154,7 @@ implements Flussvektoren {
 	 * der zu entfernende Fluß
 	 */
 	
-	public void removeFluss(Fluss fluss) {
+	public void removeFluss(Flow fluss) {
 		efv.remove(fluss);
 		pfv.remove(fluss);
 	}

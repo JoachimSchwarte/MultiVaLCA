@@ -16,14 +16,14 @@ import java.util.HashMap;
  * @version 0.1
  */
 
-public interface Flussvektoren {
+public interface FlowValueMaps {
 	
 	/**
 	 * @return
 	 * ... den Elementarflussvektor des aktuellen Objekts.
 	 */
 	
-	public HashMap<Fluss, Double> getElementarflussvektor();
+	public HashMap<Flow, Double> getElementarflussvektor();
 	
 	/**
 	 * @return
@@ -37,5 +37,5 @@ public interface Flussvektoren {
 	 * ... den Produktflussvektor des aktuellen Objekts.
 	 */
 	
-	public HashMap<Fluss, Double> getProduktflussvektor();
+	public HashMap<Flow, Double> getProduktflussvektor();
 }

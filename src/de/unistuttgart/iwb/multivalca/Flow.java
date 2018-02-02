@@ -16,21 +16,21 @@ import java.util.Set;
  * @version 0.1
  */
 
-public class Fluss {	
+public class Flow {	
 	
 	// Klassenvariable:
 	
-	private static HashMap<String,Fluss> allInstances = new HashMap<String,Fluss>();
+	private static HashMap<String,Flow> allInstances = new HashMap<String,Flow>();
 	
 	// Instanzvariablen:	
 
 	private String name;
-	private FlussTyp typ; 
-	private FlussEinheit einheit;
+	private FlowType typ; 
+	private FlowUnit einheit;
 	
 	// Konstruktor:
 	
-	private Fluss(String name, FlussTyp typ, FlussEinheit einheit) {
+	private Flow(String name, FlowType typ, FlowUnit einheit) {
 		this.name = name;
 		this.typ = typ;
 		this.einheit = einheit;
@@ -65,7 +65,7 @@ public class Fluss {
 	 * ... alle vorhandenen Flussobjekte
 	 */
 	
-	public static HashMap<String,Fluss> getAllInstances() {
+	public static HashMap<String,Flow> getAllInstances() {
 		return allInstances;
 	}
 	
@@ -85,7 +85,7 @@ public class Fluss {
 	 * ... ein Flussobjekt
 	 */
 	
-	public static Fluss getInstance(String name) {
+	public static Flow getInstance(String name) {
 		return allInstances.get(name);
 	}
 	
@@ -107,9 +107,9 @@ public class Fluss {
 	 * ... das Flussobjekt
 	 */
 	
-	public static Fluss instance(String name, FlussTyp typ, FlussEinheit einheit) {
+	public static Flow instance(String name, FlowType typ, FlowUnit einheit) {
 		if (allInstances.containsKey(name) == false) {
-			new Fluss(name, typ, einheit);
+			new Flow(name, typ, einheit);
 		}
 		return allInstances.get(name);
 	}
@@ -120,7 +120,7 @@ public class Fluss {
 	 * Flüsse quantifiziert werden.
 	 */
 	
-	public FlussEinheit getEinheit() {
+	public FlowUnit getEinheit() {
 		return einheit;
 	}
 	
@@ -138,7 +138,7 @@ public class Fluss {
 	 * ... den Typ des Flussobjektes.
 	 */
 	
-	public FlussTyp getTyp() {
+	public FlowType getTyp() {
 		return typ;
 	}
 }

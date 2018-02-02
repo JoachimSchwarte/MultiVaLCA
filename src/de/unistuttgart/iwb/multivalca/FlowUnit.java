@@ -12,7 +12,7 @@ package de.unistuttgart.iwb.multivalca;
  * @version 0.1
  */
 
-public enum FlussEinheit {
+public enum FlowUnit {
 	Itemsa,   		// Items*a
 	Itemskm,   		// Items*km
 	Itemsmi,   		// Items*mi
