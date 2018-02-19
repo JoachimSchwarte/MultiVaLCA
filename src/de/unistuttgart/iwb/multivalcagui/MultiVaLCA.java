@@ -7,10 +7,9 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
-
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.2
+ * @version 0.21
  */
 
 import java.awt.EventQueue;
@@ -37,6 +36,8 @@ import de.unistuttgart.iwb.multivalca.*;
 import net.miginfocom.swing.MigLayout;
 
 public class MultiVaLCA {
+	
+	Language l = Language.Deutsch;
 	
 	private JFrame frame;
 	private JPanel panel = new JPanel();
@@ -87,7 +88,7 @@ public class MultiVaLCA {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("MulitVaLCA   Version 0.2");
+		frame.setTitle("MulitVaLCA   Version 0.21");
 		frame.setBounds(100, 100, 600, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
 		frame.getContentPane().add(panel, BorderLayout.CENTER);		
@@ -276,7 +277,7 @@ public class MultiVaLCA {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnNew = new JMenu("Neu");
+		JMenu mnNew = new JMenu(GuiStrings.getGS("mp1",l));
 		menuBar.add(mnNew);
 		
 		JMenuItem mntmFlow = new JMenuItem();
@@ -364,7 +365,7 @@ public class MultiVaLCA {
 					if (Flow.containsName(fname)) {
 						Flow akFlow = Flow.getInstance(fname);
 						String mname = txtModName.getText();
-						ProcessModule.getInstance(mname).addFluss(akFlow, menge);
+						ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.MeanValue, menge);
 						txtFlowName.setText("");
 						txtMenge.setText("");
 						btnFertig.setEnabled(true);
@@ -600,8 +601,8 @@ public class MultiVaLCA {
 	private class newFlowAction extends AbstractAction {
 		private static final long serialVersionUID = 3159283296670804375L;
 		public newFlowAction() {
-			putValue(NAME, "Fluss");
-			putValue(SHORT_DESCRIPTION, "neues Flussobjekt erfassen");
+			putValue(NAME, GuiStrings.getGS("mp11", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp11e", l));
 		}
 		public void actionPerformed(ActionEvent e) {
 			cl.show(panel, "neuFluss");
@@ -610,8 +611,8 @@ public class MultiVaLCA {
 	private class newModuleAction extends AbstractAction {
 		private static final long serialVersionUID = 6190606710625748526L;
 		public newModuleAction() {
-			putValue(NAME, "Prozessmodul");
-			putValue(SHORT_DESCRIPTION, "neues Prozessmodul erfassen");
+			putValue(NAME, GuiStrings.getGS("mp12", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp12e", l));
 		}
 		public void actionPerformed(ActionEvent e) {
 			cl.show(panel, "neuModul");
@@ -620,8 +621,8 @@ public class MultiVaLCA {
 	private class newProductAction extends AbstractAction {
 		private static final long serialVersionUID = -7757652453649226474L;
 		public newProductAction() {
-			putValue(NAME, "Produktsystem");
-			putValue(SHORT_DESCRIPTION, "neues Produktsystem erfassen");
+			putValue(NAME, GuiStrings.getGS("mp13", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp13e", l));
 		}
 		public void actionPerformed(ActionEvent e) {
 			cl.show(panel, "neuProdukt");

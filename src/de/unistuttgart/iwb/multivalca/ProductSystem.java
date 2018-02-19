@@ -9,7 +9,7 @@ import Jama.Matrix;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.2
+ * @version 0.21
  */
 
 public class ProductSystem 
@@ -29,10 +29,10 @@ implements FlowValueMaps {
 			= new HashMap<Flow, Double>();
 	private LinkedList<Flow> vorUndKoppelProdukte 
 			= new LinkedList<Flow>();
-	private HashMap<Flow, Double> efv 
-			= new HashMap<Flow, Double>();
-	private HashMap<Flow, Double> pfv 
-			= new HashMap<Flow, Double>();
+	private HashMap<Flow, HashMap<FlowValueType, Double>> efv 
+			= new HashMap<Flow, HashMap<FlowValueType, Double>>();
+	private HashMap<Flow, HashMap<FlowValueType, Double>> pfv 
+			= new HashMap<Flow, HashMap<FlowValueType, Double>>();
 	
 	// Konstruktor:
 
@@ -156,11 +156,11 @@ implements FlowValueMaps {
 	private void aktualisiere() throws ArithmeticException {
 		LinkedList<Flow> produktFlussliste = new LinkedList<Flow>();
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, Double> modulVektor = m.getProduktflussvektor();
+			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
 			for (Flow key : modulVektor.keySet()) {		
 				if ((produktFlussliste.contains(key) == false) &&
 					(vorUndKoppelProdukte.contains(key) == false) &&
-					(m.getProduktflussvektor().get(key) != 0))	{
+					(m.getProduktflussvektor().get(key) != null))	{
 					produktFlussliste.add(key);	
 				}				
 			}
@@ -170,16 +170,16 @@ implements FlowValueMaps {
 		}
 		double[][] arrayA = new double[produktFlussliste.size()][modulliste.size()];
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, Double> modulVektor = m.getProduktflussvektor();
+			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
 			for (Flow key : modulVektor.keySet()) {
  				if (produktFlussliste.contains(key)) {
-					arrayA[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key);	
+					arrayA[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);	
  				}							
 			}
 		}
 		LinkedList<Flow> elementarFlussliste = new LinkedList<Flow>();
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, Double> modulVektor = m.getElementarflussvektor();
+			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getElementarflussvektor();
 			for (Flow key : modulVektor.keySet()) {
 				if (elementarFlussliste.contains(key) == false){
 					elementarFlussliste.add(key);					
@@ -188,9 +188,9 @@ implements FlowValueMaps {
 		}
 		double[][] arrayB = new double[elementarFlussliste.size()][modulliste.size()];
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, Double> modulVektor = m.getElementarflussvektor();
+			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getElementarflussvektor();
 			for (Flow key : modulVektor.keySet()) {
-				arrayB[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key);				
+				arrayB[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);				
 			}
 		}
 		double[][] arrayF = new double[produktFlussliste.size()][1];
@@ -215,15 +215,17 @@ implements FlowValueMaps {
 		}
 
 		for(Flow ef : elementarFlussliste) {
-			efv.put(ef, matrixG.get(elementarFlussliste.indexOf(ef),0));
+			HashMap<FlowValueType, Double> valueMap = efv.get(ef);
+			valueMap.put(FlowValueType.MeanValue, matrixG.get(elementarFlussliste.indexOf(ef),0));
+			efv.put(ef, valueMap);
 		}	
 		produktFlussliste.addAll(vorUndKoppelProdukte);
 		double[][] arrayA1 = new double[produktFlussliste.size()][modulliste.size()];
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, Double> modulVektor = m.getProduktflussvektor();
+			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
 			for (Flow key : produktFlussliste) {
 				if (modulVektor.containsKey(key)) {
-					arrayA1[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key);
+					arrayA1[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);
 				} else {
 					arrayA1[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=0;
 				}
@@ -233,7 +235,9 @@ implements FlowValueMaps {
 		Matrix matrixA1 = new Matrix(arrayA1);
 		Matrix matrixG1 = matrixA1.times(matrixS);
 		for(Flow pf : produktFlussliste) {
-			pfv.put(pf, matrixG1.get(produktFlussliste.indexOf(pf),0));
+			HashMap<FlowValueType, Double> valueMap = pfv.get(pf);
+			valueMap.put(FlowValueType.MeanValue, matrixG1.get(elementarFlussliste.indexOf(pf),0));
+			pfv.put(pf, valueMap);
 		}			
 	}
 	
@@ -254,7 +258,7 @@ implements FlowValueMaps {
 	 */
 
 	@Override
-	public HashMap<Flow, Double> getElementarflussvektor() throws ArithmeticException {
+	public HashMap<Flow, HashMap<FlowValueType, Double>> getElementarflussvektor() throws ArithmeticException {
 		aktualisiere();		
 		return efv;
 	}
@@ -291,7 +295,7 @@ implements FlowValueMaps {
 	 */
 
 	@Override
-	public HashMap<Flow, Double> getProduktflussvektor() throws ArithmeticException {
+	public HashMap<Flow, HashMap<FlowValueType, Double>> getProduktflussvektor() throws ArithmeticException {
 		aktualisiere();		
 		return pfv;
 	}

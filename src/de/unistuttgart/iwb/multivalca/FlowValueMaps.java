@@ -13,7 +13,7 @@ import java.util.HashMap;
  * auftreten können.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.1
+ * @version 0.21
  */
 
 public interface FlowValueMaps {
@@ -23,7 +23,7 @@ public interface FlowValueMaps {
 	 * ... den Elementarflussvektor des aktuellen Objekts.
 	 */
 	
-	public HashMap<Flow, Double> getElementarflussvektor();
+	public HashMap<Flow, HashMap<FlowValueType, Double>> getElementarflussvektor();
 	
 	/**
 	 * @return
@@ -37,5 +37,5 @@ public interface FlowValueMaps {
 	 * ... den Produktflussvektor des aktuellen Objekts.
 	 */
 	
-	public HashMap<Flow, Double> getProduktflussvektor();
+	public HashMap<Flow, HashMap<FlowValueType, Double>> getProduktflussvektor();
 }

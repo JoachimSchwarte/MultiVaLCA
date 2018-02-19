@@ -13,7 +13,7 @@ import java.util.Set;
  * Instanzvariablen zur Verfügung.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.2
+ * @version 0.21
  */
 
 public class Flow {	
@@ -138,7 +138,7 @@ public class Flow {
 	 * ... den Typ des Flussobjektes.
 	 */
 	
-	public FlowType getTyp() {
+	public FlowType getType() {
 		return typ;
 	}
 }

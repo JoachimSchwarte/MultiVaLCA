@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Diese Klasse dient zur Erzeugung von Prozessmodulen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.2
+ * @version 0.21
  */
 
 public class ProcessModule 
@@ -22,10 +22,10 @@ implements FlowValueMaps {
 	// Instanzvariablen:
 	
 	private String name;
-	private HashMap<Flow, Double> efv = 
-			new HashMap<Flow, Double>(); //Elementarflüsse
-	private HashMap<Flow, Double> pfv = 
-			new HashMap<Flow, Double>(); //Produktflüsse
+	private HashMap<Flow, HashMap<FlowValueType, Double>> efv = 
+			new HashMap<Flow, HashMap<FlowValueType, Double>>(); //Elementarflüsse
+	private HashMap<Flow, HashMap<FlowValueType, Double>> pfv = 
+			new HashMap<Flow, HashMap<FlowValueType, Double>>(); //Produktflüsse
 	
 	// Konstruktor:
 			
@@ -122,19 +122,20 @@ implements FlowValueMaps {
 	 * Vorzeichen) fliest.
 	 */
 	
-	public void addFluss(Flow fluss,Double wert) {
-		// 
-		// Bedingung korrigieren:
-		//
-		if (fluss.getTyp() == FlowType.ElementaryOutput) {
-			efv.put(fluss, wert);
-		} else {
-			pfv.put(fluss, wert);
+	public void addFluss(Flow fluss, FlowValueType fvt, Double wert) {	
+		if (fluss.getType() == FlowType.Elementary) {
+			HashMap<FlowValueType, Double> valueMap = efv.get(fluss);
+			valueMap.put(fvt, wert);
+			efv.put(fluss, valueMap);
+		} else { 
+			HashMap<FlowValueType, Double> valueMap = pfv.get(fluss);
+			valueMap.put(fvt, wert);
+			pfv.put(fluss, valueMap);
 		}
 	}
 	
 	@Override
-	public HashMap<Flow, Double> getElementarflussvektor() {
+	public HashMap<Flow, HashMap<FlowValueType, Double>> getElementarflussvektor() {
 		return efv; 
 	}	
 	
@@ -144,7 +145,7 @@ implements FlowValueMaps {
 	}
 	
 	@Override
-	public HashMap<Flow, Double> getProduktflussvektor() {
+	public HashMap<Flow, HashMap<FlowValueType, Double>> getProduktflussvektor() {
 		return pfv; 
 	}
 	
