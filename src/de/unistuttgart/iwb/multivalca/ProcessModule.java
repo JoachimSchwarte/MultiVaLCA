@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Diese Klasse dient zur Erzeugung von Prozessmodulen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.1
+ * @version 0.2
  */
 
 public class ProcessModule 
@@ -123,7 +123,10 @@ implements FlowValueMaps {
 	 */
 	
 	public void addFluss(Flow fluss,Double wert) {
-		if (fluss.getTyp() == FlowType.Elementary) {
+		// 
+		// Bedingung korrigieren:
+		//
+		if (fluss.getTyp() == FlowType.ElementaryOutput) {
 			efv.put(fluss, wert);
 		} else {
 			pfv.put(fluss, wert);

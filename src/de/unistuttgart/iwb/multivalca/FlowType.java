@@ -9,10 +9,13 @@ package de.unistuttgart.iwb.multivalca;
  * eines Flussobjekts annehmen darf.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.1
+ * @version 0.2
  */
 
 public enum FlowType {
-	Elementary,
-	Product
+	ElementaryInput,
+	ElementaryOutput,
+	ProductOutput,
+	PreProductInput,
+	CoProductOutput
 }

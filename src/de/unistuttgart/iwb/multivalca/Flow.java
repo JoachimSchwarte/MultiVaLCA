@@ -13,7 +13,7 @@ import java.util.Set;
  * Instanzvariablen zur Verfügung.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.1
+ * @version 0.2
  */
 
 public class Flow {	
