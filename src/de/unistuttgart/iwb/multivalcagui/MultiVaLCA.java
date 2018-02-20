@@ -9,7 +9,7 @@ import java.awt.CardLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.21
+ * @version 0.22
  */
 
 import java.awt.EventQueue;
@@ -45,8 +45,16 @@ public class MultiVaLCA {
 	private final Action newFlowAction 		= new newFlowAction();
 	private final Action newModuleAction 	= new newModuleAction();
 	private final Action newProductAction 	= new newProductAction();
+	private final Action aboutAction 	= new aboutAction();
+	private final Action prefsAction 	= new prefsAction();
 	// Panel 1; Neuer Fluss
-	private JTextField txtP01n1; 	// Name des Flusses
+	private JTextField txtP01n1 = new JTextField(); 	
+	private JLabel lblP01n1 = new JLabel();
+	private JLabel lblP01n2 = new JLabel();
+	private JLabel lblP01n3 = new JLabel();
+	private JLabel lblP01n4 = new JLabel();
+	private JLabel lblP01n5 = new JLabel();
+	private JButton btnP01n1 = new JButton("speichern");
 	// Panel 2; Neues Prozessmodul
 	private JTextField txtModName;
 	private JTextField txtFlowName;
@@ -88,7 +96,7 @@ public class MultiVaLCA {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("MulitVaLCA   Version 0.21");
+		frame.setTitle(GuiStrings.getGS("head1",l)+"   "+GuiStrings.getGS("head2",l));
 		frame.setBounds(100, 100, 600, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
 		frame.getContentPane().add(panel, BorderLayout.CENTER);		
@@ -103,38 +111,23 @@ public class MultiVaLCA {
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1, "neuFluss");
 		panel_1.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
-		JLabel lblNeuerFlow = new JLabel("Neuer Fluss");
-		lblNeuerFlow.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_1.add(lblNeuerFlow, "flowy,cell 1 0 2 1,alignx center,growy");
-		
-		JLabel lblName = new JLabel("Name des Flusses");
-		panel_1.add(lblName, "cell 1 1,grow");
-		
-		txtP01n1 = new JTextField();
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
+		lblP01n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_1.add(lblP01n1, "flowy,cell 1 0 2 1,alignx center,growy");			
+		panel_1.add(lblP01n2, "cell 1 1,grow");		
 		txtP01n1.setText("");
 		panel_1.add(txtP01n1, "cell 2 1,grow");
-		txtP01n1.setColumns(10);
-		
-		JLabel lblTyp = new JLabel("Typ");
-		panel_1.add(lblTyp, "cell 1 2,grow");
-		
+		txtP01n1.setColumns(10);	
+		panel_1.add(lblP01n3, "cell 1 2,grow");		
 		JComboBox<FlowType> comboBox = new JComboBox<FlowType>();
 		comboBox.setModel(new DefaultComboBoxModel<FlowType>(FlowType.values()));
-		panel_1.add(comboBox, "cell 2 2,grow");
-		
-		JLabel lblEinheit = new JLabel("Einheit");
-		panel_1.add(lblEinheit, "cell 1 3,grow");
-		
+		panel_1.add(comboBox, "cell 2 2,grow");	
+		panel_1.add(lblP01n4, "cell 1 3,grow");	
 		JComboBox<FlowUnit> comboBox_1 = new JComboBox<FlowUnit>();
 		comboBox_1.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
-		panel_1.add(comboBox_1, "cell 2 3,grow");
-		
-		JLabel lblStatusmeldung = new JLabel(">>> ... <<<");
-		panel_1.add(lblStatusmeldung, "cell 0 5 4 1,alignx center");
-		
-		JButton btnSpeichern = new JButton("speichern");
-		panel_1.add(btnSpeichern, "cell 1 4 2 1,alignx center");
+		panel_1.add(comboBox_1, "cell 2 3,grow");		
+		panel_1.add(lblP01n5, "cell 0 5 4 1,alignx center");		
+		panel_1.add(btnP01n1, "cell 1 4 2 1,alignx center");
 		
 		// Panel 2; Neues Prozessmodul
 		
@@ -270,6 +263,52 @@ public class MultiVaLCA {
 		JLabel lblStatus3 = new JLabel(">>> ... <<<");
 		panel_3.add(lblStatus3, "cell 0 10 4 1,alignx center");
 		
+		// Panel 4; Info
+		
+		JPanel panel_4 = new JPanel();
+		panel.add(panel_4, "leer");
+		panel_4.setLayout(new MigLayout("", "[108px,grow][200px][108px,grow]", 
+				"[20px][20px][40px][20px][20px][20px][20px,grow][20px]"));
+		JLabel lblInfo1 = new JLabel(GuiStrings.getGS("head1", l));
+		lblInfo1.setFont(new Font("Tahoma", Font.BOLD, 26));
+		panel_4.add(lblInfo1, "cell 1 2,alignx center,aligny top");
+		JLabel lblInfo2 = new JLabel(GuiStrings.getGS("info1", l));
+		lblInfo2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_4.add(lblInfo2, "cell 1 3,alignx center,aligny top");
+		JLabel lblInfo3 = new JLabel(GuiStrings.getGS("info2", l));
+		lblInfo3.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_4.add(lblInfo3, "cell 1 4,alignx center,aligny top");
+		JLabel lblInfo4 = new JLabel(GuiStrings.getGS("info3", l));
+		lblInfo4.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_4.add(lblInfo4, "cell 1 5,alignx center,aligny top");
+		JLabel lblInfo5 = new JLabel(GuiStrings.getGS("head2", l)+"     "+GuiStrings.getGS("date", l));
+		lblInfo5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_4.add(lblInfo5, "cell 1 7,alignx center,aligny top");
+		
+		// Panel 5; Sprachauswahl
+		
+		JPanel panel_5 = new JPanel();
+		panel.add(panel_5, "lang");
+		panel_5.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
+		JLabel lblLangsel = new JLabel(GuiStrings.getGS("mp31e", l));
+		lblLangsel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_5.add(lblLangsel, "flowy,cell 1 0 2 1,alignx center,growy");
+		
+		JLabel lblLang = new JLabel(GuiStrings.getGS("mp31", l));
+		panel_5.add(lblLang, "cell 1 1,grow");
+		
+		JComboBox<Language> comboBox2 = new JComboBox<Language>();
+		comboBox2.setModel(new DefaultComboBoxModel<Language>(Language.values()));
+		panel_5.add(comboBox2, "cell 2 1,grow");
+		
+		JButton btnLangSelect = new JButton(GuiStrings.getGS("bt1", l));
+		panel_5.add(btnLangSelect, "cell 1 2 2 1,alignx center");
+		
+		
+		
+		cl.show(panel, "leer");
+		
 		/*
 		 * Organisation der Menuleiste
 		 */
@@ -291,6 +330,21 @@ public class MultiVaLCA {
 		JMenuItem mntmProductSystem = new JMenuItem();
 		mntmProductSystem.setAction(newProductAction);
 		mnNew.add(mntmProductSystem);
+			
+		JMenu mnPrefs = new JMenu(GuiStrings.getGS("mp3", l));
+		menuBar.add(mnPrefs);
+		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem();
+		mntmNewMenuItem_3.setAction(prefsAction);
+		mnPrefs.add(mntmNewMenuItem_3);
+		
+		JMenu mnHilfe = new JMenu(GuiStrings.getGS("mp2", l));
+		menuBar.add(mnHilfe);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem();
+		mntmNewMenuItem_2.setAction(aboutAction);
+		mnHilfe.add(mntmNewMenuItem_2);
+
 		
 		/*
 		 * Aktivitäten der Schaltflächen
@@ -300,20 +354,20 @@ public class MultiVaLCA {
 		 * neuer Fluss
 		 */
 		
-		btnSpeichern.addActionListener(new ActionListener() {
+		btnP01n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP01n1.getText();	
 				FlowType typ = comboBox.getItemAt(comboBox.getSelectedIndex());
 				FlowUnit einheit = comboBox_1.getItemAt(comboBox_1.getSelectedIndex());
 				if (name.equals("")) {
-					lblStatusmeldung.setText(">>> Es wurde kein Name angegeben. <<<");
+					lblP01n5.setText(">>> Es wurde kein Name angegeben. <<<");
 				} else {
 					if (Flow.containsName(name)) {
-						lblStatusmeldung.setText(">>> Der angegebene Name ist bereits vorhanden. <<<");
+						lblP01n5.setText(">>> Der angegebene Name ist bereits vorhanden. <<<");
 					} else {
 						Flow.instance(name, typ, einheit);
-						lblStatusmeldung.setText(">>> Anzahl Flussobjekte: " + Flow.getAllNames().size() + " <<<");
+						lblP01n5.setText(">>> Anzahl Flussobjekte: " + Flow.getAllNames().size() + " <<<");
 						txtP01n1.setText("");
 						comboBox.setSelectedIndex(0);
 						comboBox_1.setSelectedIndex(0);
@@ -592,8 +646,42 @@ public class MultiVaLCA {
 			}
 			
 		});
+		
+		/*
+		 * Sprachauswahl
+		 */
+		
+		btnLangSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				l = comboBox2.getItemAt(comboBox2.getSelectedIndex());
+				frame.setTitle(GuiStrings.getGS("head1",l)+"   "+GuiStrings.getGS("head2",l));
+				mnNew.setText(GuiStrings.getGS("mp1",l));
+				mnPrefs.setText(GuiStrings.getGS("mp3",l));
+				mnHilfe.setText(GuiStrings.getGS("mp2",l));
+				mntmFlow.setText(GuiStrings.getGS("mp11",l));
+				mntmFlow.setToolTipText(GuiStrings.getGS("mp11e",l));
+				mntmProcessModule.setText(GuiStrings.getGS("mp12",l));
+				mntmProcessModule.setToolTipText(GuiStrings.getGS("mp12e",l));
+				mntmProductSystem.setText(GuiStrings.getGS("mp13",l));
+				mntmProductSystem.setToolTipText(GuiStrings.getGS("mp13e",l));
+				mntmNewMenuItem_3.setText(GuiStrings.getGS("mp31",l));
+				mntmNewMenuItem_3.setToolTipText(GuiStrings.getGS("mp31e",l));
+				mntmNewMenuItem_2.setText(GuiStrings.getGS("mp21",l));
+				mntmNewMenuItem_2.setToolTipText(GuiStrings.getGS("mp21e",l));
+				lblLangsel.setText(GuiStrings.getGS("mp31e", l));
+				lblLang.setText(GuiStrings.getGS("mp31", l));
+				btnLangSelect.setText(GuiStrings.getGS("bt1", l));
+				
+
+
+			}
+		});
 
 	}
+
+
+	
 	/*
 	 * Actions der Menupunkte
 	 */
@@ -605,7 +693,15 @@ public class MultiVaLCA {
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp11e", l));
 		}
 		public void actionPerformed(ActionEvent e) {
+			
+			lblP01n1.setText(GuiStrings.getGS("p1l1", l));
+			lblP01n2.setText(GuiStrings.getGS("p1l2", l));
+			lblP01n3.setText(GuiStrings.getGS("p1l3", l));
+			lblP01n4.setText(GuiStrings.getGS("p1l4", l));
+			lblP01n5.setText(GuiStrings.getGS("p1l5", l));
+			btnP01n1.setText(GuiStrings.getGS("bt1", l));
 			cl.show(panel, "neuFluss");
+						
 		}
 	}
 	private class newModuleAction extends AbstractAction {
@@ -626,6 +722,28 @@ public class MultiVaLCA {
 		}
 		public void actionPerformed(ActionEvent e) {
 			cl.show(panel, "neuProdukt");
+		}
+	}
+	
+	private class aboutAction extends AbstractAction {
+		private static final long serialVersionUID = 8545097902506476895L;
+		public aboutAction() {
+			putValue(NAME, GuiStrings.getGS("mp21", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp21e", l));
+		}
+		public void actionPerformed(ActionEvent e) {
+			cl.show(panel, "leer");
+		}
+	}
+	
+	private class prefsAction extends AbstractAction {
+		private static final long serialVersionUID = 8545097902306476895L;
+		public prefsAction() {
+			putValue(NAME, GuiStrings.getGS("mp31", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp31e", l));
+		}
+		public void actionPerformed(ActionEvent e) {
+			cl.show(panel, "lang");
 		}
 	}
 
