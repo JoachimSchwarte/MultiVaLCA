@@ -5,13 +5,13 @@ package de.unistuttgart.iwb.multivalcagui;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.22
+ * @version 0.23
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.22";
+		String vn = " 0.23";
 		String date = "20.02.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
@@ -34,12 +34,18 @@ public class GuiStrings {
 			case "mp3": r = "Einstellungen"; break;
 			case "mp31": r = "Sprache"; break;
 			case "mp31e": r = "Sprachauswahl"; break;
-			case "bt1": r = "speichern"; break;
-			case "p1l1": r = "Neuer Fluss"; break;
-			case "p1l2": r = "Name des Flusses"; break;
-			case "p1l3": r = "Typ"; break;
-			case "p1l4": r = "Einheit"; break;
-			case "p1l5": r = ">>> ... <<<"; break;
+			case "bt01": r = "speichern"; break;
+			case "p01n1": r = "Neuer Fluss"; break;
+			case "p01n2": r = "Name des Flusses"; break;
+			case "p01n3": r = "Typ"; break;
+			case "p01n4": r = "Einheit"; break;
+			case "stat01": r = ">>> ... <<<"; break;
+			case "p02n1": r = "Neues Prozessmodul"; break;
+			case "p02n2": r = "Name des Prozessmoduls"; break;
+			case "p02n4": r = "Menge"; break;
+			case "bt02": r = "neues Prozessmodul anlegen"; break;
+			case "bt03": r = "Fluss hinzufügen"; break;
+			case "bt04": r = "fertig"; break;
 
 			}		
 		}	
@@ -64,12 +70,19 @@ public class GuiStrings {
 			case "mp3": r = "Preferences"; break;
 			case "mp31": r = "Language"; break;
 			case "mp31e": r = "Language selection"; break;
-			case "bt1": r = "store"; break;
-			case "p1l1": r = "new Flow"; break;
-			case "p1l2": r = "Name of the Flow"; break;
-			case "p1l3": r = "Type"; break;
-			case "p1l4": r = "Unit"; break;
-			case "p1l5": r = ">>> ... <<<"; break;
+			case "bt01": r = "store"; break;
+			case "p01n1": r = "new Flow"; break;
+			case "p01n2": r = "Name of the Flow"; break;
+			case "p01n3": r = "Type"; break;
+			case "p01n4": r = "Unit"; break;
+			case "stat01": r = ">>> ... <<<"; break;
+			case "p02n1": r = "new Process Module"; break;
+			case "p02n2": r = "Name of the Process Module"; break;
+			case "p02n4": r = "Amount"; break;
+			case "bt02": r = "create new Process Module"; break;
+			case "bt03": r = "add Flow"; break;
+			case "bt04": r = "finished"; break;
+
 
 			
 			}		

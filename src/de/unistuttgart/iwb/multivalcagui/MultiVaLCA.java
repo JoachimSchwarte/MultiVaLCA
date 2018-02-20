@@ -9,7 +9,7 @@ import java.awt.CardLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.22
+ * @version 0.23
  */
 
 import java.awt.EventQueue;
@@ -39,7 +39,7 @@ public class MultiVaLCA {
 	
 	Language l = Language.Deutsch;
 	
-	private JFrame frame;
+	private JFrame frame = new JFrame();;
 	private JPanel panel = new JPanel();
 	private CardLayout cl = new CardLayout(0, 0);
 	private final Action newFlowAction 		= new newFlowAction();
@@ -48,17 +48,27 @@ public class MultiVaLCA {
 	private final Action aboutAction 	= new aboutAction();
 	private final Action prefsAction 	= new prefsAction();
 	// Panel 1; Neuer Fluss
-	private JTextField txtP01n1 = new JTextField(); 	
-	private JLabel lblP01n1 = new JLabel();
-	private JLabel lblP01n2 = new JLabel();
-	private JLabel lblP01n3 = new JLabel();
-	private JLabel lblP01n4 = new JLabel();
-	private JLabel lblP01n5 = new JLabel();
-	private JButton btnP01n1 = new JButton("speichern");
+	private JPanel panel_01 = new JPanel();
+	private JTextField txtP01n1 = new JTextField(); 	// Eingabefeld Flussname
+	private JLabel lblP01n1 = new JLabel();				// "Neuer Fluss"
+	private JLabel lblP01n2 = new JLabel();				// "Name des Flusses"
+	private JLabel lblP01n3 = new JLabel();				// "Typ"
+	private JLabel lblP01n4 = new JLabel();				// "Einheit"
+	private JLabel lblP01n5 = new JLabel();				// Status
+	private JButton btnP01n1 = new JButton();			// "speichern" 
 	// Panel 2; Neues Prozessmodul
-	private JTextField txtModName;
-	private JTextField txtFlowName;
-	private JTextField txtMenge;
+	private JPanel panel_02 = new JPanel();
+	private JTextField txtP02n1 = new JTextField();		// Eingabefeld Modulname
+	private JTextField txtP02n2 = new JTextField();		// Eingabefeld Flussname  
+	private JTextField txtP02n3 = new JTextField();		// Eingabefeld Menge
+	private JLabel lblP02n1 = new JLabel(); 			// "Neues Prozessmodul"
+	private JLabel lblP02n2 = new JLabel();				// "Name des Prozessmoduls"
+	private JLabel lblP02n3 = new JLabel();				// "Name des Flusses"
+	private JLabel lblP02n4 = new JLabel();				// "Menge"
+	private JLabel lblP02n5 = new JLabel();				// Status
+	private JButton btnP02n1 = new JButton(); 			// "neues Prozessmodul anlegen"
+	private JButton btnP02n2 = new JButton();			// "Fluss hinzufügen"
+	private JButton btnP02n3 = new JButton();			// "fertig"
 	// Panel 3; Neues Produktsystem
 	private JTextField txtPSName;
 	private JTextField txtModName2;
@@ -95,7 +105,6 @@ public class MultiVaLCA {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
 		frame.setTitle(GuiStrings.getGS("head1",l)+"   "+GuiStrings.getGS("head2",l));
 		frame.setBounds(100, 100, 600, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
@@ -107,77 +116,55 @@ public class MultiVaLCA {
 		 */
 		
 		// Panel 1; Neuer Fluss
-		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1, "neuFluss");
-		panel_1.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+			
+		panel.add(panel_01, "neuFluss");
+		panel_01.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP01n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_1.add(lblP01n1, "flowy,cell 1 0 2 1,alignx center,growy");			
-		panel_1.add(lblP01n2, "cell 1 1,grow");		
+		panel_01.add(lblP01n1, "flowy,cell 1 0 2 1,alignx center,growy");			
+		panel_01.add(lblP01n2, "cell 1 1,grow");		
 		txtP01n1.setText("");
-		panel_1.add(txtP01n1, "cell 2 1,grow");
+		panel_01.add(txtP01n1, "cell 2 1,grow");
 		txtP01n1.setColumns(10);	
-		panel_1.add(lblP01n3, "cell 1 2,grow");		
+		panel_01.add(lblP01n3, "cell 1 2,grow");		
 		JComboBox<FlowType> comboBox = new JComboBox<FlowType>();
 		comboBox.setModel(new DefaultComboBoxModel<FlowType>(FlowType.values()));
-		panel_1.add(comboBox, "cell 2 2,grow");	
-		panel_1.add(lblP01n4, "cell 1 3,grow");	
+		panel_01.add(comboBox, "cell 2 2,grow");	
+		panel_01.add(lblP01n4, "cell 1 3,grow");	
 		JComboBox<FlowUnit> comboBox_1 = new JComboBox<FlowUnit>();
 		comboBox_1.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
-		panel_1.add(comboBox_1, "cell 2 3,grow");		
-		panel_1.add(lblP01n5, "cell 0 5 4 1,alignx center");		
-		panel_1.add(btnP01n1, "cell 1 4 2 1,alignx center");
+		panel_01.add(comboBox_1, "cell 2 3,grow");			
+		panel_01.add(btnP01n1, "cell 1 4 2 1,alignx center");
+		panel_01.add(lblP01n5, "cell 0 5 4 1,alignx center");		
 		
 		// Panel 2; Neues Prozessmodul
 		
-		JPanel panel_2 = new JPanel();
-		panel.add(panel_2, "neuModul");
-		panel_2.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));
-		JLabel lblNeuesProzessmodul = new JLabel("Neues Prozessmodul");
-		lblNeuesProzessmodul.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_2.add(lblNeuesProzessmodul, "flowy,cell 1 0 2 1,alignx center,growy");
-		
-		JLabel lblModName = new JLabel("Name des Prozessmoduls");
-		panel_2.add(lblModName, "cell 1 1,grow");
-		
-		txtModName = new JTextField();
-		txtModName.setText("");
-		panel_2.add(txtModName, "cell 2 1,grow");
-		txtModName.setColumns(10);
-		
-		JLabel lblStatus2 = new JLabel(">>> ... <<<");
-		panel_2.add(lblStatus2, "cell 0 6 4 1,alignx center");
-		
-		JButton btnSpei2 = new JButton("neues Prozessmodul anlegen");
-		panel_2.add(btnSpei2, "cell 1 2 2 1,alignx center");
-		
-		JLabel lblFlowName = new JLabel("Name des Flowes");
-		panel_2.add(lblFlowName, "cell 1 3,grow");
-		
-		txtFlowName = new JTextField();
-		txtFlowName.setText("");
-		panel_2.add(txtFlowName, "cell 2 3,grow");
-		txtFlowName.setColumns(10);
-		txtFlowName.setEnabled(false);
-		
-		JLabel lblMenge = new JLabel("Menge");
-		panel_2.add(lblMenge, "cell 1 4,grow");
-		
-		txtMenge = new JTextField();
-		txtMenge.setText("");
-		panel_2.add(txtMenge, "cell 2 4,grow");
-		txtMenge.setColumns(10);
-		txtMenge.setEnabled(false);
-		
-		JButton btnAddFlow = new JButton("Flow hinzuf\u00fcgen");
-		btnAddFlow.setEnabled(false);
-		panel_2.add(btnAddFlow, "cell 1 5,alignx center");
-		
-		JButton btnFertig = new JButton("fertig");
-		btnFertig.setEnabled(false);
-		panel_2.add(btnFertig, "cell 2 5,alignx center");
+
+		panel.add(panel_02, "neuModul");
+		panel_02.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
+		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_02.add(lblP02n1, "flowy,cell 1 0 2 1,alignx center,growy");	
+		panel_02.add(lblP02n2, "cell 1 1,grow");		
+		txtP02n1.setText("");
+		panel_02.add(txtP02n1, "cell 2 1,grow");
+		txtP02n1.setColumns(10);		
+		panel_02.add(btnP02n1, "cell 1 2 2 1,alignx center");		
+		panel_02.add(lblP02n3, "cell 1 3,grow");	
+		txtP02n2.setText("");
+		panel_02.add(txtP02n2, "cell 2 3,grow");
+		txtP02n2.setColumns(10);
+		txtP02n2.setEnabled(false);	
+		panel_02.add(lblP02n4, "cell 1 4,grow");
+		txtP02n3.setText("");
+		panel_02.add(txtP02n3, "cell 2 4,grow");
+		txtP02n3.setColumns(10);
+		txtP02n3.setEnabled(false);		
+		btnP02n2.setEnabled(false);
+		panel_02.add(btnP02n2, "cell 1 5,alignx center");
+		btnP02n3.setEnabled(false);
+		panel_02.add(btnP02n3, "cell 2 5,alignx center");
+		panel_02.add(lblP02n5, "cell 0 6 4 1,alignx center");		
 
 		// Panel 3; Neues Produktsystem
 		
@@ -302,7 +289,7 @@ public class MultiVaLCA {
 		comboBox2.setModel(new DefaultComboBoxModel<Language>(Language.values()));
 		panel_5.add(comboBox2, "cell 2 1,grow");
 		
-		JButton btnLangSelect = new JButton(GuiStrings.getGS("bt1", l));
+		JButton btnLangSelect = new JButton(GuiStrings.getGS("bt01", l));
 		panel_5.add(btnLangSelect, "cell 1 2 2 1,alignx center");
 		
 		
@@ -380,33 +367,33 @@ public class MultiVaLCA {
 		 * neues Prozessmodul
 		 */
 		
-		btnSpei2.addActionListener(new ActionListener() {
+		btnP02n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String name = txtModName.getText();	
+				String name = txtP02n1.getText();	
 				if (name.equals("")) {
-					lblStatus2.setText(">>> Es wurde kein Name angegeben. <<<");
+					lblP02n5.setText(">>> Es wurde kein Name angegeben. <<<");
 				} else {
 					if (NameCheck.containsFVName(name)) {
-						lblStatus2.setText(">>> Der angegebene Name ist bereits vorhanden. <<<");
+						lblP02n5.setText(">>> Der angegebene Name ist bereits vorhanden. <<<");
 					} else {
 						ProcessModule.instance(name);
-						lblStatus2.setText(">>> Anzahl Prozessmodule: " + ProcessModule.getAllInstances().size() + " <<<");
-						btnSpei2.setEnabled(false);
-						txtModName.setEnabled(false);
-						btnAddFlow.setEnabled(true);
-						txtFlowName.setEnabled(true);
-						txtMenge.setEnabled(true);
+						lblP02n5.setText(">>> Anzahl Prozessmodule: " + ProcessModule.getAllInstances().size() + " <<<");
+						btnP02n1.setEnabled(false);
+						txtP02n1.setEnabled(false);
+						btnP02n2.setEnabled(true);
+						txtP02n2.setEnabled(true);
+						txtP02n3.setEnabled(true);
 					}	
 				} 		
 			}
 		});
 		
-		btnAddFlow.addActionListener(new ActionListener() {
+		btnP02n2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String fname = txtFlowName.getText();
-				String fmenge = txtMenge.getText();
+				String fname = txtP02n2.getText();
+				String fmenge = txtP02n3.getText();
 				Double menge;
 				try {
 					menge = Double.parseDouble(fmenge);
@@ -414,41 +401,41 @@ public class MultiVaLCA {
 					menge = 0.0;
 				}
 				if (fname.equals("") || (menge == 0.0)) {
-					lblStatus2.setText(">>> unvollst\u00e4ndige Eingabe <<<");
+					lblP02n5.setText(">>> unvollst\u00e4ndige Eingabe <<<");
 				} else {
 					if (Flow.containsName(fname)) {
 						Flow akFlow = Flow.getInstance(fname);
-						String mname = txtModName.getText();
+						String mname = txtP02n1.getText();
 						ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.MeanValue, menge);
-						txtFlowName.setText("");
-						txtMenge.setText("");
-						btnFertig.setEnabled(true);
+						txtP02n2.setText("");
+						txtP02n3.setText("");
+						btnP02n3.setEnabled(true);
 						int anzPFlow = ProcessModule.getInstance(mname).getProduktflussvektor().size();
 						int anzEFlow = ProcessModule.getInstance(mname).getElementarflussvektor().size();
 						int anzGesamt = anzPFlow + anzEFlow;
-						lblStatus2.setText(">>> Prozessmodul " + mname + " besitzt " +
+						lblP02n5.setText(">>> Prozessmodul " + mname + " besitzt " +
 								anzGesamt + " Fl\u00fcsse <<<");
 						
 					} else {
-						lblStatus2.setText(">>> unbekannter Flowname <<<");
+						lblP02n5.setText(">>> unbekannter Flowname <<<");
 					}					
 				}
 			}
 		});
 		
-		btnFertig.addActionListener(new ActionListener() {
+		btnP02n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				btnSpei2.setEnabled(true);
-				txtFlowName.setText("");
-				txtMenge.setText("");
-				txtModName.setText("");
-				btnAddFlow.setEnabled(false);
-				btnFertig.setEnabled(false);
-				txtModName.setEnabled(true);
-				txtFlowName.setEnabled(false);
-				txtMenge.setEnabled(false);
-				lblStatus2.setText(">>> ... <<<");
+				btnP02n1.setEnabled(true);
+				txtP02n2.setText("");
+				txtP02n3.setText("");
+				txtP02n1.setText("");
+				btnP02n2.setEnabled(false);
+				btnP02n3.setEnabled(false);
+				txtP02n1.setEnabled(true);
+				txtP02n2.setEnabled(false);
+				txtP02n3.setEnabled(false);
+				lblP02n5.setText(">>> ... <<<");
 			}
 		});
 
@@ -671,7 +658,7 @@ public class MultiVaLCA {
 				mntmNewMenuItem_2.setToolTipText(GuiStrings.getGS("mp21e",l));
 				lblLangsel.setText(GuiStrings.getGS("mp31e", l));
 				lblLang.setText(GuiStrings.getGS("mp31", l));
-				btnLangSelect.setText(GuiStrings.getGS("bt1", l));
+				btnLangSelect.setText(GuiStrings.getGS("bt01", l));
 				
 
 
@@ -692,14 +679,13 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp11", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp11e", l));
 		}
-		public void actionPerformed(ActionEvent e) {
-			
-			lblP01n1.setText(GuiStrings.getGS("p1l1", l));
-			lblP01n2.setText(GuiStrings.getGS("p1l2", l));
-			lblP01n3.setText(GuiStrings.getGS("p1l3", l));
-			lblP01n4.setText(GuiStrings.getGS("p1l4", l));
-			lblP01n5.setText(GuiStrings.getGS("p1l5", l));
-			btnP01n1.setText(GuiStrings.getGS("bt1", l));
+		public void actionPerformed(ActionEvent e) {			
+			lblP01n1.setText(GuiStrings.getGS("p01n1", l));
+			lblP01n2.setText(GuiStrings.getGS("p01n2", l));
+			lblP01n3.setText(GuiStrings.getGS("p01n3", l));
+			lblP01n4.setText(GuiStrings.getGS("p01n4", l));
+			lblP01n5.setText(GuiStrings.getGS("stat01", l));
+			btnP01n1.setText(GuiStrings.getGS("bt01", l));
 			cl.show(panel, "neuFluss");
 						
 		}
@@ -711,6 +697,14 @@ public class MultiVaLCA {
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp12e", l));
 		}
 		public void actionPerformed(ActionEvent e) {
+			lblP02n1.setText(GuiStrings.getGS("p02n1", l));
+			lblP02n2.setText(GuiStrings.getGS("p02n2", l));
+			lblP02n3.setText(GuiStrings.getGS("p01n2", l));
+			lblP02n4.setText(GuiStrings.getGS("p02n4", l));
+			lblP02n5.setText(GuiStrings.getGS("stat01", l));
+			btnP02n1.setText(GuiStrings.getGS("bt02", l));
+			btnP02n2.setText(GuiStrings.getGS("bt03", l));
+			btnP02n3.setText(GuiStrings.getGS("bt04", l));
 			cl.show(panel, "neuModul");
 		}
 	}
