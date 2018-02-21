@@ -9,7 +9,7 @@ import java.awt.CardLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.24
+ * @version 0.25
  */
 
 import java.awt.EventQueue;
@@ -268,22 +268,13 @@ public class MultiVaLCA {
 		//
 		panel.add(panel_5, "lang");
 		panel_5.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
-		
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP05n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_5.add(lblP05n1, "flowy,cell 1 0 2 1,alignx center,growy");
-		
-		
-		panel_5.add(lblP05n2, "cell 1 1,grow");
-		
-		
+		panel_5.add(lblP05n1, "flowy,cell 1 0 2 1,alignx center,growy");		
+		panel_5.add(lblP05n2, "cell 1 1,grow");		
 		comboBox2.setModel(new DefaultComboBoxModel<Language>(Language.values()));
-		panel_5.add(comboBox2, "cell 2 1,grow");
-		
-		
-		panel_5.add(btn05n1, "cell 1 2 2 1,alignx center");
-		
-		
+		panel_5.add(comboBox2, "cell 2 1,grow");	
+		panel_5.add(btn05n1, "cell 1 2 2 1,alignx center");		
 		lblInfo1.setText(GuiStrings.getGS("head1", l));
 		lblInfo2.setText(GuiStrings.getGS("info1", l));
 		lblInfo3.setText(GuiStrings.getGS("info2", l));
@@ -345,13 +336,14 @@ public class MultiVaLCA {
 				FlowType typ = ft.get(typs);
 				FlowUnit einheit = comboBox_1.getItemAt(comboBox_1.getSelectedIndex());
 				if (name.equals("")) {
-					lblP01n5.setText(">>> Es wurde kein Name angegeben. <<<");
+					lblP01n5.setText(GuiStrings.getGS("stat02", l));
 				} else {
 					if (Flow.containsName(name)) {
-						lblP01n5.setText(">>> Der angegebene Name ist bereits vorhanden. <<<");
+						lblP01n5.setText(GuiStrings.getGS("stat03", l));
 					} else {
 						Flow.instance(name, typ, einheit);
-						lblP01n5.setText(">>> Anzahl Flussobjekte: " + Flow.getAllNames().size() + " <<<");
+						lblP01n5.setText(GuiStrings.getGS("stat04", l) + 
+								Flow.getAllNames().size() + GuiStrings.getGS("stat05", l));
 						txtP01n1.setText("");
 						comboBox.setSelectedIndex(0);
 						comboBox_1.setSelectedIndex(0);
@@ -369,13 +361,14 @@ public class MultiVaLCA {
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP02n1.getText();	
 				if (name.equals("")) {
-					lblP02n5.setText(">>> Es wurde kein Name angegeben. <<<");
+					lblP02n5.setText(GuiStrings.getGS("stat02", l));
 				} else {
 					if (NameCheck.containsFVName(name)) {
-						lblP02n5.setText(">>> Der angegebene Name ist bereits vorhanden. <<<");
+						lblP02n5.setText(GuiStrings.getGS("stat03", l));
 					} else {
 						ProcessModule.instance(name);
-						lblP02n5.setText(">>> Anzahl Prozessmodule: " + ProcessModule.getAllInstances().size() + " <<<");
+						lblP02n5.setText(GuiStrings.getGS("stat06", l) + 
+								ProcessModule.getAllInstances().size() + GuiStrings.getGS("stat05", l));
 						btnP02n1.setEnabled(false);
 						txtP02n1.setEnabled(false);
 						btnP02n2.setEnabled(true);
@@ -398,7 +391,7 @@ public class MultiVaLCA {
 					menge = 0.0;
 				}
 				if (fname.equals("") || (menge == 0.0)) {
-					lblP02n5.setText(">>> unvollst\u00e4ndige Eingabe <<<");
+					lblP02n5.setText(GuiStrings.getGS("stat07", l));
 				} else {
 					if (Flow.containsName(fname)) {
 						Flow akFlow = Flow.getInstance(fname);
@@ -410,11 +403,11 @@ public class MultiVaLCA {
 						int anzPFlow = ProcessModule.getInstance(mname).getProduktflussvektor().size();
 						int anzEFlow = ProcessModule.getInstance(mname).getElementarflussvektor().size();
 						int anzGesamt = anzPFlow + anzEFlow;
-						lblP02n5.setText(">>> Prozessmodul " + mname + " besitzt " +
-								anzGesamt + " Fl\u00fcsse <<<");
+						lblP02n5.setText(GuiStrings.getGS("stat08", l) + mname + GuiStrings.getGS("stat09", l) +
+								anzGesamt + GuiStrings.getGS("stat10", l));
 						
 					} else {
-						lblP02n5.setText(">>> unbekannter Flowname <<<");
+						lblP02n5.setText(GuiStrings.getGS("stat11", l));
 					}					
 				}
 			}
@@ -432,7 +425,7 @@ public class MultiVaLCA {
 				txtP02n1.setEnabled(true);
 				txtP02n2.setEnabled(false);
 				txtP02n3.setEnabled(false);
-				lblP02n5.setText(">>> ... <<<");
+				lblP02n5.setText(GuiStrings.getGS("stat01", l));
 			}
 		});
 
@@ -445,7 +438,7 @@ public class MultiVaLCA {
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP03n1.getText();	
 				if (name.equals("")) {
-					lblP03n7.setText(">>> Es wurde kein Name angegeben. <<<");
+					lblP03n7.setText(GuiStrings.getGS("stat02", l));
 				} else {
 					boolean nameVorhanden = false;
 					
@@ -460,11 +453,12 @@ public class MultiVaLCA {
 						}
 					}
 					if (nameVorhanden == true) {
-						lblP03n7.setText(">>> Der angegebene Name ist bereits vorhanden. <<<");
+						lblP03n7.setText(GuiStrings.getGS("stat03", l));
 					} else {
 						ProductSystem.instance(name, new HashMap<Flow, Double>(), 
 								new LinkedList<Flow>());
-						lblP03n7.setText(">>> Anzahl Produktsysteme: " + ProductSystem.getAllInstances().size() + " <<<");
+						lblP03n7.setText(GuiStrings.getGS("stat12", l) + 
+								ProductSystem.getAllInstances().size() + GuiStrings.getGS("stat05", l));
 
 						btnP03n1.setEnabled(false);
 						txtP03n1.setEnabled(false);
@@ -481,10 +475,10 @@ public class MultiVaLCA {
 				String modname = txtP03n2.getText();
 				if (modname.equals("") || modname.equals(txtP03n1.getText())) {
 					if (modname.equals("")) {
-						lblP03n7.setText(">>> unvollst\u00e4ndige Eingabe <<<");
+						lblP03n7.setText(GuiStrings.getGS("stat07", l));
 					}
 					if (modname.equals(txtP03n1.getText())) {
-						lblP03n7.setText(">>> unzul\u00e4ssige Rekursion <<<");
+						lblP03n7.setText(GuiStrings.getGS("stat13", l));
 					}
 				} else {
 					boolean nameVorhanden = false;
@@ -509,13 +503,13 @@ public class MultiVaLCA {
 						} else {
 							ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProductSystem.getAllInstances().get(modname));
 						}
-						lblP03n7.setText(">>> Produktsystem " + txtP03n1.getText() +
-								" besteht aus " + ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulAnzahl() 
-								+ " Elementen <<<");
+						lblP03n7.setText(GuiStrings.getGS("stat14", l) + txtP03n1.getText() +
+								GuiStrings.getGS("stat15", l) + ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulAnzahl() 
+								+ GuiStrings.getGS("stat16", l));
 						txtP03n2.setText("");
 						btnP03n3.setEnabled(true);
 					} else {
-						lblP03n7.setText(">>> Name ist weder Prozessmodul noch Produktsystem <<<");
+						lblP03n7.setText(GuiStrings.getGS("stat17", l));
 					}					
 				}
 			}
@@ -531,7 +525,7 @@ public class MultiVaLCA {
 				txtP03n3.setEnabled(true);
 				txtP03n4.setEnabled(true);
 				btnP03n4.setEnabled(true);
-				lblP03n7.setText(">>> ... <<<");
+				lblP03n7.setText(GuiStrings.getGS("stat01", l));
 			}
 		});
 		
@@ -547,18 +541,18 @@ public class MultiVaLCA {
 					menge = 0.0;
 				}
 				if (fname.equals("") || (menge == 0.0)) {
-					lblP03n7.setText(">>> unvollst\u00e4ndige Eingabe <<<");
+					lblP03n7.setText(GuiStrings.getGS("stat07", l));
 				} else {
 					if (Flow.containsName(fname)) {
 						Flow akFlow = Flow.getInstance(fname);
 						ProductSystem.getInstance(txtP03n1.getText()).addBedarf(akFlow, Double.parseDouble(txtP03n4.getText()));
-						lblP03n7.setText(">>> Der Bedarfsvektor enth\u00e4lt " + 
-								ProductSystem.getInstance(txtP03n1.getText()).getBedarfsvektor().size() + " Fl\u00dcsse <<<");
+						lblP03n7.setText(GuiStrings.getGS("stat18", l) + 
+								ProductSystem.getInstance(txtP03n1.getText()).getBedarfsvektor().size() + GuiStrings.getGS("stat10", l));
 						btnP03n5.setEnabled(true);	
 						txtP03n3.setText("");
 						txtP03n4.setText("");
 					} else {
-						lblP03n7.setText(">>> unbekannter Flowname <<<");
+						lblP03n7.setText(GuiStrings.getGS("stat11", l));
 					}					
 				}
 			}
@@ -581,7 +575,7 @@ public class MultiVaLCA {
 				btnP03n6.setEnabled(true);
 				btnP03n7.setEnabled(true);
 				
-				lblP03n7.setText(">>> ... <<<");
+				lblP03n7.setText(GuiStrings.getGS("stat01", l));
 			}
 		});
 		
@@ -590,16 +584,16 @@ public class MultiVaLCA {
 			public void actionPerformed(ActionEvent arg0) {
 				String vkname = txtP03n5.getText();
 				if (vkname.equals("")) {
-					lblP03n7.setText(">>> unvollst\u00e4ndige Eingabe <<<");
+					lblP03n7.setText(GuiStrings.getGS("stat07", l));
 				} else {					
 					if (Flow.containsName(vkname)) {
 						Flow akFlow = Flow.getInstance(vkname);
 						ProductSystem.getInstance(txtP03n1.getText()).addVuK(akFlow);
 						txtP03n5.setText("");
-						lblP03n7.setText(">>> Der VK-Vektor enth\u00e4lt " + 
-								ProductSystem.getInstance(txtP03n1.getText()).getVorUndKoppelprodukte().size() + " Fl\u00fcsse <<<");										
+						lblP03n7.setText(GuiStrings.getGS("stat19", l) + 
+								ProductSystem.getInstance(txtP03n1.getText()).getVorUndKoppelprodukte().size() + GuiStrings.getGS("stat10", l));										
 					} else {
-						lblP03n7.setText(">>> unbekannter Flowname <<<");
+						lblP03n7.setText(GuiStrings.getGS("stat11", l));
 					}					
 				}
 			}
@@ -626,7 +620,7 @@ public class MultiVaLCA {
 				btnP03n6.setEnabled(false);
 				btnP03n7.setEnabled(false);
 				
-				lblP03n7.setText(">>> ... <<<");
+				lblP03n7.setText(GuiStrings.getGS("stat01", l));
 			}
 			
 		});
