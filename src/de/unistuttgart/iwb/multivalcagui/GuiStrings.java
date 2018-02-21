@@ -4,15 +4,17 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 /**
+ * Zusammenstellung der Textkonstanten für die
+ * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.23
+ * @version 0.24
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.23";
-		String date = "20.02.2018";
+		String vn = " 0.24";
+		String date = "21.02.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MulitVaLCA"; break;
@@ -46,6 +48,17 @@ public class GuiStrings {
 			case "bt02": r = "neues Prozessmodul anlegen"; break;
 			case "bt03": r = "Fluss hinzufügen"; break;
 			case "bt04": r = "fertig"; break;
+			case "p03n1": r = "Neues Produktsystem"; break;
+			case "p03n2": r = "Name des Produktsystems"; break;
+			case "p03n3": r = "Prozessmodul/Subsystem"; break;
+			case "p03n4": r = "Produkt im Bedarfsvektor"; break;
+			case "p03n6": r = "Vor- oder Koppelprodukt"; break;
+			case "bt05": r = "neues Produktsystem anlegen"; break;
+			case "bt06": r = "Modul/System hinzufügen"; break;
+			case "bt07": r = "weiter"; break;
+			case "bt08": r = "Bedarfsvektor ergänzen"; break;
+			case "bt09": r = "VK-Fluss hinzufügen"; break;
+
 
 			}		
 		}	
@@ -82,6 +95,16 @@ public class GuiStrings {
 			case "bt02": r = "create new Process Module"; break;
 			case "bt03": r = "add Flow"; break;
 			case "bt04": r = "finished"; break;
+			case "p03n1": r = "new Product System"; break;
+			case "p03n2": r = "Name of the Product System"; break;
+			case "p03n3": r = "Process Module/Subsystem"; break;
+			case "p03n4": r = "Product in demand vector"; break;
+			case "p03n6": r = "Pre- or Coproduct"; break;
+			case "bt05": r = "create new Product System"; break;
+			case "bt06": r = "add Module or System"; break;
+			case "bt07": r = "next"; break;
+			case "bt08": r = "add Product to demand vector"; break;
+			case "bt09": r = "add Pre- or Coproduct Flow"; break;
 
 
 			
