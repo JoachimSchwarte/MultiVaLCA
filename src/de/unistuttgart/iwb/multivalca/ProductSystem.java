@@ -215,7 +215,7 @@ implements FlowValueMaps {
 		}
 
 		for(Flow ef : elementarFlussliste) {
-			HashMap<FlowValueType, Double> valueMap = efv.get(ef);
+			HashMap<FlowValueType, Double> valueMap = new HashMap<FlowValueType, Double>();
 			valueMap.put(FlowValueType.MeanValue, matrixG.get(elementarFlussliste.indexOf(ef),0));
 			efv.put(ef, valueMap);
 		}	
@@ -235,8 +235,8 @@ implements FlowValueMaps {
 		Matrix matrixA1 = new Matrix(arrayA1);
 		Matrix matrixG1 = matrixA1.times(matrixS);
 		for(Flow pf : produktFlussliste) {
-			HashMap<FlowValueType, Double> valueMap = pfv.get(pf);
-			valueMap.put(FlowValueType.MeanValue, matrixG1.get(elementarFlussliste.indexOf(pf),0));
+			HashMap<FlowValueType, Double> valueMap = new HashMap<FlowValueType, Double>();
+			valueMap.put(FlowValueType.MeanValue, matrixG1.get(produktFlussliste.indexOf(pf),0));
 			pfv.put(pf, valueMap);
 		}			
 	}

@@ -32,8 +32,38 @@ class ProductSystemTest {
 	private void initialize() {
 		ProductSystem.clear();
 		Modul1.addFluss(r1, FlowValueType.MeanValue, -1000.);
-		Modul1.addFluss(r1, FlowValueType.UpperBound, -1050.);
-		Modul1.addFluss(r1, FlowValueType.LowerBound, -950.);
+		Modul1.addFluss(r1, FlowValueType.UpperBound, -950.);
+		Modul1.addFluss(r1, FlowValueType.LowerBound, -1050.);
+		Modul1.addFluss(r2, FlowValueType.MeanValue, -100.);
+		Modul1.addFluss(r2, FlowValueType.UpperBound, -10.);
+		Modul1.addFluss(r2, FlowValueType.LowerBound, -250.);
+		Modul1.addFluss(e1, FlowValueType.MeanValue, 1000.);
+		Modul1.addFluss(e1, FlowValueType.UpperBound, 1200.);
+		Modul1.addFluss(e1, FlowValueType.LowerBound, 800.);
+		Modul1.addFluss(e2, FlowValueType.MeanValue, 200.);
+		Modul1.addFluss(e2, FlowValueType.UpperBound, 250.);
+		Modul1.addFluss(e2, FlowValueType.LowerBound, 150.);
+		Modul1.addFluss(p1, FlowValueType.MeanValue, 100.);
+		Modul2.addFluss(r1, FlowValueType.MeanValue, -300.);
+		Modul2.addFluss(r1, FlowValueType.UpperBound, -200.);
+		Modul2.addFluss(r1, FlowValueType.LowerBound, -400.);
+		Modul2.addFluss(r2, FlowValueType.MeanValue, -800.);
+		Modul2.addFluss(r2, FlowValueType.UpperBound, -750.);
+		Modul2.addFluss(r2, FlowValueType.LowerBound, -900.);
+		Modul2.addFluss(e1, FlowValueType.MeanValue, 150.);
+		Modul2.addFluss(e1, FlowValueType.UpperBound, 200.);
+		Modul2.addFluss(e1, FlowValueType.LowerBound, 100.);
+		Modul2.addFluss(e2, FlowValueType.MeanValue, 500.);
+		Modul2.addFluss(e2, FlowValueType.UpperBound, 520.);
+		Modul2.addFluss(e2, FlowValueType.LowerBound, 480.);
+		Modul2.addFluss(p1, FlowValueType.MeanValue, -300.);
+		Modul2.addFluss(p1, FlowValueType.UpperBound, -290.);
+		Modul2.addFluss(p1, FlowValueType.LowerBound, -310.);
+		Modul2.addFluss(p2, FlowValueType.MeanValue, 1.);
+		f.put(p2, 1.);
+		ProductP2 = ProductSystem.instance("PS1", f, vkp);
+		ProductP2.addProzessmodul(Modul1);
+		ProductP2.addProzessmodul(Modul2);
 		
 	};
 
@@ -44,8 +74,17 @@ class ProductSystemTest {
 		HashMap<Flow, HashMap<FlowValueType, Double>> efv = Modul1.getElementarflussvektor();
 		HashMap<FlowValueType, Double> vv = efv.get(r1);
 		assertEquals(-1000., vv.get(FlowValueType.MeanValue), .001);
-		assertEquals(-1050., vv.get(FlowValueType.UpperBound), .001);
-		assertEquals(-950., vv.get(FlowValueType.LowerBound), .001);
+		assertEquals(-950., vv.get(FlowValueType.UpperBound), .001);
+		assertEquals(-1050., vv.get(FlowValueType.LowerBound), .001);
+	}
+	
+	@Test
+	void test02() {
+		initialize();
+		HashMap<Flow, HashMap<FlowValueType, Double>> efv = ProductP2.getElementarflussvektor();
+		HashMap<FlowValueType, Double> vv = efv.get(r1);
+		assertEquals(-3300., vv.get(FlowValueType.MeanValue), .001);
+
 	}
 
 }
