@@ -5,7 +5,7 @@ package de.unistuttgart.iwb.multivalcatest;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.24
+ * @version 0.26
  */
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,6 +84,12 @@ class ProductSystemTest {
 		HashMap<Flow, HashMap<FlowValueType, Double>> efv = ProductP2.getElementarflussvektor();
 		HashMap<FlowValueType, Double> vv = efv.get(r1);
 		assertEquals(-3300., vv.get(FlowValueType.MeanValue), .001);
+		vv = efv.get(r2);
+		assertEquals(-1100., vv.get(FlowValueType.MeanValue), .001);
+		vv = efv.get(e1);
+		assertEquals(3150., vv.get(FlowValueType.MeanValue), .001);
+		vv = efv.get(e2);
+		assertEquals(1100., vv.get(FlowValueType.MeanValue), .001);
 
 	}
 

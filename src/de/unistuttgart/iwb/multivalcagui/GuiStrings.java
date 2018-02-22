@@ -7,14 +7,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.25
+ * @version 0.26
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.25";
-		String date = "21.02.2018";
+		String vn = " 0.26";
+		String date = "22.02.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MulitVaLCA"; break;
@@ -76,6 +76,14 @@ public class GuiStrings {
 			case "stat17": r = ">>> Name ist weder Prozessmodul noch Produktsystem <<<"; break;
 			case "stat18": r = ">>> Der Bedarfsvektor enthält "; break;
 			case "stat19": r = ">>> Der VK-Vektor enthält "; break;
+			case "stat20": r = ">>> Bitte keine Leerzeichen verwenden! <<<"; break;
+			case "mp4": r = "Liste"; break;
+			case "mp41": r = "Flüsse"; break;
+			case "mp41e": r = "Liste aller Flüsse"; break;
+			case "mp42": r = "Prozessmodule"; break;
+			case "mp42e": r = "Liste aller Prozessmodule"; break;
+			case "mp43": r = "Produktsysteme"; break;
+			case "mp43e": r = "Liste aller Produktsysteme"; break;
 
 
 
@@ -142,6 +150,14 @@ public class GuiStrings {
 			case "stat17": r = ">>> The Name does not belong to a Process Module or a Product System <<<"; break;
 			case "stat18": r = ">>> The demand vector contains "; break;
 			case "stat19": r = ">>> The vector of Pre- and Coproducts contains "; break;
+			case "stat20": r = ">>> Space is an illegal character! <<<"; break;
+			case "mp4": r = "List"; break;
+			case "mp41": r = "Flows"; break;
+			case "mp41e": r = "List of all Flows"; break;
+			case "mp42": r = "Process Modules"; break;
+			case "mp42e": r = "List of all Process Modules"; break;
+			case "mp43": r = "Product Systems"; break;
+			case "mp43e": r = "List of all Product Systems"; break;
 
 
 			

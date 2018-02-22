@@ -47,6 +47,11 @@ public class MultiVaLCA {
 	private final Action newProductAction 	= new newProductAction();
 	private final Action aboutAction 	= new aboutAction();
 	private final Action prefsAction 	= new prefsAction();
+	private final Action listFlowAction 	= new listFlowAction();
+	private final Action listModuleAction 	= new listModuleAction();
+	private final Action listProductAction 	= new listProductAction();
+	
+	
 	//
 	// Panel 1; Neuer Fluss
 	//
@@ -303,6 +308,21 @@ public class MultiVaLCA {
 		JMenuItem mntmProductSystem = new JMenuItem();
 		mntmProductSystem.setAction(newProductAction);
 		mnNew.add(mntmProductSystem);
+		
+		JMenu mnListe = new JMenu(GuiStrings.getGS("mp4", l));
+		menuBar.add(mnListe);
+		
+		JMenuItem mntmFlsse = new JMenuItem();
+		mntmFlsse.setAction(listFlowAction);
+		mnListe.add(mntmFlsse);
+		
+		JMenuItem mntmProzessmodule = new JMenuItem();
+		mntmProzessmodule.setAction(listModuleAction);
+		mnListe.add(mntmProzessmodule);
+		
+		JMenuItem mntmProduktsysteme = new JMenuItem();
+		mntmProduktsysteme.setAction(listProductAction);
+		mnListe.add(mntmProduktsysteme);
 			
 		JMenu mnPrefs = new JMenu(GuiStrings.getGS("mp3", l));
 		menuBar.add(mnPrefs);
@@ -335,9 +355,17 @@ public class MultiVaLCA {
 				String typs = comboBox.getItemAt(comboBox.getSelectedIndex());
 				FlowType typ = ft.get(typs);
 				FlowUnit einheit = comboBox_1.getItemAt(comboBox_1.getSelectedIndex());
+				boolean nameOk = true;
 				if (name.equals("")) {
+					nameOk = false;
 					lblP01n5.setText(GuiStrings.getGS("stat02", l));
-				} else {
+				}
+				if (name != name.replaceAll(" ","")) {
+					nameOk = false;
+					lblP01n5.setText(GuiStrings.getGS("stat20", l));
+					txtP01n1.setText("");
+				}								
+				if (nameOk == true) {
 					if (Flow.containsName(name)) {
 						lblP01n5.setText(GuiStrings.getGS("stat03", l));
 					} else {
@@ -360,9 +388,17 @@ public class MultiVaLCA {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP02n1.getText();	
+				boolean nameOk = true;
 				if (name.equals("")) {
+					nameOk = false;
 					lblP02n5.setText(GuiStrings.getGS("stat02", l));
-				} else {
+				} 
+				if (name != name.replaceAll(" ","")) {
+					nameOk = false;
+					lblP02n5.setText(GuiStrings.getGS("stat20", l));
+					txtP02n1.setText("");
+				}
+				if (nameOk == true) {
 					if (NameCheck.containsFVName(name)) {
 						lblP02n5.setText(GuiStrings.getGS("stat03", l));
 					} else {
@@ -437,9 +473,17 @@ public class MultiVaLCA {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP03n1.getText();	
+				boolean nameOk = true;
 				if (name.equals("")) {
+					nameOk = false;
 					lblP03n7.setText(GuiStrings.getGS("stat02", l));
-				} else {
+				} 
+				if (name != name.replaceAll(" ","")) {
+					nameOk = false;
+					lblP03n7.setText(GuiStrings.getGS("stat20", l));
+					txtP03n1.setText("");
+				}	
+				if (nameOk == true) {
 					boolean nameVorhanden = false;
 					
 					for(String mod : ProcessModule.getAllInstances().keySet()) {
@@ -635,6 +679,7 @@ public class MultiVaLCA {
 				l = comboBox2.getItemAt(comboBox2.getSelectedIndex());
 				frame.setTitle(GuiStrings.getGS("head1",l)+"   "+GuiStrings.getGS("head2",l));
 				mnNew.setText(GuiStrings.getGS("mp1",l));
+				mnListe.setText(GuiStrings.getGS("mp4",l));
 				mnPrefs.setText(GuiStrings.getGS("mp3",l));
 				mnHilfe.setText(GuiStrings.getGS("mp2",l));
 				mntmFlow.setText(GuiStrings.getGS("mp11",l));
@@ -645,6 +690,12 @@ public class MultiVaLCA {
 				mntmProductSystem.setToolTipText(GuiStrings.getGS("mp13e",l));
 				mntmNewMenuItem_3.setText(GuiStrings.getGS("mp31",l));
 				mntmNewMenuItem_3.setToolTipText(GuiStrings.getGS("mp31e",l));
+				mntmFlsse.setText(GuiStrings.getGS("mp41",l));
+				mntmFlsse.setToolTipText(GuiStrings.getGS("mp41e",l));
+				mntmProzessmodule.setText(GuiStrings.getGS("mp42",l));
+				mntmProzessmodule.setToolTipText(GuiStrings.getGS("mp42e",l));
+				mntmProduktsysteme.setText(GuiStrings.getGS("mp43",l));
+				mntmProduktsysteme.setToolTipText(GuiStrings.getGS("mp43e",l));
 				mntmNewMenuItem_2.setText(GuiStrings.getGS("mp21",l));
 				mntmNewMenuItem_2.setToolTipText(GuiStrings.getGS("mp21e",l));
 				lblP05n1.setText(GuiStrings.getGS("mp31e", l));
@@ -760,6 +811,39 @@ public class MultiVaLCA {
 			lblP05n2.setText(GuiStrings.getGS("mp31", l));
 			btn05n1.setText(GuiStrings.getGS("bt01", l));			
 			cl.show(panel, "lang");
+		}
+	}
+	
+	private class listFlowAction extends AbstractAction {
+		private static final long serialVersionUID = 8545097902306456895L;
+		public listFlowAction() {
+			putValue(NAME, GuiStrings.getGS("mp41", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp41e", l));
+		}
+		public void actionPerformed(ActionEvent e) {	
+			cl.show(panel, "leer");
+		}
+	}
+	
+	private class listModuleAction extends AbstractAction {
+		private static final long serialVersionUID = 8545097602306456895L;
+		public listModuleAction() {
+			putValue(NAME, GuiStrings.getGS("mp42", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp42e", l));
+		}
+		public void actionPerformed(ActionEvent e) {	
+			cl.show(panel, "leer");
+		}
+	}
+	
+	private class listProductAction extends AbstractAction {
+		private static final long serialVersionUID = 8545197602306456895L;
+		public listProductAction() {
+			putValue(NAME, GuiStrings.getGS("mp43", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp43e", l));
+		}
+		public void actionPerformed(ActionEvent e) {	
+			cl.show(panel, "leer");
 		}
 	}
 
