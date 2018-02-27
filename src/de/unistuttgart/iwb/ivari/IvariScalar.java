@@ -8,7 +8,7 @@ package de.unistuttgart.iwb.ivari;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.01
+ * @version 0.02
  */
 
 public class IvariScalar {
@@ -65,8 +65,14 @@ public class IvariScalar {
 		return r;		
 	}
 	
-	public IvariScalar inv() {
-		IvariScalar r = new IvariScalar(1/this.upperBound, 1/this.lowerBound);
+	public IvariScalar inv() throws ArithmeticException {
+		IvariScalar r = new IvariScalar(1.,1.);
+		if (this.upperBound*this.lowerBound <= 0) {
+			throw new ArithmeticException("Fehler bei Kehrwertberechnung");
+		} else {
+			r.setLowerBound(1/this.upperBound);
+			r.setUpperBound(1/this.lowerBound);
+		}		
 		return r;
 	}
 	

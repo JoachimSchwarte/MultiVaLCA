@@ -14,7 +14,7 @@ import de.unistuttgart.iwb.ivari.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.01
+ * @version 0.02
  */
 
 class IvariTest {
@@ -58,8 +58,16 @@ class IvariTest {
 	void testDiv() {
 		assertEquals(a.div(b).getLowerBound(), .461538, .000001);
 		assertEquals(a.div(b).getUpperBound(), .878048, .000001);
-		assertEquals(a.div(c).getLowerBound(), -3.272727, .000001);
-		assertEquals(a.div(c).getUpperBound(), 3., .000001);
+		try {
+			assertEquals(a.div(c).getLowerBound(), -3.272727, .000001);
+		} catch (ArithmeticException e) {
+			assertTrue(e.getMessage().equals("Fehler bei Kehrwertberechnung"));
+		}
+		try {
+			assertEquals(a.div(c).getUpperBound(), 3., .000001);
+		} catch (ArithmeticException e) {
+			assertTrue(e.getMessage().equals("Fehler bei Kehrwertberechnung"));
+		}
 		assertEquals(a.div(d).getLowerBound(), -2.4, .000001);
 		assertEquals(a.div(d).getUpperBound(), -.685714, .000001);
 	}
