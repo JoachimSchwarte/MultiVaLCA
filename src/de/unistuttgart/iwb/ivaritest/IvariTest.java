@@ -14,7 +14,7 @@ import de.unistuttgart.iwb.ivari.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.03
+ * @version 0.04
  */
 
 class IvariTest {
@@ -133,10 +133,217 @@ class IvariTest {
 		assertEquals(m1.getValue(1, 0).getLowerBound(), -1.1, 0.001);
 		assertEquals(m1.getValue(1, 0).getUpperBound(), 1.2, 0.001);
 		assertEquals(m1.getValue(1, 1).getLowerBound(), -3.5, 0.001);
-		assertEquals(m1.getValue(1, 1).getUpperBound(), -1.5, 0.001);
+		assertEquals(m1.getValue(1, 1).getUpperBound(), -1.5, 0.001);		
+	}
+	
+	@Test
+	void testMultVector() {
+		IvariScalar a11 = new IvariScalar(100., 200.);
+		IvariScalar a12 = new IvariScalar(1., 1.);
+		IvariScalar a21 = new IvariScalar(1., 1.);
+		IvariScalar a22 = new IvariScalar(100., 300.);
+		IvariScalar b1 = new IvariScalar(1., 2.);
+		IvariScalar b2 = new IvariScalar(2., 6.);	
+		IvariMatrix ma = new IvariMatrix(2);
+		IvariVector vb = new IvariVector(2);
+		IvariVector vx = new IvariVector(2);
+		ma.setValue(0, 0, a11);
+		ma.setValue(0, 1, a12);
+		ma.setValue(1, 0, a21);
+		ma.setValue(1, 1, a22);
+		vb.setValue(0, b1);
+		vb.setValue(1, b2);
+		vx = ma.multVector(vb);
+		assertEquals(vx.getValue(0).getLowerBound(), 102., .001);
+		assertEquals(vx.getValue(0).getUpperBound(), 406., .001);
+		assertEquals(vx.getValue(1).getLowerBound(), 201., .001);
+		assertEquals(vx.getValue(1).getUpperBound(), 1802., .001);
 		
 	}
-
-
-
+	
+	@Test
+	void testGauss01() throws Exception {
+		IvariScalar a11 = new IvariScalar(5., 5.);
+		IvariScalar a12 = new IvariScalar(4., 4.);
+		IvariScalar a13 = new IvariScalar(3., 3.);
+		IvariScalar a21 = new IvariScalar(2., 2.);
+		IvariScalar a22 = new IvariScalar(7., 7.);
+		IvariScalar a23 = new IvariScalar(1., 1.);
+		IvariScalar a31 = new IvariScalar(4., 4.);
+		IvariScalar a32 = new IvariScalar(3., 3.);
+		IvariScalar a33 = new IvariScalar(2., 2.);
+		IvariScalar b1 = new IvariScalar(22., 22.);
+		IvariScalar b2 = new IvariScalar(19., 19.);
+		IvariScalar b3 = new IvariScalar(16., 16.);			
+		IvariMatrix ma = new IvariMatrix(3);
+		IvariVector vb = new IvariVector(3);
+		IvariVector vx = new IvariVector(3);
+		ma.setValue(0, 0, a11);
+		ma.setValue(0, 1, a12);
+		ma.setValue(0, 2, a13);
+		ma.setValue(1, 0, a21);
+		ma.setValue(1, 1, a22);
+		ma.setValue(1, 2, a23);
+		ma.setValue(2, 0, a31);
+		ma.setValue(2, 1, a32);
+		ma.setValue(2, 2, a33);
+		vb.setValue(0, b1);
+		vb.setValue(1, b2);
+		vb.setValue(2, b3);
+		vx = ma.gauss(vb);
+		assertEquals(vx.getValue(0).getLowerBound(), 1., .001);
+		assertEquals(vx.getValue(0).getUpperBound(), 1., .001);
+		assertEquals(vx.getValue(1).getLowerBound(), 2., .001);
+		assertEquals(vx.getValue(1).getUpperBound(), 2., .001);
+		assertEquals(vx.getValue(2).getLowerBound(), 3., .001);
+		assertEquals(vx.getValue(2).getUpperBound(), 3., .001);
+	}
+	
+	@Test
+	void testGauss02() throws Exception {
+		IvariScalar a11 = new IvariScalar(7., 7.);
+		IvariScalar a12 = new IvariScalar(4., 4.);
+		IvariScalar a13 = new IvariScalar(3., 3.);
+		IvariScalar a21 = new IvariScalar(2., 2.);
+		IvariScalar a22 = new IvariScalar(7., 7.);
+		IvariScalar a23 = new IvariScalar(1., 1.);
+		IvariScalar a31 = new IvariScalar(4., 4.);
+		IvariScalar a32 = new IvariScalar(3., 3.);
+		IvariScalar a33 = new IvariScalar(2., 2.);
+		IvariScalar b1 = new IvariScalar(22., 22.);
+		IvariScalar b2 = new IvariScalar(19., 19.);
+		IvariScalar b3 = new IvariScalar(16., 16.);			
+		IvariMatrix ma = new IvariMatrix(3);
+		IvariVector vb = new IvariVector(3);
+		IvariVector vx = new IvariVector(3);
+		ma.setValue(0, 0, a11);
+		ma.setValue(0, 1, a12);
+		ma.setValue(0, 2, a13);
+		ma.setValue(1, 0, a21);
+		ma.setValue(1, 1, a22);
+		ma.setValue(1, 2, a23);
+		ma.setValue(2, 0, a31);
+		ma.setValue(2, 1, a32);
+		ma.setValue(2, 2, a33);
+		vb.setValue(0, b1);
+		vb.setValue(1, b2);
+		vb.setValue(2, b3);
+		vx = ma.gauss(vb);
+		assertEquals(vx.getValue(0).getLowerBound(), -1., .001);
+		assertEquals(vx.getValue(0).getUpperBound(), -1., .001);
+		assertEquals(vx.getValue(1).getLowerBound(), 2, .001);
+		assertEquals(vx.getValue(1).getUpperBound(), 2, .001);
+		assertEquals(vx.getValue(2).getLowerBound(), 7, .001);
+		assertEquals(vx.getValue(2).getUpperBound(), 7, .001);	
+	}
+	
+	@Test
+	void testGauss03() throws Exception {
+		IvariScalar a11 = new IvariScalar(4., 4.);
+		IvariScalar a12 = new IvariScalar(4., 4.);
+		IvariScalar a13 = new IvariScalar(3., 3.);
+		IvariScalar a21 = new IvariScalar(2., 2.);
+		IvariScalar a22 = new IvariScalar(7., 7.);
+		IvariScalar a23 = new IvariScalar(1., 1.);
+		IvariScalar a31 = new IvariScalar(4., 4.);
+		IvariScalar a32 = new IvariScalar(3., 3.);
+		IvariScalar a33 = new IvariScalar(2., 2.);
+		IvariScalar b1 = new IvariScalar(22., 22.);
+		IvariScalar b2 = new IvariScalar(19., 19.);
+		IvariScalar b3 = new IvariScalar(16., 16.);			
+		IvariMatrix ma = new IvariMatrix(3);
+		IvariVector vb = new IvariVector(3);
+		IvariVector vx = new IvariVector(3);
+		ma.setValue(0, 0, a11);
+		ma.setValue(0, 1, a12);
+		ma.setValue(0, 2, a13);
+		ma.setValue(1, 0, a21);
+		ma.setValue(1, 1, a22);
+		ma.setValue(1, 2, a23);
+		ma.setValue(2, 0, a31);
+		ma.setValue(2, 1, a32);
+		ma.setValue(2, 2, a33);
+		vb.setValue(0, b1);
+		vb.setValue(1, b2);
+		vb.setValue(2, b3);
+		vx = ma.gauss(vb);
+		assertEquals(vx.getValue(0).getLowerBound(), 0.5, .001);
+		assertEquals(vx.getValue(0).getUpperBound(), 0.5, .001);
+		assertEquals(vx.getValue(1).getLowerBound(), 2, .001);
+		assertEquals(vx.getValue(1).getUpperBound(), 2, .001);
+		assertEquals(vx.getValue(2).getLowerBound(), 4, .001);
+		assertEquals(vx.getValue(2).getUpperBound(), 4, .001);	
+	}
+	
+	@Test
+	void testGauss04() throws Exception {
+		IvariScalar a11 = new IvariScalar(1., 2.);
+		IvariScalar a12 = new IvariScalar(0., 0.);
+		IvariScalar a21 = new IvariScalar(0., 0.);
+		IvariScalar a22 = new IvariScalar(1., 3.);
+		IvariScalar b1 = new IvariScalar(2., 2.);
+		IvariScalar b2 = new IvariScalar(6., 6.);	
+		IvariMatrix ma = new IvariMatrix(2);
+		IvariVector vb = new IvariVector(2);
+		IvariVector vx = new IvariVector(2);
+		ma.setValue(0, 0, a11);
+		ma.setValue(0, 1, a12);
+		ma.setValue(1, 0, a21);
+		ma.setValue(1, 1, a22);
+		vb.setValue(0, b1);
+		vb.setValue(1, b2);
+		vx = ma.gauss(vb);
+		assertEquals(vx.getValue(0).getLowerBound(), 1., .001);
+		assertEquals(vx.getValue(0).getUpperBound(), 2., .001);
+		assertEquals(vx.getValue(1).getLowerBound(), 2., .001);
+		assertEquals(vx.getValue(1).getUpperBound(), 6., .001);
+	}
+	
+	@Test
+	void testGauss05() throws Exception {
+		IvariScalar a11 = new IvariScalar(100., 200.);
+		IvariScalar a12 = new IvariScalar(1., 1.);
+		IvariScalar a21 = new IvariScalar(1., 1.);
+		IvariScalar a22 = new IvariScalar(100., 300.);
+		IvariScalar b1 = new IvariScalar(200., 200.);
+		IvariScalar b2 = new IvariScalar(600., 600.);	
+		IvariMatrix ma = new IvariMatrix(2);
+		IvariVector vb = new IvariVector(2);
+		IvariVector vx = new IvariVector(2);
+		ma.setValue(0, 0, a11);
+		ma.setValue(0, 1, a12);
+		ma.setValue(1, 0, a21);
+		ma.setValue(1, 1, a22);
+		vb.setValue(0, b1);
+		vb.setValue(1, b2);
+		vx = ma.gauss(vb);
+		assertEquals(vx.getValue(0).getLowerBound(), 0.97004, .001);
+		assertEquals(vx.getValue(0).getUpperBound(), 1.98007, .001);
+		assertEquals(vx.getValue(1).getLowerBound(), 1.99337, .001);
+		assertEquals(vx.getValue(1).getUpperBound(), 5.99059, .001);
+	}
+	
+	@Test
+	void testGauss06() throws Exception {
+		IvariScalar a11 = new IvariScalar(100., 200.);
+		IvariScalar a12 = new IvariScalar(1., 1.);
+		IvariScalar a21 = new IvariScalar(1., 1.);
+		IvariScalar a22 = new IvariScalar(100., 300.);
+		IvariScalar b1 = new IvariScalar(200., 200.);
+		IvariScalar b2 = new IvariScalar(600., 600.);	
+		IvariMatrix ma = new IvariMatrix(2);
+		IvariVector vb = new IvariVector(2);
+		IvariVector vx = new IvariVector(2);
+		ma.setValue(1, 1, a11);
+		ma.setValue(1, 0, a12);
+		ma.setValue(0, 1, a21);
+		ma.setValue(0, 0, a22);
+		vb.setValue(1, b1);
+		vb.setValue(0, b2);
+		vx = ma.gauss(vb);
+		assertEquals(vx.getValue(1).getLowerBound(), 0.97004, .001);
+		assertEquals(vx.getValue(1).getUpperBound(), 1.98007, .001);
+		assertEquals(vx.getValue(0).getLowerBound(), 1.99337, .001);
+		assertEquals(vx.getValue(0).getUpperBound(), 5.99059, .001);
+	}
 }

@@ -5,7 +5,7 @@ package de.unistuttgart.iwb.multivalcatest;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.26
+ * @version 0.27
  */
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,6 +44,8 @@ class ProductSystemTest {
 		Modul1.addFluss(e2, FlowValueType.UpperBound, 250.);
 		Modul1.addFluss(e2, FlowValueType.LowerBound, 150.);
 		Modul1.addFluss(p1, FlowValueType.MeanValue, 100.);
+		Modul1.addFluss(p1, FlowValueType.LowerBound, 100.);
+		Modul1.addFluss(p1, FlowValueType.UpperBound, 100.);
 		Modul2.addFluss(r1, FlowValueType.MeanValue, -300.);
 		Modul2.addFluss(r1, FlowValueType.UpperBound, -200.);
 		Modul2.addFluss(r1, FlowValueType.LowerBound, -400.);
@@ -60,6 +62,8 @@ class ProductSystemTest {
 		Modul2.addFluss(p1, FlowValueType.UpperBound, -290.);
 		Modul2.addFluss(p1, FlowValueType.LowerBound, -310.);
 		Modul2.addFluss(p2, FlowValueType.MeanValue, 1.);
+		Modul2.addFluss(p2, FlowValueType.LowerBound, 1.);
+		Modul2.addFluss(p2, FlowValueType.UpperBound, 1.);
 		f.put(p2, 1.);
 		ProductP2 = ProductSystem.instance("PS1", f, vkp);
 		ProductP2.addProzessmodul(Modul1);
@@ -84,12 +88,20 @@ class ProductSystemTest {
 		HashMap<Flow, HashMap<FlowValueType, Double>> efv = ProductP2.getElementarflussvektor();
 		HashMap<FlowValueType, Double> vv = efv.get(r1);
 		assertEquals(-3300., vv.get(FlowValueType.MeanValue), .001);
+		assertEquals(-3300., vv.get(FlowValueType.LowerBound), .001);
+		assertEquals(-3300., vv.get(FlowValueType.UpperBound), .001);
 		vv = efv.get(r2);
 		assertEquals(-1100., vv.get(FlowValueType.MeanValue), .001);
+		assertEquals(-1100., vv.get(FlowValueType.LowerBound), .001);
+		assertEquals(-1100., vv.get(FlowValueType.UpperBound), .001);
 		vv = efv.get(e1);
 		assertEquals(3150., vv.get(FlowValueType.MeanValue), .001);
+		assertEquals(3150., vv.get(FlowValueType.LowerBound), .001);
+		assertEquals(3150., vv.get(FlowValueType.UpperBound), .001);
 		vv = efv.get(e2);
 		assertEquals(1100., vv.get(FlowValueType.MeanValue), .001);
+		assertEquals(1100., vv.get(FlowValueType.LowerBound), .001);
+		assertEquals(1100., vv.get(FlowValueType.UpperBound), .001);
 
 	}
 

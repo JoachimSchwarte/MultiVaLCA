@@ -8,7 +8,7 @@ package de.unistuttgart.iwb.ivari;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.03
+ * @version 0.04
  */
 
 public class IvariScalar {
@@ -82,8 +82,8 @@ public class IvariScalar {
 	}
 	
 	public double abs2() throws Exception  {
-		double r = this.upperBound*this.lowerBound;
-		if (r <= 0) {
+		double r = this.lowerBound*this.upperBound;
+		if (r < 0) {
 			throw new Exception("Fehler bei der Absolutwertberechnung");
 		}
 		return r;	

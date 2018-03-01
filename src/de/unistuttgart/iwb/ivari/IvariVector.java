@@ -8,7 +8,7 @@ package de.unistuttgart.iwb.ivari;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.03
+ * @version 0.04
  */
 
 public class IvariVector {
@@ -20,6 +20,15 @@ public class IvariVector {
 		size = n;
 		for (int j=0; j<size; j++) {
 			v[j] = new IvariScalar(.0, .0);
+		}
+	}
+	
+	public IvariVector(double[] a, double[] b) {
+		size = a.length;
+		v = new IvariScalar[size];
+		for (int i=0; i<size; i++) {
+			IvariScalar s = new IvariScalar(a[i], b[i]);
+			v[i] = s;			
 		}
 	}
 	

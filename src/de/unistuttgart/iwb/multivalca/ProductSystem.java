@@ -6,10 +6,11 @@ package de.unistuttgart.iwb.multivalca;
 import java.util.HashMap;
 import java.util.LinkedList;
 import Jama.Matrix;
+import de.unistuttgart.iwb.ivari.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.21
+ * @version 0.27
  */
 
 public class ProductSystem 
@@ -153,7 +154,7 @@ implements FlowValueMaps {
 		vorUndKoppelProdukte.add(fluss);
 	}
 	
-	private void aktualisiere() throws ArithmeticException {
+	private void aktualisiere() {
 		LinkedList<Flow> produktFlussliste = new LinkedList<Flow>();
 		for(FlowValueMaps m : modulliste){
 			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
@@ -169,12 +170,16 @@ implements FlowValueMaps {
 			throw new ArithmeticException("Matrix nicht quadratisch");
 		}
 		double[][] arrayA = new double[produktFlussliste.size()][modulliste.size()];
+		double[][] arrayAl = new double[produktFlussliste.size()][modulliste.size()];
+		double[][] arrayAu = new double[produktFlussliste.size()][modulliste.size()];
 		for(FlowValueMaps m : modulliste){
 			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
 			for (Flow key : modulVektor.keySet()) {
  				if (produktFlussliste.contains(key)) {
-					arrayA[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);	
- 				}							
+					arrayA[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);
+					arrayAl[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.LowerBound);
+					arrayAu[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.UpperBound);
+ 				} 
 			}
 		}
 		LinkedList<Flow> elementarFlussliste = new LinkedList<Flow>();
@@ -187,10 +192,14 @@ implements FlowValueMaps {
 			}
 		}
 		double[][] arrayB = new double[elementarFlussliste.size()][modulliste.size()];
+		double[][] arrayBl = new double[elementarFlussliste.size()][modulliste.size()];
+		double[][] arrayBu = new double[elementarFlussliste.size()][modulliste.size()];
 		for(FlowValueMaps m : modulliste){
 			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getElementarflussvektor();
 			for (Flow key : modulVektor.keySet()) {
-				arrayB[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);				
+				arrayB[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);		
+				arrayBl[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.LowerBound);	
+				arrayBu[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.UpperBound);	
 			}
 		}
 		double[][] arrayF = new double[produktFlussliste.size()][1];
@@ -203,12 +212,44 @@ implements FlowValueMaps {
 			}		
 		}
 		Matrix matrixA = new Matrix(arrayA);
+		IvariMatrix imA = new IvariMatrix(arrayAl, arrayAu);
 		Matrix matrixB = new Matrix(arrayB);
+		IvariMatrix imB = new IvariMatrix(arrayBl, arrayBu);
 		Matrix matrixF = new Matrix(arrayF);
+		System.out.println("ivF:");
+		System.out.println(arrayF[0][0]);
+		System.out.println(arrayF[1][0]);
+		double[] harry = new double[arrayF.length];
+		for (int i=0; i<arrayF.length; i++) {
+			harry[i] = arrayF[i][0];
+		}
+		IvariVector ivF = new IvariVector(harry, harry);
 		Matrix matrixS = matrixA.solve(matrixF);
+		IvariVector ivS = new IvariVector(arrayA.length);
+		System.out.println(imA.getValue(0, 0).getLowerBound()+ " " +
+				imA.getValue(0, 1).getLowerBound()+ " " +
+				imA.getValue(1, 0).getLowerBound()+ " " +
+				imA.getValue(1, 1).getLowerBound());
+		System.out.println(imA.getValue(0, 0).getUpperBound()+ " " +
+				imA.getValue(0, 1).getUpperBound()+ " " +
+				imA.getValue(1, 0).getUpperBound()+ " " +
+				imA.getValue(1, 1).getUpperBound());
+		System.out.println("Fl=  "+ivF.getValue(0).getLowerBound()+ " " +
+				ivF.getValue(1).getLowerBound());
+		System.out.println("Fu=  "+ivF.getValue(0).getUpperBound()+ " " +
+				ivF.getValue(1).getUpperBound());
+		try {
+			ivS = imA.gauss(ivF);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Matrix matrixG = matrixB.times(matrixS);
+		IvariVector ivG = imB.multVector(ivS);
 		double[][] arrayS = matrixS.getArray();
 		for (Integer i=0; i<arrayS.length; i++){
+			System.out.println("s"+i+"=  "+arrayS[i]+ivS.getValue(i).getLowerBound()+
+					arrayS[i]+ivS.getValue(i).getUpperBound());
 			if (arrayS[i][0]<0){
 				throw new ArithmeticException("Vorzeichenfehler im Skalierungsvektor");			
 			}
@@ -217,26 +258,38 @@ implements FlowValueMaps {
 		for(Flow ef : elementarFlussliste) {
 			HashMap<FlowValueType, Double> valueMap = new HashMap<FlowValueType, Double>();
 			valueMap.put(FlowValueType.MeanValue, matrixG.get(elementarFlussliste.indexOf(ef),0));
+			valueMap.put(FlowValueType.LowerBound, ivG.getValue(elementarFlussliste.indexOf(ef)).getLowerBound());
+			valueMap.put(FlowValueType.UpperBound, ivG.getValue(elementarFlussliste.indexOf(ef)).getUpperBound());
 			efv.put(ef, valueMap);
 		}	
 		produktFlussliste.addAll(vorUndKoppelProdukte);
 		double[][] arrayA1 = new double[produktFlussliste.size()][modulliste.size()];
+		double[][] arrayA1l = new double[produktFlussliste.size()][modulliste.size()];
+		double[][] arrayA1u = new double[produktFlussliste.size()][modulliste.size()];
 		for(FlowValueMaps m : modulliste){
 			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
 			for (Flow key : produktFlussliste) {
 				if (modulVektor.containsKey(key)) {
 					arrayA1[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);
+					arrayA1l[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.LowerBound);
+					arrayA1u[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.UpperBound);
 				} else {
 					arrayA1[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=0;
+					arrayA1l[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=0;
+					arrayA1u[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=0;
 				}
 								
 			}
 		}
 		Matrix matrixA1 = new Matrix(arrayA1);
+		IvariMatrix imA1 = new IvariMatrix(arrayA1l, arrayA1u);
 		Matrix matrixG1 = matrixA1.times(matrixS);
+		IvariVector ivG1 = imA1.multVector(ivS);
 		for(Flow pf : produktFlussliste) {
 			HashMap<FlowValueType, Double> valueMap = new HashMap<FlowValueType, Double>();
 			valueMap.put(FlowValueType.MeanValue, matrixG1.get(produktFlussliste.indexOf(pf),0));
+			valueMap.put(FlowValueType.LowerBound, ivG1.getValue(produktFlussliste.indexOf(pf)).getLowerBound());
+			valueMap.put(FlowValueType.UpperBound, ivG1.getValue(produktFlussliste.indexOf(pf)).getUpperBound());
 			pfv.put(pf, valueMap);
 		}			
 	}
