@@ -9,7 +9,7 @@ import java.awt.CardLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.25
+ * @version 0.28
  */
 
 import java.awt.EventQueue;
@@ -71,14 +71,19 @@ public class MultiVaLCA {
 	private JTextField txtP02n1 = new JTextField();		// Eingabefeld Modulname
 	private JTextField txtP02n2 = new JTextField();		// Eingabefeld Flussname  
 	private JTextField txtP02n3 = new JTextField();		// Eingabefeld Menge
+	private JTextField txtP02n4 = new JTextField();		// Eingabefeld Untergrenze
+	private JTextField txtP02n5 = new JTextField();		// Eingabefeld Obergrenze
 	private JLabel lblP02n1 = new JLabel(); 			// "Neues Prozessmodul"
 	private JLabel lblP02n2 = new JLabel();				// "Name des Prozessmoduls"
 	private JLabel lblP02n3 = new JLabel();				// "Name des Flusses"
 	private JLabel lblP02n4 = new JLabel();				// "Menge"
 	private JLabel lblP02n5 = new JLabel();				// Status
+	private JLabel lblP02n6 = new JLabel();				// "Untergrenze"
+	private JLabel lblP02n7 = new JLabel();				// "Obergrenze"
 	private JButton btnP02n1 = new JButton(); 			// "neues Prozessmodul anlegen"
-	private JButton btnP02n2 = new JButton();			// "Fluss hinzufügen"
+	private JButton btnP02n2 = new JButton();			// "Grenzwerte bestätigen"
 	private JButton btnP02n3 = new JButton();			// "fertig"
+	private JButton btnP02n4 = new JButton();			// "Fluss hinzufügen"
 	//
 	// Panel 3; Neues Produktsystem
 	//
@@ -183,7 +188,7 @@ public class MultiVaLCA {
 		//
 		panel.add(panel_02, "neuModul");
 		panel_02.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_02.add(lblP02n1, "flowy,cell 1 0 2 1,alignx center,growy");	
 		panel_02.add(lblP02n2, "cell 1 1,grow");		
@@ -202,10 +207,22 @@ public class MultiVaLCA {
 		txtP02n3.setColumns(10);
 		txtP02n3.setEnabled(false);		
 		btnP02n2.setEnabled(false);
-		panel_02.add(btnP02n2, "cell 1 5,alignx center");
+		panel_02.add(btnP02n2, "cell 1 5 2 1,alignx center");	
+		panel_02.add(lblP02n6, "cell 1 6,grow");	
+		txtP02n4.setText("");
+		panel_02.add(txtP02n4, "cell 2 6,grow");
+		txtP02n4.setColumns(10);
+		txtP02n4.setEnabled(false);	
+		panel_02.add(lblP02n7, "cell 1 7,grow");
+		txtP02n5.setText("");
+		panel_02.add(txtP02n5, "cell 2 7,grow");
+		txtP02n5.setColumns(10);
+		txtP02n5.setEnabled(false);		
+		btnP02n4.setEnabled(false);
+		panel_02.add(btnP02n4, "cell 1 8,alignx center");
 		btnP02n3.setEnabled(false);
-		panel_02.add(btnP02n3, "cell 2 5,alignx center");
-		panel_02.add(lblP02n5, "cell 0 6 4 1,alignx center");		
+		panel_02.add(btnP02n3, "cell 2 8,alignx center");
+		panel_02.add(lblP02n5, "cell 0 9 4 1,alignx center");		
 		//
 		// Panel 3; Neues Produktsystem
 		//		
@@ -753,9 +770,12 @@ public class MultiVaLCA {
 			lblP02n3.setText(GuiStrings.getGS("p01n2", l));
 			lblP02n4.setText(GuiStrings.getGS("p02n4", l));
 			lblP02n5.setText(GuiStrings.getGS("stat01", l));
+			lblP02n6.setText(GuiStrings.getGS("p02n5", l));
+			lblP02n7.setText(GuiStrings.getGS("p02n6", l));
 			btnP02n1.setText(GuiStrings.getGS("bt02", l));
 			btnP02n2.setText(GuiStrings.getGS("bt03", l));
 			btnP02n3.setText(GuiStrings.getGS("bt04", l));
+			btnP02n4.setText(GuiStrings.getGS("bt10", l));
 			cl.show(panel, "neuModul");
 		}
 	}

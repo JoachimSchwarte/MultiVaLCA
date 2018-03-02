@@ -8,7 +8,7 @@ package de.unistuttgart.iwb.ivari;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.04
+ * @version 0.05
  */
 
 public class IvariMatrix {
@@ -22,14 +22,18 @@ public class IvariMatrix {
 		spalAnz = n;
 	}
 	
+	public IvariMatrix(int i, int j) {
+		m = new IvariScalar[i][j];
+		zeilAnz = i;
+		spalAnz = j;
+	}
+	
 	public IvariMatrix(double[][] a, double[][] b) {
 		zeilAnz = a.length;
 		spalAnz = a[0].length;
-		System.out.println("size= "+zeilAnz);
 		m = new IvariScalar[zeilAnz][spalAnz];
 		for (int i=0; i<zeilAnz; i++) {
 			for (int j=0; j<spalAnz; j++) {
-				System.out.println("i= "+i+"  j= "+j+"  l= "+a[i][j]+"  u= "+ b[i][j]);
 				IvariScalar s = new IvariScalar(a[i][j], b[i][j]);
 				m[i][j] = s;
 			}
@@ -67,8 +71,11 @@ public class IvariMatrix {
 		return r;
 	}
 	
-	public IvariVector multVector(IvariVector v) {
-		IvariVector r = new IvariVector(spalAnz); 
+	public IvariVector multVector(IvariVector v) throws Exception {
+		if (spalAnz != v.getSize()) {
+			throw new Exception("Abweichende Dimensionen");
+		}
+		IvariVector r = new IvariVector(zeilAnz); 
 		for (int j=0; j<zeilAnz; j++) {
 			r.setValue(j, new IvariScalar(0., 0.));
 			for (int k=0; k<spalAnz; k++) {

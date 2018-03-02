@@ -8,7 +8,7 @@ package de.unistuttgart.iwb.ivari;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.04
+ * @version 0.05
  */
 
 public class IvariScalar {

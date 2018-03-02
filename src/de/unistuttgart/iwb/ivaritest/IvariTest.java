@@ -14,7 +14,7 @@ import de.unistuttgart.iwb.ivari.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.04
+ * @version 0.05
  */
 
 class IvariTest {
@@ -137,7 +137,7 @@ class IvariTest {
 	}
 	
 	@Test
-	void testMultVector() {
+	void testMultVector() throws Exception {
 		IvariScalar a11 = new IvariScalar(100., 200.);
 		IvariScalar a12 = new IvariScalar(1., 1.);
 		IvariScalar a21 = new IvariScalar(1., 1.);

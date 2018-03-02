@@ -10,7 +10,7 @@ import de.unistuttgart.iwb.ivari.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.27
+ * @version 0.28
  */
 
 public class ProductSystem 
@@ -154,7 +154,7 @@ implements FlowValueMaps {
 		vorUndKoppelProdukte.add(fluss);
 	}
 	
-	private void aktualisiere() {
+	private void aktualisiere() throws Exception {
 		LinkedList<Flow> produktFlussliste = new LinkedList<Flow>();
 		for(FlowValueMaps m : modulliste){
 			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
@@ -216,9 +216,6 @@ implements FlowValueMaps {
 		Matrix matrixB = new Matrix(arrayB);
 		IvariMatrix imB = new IvariMatrix(arrayBl, arrayBu);
 		Matrix matrixF = new Matrix(arrayF);
-		System.out.println("ivF:");
-		System.out.println(arrayF[0][0]);
-		System.out.println(arrayF[1][0]);
 		double[] harry = new double[arrayF.length];
 		for (int i=0; i<arrayF.length; i++) {
 			harry[i] = arrayF[i][0];
@@ -226,18 +223,6 @@ implements FlowValueMaps {
 		IvariVector ivF = new IvariVector(harry, harry);
 		Matrix matrixS = matrixA.solve(matrixF);
 		IvariVector ivS = new IvariVector(arrayA.length);
-		System.out.println(imA.getValue(0, 0).getLowerBound()+ " " +
-				imA.getValue(0, 1).getLowerBound()+ " " +
-				imA.getValue(1, 0).getLowerBound()+ " " +
-				imA.getValue(1, 1).getLowerBound());
-		System.out.println(imA.getValue(0, 0).getUpperBound()+ " " +
-				imA.getValue(0, 1).getUpperBound()+ " " +
-				imA.getValue(1, 0).getUpperBound()+ " " +
-				imA.getValue(1, 1).getUpperBound());
-		System.out.println("Fl=  "+ivF.getValue(0).getLowerBound()+ " " +
-				ivF.getValue(1).getLowerBound());
-		System.out.println("Fu=  "+ivF.getValue(0).getUpperBound()+ " " +
-				ivF.getValue(1).getUpperBound());
 		try {
 			ivS = imA.gauss(ivF);
 		} catch (Exception e) {
@@ -248,8 +233,6 @@ implements FlowValueMaps {
 		IvariVector ivG = imB.multVector(ivS);
 		double[][] arrayS = matrixS.getArray();
 		for (Integer i=0; i<arrayS.length; i++){
-			System.out.println("s"+i+"=  "+arrayS[i]+ivS.getValue(i).getLowerBound()+
-					arrayS[i]+ivS.getValue(i).getUpperBound());
 			if (arrayS[i][0]<0){
 				throw new ArithmeticException("Vorzeichenfehler im Skalierungsvektor");			
 			}
@@ -312,7 +295,12 @@ implements FlowValueMaps {
 
 	@Override
 	public HashMap<Flow, HashMap<FlowValueType, Double>> getElementarflussvektor() throws ArithmeticException {
-		aktualisiere();		
+		try {
+			aktualisiere();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		return efv;
 	}
 	
@@ -349,7 +337,12 @@ implements FlowValueMaps {
 
 	@Override
 	public HashMap<Flow, HashMap<FlowValueType, Double>> getProduktflussvektor() throws ArithmeticException {
-		aktualisiere();		
+		try {
+			aktualisiere();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		return pfv;
 	}
 	

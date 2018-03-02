@@ -5,7 +5,7 @@ package de.unistuttgart.iwb.multivalcatest;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.27
+ * @version 0.28
  */
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -88,20 +88,20 @@ class ProductSystemTest {
 		HashMap<Flow, HashMap<FlowValueType, Double>> efv = ProductP2.getElementarflussvektor();
 		HashMap<FlowValueType, Double> vv = efv.get(r1);
 		assertEquals(-3300., vv.get(FlowValueType.MeanValue), .001);
-		assertEquals(-3300., vv.get(FlowValueType.LowerBound), .001);
-		assertEquals(-3300., vv.get(FlowValueType.UpperBound), .001);
+		assertEquals(-3655., vv.get(FlowValueType.LowerBound), .001);
+		assertEquals(-2955., vv.get(FlowValueType.UpperBound), .001);
 		vv = efv.get(r2);
 		assertEquals(-1100., vv.get(FlowValueType.MeanValue), .001);
-		assertEquals(-1100., vv.get(FlowValueType.LowerBound), .001);
-		assertEquals(-1100., vv.get(FlowValueType.UpperBound), .001);
+		assertEquals(-1675., vv.get(FlowValueType.LowerBound), .001);
+		assertEquals(-779., vv.get(FlowValueType.UpperBound), .001);
 		vv = efv.get(e1);
 		assertEquals(3150., vv.get(FlowValueType.MeanValue), .001);
-		assertEquals(3150., vv.get(FlowValueType.LowerBound), .001);
-		assertEquals(3150., vv.get(FlowValueType.UpperBound), .001);
+		assertEquals(2420., vv.get(FlowValueType.LowerBound), .001);
+		assertEquals(3920., vv.get(FlowValueType.UpperBound), .001);
 		vv = efv.get(e2);
 		assertEquals(1100., vv.get(FlowValueType.MeanValue), .001);
-		assertEquals(1100., vv.get(FlowValueType.LowerBound), .001);
-		assertEquals(1100., vv.get(FlowValueType.UpperBound), .001);
+		assertEquals(915., vv.get(FlowValueType.LowerBound), .001);
+		assertEquals(1295., vv.get(FlowValueType.UpperBound), .001);
 
 	}
 

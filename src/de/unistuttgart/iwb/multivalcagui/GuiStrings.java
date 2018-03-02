@@ -7,14 +7,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.26
+ * @version 0.28
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.26";
-		String date = "22.02.2018";
+		String vn = " 0.28";
+		String date = "02.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MulitVaLCA"; break;
@@ -84,6 +84,9 @@ public class GuiStrings {
 			case "mp42e": r = "Liste aller Prozessmodule"; break;
 			case "mp43": r = "Produktsysteme"; break;
 			case "mp43e": r = "Liste aller Produktsysteme"; break;
+			case "p02n5": r = "Untergrenze"; break;
+			case "p02n6": r = "Obergrenze"; break;
+			case "bt10": r = "Grenzwerte bestätigen"; break;
 
 
 
@@ -158,6 +161,9 @@ public class GuiStrings {
 			case "mp42e": r = "List of all Process Modules"; break;
 			case "mp43": r = "Product Systems"; break;
 			case "mp43e": r = "List of all Product Systems"; break;
+			case "p02n5": r = "lower Bound"; break;
+			case "p02n6": r = "upper Bound"; break;
+			case "bt10": r = "confirm Bounds"; break;
 
 
 			
