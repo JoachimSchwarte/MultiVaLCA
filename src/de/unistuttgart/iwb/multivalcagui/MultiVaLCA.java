@@ -9,7 +9,7 @@ import java.awt.CardLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.28
+ * @version 0.29
  */
 
 import java.awt.EventQueue;
@@ -30,7 +30,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.*;
 import net.miginfocom.swing.MigLayout;
@@ -124,7 +128,13 @@ public class MultiVaLCA {
 	private JLabel lblP05n2 = new JLabel();				// "Sprache"
 	private JButton btn05n1 = new JButton();			// "speichern"
 	private JComboBox<Language> comboBox2 = new JComboBox<Language>();
-	
+	//
+	// Panel 6; Flussliste
+	//
+	private JPanel panel_6 = new JPanel();
+	private JLabel lblP06n1 = new JLabel();
+	private JTable flowsTable 		= new JTable();
+	DefaultTableModel flowsTableModel 		= new DefaultTableModel(0,3);
 
 	/**
 	 * Launch the application.
@@ -302,8 +312,18 @@ public class MultiVaLCA {
 		lblInfo3.setText(GuiStrings.getGS("info2", l));
 		lblInfo4.setText(GuiStrings.getGS("info3", l));
 		lblInfo5.setText(GuiStrings.getGS("head2", l)+"     "+GuiStrings.getGS("date", l));		
-		cl.show(panel, "leer");
+		//
+		// Panel 6; Flussliste
+		//
+		panel.add(panel_6, "listeFluss");		
+		panel_6.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));	
 		
+		lblP06n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_6.add(lblP06n1, "cell 0 0,alignx center,aligny top");		
+		panel_6.add(new JScrollPane(flowsTable), "cell 0 1,alignx center,aligny top");
+		
+		cl.show(panel, "leer");
+	
 		/*
 		 * Organisation der Menuleiste
 		 */
@@ -415,19 +435,20 @@ public class MultiVaLCA {
 					lblP02n5.setText(GuiStrings.getGS("stat20", l));
 					txtP02n1.setText("");
 				}
+				if (NameCheck.containsFVName(name)) {
+					nameOk = false;
+					lblP02n5.setText(GuiStrings.getGS("stat03", l));
+					txtP02n1.setText("");
+				}			
 				if (nameOk == true) {
-					if (NameCheck.containsFVName(name)) {
-						lblP02n5.setText(GuiStrings.getGS("stat03", l));
-					} else {
-						ProcessModule.instance(name);
-						lblP02n5.setText(GuiStrings.getGS("stat06", l) + 
-								ProcessModule.getAllInstances().size() + GuiStrings.getGS("stat05", l));
-						btnP02n1.setEnabled(false);
-						txtP02n1.setEnabled(false);
-						btnP02n2.setEnabled(true);
-						txtP02n2.setEnabled(true);
-						txtP02n3.setEnabled(true);
-					}	
+					ProcessModule.instance(name);
+					lblP02n5.setText(GuiStrings.getGS("stat06", l) + 
+							ProcessModule.getAllInstances().size() + GuiStrings.getGS("stat05", l));
+					btnP02n1.setEnabled(false);
+					txtP02n1.setEnabled(false);
+					btnP02n2.setEnabled(true);
+					txtP02n2.setEnabled(true);
+					txtP02n3.setEnabled(true);	
 				} 		
 			}
 		});
@@ -450,9 +471,18 @@ public class MultiVaLCA {
 						Flow akFlow = Flow.getInstance(fname);
 						String mname = txtP02n1.getText();
 						ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.MeanValue, menge);
-						txtP02n2.setText("");
-						txtP02n3.setText("");
-						btnP02n3.setEnabled(true);
+						ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.LowerBound, menge);
+						ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.UpperBound, menge);
+						txtP02n2.setEnabled(false);
+						txtP02n3.setEnabled(false);
+						btnP02n2.setEnabled(false);
+						txtP02n4.setText(txtP02n3.getText());
+						txtP02n4.setEnabled(true);
+						txtP02n5.setText(txtP02n3.getText());
+						txtP02n5.setEnabled(true);
+						btnP02n4.setEnabled(true);
+						btnP02n3.setEnabled(false);
+						txtP02n4.setEnabled(true);
 						int anzPFlow = ProcessModule.getInstance(mname).getProduktflussvektor().size();
 						int anzEFlow = ProcessModule.getInstance(mname).getElementarflussvektor().size();
 						int anzGesamt = anzPFlow + anzEFlow;
@@ -466,6 +496,57 @@ public class MultiVaLCA {
 			}
 		});
 		
+		btnP02n4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String fug = txtP02n4.getText();
+				String fog = txtP02n5.getText();
+				Double fugv;
+				Double fogv;
+				try {
+					fugv = Double.parseDouble(fug);
+				} catch (NumberFormatException e){
+					fugv = 0.0;
+				}
+				try {
+					fogv = Double.parseDouble(fog);
+				} catch (NumberFormatException e){
+					fogv = 0.0;
+				}
+				String fmenge = txtP02n3.getText();
+				Double menge;
+				try {
+					menge = Double.parseDouble(fmenge);
+				} catch (NumberFormatException e){
+					menge = 0.0;
+				}
+				if ((fugv > menge) || (fogv < menge)) {
+					txtP02n4.setText(txtP02n3.getText());
+					txtP02n5.setText(txtP02n3.getText());
+					lblP02n5.setText(GuiStrings.getGS("stat21", l));
+				} else {
+					String mname = txtP02n1.getText();
+					String fname = txtP02n2.getText();
+					Flow akFlow = Flow.getInstance(fname);
+					ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.LowerBound, fugv);
+					ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.UpperBound, fogv);
+					txtP02n2.setText("");
+					txtP02n3.setText("");
+					txtP02n4.setText("");
+					txtP02n5.setText("");
+					txtP02n2.setEnabled(true);
+					txtP02n3.setEnabled(true);
+					txtP02n4.setEnabled(false);
+					txtP02n5.setEnabled(false);
+					btnP02n2.setEnabled(true);
+					btnP02n3.setEnabled(true);
+					btnP02n4.setEnabled(false);
+					lblP02n5.setText(GuiStrings.getGS("stat01", l));
+					
+				}
+			}			
+		});
+		
 		btnP02n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -473,11 +554,16 @@ public class MultiVaLCA {
 				txtP02n2.setText("");
 				txtP02n3.setText("");
 				txtP02n1.setText("");
+				txtP02n4.setText("");
+				txtP02n5.setText("");
 				btnP02n2.setEnabled(false);
 				btnP02n3.setEnabled(false);
+				btnP02n4.setEnabled(false);
 				txtP02n1.setEnabled(true);
 				txtP02n2.setEnabled(false);
 				txtP02n3.setEnabled(false);
+				txtP02n4.setEnabled(false);
+				txtP02n5.setEnabled(false);
 				lblP02n5.setText(GuiStrings.getGS("stat01", l));
 			}
 		});
@@ -840,8 +926,19 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp41", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp41e", l));
 		}
-		public void actionPerformed(ActionEvent e) {	
-			cl.show(panel, "leer");
+		public void actionPerformed(ActionEvent e) {
+			lblP06n1.setText(GuiStrings.getGS("mp41e", l));
+			flowsTableModel.setRowCount(0);
+			flowsTable.setModel(flowsTableModel);
+			TableColumnModel tcm = flowsTable.getColumnModel();
+			tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("p06n1", l));
+			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p01n3", l));
+			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p01n4", l));
+			for(String flussname : Flow.getAllInstances().keySet()) {
+				Flow fluss = Flow.getInstance(flussname);			
+				flowsTableModel.addRow(new Object[] {fluss.getName(), fluss.getType(), fluss.getEinheit()});			
+			}			
+			cl.show(panel, "listeFluss");
 		}
 	}
 	

@@ -7,14 +7,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.28
+ * @version 0.29
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.28";
-		String date = "02.03.2018";
+		String vn = " 0.29";
+		String date = "05.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MulitVaLCA"; break;
@@ -87,6 +87,8 @@ public class GuiStrings {
 			case "p02n5": r = "Untergrenze"; break;
 			case "p02n6": r = "Obergrenze"; break;
 			case "bt10": r = "Grenzwerte bestätigen"; break;
+			case "stat21": r = ">>> unzulässige Eingabe <<<"; break;
+			case "p06n1": r = "Name"; break;
 
 
 
@@ -164,6 +166,8 @@ public class GuiStrings {
 			case "p02n5": r = "lower Bound"; break;
 			case "p02n6": r = "upper Bound"; break;
 			case "bt10": r = "confirm Bounds"; break;
+			case "stat21": r = ">>> Illegal Entry <<<"; break;
+			case "p06n1": r = "Name"; break;
 
 
 			
