@@ -10,21 +10,21 @@ import de.unistuttgart.iwb.multivalca.FlowValueType;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Realisierung der Enumeration FlowValueType
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.26
+ * @version 0.291
  */
 
 public class FlowValueTypeStrings {
-	public static HashMap<String, FlowValueType> getFVTS(Language l) {
-		HashMap<String, FlowValueType> r = new HashMap<String, FlowValueType>();
+	public static HashMap<FlowValueType, String> getFVTS(Language l) {
+		HashMap<FlowValueType, String> r = new HashMap<FlowValueType, String>();
 		if (l == Language.Deutsch) {
-			r.put("Hauptwert", FlowValueType.MeanValue);
-			r.put("Untergrenze", FlowValueType.LowerBound);
-			r.put("Obergrenze", FlowValueType.UpperBound);
+			r.put(FlowValueType.MeanValue, "Hauptwert");
+			r.put(FlowValueType.LowerBound, "Untergrenze");
+			r.put(FlowValueType.UpperBound, "Obergrenze");
 		}	
 		if (l == Language.English) {
-			r.put("Main Value", FlowValueType.MeanValue);
-			r.put("Lower Bound", FlowValueType.LowerBound);
-			r.put("Upper Bound", FlowValueType.UpperBound);		
+			r.put(FlowValueType.MeanValue, "Main Value");
+			r.put(FlowValueType.LowerBound, "Lower Bound");
+			r.put(FlowValueType.UpperBound, "Upper Bound");		
 		}
 		return r;
 	}

@@ -10,19 +10,19 @@ import de.unistuttgart.iwb.multivalca.FlowType;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Realisierung der Enumeration FlowType
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.24
+ * @version 0.291
  */
 
 public class FlowTypeStrings {
-	public static HashMap<String, FlowType> getFTS(Language l) {
-		HashMap<String, FlowType> r = new HashMap<String, FlowType>();
+	public static HashMap<FlowType, String> getFTS(Language l) {
+		HashMap<FlowType, String> r = new HashMap<FlowType, String>();
 		if (l == Language.Deutsch) {
-			r.put("Elementarfluss", FlowType.Elementary);
-			r.put("Produktfluss", FlowType.Product);			
+			r.put(FlowType.Elementary, "Elementarfluss");
+			r.put(FlowType.Product, "Produktfluss");			
 		}	
 		if (l == Language.English) {
-			r.put("elementary Flow", FlowType.Elementary);
-			r.put("Product", FlowType.Product);			
+			r.put(FlowType.Elementary, "elementary Flow");
+			r.put(FlowType.Product, "Product");			
 		}
 		return r;
 	}

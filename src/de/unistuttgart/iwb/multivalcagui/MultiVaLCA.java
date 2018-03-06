@@ -9,7 +9,7 @@ import java.awt.CardLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.29
+ * @version 0.291
  */
 
 import java.awt.EventQueue;
@@ -135,6 +135,20 @@ public class MultiVaLCA {
 	private JLabel lblP06n1 = new JLabel();
 	private JTable flowsTable 		= new JTable();
 	DefaultTableModel flowsTableModel 		= new DefaultTableModel(0,3);
+	//
+	// Panel 7; Prozessmodulliste
+	//
+	private JPanel panel_7 = new JPanel();
+	private JLabel lblP07n1 = new JLabel();
+	private JTable pmTable 		= new JTable();
+	DefaultTableModel pmTableModel 		= new DefaultTableModel(0,4);
+	//
+	// Panel 8; Produktsystemliste
+	//
+	private JPanel panel_8 = new JPanel();
+	private JLabel lblP08n1 = new JLabel();
+	private JTable psTable 		= new JTable();
+	DefaultTableModel psTableModel 		= new DefaultTableModel(0,3);
 
 	/**
 	 * Launch the application.
@@ -316,11 +330,26 @@ public class MultiVaLCA {
 		// Panel 6; Flussliste
 		//
 		panel.add(panel_6, "listeFluss");		
-		panel_6.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));	
-		
+		panel_6.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));			
 		lblP06n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_6.add(lblP06n1, "cell 0 0,alignx center,aligny top");		
 		panel_6.add(new JScrollPane(flowsTable), "cell 0 1,alignx center,aligny top");
+		//
+		// Panel 7; Prozessmodulliste
+		//
+		panel.add(panel_7, "listePM");		
+		panel_7.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
+		lblP07n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_7.add(lblP07n1, "cell 0 0,alignx center,aligny top");		
+		panel_7.add(new JScrollPane(pmTable), "cell 0 1,alignx center,aligny top");	
+		//
+		// Panel 8; Produktsystemliste
+		//
+		panel.add(panel_8, "listePS");		
+		panel_8.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
+		lblP08n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_8.add(lblP08n1, "cell 0 0,alignx center,aligny top");		
+		panel_8.add(new JScrollPane(psTable), "cell 0 1,alignx center,aligny top");	
 		
 		cl.show(panel, "leer");
 	
@@ -388,9 +417,15 @@ public class MultiVaLCA {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP01n1.getText();
-				HashMap<String, FlowType> ft = FlowTypeStrings.getFTS(l);
+				HashMap<FlowType, String> ft = FlowTypeStrings.getFTS(l);
 				String typs = comboBox.getItemAt(comboBox.getSelectedIndex());
-				FlowType typ = ft.get(typs);
+				FlowType typ = FlowType.Elementary;
+				for (FlowType fte : ft.keySet()) {
+					if (ft.get(fte) == typs) {
+						typ = fte;
+					}
+				}
+
 				FlowUnit einheit = comboBox_1.getItemAt(comboBox_1.getSelectedIndex());
 				boolean nameOk = true;
 				if (name.equals("")) {
@@ -828,15 +863,12 @@ public class MultiVaLCA {
 			lblP01n4.setText(GuiStrings.getGS("p01n4", l));
 			lblP01n5.setText(GuiStrings.getGS("stat01", l));
 			btnP01n1.setText(GuiStrings.getGS("bt01", l));
-			HashMap<String, FlowType> ft = FlowTypeStrings.getFTS(l);
+			HashMap<FlowType, String> ft = FlowTypeStrings.getFTS(l);
 			String[] fta = new String[ft.size()];
 			int i=0;
 			for (FlowType f : FlowType.values()) {
-				for (String ftl : ft.keySet()) {
-					if (f == ft.get(ftl)) {
-						fta[i] = ftl;
-					}
-				}	
+				String ftl = ft.get(f);
+				fta[i] = ftl;
 				i++;
 			}
 			comboBox.setModel(new DefaultComboBoxModel<String>(fta));
@@ -936,7 +968,8 @@ public class MultiVaLCA {
 			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p01n4", l));
 			for(String flussname : Flow.getAllInstances().keySet()) {
 				Flow fluss = Flow.getInstance(flussname);			
-				flowsTableModel.addRow(new Object[] {fluss.getName(), fluss.getType(), fluss.getEinheit()});			
+				flowsTableModel.addRow(new Object[] {fluss.getName(), 
+						FlowTypeStrings.getFTS(l).get(fluss.getType()), fluss.getEinheit()});			
 			}			
 			cl.show(panel, "listeFluss");
 		}
@@ -948,8 +981,31 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp42", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp42e", l));
 		}
-		public void actionPerformed(ActionEvent e) {	
-			cl.show(panel, "leer");
+		public void actionPerformed(ActionEvent e) {
+			lblP07n1.setText(GuiStrings.getGS("mp42e", l));
+			pmTableModel.setRowCount(0);
+			pmTable.setModel(pmTableModel);
+			TableColumnModel tcm = pmTable.getColumnModel();
+			tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp12", l));
+			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("mp11", l));
+			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p01n3", l));
+			tcm.getColumn(3).setHeaderValue(GuiStrings.getGS("p02n4", l));
+			for(String mn : ProcessModule.getAllInstances().keySet()) {
+				ProcessModule akModul = ProcessModule.getInstance(mn);
+				pmTableModel.addRow(new Object[] {mn, "", ""});
+				for(Flow pf : akModul.getElementarflussvektor().keySet()){
+					for (FlowValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
+						pmTableModel.addRow(new Object[] {"", pf.getName(), 
+								FlowValueTypeStrings.getFVTS(l).get(vt),
+								akModul.getElementarflussvektor().get(pf).get(vt)});
+					}
+				}						
+				for(Flow pf : akModul.getProduktflussvektor().keySet()){
+					pmTableModel.addRow(new Object[] {"", pf.getName(), 
+							akModul.getProduktflussvektor().get(pf)});				
+				}
+			}	
+			cl.show(panel, "listePM");
 		}
 	}
 	
@@ -960,7 +1016,14 @@ public class MultiVaLCA {
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp43e", l));
 		}
 		public void actionPerformed(ActionEvent e) {	
-			cl.show(panel, "leer");
+			lblP08n1.setText(GuiStrings.getGS("mp43e", l));
+			psTableModel.setRowCount(0);
+			psTable.setModel(psTableModel);
+			TableColumnModel tcm = psTable.getColumnModel();
+			tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp13", l));
+			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p08n1", l));
+			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p08n2", l));
+			cl.show(panel, "listePS");
 		}
 	}
 
