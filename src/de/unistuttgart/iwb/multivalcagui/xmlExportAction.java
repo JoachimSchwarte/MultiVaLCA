@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.32
+ * @version 0.4
  */
 
 class xmlExportAction extends AbstractAction {
@@ -113,6 +113,51 @@ class xmlExportAction extends AbstractAction {
 	            	menge3.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(FlowValueType.UpperBound).toString()));
 	            }
 			}
+			
+			Element alleprosys = document.createElement("ProductSystems");
+            root.appendChild(alleprosys);
+            
+            for(String psm : ProductSystem.getAllInstances().keySet()) {
+            	ProductSystem akProSys = ProductSystem.getAllInstances().get(psm);
+				Element produktsystem = document.createElement("ProductSystem");
+				alleprosys.appendChild(produktsystem);
+				Element name = document.createElement("PS-Name");
+				produktsystem.appendChild(name);
+				name.appendChild(document.createTextNode(akProSys.getName()));
+				Element modullist = document.createElement("PS-Modules");
+				produktsystem.appendChild(modullist);
+				for (FlowValueMaps mod  : ProductSystem.getInstance(psm).getModulliste()) {
+					String modname = mod.getName();
+					Element modul = document.createElement("PS-Module");
+					modullist.appendChild(modul);
+					Element mname = document.createElement("PSM-Name");
+					modul.appendChild(mname);
+					mname.appendChild(document.createTextNode(modname));
+				}					
+				Element bv = document.createElement("DemandVector");
+				produktsystem.appendChild(bv);		            	
+            	for (Flow bvf : ProductSystem.getInstance(psm).getBedarfsvektor().keySet()) {
+            		Element bedarf = document.createElement("DV-Entry");
+            		bv.appendChild(bedarf);
+            		Element fluss =  document.createElement("DV-Name");
+            		bedarf.appendChild(fluss);
+            		fluss.appendChild(document.createTextNode(bvf.getName()));
+            		Element menge = document.createElement("DV-Value");
+            		bedarf.appendChild(menge);
+            		menge.appendChild(document.createTextNode(ProductSystem.getInstance(psm).
+            				getBedarfsvektor().get(bvf).toString()));
+            	}
+            	Element vuk = document.createElement("PreAndCoProducts");
+				produktsystem.appendChild(vuk);
+            	for (Flow vkf : ProductSystem.getInstance(psm).getVorUndKoppelprodukte()){
+            		Element produkt = document.createElement("PaCP-Entry");
+            		vuk.appendChild(produkt);
+            		Element prodname =  document.createElement("PaCP-Name");
+            		produkt.appendChild(prodname);
+            		prodname.appendChild(document.createTextNode(vkf.getName()));
+            	}	            	
+            }
+
             
          // JFileChooser-Objekt erstellen
 	        JFileChooser chooser = new JFileChooser();

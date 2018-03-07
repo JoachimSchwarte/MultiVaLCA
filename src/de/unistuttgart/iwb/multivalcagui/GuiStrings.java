@@ -7,17 +7,17 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.32
+ * @version 0.4
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.32";
+		String vn = " 0.4";
 		String date = "07.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
-			case "head1": r = "MulitVaLCA"; break;
+			case "head1": r = "MultiVaLCA"; break;
 			case "head2": r = "Version"+vn; break;
 			case "date": r = date; break;
 			case "info1": r = "Dr.-Ing. Joachim Schwarte"; break;
@@ -108,7 +108,7 @@ public class GuiStrings {
 		}	
 		if (l == Language.English) {
 			switch (s) {
-			case "head1": r = "MulitVaLCA"; break;
+			case "head1": r = "MultiVaLCA"; break;
 			case "head2": r = "Version"+vn; break;
 			case "date": r = date; break;
 			case "info1": r = "Dr.-Ing. Joachim Schwarte"; break;
