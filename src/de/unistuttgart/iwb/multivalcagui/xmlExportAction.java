@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.31
+ * @version 0.32
  */
 
 class xmlExportAction extends AbstractAction {
@@ -64,6 +64,54 @@ class xmlExportAction extends AbstractAction {
 	            Element einheit = document.createElement("FlowUnit");
 	            fluss.appendChild(einheit);
 	            einheit.appendChild(document.createTextNode(pf.getEinheit().toString()));
+			}
+            
+            Element allemodule = document.createElement("ProcessModules");
+            root.appendChild(allemodule);
+            
+			for(String mn : ProcessModule.getAllInstances().keySet()) {
+				ProcessModule akModul = ProcessModule.getInstance(mn);
+				Element prozessmodul = document.createElement("ProcessModule");
+				allemodule.appendChild(prozessmodul);
+				Element name = document.createElement("ModuleName");
+				prozessmodul.appendChild(name);
+				name.appendChild(document.createTextNode(akModul.getName()));
+				Element efv = document.createElement("ElementaryFlowVector");
+				prozessmodul.appendChild(efv);	            
+	            for(Flow pf : akModul.getElementarflussvektor().keySet()){
+	            	Element fluss = document.createElement("EFV-Entry");
+					efv.appendChild(fluss);	
+	            	Element fname = document.createElement("EFV-Name");
+	            	fluss.appendChild(fname);
+	            	fname.appendChild(document.createTextNode(pf.getName()));
+	            	Element menge = document.createElement("EFV-MainValue");
+	            	fluss.appendChild(menge);
+	            	menge.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(FlowValueType.MeanValue).toString()));
+	            	Element menge2 = document.createElement("EFV-LowerBound");
+	            	fluss.appendChild(menge2);
+	            	menge2.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(FlowValueType.LowerBound).toString()));
+	            	Element menge3 = document.createElement("EFV-UpperBound");
+	            	fluss.appendChild(menge3);
+	            	menge3.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(FlowValueType.UpperBound).toString()));
+	            }
+	            Element pfv = document.createElement("ProductFlowVector");
+				prozessmodul.appendChild(pfv);	  
+	            for(Flow pf : akModul.getProduktflussvektor().keySet()){
+	            	Element fluss = document.createElement("PFV-Entry");
+					pfv.appendChild(fluss);
+	            	Element fname = document.createElement("PFV-Name");
+	            	fluss.appendChild(fname);
+	            	fname.appendChild(document.createTextNode(pf.getName()));
+	            	Element menge = document.createElement("PFV-MainValue");
+	            	fluss.appendChild(menge);
+	            	menge.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(FlowValueType.MeanValue).toString()));
+	            	Element menge2 = document.createElement("PFV-LowerBound");
+	            	fluss.appendChild(menge2);
+	            	menge2.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(FlowValueType.LowerBound).toString()));
+	            	Element menge3 = document.createElement("PFV-UpperBound");
+	            	fluss.appendChild(menge3);
+	            	menge3.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(FlowValueType.UpperBound).toString()));
+	            }
 			}
             
          // JFileChooser-Objekt erstellen
