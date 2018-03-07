@@ -7,14 +7,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.3
+ * @version 0.31
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.3";
-		String date = "06.03.2018";
+		String vn = " 0.31";
+		String date = "07.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MulitVaLCA"; break;
@@ -96,7 +96,11 @@ public class GuiStrings {
 			case "mp5": r = "Berechnen"; break;
 			case "mp51": r = "Sachbilanz berechnen"; break;
 			case "mp51e": r = "Sachbilanzen aller Produktsysteme"; break;
-
+			case "mp6": r = "Datei"; break;
+			case "mp61": r = "XML-Export"; break;
+			case "mp61e": r = "Exportieren des Objektbestandes in eine XML-Datei"; break;
+			case "mp62": r = "XML-Import"; break;
+			case "mp62e": r = "Importieren eines Objektbestandes aus einer XML-Datei"; break;
 
 
 
@@ -183,6 +187,11 @@ public class GuiStrings {
 			case "mp5": r = "Evaluation"; break;
 			case "mp51": r = "LCI Evaluation"; break;
 			case "mp51e": r = "LCIs for all Product Systems"; break;
+			case "mp6": r = "File"; break;
+			case "mp61": r = "XML-Export"; break;
+			case "mp61e": r = "Database export into XML-file"; break;
+			case "mp62": r = "XML-Import"; break;
+			case "mp62e": r = "Database import from XML-file"; break;
 
 
 			

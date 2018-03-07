@@ -7,11 +7,6 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
-/**
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.3
- */
-
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -39,6 +34,11 @@ import javax.swing.table.TableColumnModel;
 import de.unistuttgart.iwb.multivalca.*;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * @author Dr.-Ing. Joachim Schwarte
+ * @version 0.31
+ */
+
 public class MultiVaLCA {
 	
 	Language l = Language.Deutsch;
@@ -55,6 +55,8 @@ public class MultiVaLCA {
 	private final Action listModuleAction 	= new listModuleAction();
 	private final Action listProductAction 	= new listProductAction();
 	private final Action calculateAction 	= new calculateAction();	
+	private final Action xmlExportAction 	= new xmlExportAction(l);
+	private final Action xmlImportAction 	= new xmlImportAction(l);
 	
 	//
 	// Panel 1; Neuer Fluss
@@ -374,6 +376,17 @@ public class MultiVaLCA {
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
+		
+		JMenu mnDatei = new JMenu(GuiStrings.getGS("mp6",l));
+		menuBar.add(mnDatei);
+		
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem();
+		mntmNewMenuItem_4.setAction(xmlExportAction);
+		mnDatei.add(mntmNewMenuItem_4);	
+		
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem();
+		mntmNewMenuItem_5.setAction(xmlImportAction);
+		mnDatei.add(mntmNewMenuItem_5);
 		
 		JMenu mnNew = new JMenu(GuiStrings.getGS("mp1",l));
 		menuBar.add(mnNew);
@@ -838,6 +851,7 @@ public class MultiVaLCA {
 			public void actionPerformed(ActionEvent arg0) {
 				l = comboBox2.getItemAt(comboBox2.getSelectedIndex());
 				frame.setTitle(GuiStrings.getGS("head1",l)+"   "+GuiStrings.getGS("head2",l));
+				mnDatei.setText(GuiStrings.getGS("mp6",l));
 				mnNew.setText(GuiStrings.getGS("mp1",l));
 				mnListe.setText(GuiStrings.getGS("mp4",l));
 				mnBerechnen.setText(GuiStrings.getGS("mp5",l));
@@ -861,6 +875,10 @@ public class MultiVaLCA {
 				mntmLci.setToolTipText(GuiStrings.getGS("mp51e",l));
 				mntmNewMenuItem_2.setText(GuiStrings.getGS("mp21",l));
 				mntmNewMenuItem_2.setToolTipText(GuiStrings.getGS("mp21e",l));
+				mntmNewMenuItem_4.setText(GuiStrings.getGS("mp61",l));
+				mntmNewMenuItem_4.setToolTipText(GuiStrings.getGS("mp61e",l));
+				mntmNewMenuItem_5.setText(GuiStrings.getGS("mp62",l));
+				mntmNewMenuItem_5.setToolTipText(GuiStrings.getGS("mp62e",l));
 				lblP05n1.setText(GuiStrings.getGS("mp31e", l));
 				lblP05n2.setText(GuiStrings.getGS("mp31", l));
 				btn05n1.setText(GuiStrings.getGS("bt01", l));
@@ -1120,8 +1138,6 @@ public class MultiVaLCA {
 				}
 			}
 			cl.show(panel, "berechnen");
-		}
-		
+		}		
 	}
-
 }
