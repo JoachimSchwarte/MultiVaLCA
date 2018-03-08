@@ -1,6 +1,7 @@
 /*	
  * MultiVaLCA
  */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.event.ActionEvent;
@@ -27,13 +28,13 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.4
+ * @version 0.41
  */
 
-class xmlExportAction extends AbstractAction {
+class XMLExportAction extends AbstractAction {
 
 	private static final long serialVersionUID = -4213564766954115318L;
-	public xmlExportAction(Language l) {
+	public XMLExportAction(Language l) {
 		putValue(NAME, GuiStrings.getGS("mp61", l));
 		putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp61e", l));
 	}
@@ -157,6 +158,22 @@ class xmlExportAction extends AbstractAction {
             		prodname.appendChild(document.createTextNode(vkf.getName()));
             	}	            	
             }
+            
+            Element allecats = document.createElement("ImpactCategories");
+            root.appendChild(allecats);
+            
+            for(String ick : ImpactCategory.getAllInstances().keySet()) {
+            	ImpactCategory ic = ImpactCategory.getAllInstances().get(ick);
+				Element cat = document.createElement("ImpactCategory");
+				allecats.appendChild(cat);
+				Element catname = document.createElement("Category");
+				cat.appendChild(catname);	
+				catname.appendChild(document.createTextNode(ic.getName()));
+				Element catind = document.createElement("Indicator");
+				cat.appendChild(catind);
+				catind.appendChild(document.createTextNode(ic.getEinheit().getName()));        	
+            }
+            
 
             
          // JFileChooser-Objekt erstellen

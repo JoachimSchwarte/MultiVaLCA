@@ -7,14 +7,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.4
+ * @version 0.41
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.4";
-		String date = "07.03.2018";
+		String vn = " 0.41";
+		String date = "08.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -101,6 +101,18 @@ public class GuiStrings {
 			case "mp61e": r = "Exportieren des Objektbestandes in eine XML-Datei"; break;
 			case "mp62": r = "XML-Import"; break;
 			case "mp62e": r = "Importieren eines Objektbestandes aus einer XML-Datei"; break;
+			case "mp14": r = "Wirkungskategorie"; break;
+			case "mp14e": r = "neue Wirkungskategorie erfassen"; break;
+			case "p10n1": r = "Neue Wirkungskategorie"; break;
+			case "p10n2": r = "Name der Wirkungskategorie"; break;
+			case "p10n3": r = "Indikator"; break;
+			case "stat22": r = ">>> Es wurde keine Kategorie angegeben. <<<"; break;
+			case "stat23": r = ">>> Die angegebene Kategorie ist bereits vorhanden. "; break;
+			case "stat24": r = ">>> Es wurde kein Indikator angegeben. <<<"; break;
+			case "stat25": r = ">>> Anzahl Wirkungskategorien: "; break;
+			case "mp44": r = "Wirkungskategorien"; break;
+			case "mp44e": r = "Liste aller Wirkungskategorien"; break;
+			case "p11n1": r = "Wirkungsindikator"; break;
 
 
 
@@ -192,6 +204,19 @@ public class GuiStrings {
 			case "mp61e": r = "Database export into XML-file"; break;
 			case "mp62": r = "XML-Import"; break;
 			case "mp62e": r = "Database import from XML-file"; break;
+			case "mp14": r = "Impact Category"; break;
+			case "mp14e": r = "Create new Impact Category"; break;
+			case "p10n1": r = "New Impact Category"; break;
+			case "p10n2": r = "Name of the Impact Category"; break;
+			case "p10n3": r = "Indicator"; break;
+			case "stat22": r = ">>> No Category has been entered. <<<"; break;
+			case "stat23": r = ">>> The Category is already existing. <<<"; break;
+			case "stat24": r = ">>> No Indicator has been entered. <<<"; break;
+			case "stat25": r = ">>> Number of Impact Categories: "; break;
+			case "mp44": r = "Impact Categories"; break;
+			case "mp44e": r = "List of all Impact Categories"; break;
+			case "p11n1": r = "Category Indicator"; break;
+
 
 
 			

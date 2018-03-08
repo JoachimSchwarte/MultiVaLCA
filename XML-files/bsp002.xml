@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<XML>
+<Flows/>
+<ProcessModules/>
+<ProductSystems/>
+<ImpactCategories>
+<ImpactCategory>
+<Category>GWP200</Category>
+<Indicator>kgCO2Aequivalent</Indicator>
+</ImpactCategory>
+<ImpactCategory>
+<Category>GWP100</Category>
+<Indicator>kgCO2Aequivalent</Indicator>
+</ImpactCategory>
+<ImpactCategory>
+<Category>AP</Category>
+<Indicator>kgSO2Aequivalent</Indicator>
+</ImpactCategory>
+</ImpactCategories>
+</XML>

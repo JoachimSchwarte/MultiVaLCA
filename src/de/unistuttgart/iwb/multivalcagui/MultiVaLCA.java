@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.4
+ * @version 0.41
  */
 
 public class MultiVaLCA {
@@ -46,17 +46,20 @@ public class MultiVaLCA {
 	private JFrame frame = new JFrame();;
 	private JPanel panel = new JPanel();
 	private CardLayout cl = new CardLayout(0, 0);
-	private final Action newFlowAction 		= new newFlowAction();
-	private final Action newModuleAction 	= new newModuleAction();
-	private final Action newProductAction 	= new newProductAction();
-	private final Action aboutAction 		= new aboutAction();
-	private final Action prefsAction 		= new prefsAction();
-	private final Action listFlowAction 	= new listFlowAction();
-	private final Action listModuleAction 	= new listModuleAction();
-	private final Action listProductAction 	= new listProductAction();
-	private final Action calculateAction 	= new calculateAction();	
-	private final Action xmlExportAction 	= new xmlExportAction(l);
-	private final Action xmlImportAction 	= new xmlImportAction(l);
+	private final Action newFlowAction 			= new newFlowAction();
+	private final Action newModuleAction 		= new newModuleAction();
+	private final Action newProductAction 		= new newProductAction();
+	private final Action aboutAction 			= new aboutAction();
+	private final Action prefsAction 			= new prefsAction();
+	private final Action listFlowAction 		= new listFlowAction();
+	private final Action listModuleAction 		= new listModuleAction();
+	private final Action listProductAction 		= new listProductAction();
+	private final Action calculateAction 		= new calculateAction();	
+	private final Action xmlExportAction 		= new XMLExportAction(l);
+	private final Action xmlImportAction 		= new XMLImportAction(l);
+	private final Action newCategoryAction 		= new newCategoryAction();
+	private final Action listCategoriesAction 	= new listCategoriesAction();
+	
 	
 	//
 	// Panel 1; Neuer Fluss
@@ -158,6 +161,24 @@ public class MultiVaLCA {
 	private JLabel lblP09n1 = new JLabel();
 	private JTable lciTable 		= new JTable();
 	DefaultTableModel lciTableModel 		= new DefaultTableModel(0,4);
+	//
+	// Panel 10; Neue Wirkungskategorie
+	//
+	private JPanel panel_10 = new JPanel();
+	private JTextField txtP10n1 = new JTextField();		// Eingabefeld Kategorie
+	private JTextField txtP10n2 = new JTextField();		// Eingabefeld Indikator
+	private JLabel lblP10n1 = new JLabel(); 			// "Neue Wirkungskategorie"
+	private JLabel lblP10n2 = new JLabel();				// "Name der Wirkungskategorie"
+	private JLabel lblP10n3 = new JLabel();				// "Indikator"
+	private JLabel lblP10n4 = new JLabel();				// Status
+	private JButton btnP10n1 = new JButton(); 			// "speichern"
+	//
+	// Panel 11; Kategorieliste
+	//
+	private JPanel panel_11 = new JPanel();
+	private JLabel lblP11n1 = new JLabel();
+	private JTable catTable 		= new JTable();
+	DefaultTableModel catTableModel 		= new DefaultTableModel(0,2);
 
 	/**
 	 * Launch the application.
@@ -366,7 +387,34 @@ public class MultiVaLCA {
 		panel_9.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
 		lblP09n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_9.add(lblP09n1, "cell 0 0,alignx center,aligny top");		
-		panel_9.add(new JScrollPane(lciTable), "cell 0 1,alignx center,aligny top");	
+		panel_9.add(new JScrollPane(lciTable), "cell 0 1,alignx center,aligny top");
+		//
+		// Panel 10; Neue Wirkungskategorie
+		//
+		panel.add(panel_10, "neuKategorie");
+		panel_10.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
+		lblP10n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_10.add(lblP10n1, "flowy,cell 1 0 2 1,alignx center,growy");	
+		panel_10.add(lblP10n2, "cell 1 1,grow");	
+		txtP10n1.setText("");
+		panel_10.add(txtP10n1, "cell 2 1,grow");	
+		txtP10n1.setColumns(10);
+		panel_10.add(lblP10n3, "cell 1 2,grow");	
+		txtP10n2.setText("");
+		panel_10.add(txtP10n2, "cell 2 2,grow");	
+		txtP10n2.setColumns(10);
+		panel_10.add(btnP10n1, "cell 1 3 2 1,alignx center");	
+		btnP10n1.setEnabled(true);
+		panel_10.add(lblP10n4, "cell 0 4 4 1,alignx center");	
+		//
+		// Panel 11; Kategorieliste
+		//
+		panel.add(panel_11, "categories");		
+		panel_11.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
+		lblP11n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_11.add(lblP11n1, "cell 0 0,alignx center,aligny top");		
+		panel_11.add(new JScrollPane(catTable), "cell 0 1,alignx center,aligny top");
 		
 		cl.show(panel, "leer");
 	
@@ -403,6 +451,10 @@ public class MultiVaLCA {
 		mntmProductSystem.setAction(newProductAction);
 		mnNew.add(mntmProductSystem);
 		
+		JMenuItem mntmCategory = new JMenuItem();
+		mntmCategory.setAction(newCategoryAction);
+		mnNew.add(mntmCategory);
+		
 		JMenu mnListe = new JMenu(GuiStrings.getGS("mp4", l));
 		menuBar.add(mnListe);
 		
@@ -417,6 +469,10 @@ public class MultiVaLCA {
 		JMenuItem mntmProduktsysteme = new JMenuItem();
 		mntmProduktsysteme.setAction(listProductAction);
 		mnListe.add(mntmProduktsysteme);
+		
+		JMenuItem mntmCategories = new JMenuItem();
+		mntmCategories.setAction(listCategoriesAction);
+		mnListe.add(mntmCategories);
 		
 		JMenu mnBerechnen = new JMenu(GuiStrings.getGS("mp5", l));
 		menuBar.add(mnBerechnen);
@@ -879,12 +935,47 @@ public class MultiVaLCA {
 				mntmNewMenuItem_4.setToolTipText(GuiStrings.getGS("mp61e",l));
 				mntmNewMenuItem_5.setText(GuiStrings.getGS("mp62",l));
 				mntmNewMenuItem_5.setToolTipText(GuiStrings.getGS("mp62e",l));
+				mntmCategory.setText(GuiStrings.getGS("mp14",l));
+				mntmCategory.setToolTipText(GuiStrings.getGS("mp14e",l));
+				mntmCategories.setText(GuiStrings.getGS("mp44",l));
+				mntmCategories.setToolTipText(GuiStrings.getGS("mp44e",l));
 				lblP05n1.setText(GuiStrings.getGS("mp31e", l));
 				lblP05n2.setText(GuiStrings.getGS("mp31", l));
 				btn05n1.setText(GuiStrings.getGS("bt01", l));
 			}
 		});
-
+		
+		/*
+		 * neue Wirkungskategorie
+		 */
+		
+		btnP10n1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String name = txtP10n1.getText();	
+				String wi = txtP10n2.getText();
+				boolean inputOK = true;
+				if (wi.equals("")) {
+					lblP10n4.setText(GuiStrings.getGS("stat24",l));
+					inputOK = false;
+				} 
+				if (name.equals("")) {
+					lblP10n4.setText(GuiStrings.getGS("stat22",l));
+					inputOK = false;
+				} 
+				if (ImpactCategory.containsName(name)) {
+					lblP10n4.setText(GuiStrings.getGS("stat23",l));
+					inputOK = false;
+				}
+				if (inputOK == true) {
+					CategoryIndicator indi = CategoryIndicator.instance(wi);
+					ImpactCategory.instance(name, indi);
+					lblP10n4.setText(GuiStrings.getGS("stat25",l) + ImpactCategory.getAllInstances().size() + GuiStrings.getGS("stat05",l));
+					txtP10n1.setText("");
+					txtP10n2.setText("");
+				}		
+			}
+		});
 	}
 
 
@@ -899,6 +990,7 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp11", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp11e", l));
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {			
 			lblP01n1.setText(GuiStrings.getGS("p01n1", l));
 			lblP01n2.setText(GuiStrings.getGS("p01n2", l));
@@ -925,6 +1017,7 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp12", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp12e", l));
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			lblP02n1.setText(GuiStrings.getGS("p02n1", l));
 			lblP02n2.setText(GuiStrings.getGS("p02n2", l));
@@ -946,6 +1039,7 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp13", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp13e", l));
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			lblP03n1.setText(GuiStrings.getGS("p03n1", l));
 			lblP03n2.setText(GuiStrings.getGS("p03n2", l));
@@ -971,6 +1065,7 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp21", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp21e", l));
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			lblInfo1.setText(GuiStrings.getGS("head1", l));
 			lblInfo2.setText(GuiStrings.getGS("info1", l));
@@ -987,6 +1082,7 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp31", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp31e", l));
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			lblP05n1.setText(GuiStrings.getGS("mp31e", l));
 			lblP05n2.setText(GuiStrings.getGS("mp31", l));
@@ -1001,6 +1097,7 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp41", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp41e", l));
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			lblP06n1.setText(GuiStrings.getGS("mp41e", l));
 			flowsTableModel.setRowCount(0);
@@ -1024,6 +1121,7 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp42", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp42e", l));
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			lblP07n1.setText(GuiStrings.getGS("mp42e", l));
 			pmTableModel.setRowCount(0);
@@ -1061,6 +1159,7 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp43", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp43e", l));
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {	
 			lblP08n1.setText(GuiStrings.getGS("mp43e", l));
 			psTableModel.setRowCount(0);
@@ -1106,6 +1205,7 @@ public class MultiVaLCA {
 			putValue(NAME, GuiStrings.getGS("mp51", l));
 			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp51e", l));
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			lblP09n1.setText(GuiStrings.getGS("mp51e", l));
 			lciTableModel.setRowCount(0);
@@ -1139,5 +1239,43 @@ public class MultiVaLCA {
 			}
 			cl.show(panel, "berechnen");
 		}		
+	}
+	private class newCategoryAction extends AbstractAction {
+		private static final long serialVersionUID = 3009404662175614709L;
+		public newCategoryAction() {
+			putValue(NAME, GuiStrings.getGS("mp14", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp14e", l));
+		}
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			lblP10n1.setText(GuiStrings.getGS("p10n1", l));
+			lblP10n2.setText(GuiStrings.getGS("p10n2", l));
+			lblP10n3.setText(GuiStrings.getGS("p10n3", l));
+			btnP10n1.setText(GuiStrings.getGS("bt01", l));	
+			lblP10n4.setText(GuiStrings.getGS("stat01", l));
+			cl.show(panel, "neuKategorie");
+		}	
+	}
+	private class listCategoriesAction extends AbstractAction {
+		private static final long serialVersionUID = 8545097901306456895L;
+		public listCategoriesAction() {
+			putValue(NAME, GuiStrings.getGS("mp44", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp44e", l));
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			lblP11n1.setText(GuiStrings.getGS("mp44e", l));
+			catTableModel.setRowCount(0);
+			catTable.setModel(catTableModel);
+			TableColumnModel tcm = catTable.getColumnModel();
+			tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp14", l));
+			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p11n1", l));
+			for(String catName : ImpactCategory.getAllInstances().keySet()) {
+				ImpactCategory ic = ImpactCategory.getInstance(catName);			
+				catTableModel.addRow(new Object[] {ic.getName(), 
+						ic.getEinheit().getName()});			
+			}			
+			cl.show(panel, "categories");
+		}
 	}
 }

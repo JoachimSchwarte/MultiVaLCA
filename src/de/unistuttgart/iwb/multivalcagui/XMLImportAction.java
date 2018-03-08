@@ -30,10 +30,10 @@ import de.unistuttgart.iwb.multivalca.*;
  * @version 0.4
  */
 
-class xmlImportAction extends AbstractAction {
+class XMLImportAction extends AbstractAction {
 
 	private static final long serialVersionUID = -8752103520306217094L;
-	public xmlImportAction(Language l) {
+	public XMLImportAction(Language l) {
 		putValue(NAME, GuiStrings.getGS("mp62", l));
 		putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp62e", l));
 	}
