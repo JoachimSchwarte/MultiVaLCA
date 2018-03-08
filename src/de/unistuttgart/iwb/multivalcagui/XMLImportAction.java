@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.4
+ * @version 0.42
  */
 
 class XMLImportAction extends AbstractAction {
@@ -55,12 +55,13 @@ class XMLImportAction extends AbstractAction {
 				DocumentBuilder db = dbf.newDocumentBuilder();
 				try {
 					Document dom = db.parse(fileInput);
-					Element docEle = dom.getDocumentElement();
+					Element docEle = dom.getDocumentElement();		
 					
-					NameCheck.clear();
-					
-					Flow.clear();
 					NodeList nl = docEle.getElementsByTagName("Flow");
+					if (nl.getLength() != 0) {
+						Flow.clear();
+						NameCheck.clear();
+					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String flussname = "";
@@ -81,9 +82,11 @@ class XMLImportAction extends AbstractAction {
 						FlowUnit fe = FlowUnit.valueOf(flusseinheit);
 						Flow.instance(flussname, ft, fe);
 					}
-					
-					ProcessModule.clear();
+									
 					nl = docEle.getElementsByTagName("ProcessModule");
+					if (nl.getLength() != 0) {
+						ProcessModule.clear();
+					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String pmname = "";	
@@ -170,9 +173,11 @@ class XMLImportAction extends AbstractAction {
 							ProcessModule.getInstance(pmname).addFluss(akFluss, FlowValueType.UpperBound, pmfv.get(akFluss).get(FlowValueType.UpperBound));
 						}
 					}
-					
-					ProductSystem.clear();
+									
 					nl = docEle.getElementsByTagName("ProductSystem");
+					if (nl.getLength() != 0) {
+						ProductSystem.clear();
+					}
 					HashMap<String, LinkedList<String>> mnls = new HashMap<String, LinkedList<String>>();
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
@@ -246,6 +251,26 @@ class XMLImportAction extends AbstractAction {
 								ProductSystem.getInstance(psname).addProzessmodul(ProductSystem.getInstance(m));
 							} 
 						}
+					}
+					
+					nl = docEle.getElementsByTagName("ImpactCategory");
+					if (nl.getLength() != 0) {
+						ImpactCategory.clear();
+					}
+					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
+						String catname = "";
+						String indiname = "";
+						for (int j = 0; j < nlc.getLength(); j++) {
+							if (nlc.item(j).getNodeName().equals("Category")) {
+								catname = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("Indicator")) {
+								indiname = nlc.item(j).getTextContent();
+							}
+						}
+						CategoryIndicator indi = CategoryIndicator.instance(indiname);
+						ImpactCategory.instance(catname, indi);
 					}
 					
 				} catch (SAXException | IOException e1) {
