@@ -7,13 +7,13 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.41
+ * @version 0.42
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.41";
+		String vn = " 0.42";
 		String date = "08.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
