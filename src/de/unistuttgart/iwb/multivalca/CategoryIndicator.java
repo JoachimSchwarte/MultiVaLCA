@@ -1,6 +1,15 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalca;
 
 import java.util.HashMap;
+
+/**
+ * @author Dr.-Ing. Joachim Schwarte
+ * @version 0.43
+ */
 
 public class CategoryIndicator {
 	

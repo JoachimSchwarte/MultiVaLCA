@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.42
+ * @version 0.43
  */
 
 public class MultiVaLCA {
@@ -59,6 +59,7 @@ public class MultiVaLCA {
 	private final Action xmlImportAction 		= new XMLImportAction(l);
 	private final Action newCategoryAction 		= new newCategoryAction();
 	private final Action listCategoriesAction 	= new listCategoriesAction();
+	private final Action newCFAction 			= new newCFAction();
 	
 	
 	//
@@ -179,6 +180,27 @@ public class MultiVaLCA {
 	private JLabel lblP11n1 = new JLabel();
 	private JTable catTable 		= new JTable();
 	DefaultTableModel catTableModel 		= new DefaultTableModel(0,2);
+	//
+	// Panel 12; Neuer Charakterisierungsfaktor
+	//
+	private JPanel panel_12 = new JPanel();
+	private JTextField txtP12n1 = new JTextField();		// Eingabefeld CF-Name
+	private JTextField txtP12n2 = new JTextField();		// Eingabefeld Fluss-Name
+	private JTextField txtP12n3 = new JTextField();		// Eingabefeld Wirkungskategorie
+	private JTextField txtP12n4 = new JTextField();		// Eingabefeld Faktor
+	private JTextField txtP12n5 = new JTextField();		// Eingabefeld Untergrenze
+	private JTextField txtP12n6 = new JTextField();		// Eingabefeld Obergrenze
+	private JLabel lblP12n1 = new JLabel(); 			// "Neuer Charakterisierungsfaktor"
+	private JLabel lblP12n2 = new JLabel(); 			// "Name des Charakterisierungsfaktors"
+	private JLabel lblP12n3 = new JLabel(); 			// "Name des Flusses"
+	private JLabel lblP12n4 = new JLabel(); 			// "Name der Wirkungskategorie"
+	private JLabel lblP12n5 = new JLabel(); 			// "Faktor"
+	private JLabel lblP12n6 = new JLabel(); 			// "Untergrenze"
+	private JLabel lblP12n7 = new JLabel(); 			// "Obergrenze"
+	private JLabel lblP12n8 = new JLabel(); 			// Status
+	private JButton btnP12n1 = new JButton(); 			// "speichern"
+	private JButton btnP12n2 = new JButton(); 			// "Grenzwerte bestätigen"
+	private JButton btnP12n3 = new JButton(); 			// "fertig"
 
 	/**
 	 * Launch the application.
@@ -415,6 +437,54 @@ public class MultiVaLCA {
 		lblP11n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_11.add(lblP11n1, "cell 0 0,alignx center,aligny top");		
 		panel_11.add(new JScrollPane(catTable), "cell 0 1,alignx center,aligny top");
+		//
+		// Panel 12; Neues Prozessmodul
+		//
+		panel.add(panel_12, "neuCF");
+		panel_12.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
+		lblP12n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_12.add(lblP12n1, "flowy,cell 1 0 2 1,alignx center,growy");
+		
+		panel_12.add(lblP12n2, "cell 1 1,grow");		
+		txtP12n1.setText("");
+		panel_12.add(txtP12n1, "cell 2 1,grow");
+		txtP02n1.setColumns(10);			
+		
+		panel_12.add(lblP12n3, "cell 1 2,grow");	
+		txtP12n2.setText("");
+		panel_12.add(txtP12n2, "cell 2 2,grow");
+		txtP12n2.setColumns(10);
+		
+		panel_12.add(lblP12n4, "cell 1 3,grow");
+		txtP12n3.setText("");
+		panel_12.add(txtP12n3, "cell 2 3,grow");
+		txtP12n3.setColumns(10);
+		
+		panel_12.add(lblP12n5, "cell 1 4,grow");
+		txtP12n4.setText("");
+		panel_12.add(txtP12n4, "cell 2 4,grow");
+		txtP12n4.setColumns(10);	
+
+		panel_12.add(btnP12n1, "cell 1 5 2 1,alignx center");	
+		
+		panel_12.add(lblP12n6, "cell 1 6,grow");	
+		txtP12n5.setText("");
+		panel_12.add(txtP12n5, "cell 2 6,grow");
+		txtP12n5.setColumns(10);
+		txtP12n5.setEnabled(false);	
+		
+		panel_12.add(lblP12n7, "cell 1 7,grow");
+		txtP12n6.setText("");
+		panel_12.add(txtP12n6, "cell 2 7,grow");
+		txtP12n6.setColumns(10);		
+		txtP12n6.setEnabled(false);		
+		
+		btnP12n2.setEnabled(false);
+		panel_12.add(btnP12n2, "cell 1 8,alignx center");
+		btnP12n3.setEnabled(false);
+		panel_12.add(btnP12n3, "cell 2 8,alignx center");
+		panel_12.add(lblP12n8, "cell 0 9 4 1,alignx center");		
 		
 		cl.show(panel, "leer");
 	
@@ -454,6 +524,10 @@ public class MultiVaLCA {
 		JMenuItem mntmCategory = new JMenuItem();
 		mntmCategory.setAction(newCategoryAction);
 		mnNew.add(mntmCategory);
+		
+		JMenuItem mntmCF = new JMenuItem();
+		mntmCF.setAction(newCFAction);
+		mnNew.add(mntmCF);
 		
 		JMenu mnListe = new JMenu(GuiStrings.getGS("mp4", l));
 		menuBar.add(mnListe);
@@ -596,9 +670,9 @@ public class MultiVaLCA {
 					if (Flow.containsName(fname)) {
 						Flow akFlow = Flow.getInstance(fname);
 						String mname = txtP02n1.getText();
-						ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.MeanValue, menge);
-						ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.LowerBound, menge);
-						ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.UpperBound, menge);
+						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.MeanValue, menge);
+						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, menge);
+						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, menge);
 						txtP02n2.setEnabled(false);
 						txtP02n3.setEnabled(false);
 						btnP02n2.setEnabled(false);
@@ -654,8 +728,8 @@ public class MultiVaLCA {
 					String mname = txtP02n1.getText();
 					String fname = txtP02n2.getText();
 					Flow akFlow = Flow.getInstance(fname);
-					ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.LowerBound, fugv);
-					ProcessModule.getInstance(mname).addFluss(akFlow, FlowValueType.UpperBound, fogv);
+					ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, fugv);
+					ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, fogv);
 					txtP02n2.setText("");
 					txtP02n3.setText("");
 					txtP02n4.setText("");
@@ -939,6 +1013,8 @@ public class MultiVaLCA {
 				mntmCategory.setToolTipText(GuiStrings.getGS("mp14e",l));
 				mntmCategories.setText(GuiStrings.getGS("mp44",l));
 				mntmCategories.setToolTipText(GuiStrings.getGS("mp44e",l));
+				mntmCF.setText(GuiStrings.getGS("mp15",l));
+				mntmCF.setToolTipText(GuiStrings.getGS("mp15e",l));
 				lblP05n1.setText(GuiStrings.getGS("mp31e", l));
 				lblP05n2.setText(GuiStrings.getGS("mp31", l));
 				btn05n1.setText(GuiStrings.getGS("bt01", l));
@@ -1135,14 +1211,14 @@ public class MultiVaLCA {
 				ProcessModule akModul = ProcessModule.getInstance(mn);
 				pmTableModel.addRow(new Object[] {mn, "", "", ""});
 				for(Flow pf : akModul.getElementarflussvektor().keySet()){
-					for (FlowValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
+					for (ValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
 						pmTableModel.addRow(new Object[] {"", pf.getName(), 
 								FlowValueTypeStrings.getFVTS(l).get(vt),
 								akModul.getElementarflussvektor().get(pf).get(vt)});
 					}
 				}						
 				for(Flow pf : akModul.getProduktflussvektor().keySet()){
-					for (FlowValueType vt : akModul.getProduktflussvektor().get(pf).keySet()) {
+					for (ValueType vt : akModul.getProduktflussvektor().get(pf).keySet()) {
 						pmTableModel.addRow(new Object[] {"", pf.getName(), 
 								FlowValueTypeStrings.getFVTS(l).get(vt),
 								akModul.getProduktflussvektor().get(pf).get(vt)});							
@@ -1215,7 +1291,7 @@ public class MultiVaLCA {
 			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("mp11", l));
 			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p01n3", l));
 			tcm.getColumn(3).setHeaderValue(GuiStrings.getGS("p02n4", l));
-			HashMap<Flow, HashMap<FlowValueType, Double>> sysErgebnis = new HashMap<Flow, HashMap<FlowValueType, Double>>();
+			HashMap<Flow, HashMap<ValueType, Double>> sysErgebnis = new HashMap<Flow, HashMap<ValueType, Double>>();
 			if (ProductSystem.getAllInstances().size() > 0) {
 				for(String sysName : ProductSystem.getAllInstances().keySet()) {
 					lciTableModel.addRow(new Object[] {sysName,"","",""});
@@ -1224,7 +1300,7 @@ public class MultiVaLCA {
 						if (sysAktuell.getElementarflussvektor().size() > 0) {
 							sysErgebnis = sysAktuell.getElementarflussvektor();
 							for(Flow sysFluss : sysErgebnis.keySet()){
-								for (FlowValueType vt : sysAktuell.getElementarflussvektor().get(sysFluss).keySet()) {
+								for (ValueType vt : sysAktuell.getElementarflussvektor().get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 											FlowValueTypeStrings.getFVTS(l).get(vt),								
 											sysErgebnis.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
@@ -1277,5 +1353,29 @@ public class MultiVaLCA {
 			}			
 			cl.show(panel, "categories");
 		}
+	}
+	private class newCFAction extends AbstractAction {
+		private static final long serialVersionUID = 4429058458938628148L;
+		public newCFAction() {
+			putValue(NAME, GuiStrings.getGS("mp15", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp15e", l));
+		}
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			lblP12n1.setText(GuiStrings.getGS("p12n1", l));
+			lblP12n2.setText(GuiStrings.getGS("p12n2", l));
+			lblP12n3.setText(GuiStrings.getGS("p01n2", l));
+			lblP12n4.setText(GuiStrings.getGS("p10n2", l));
+			lblP12n5.setText(GuiStrings.getGS("p12n3", l));
+			lblP12n6.setText(GuiStrings.getGS("p02n5", l));
+			lblP12n7.setText(GuiStrings.getGS("p02n6", l));
+			lblP12n8.setText(GuiStrings.getGS("stat01", l));
+			btnP12n1.setText(GuiStrings.getGS("bt01", l));
+			btnP12n2.setText(GuiStrings.getGS("bt10", l));
+			btnP12n3.setText(GuiStrings.getGS("bt04", l));
+			
+			cl.show(panel, "neuCF");		
+		}
+		
 	}
 }

@@ -4,7 +4,7 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.util.HashMap;
-import de.unistuttgart.iwb.multivalca.FlowValueType;
+import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * Zusammenstellung der Textkonstanten für die
@@ -14,17 +14,17 @@ import de.unistuttgart.iwb.multivalca.FlowValueType;
  */
 
 public class FlowValueTypeStrings {
-	public static HashMap<FlowValueType, String> getFVTS(Language l) {
-		HashMap<FlowValueType, String> r = new HashMap<FlowValueType, String>();
+	public static HashMap<ValueType, String> getFVTS(Language l) {
+		HashMap<ValueType, String> r = new HashMap<ValueType, String>();
 		if (l == Language.Deutsch) {
-			r.put(FlowValueType.MeanValue, "Hauptwert");
-			r.put(FlowValueType.LowerBound, "Untergrenze");
-			r.put(FlowValueType.UpperBound, "Obergrenze");
+			r.put(ValueType.MeanValue, "Hauptwert");
+			r.put(ValueType.LowerBound, "Untergrenze");
+			r.put(ValueType.UpperBound, "Obergrenze");
 		}	
 		if (l == Language.English) {
-			r.put(FlowValueType.MeanValue, "Main Value");
-			r.put(FlowValueType.LowerBound, "Lower Bound");
-			r.put(FlowValueType.UpperBound, "Upper Bound");		
+			r.put(ValueType.MeanValue, "Main Value");
+			r.put(ValueType.LowerBound, "Lower Bound");
+			r.put(ValueType.UpperBound, "Upper Bound");		
 		}
 		return r;
 	}

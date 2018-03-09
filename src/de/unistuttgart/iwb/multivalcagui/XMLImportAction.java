@@ -92,7 +92,7 @@ class XMLImportAction extends AbstractAction {
 						String pmname = "";	
 						String fvename = "";	
 						String fvemenge = "";
-						HashMap<Flow, HashMap<FlowValueType, Double>> pmfv = new HashMap<Flow, HashMap<FlowValueType, Double>>();						
+						HashMap<Flow, HashMap<ValueType, Double>> pmfv = new HashMap<Flow, HashMap<ValueType, Double>>();						
 						for (int j = 0; j < nlc.getLength(); j++) {							
 							if (nlc.item(j).getNodeName().equals("ModuleName")) {									
 								pmname = nlc.item(j).getTextContent();
@@ -109,22 +109,22 @@ class XMLImportAction extends AbstractAction {
 											if (nlc3.item(l).getNodeName().equals("EFV-MainValue")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<FlowValueType, Double> vt = new HashMap<FlowValueType, Double>();
-												vt.put(FlowValueType.MeanValue, Double.parseDouble(fvemenge));
+												HashMap<ValueType, Double> vt = new HashMap<ValueType, Double>();
+												vt.put(ValueType.MeanValue, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 											if (nlc3.item(l).getNodeName().equals("EFV-LowerBound")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<FlowValueType, Double> vt = pmfv.get(akFluss);
-												vt.put(FlowValueType.LowerBound, Double.parseDouble(fvemenge));
+												HashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												vt.put(ValueType.LowerBound, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 											if (nlc3.item(l).getNodeName().equals("EFV-UpperBound")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<FlowValueType, Double> vt = pmfv.get(akFluss);
-												vt.put(FlowValueType.UpperBound, Double.parseDouble(fvemenge));
+												HashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												vt.put(ValueType.UpperBound, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 										}											
@@ -143,22 +143,22 @@ class XMLImportAction extends AbstractAction {
 											if (nlc3.item(l).getNodeName().equals("PFV-MainValue")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<FlowValueType, Double> vt = new HashMap<FlowValueType, Double>();
-												vt.put(FlowValueType.MeanValue, Double.parseDouble(fvemenge));
+												HashMap<ValueType, Double> vt = new HashMap<ValueType, Double>();
+												vt.put(ValueType.MeanValue, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 											if (nlc3.item(l).getNodeName().equals("PFV-LowerBound")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<FlowValueType, Double> vt = pmfv.get(akFluss);
-												vt.put(FlowValueType.LowerBound, Double.parseDouble(fvemenge));
+												HashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												vt.put(ValueType.LowerBound, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 											if (nlc3.item(l).getNodeName().equals("PFV-UpperBound")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<FlowValueType, Double> vt = pmfv.get(akFluss);
-												vt.put(FlowValueType.UpperBound, Double.parseDouble(fvemenge));
+												HashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												vt.put(ValueType.UpperBound, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 										}											
@@ -168,9 +168,9 @@ class XMLImportAction extends AbstractAction {
 						}
 						ProcessModule.instance(pmname);
 						for (Flow akFluss : pmfv.keySet()) {
-							ProcessModule.getInstance(pmname).addFluss(akFluss, FlowValueType.MeanValue, pmfv.get(akFluss).get(FlowValueType.MeanValue));
-							ProcessModule.getInstance(pmname).addFluss(akFluss, FlowValueType.LowerBound, pmfv.get(akFluss).get(FlowValueType.LowerBound));
-							ProcessModule.getInstance(pmname).addFluss(akFluss, FlowValueType.UpperBound, pmfv.get(akFluss).get(FlowValueType.UpperBound));
+							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.MeanValue, pmfv.get(akFluss).get(ValueType.MeanValue));
+							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.LowerBound, pmfv.get(akFluss).get(ValueType.LowerBound));
+							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.UpperBound, pmfv.get(akFluss).get(ValueType.UpperBound));
 						}
 					}
 									

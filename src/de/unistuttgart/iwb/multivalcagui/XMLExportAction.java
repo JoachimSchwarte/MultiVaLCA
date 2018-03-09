@@ -87,13 +87,13 @@ class XMLExportAction extends AbstractAction {
 	            	fname.appendChild(document.createTextNode(pf.getName()));
 	            	Element menge = document.createElement("EFV-MainValue");
 	            	fluss.appendChild(menge);
-	            	menge.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(FlowValueType.MeanValue).toString()));
+	            	menge.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(ValueType.MeanValue).toString()));
 	            	Element menge2 = document.createElement("EFV-LowerBound");
 	            	fluss.appendChild(menge2);
-	            	menge2.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(FlowValueType.LowerBound).toString()));
+	            	menge2.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(ValueType.LowerBound).toString()));
 	            	Element menge3 = document.createElement("EFV-UpperBound");
 	            	fluss.appendChild(menge3);
-	            	menge3.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(FlowValueType.UpperBound).toString()));
+	            	menge3.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(ValueType.UpperBound).toString()));
 	            }
 	            Element pfv = document.createElement("ProductFlowVector");
 				prozessmodul.appendChild(pfv);	  
@@ -105,13 +105,13 @@ class XMLExportAction extends AbstractAction {
 	            	fname.appendChild(document.createTextNode(pf.getName()));
 	            	Element menge = document.createElement("PFV-MainValue");
 	            	fluss.appendChild(menge);
-	            	menge.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(FlowValueType.MeanValue).toString()));
+	            	menge.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(ValueType.MeanValue).toString()));
 	            	Element menge2 = document.createElement("PFV-LowerBound");
 	            	fluss.appendChild(menge2);
-	            	menge2.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(FlowValueType.LowerBound).toString()));
+	            	menge2.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(ValueType.LowerBound).toString()));
 	            	Element menge3 = document.createElement("PFV-UpperBound");
 	            	fluss.appendChild(menge3);
-	            	menge3.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(FlowValueType.UpperBound).toString()));
+	            	menge3.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(ValueType.UpperBound).toString()));
 	            }
 			}
 			

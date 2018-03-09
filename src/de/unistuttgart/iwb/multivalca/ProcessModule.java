@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Diese Klasse dient zur Erzeugung von Prozessmodulen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.24
+ * @version 0.43
  */
 
 public class ProcessModule 
@@ -22,10 +22,10 @@ implements FlowValueMaps {
 	// Instanzvariablen:
 	
 	private String name;
-	private HashMap<Flow, HashMap<FlowValueType, Double>> efv = 
-			new HashMap<Flow, HashMap<FlowValueType, Double>>(); //Elementarflüsse
-	private HashMap<Flow, HashMap<FlowValueType, Double>> pfv = 
-			new HashMap<Flow, HashMap<FlowValueType, Double>>(); //Produktflüsse
+	private HashMap<Flow, HashMap<ValueType, Double>> efv = 
+			new HashMap<Flow, HashMap<ValueType, Double>>(); //Elementarflüsse
+	private HashMap<Flow, HashMap<ValueType, Double>> pfv = 
+			new HashMap<Flow, HashMap<ValueType, Double>>(); //Produktflüsse
 	
 	// Konstruktor:
 			
@@ -122,18 +122,18 @@ implements FlowValueMaps {
 	 * Vorzeichen) fließt.
 	 */
 	
-	public void addFluss(Flow fluss, FlowValueType fvt, Double wert) {	
+	public void addFluss(Flow fluss, ValueType fvt, Double wert) {	
 		if (fluss.getType() == FlowType.Elementary) {
-			HashMap<FlowValueType, Double> valueMap = efv.get(fluss);
+			HashMap<ValueType, Double> valueMap = efv.get(fluss);
 			if (valueMap == null) {
-				valueMap = new HashMap<FlowValueType, Double>();
+				valueMap = new HashMap<ValueType, Double>();
 			}
 			valueMap.put(fvt, wert);
 			efv.put(fluss, valueMap);
 		} else { 
-			HashMap<FlowValueType, Double> valueMap = pfv.get(fluss);
+			HashMap<ValueType, Double> valueMap = pfv.get(fluss);
 			if (valueMap == null) {
-				valueMap = new HashMap<FlowValueType, Double>();
+				valueMap = new HashMap<ValueType, Double>();
 			}
 			valueMap.put(fvt, wert);
 			pfv.put(fluss, valueMap);
@@ -141,7 +141,7 @@ implements FlowValueMaps {
 	}
 	
 	@Override
-	public HashMap<Flow, HashMap<FlowValueType, Double>> getElementarflussvektor() {
+	public HashMap<Flow, HashMap<ValueType, Double>> getElementarflussvektor() {
 		return efv; 
 	}	
 	
@@ -151,7 +151,7 @@ implements FlowValueMaps {
 	}
 	
 	@Override
-	public HashMap<Flow, HashMap<FlowValueType, Double>> getProduktflussvektor() {
+	public HashMap<Flow, HashMap<ValueType, Double>> getProduktflussvektor() {
 		return pfv; 
 	}
 	

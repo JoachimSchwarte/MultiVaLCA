@@ -23,7 +23,7 @@ public interface FlowValueMaps {
 	 * ... den Elementarflussvektor des aktuellen Objekts.
 	 */
 	
-	public HashMap<Flow, HashMap<FlowValueType, Double>> getElementarflussvektor();
+	public HashMap<Flow, HashMap<ValueType, Double>> getElementarflussvektor();
 	
 	/**
 	 * @return
@@ -37,5 +37,5 @@ public interface FlowValueMaps {
 	 * ... den Produktflussvektor des aktuellen Objekts.
 	 */
 	
-	public HashMap<Flow, HashMap<FlowValueType, Double>> getProduktflussvektor();
+	public HashMap<Flow, HashMap<ValueType, Double>> getProduktflussvektor();
 }

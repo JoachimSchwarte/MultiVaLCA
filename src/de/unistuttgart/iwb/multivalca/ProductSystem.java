@@ -30,10 +30,10 @@ implements FlowValueMaps {
 			= new HashMap<Flow, Double>();
 	private LinkedList<Flow> vorUndKoppelProdukte 
 			= new LinkedList<Flow>();
-	private HashMap<Flow, HashMap<FlowValueType, Double>> efv 
-			= new HashMap<Flow, HashMap<FlowValueType, Double>>();
-	private HashMap<Flow, HashMap<FlowValueType, Double>> pfv 
-			= new HashMap<Flow, HashMap<FlowValueType, Double>>();
+	private HashMap<Flow, HashMap<ValueType, Double>> efv 
+			= new HashMap<Flow, HashMap<ValueType, Double>>();
+	private HashMap<Flow, HashMap<ValueType, Double>> pfv 
+			= new HashMap<Flow, HashMap<ValueType, Double>>();
 	
 	// Konstruktor:
 
@@ -157,7 +157,7 @@ implements FlowValueMaps {
 	private void aktualisiere() throws Exception {
 		LinkedList<Flow> produktFlussliste = new LinkedList<Flow>();
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
+			HashMap<Flow, HashMap<ValueType, Double>> modulVektor = m.getProduktflussvektor();
 			for (Flow key : modulVektor.keySet()) {		
 				if ((produktFlussliste.contains(key) == false) &&
 					(vorUndKoppelProdukte.contains(key) == false) &&
@@ -173,18 +173,18 @@ implements FlowValueMaps {
 		double[][] arrayAl = new double[produktFlussliste.size()][modulliste.size()];
 		double[][] arrayAu = new double[produktFlussliste.size()][modulliste.size()];
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
+			HashMap<Flow, HashMap<ValueType, Double>> modulVektor = m.getProduktflussvektor();
 			for (Flow key : modulVektor.keySet()) {
  				if (produktFlussliste.contains(key)) {
-					arrayA[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);
-					arrayAl[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.LowerBound);
-					arrayAu[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.UpperBound);
+					arrayA[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.MeanValue);
+					arrayAl[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.LowerBound);
+					arrayAu[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.UpperBound);
  				} 
 			}
 		}
 		LinkedList<Flow> elementarFlussliste = new LinkedList<Flow>();
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getElementarflussvektor();
+			HashMap<Flow, HashMap<ValueType, Double>> modulVektor = m.getElementarflussvektor();
 			for (Flow key : modulVektor.keySet()) {
 				if (elementarFlussliste.contains(key) == false){
 					elementarFlussliste.add(key);					
@@ -195,11 +195,11 @@ implements FlowValueMaps {
 		double[][] arrayBl = new double[elementarFlussliste.size()][modulliste.size()];
 		double[][] arrayBu = new double[elementarFlussliste.size()][modulliste.size()];
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getElementarflussvektor();
+			HashMap<Flow, HashMap<ValueType, Double>> modulVektor = m.getElementarflussvektor();
 			for (Flow key : modulVektor.keySet()) {
-				arrayB[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);		
-				arrayBl[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.LowerBound);	
-				arrayBu[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.UpperBound);	
+				arrayB[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.MeanValue);		
+				arrayBl[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.LowerBound);	
+				arrayBu[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.UpperBound);	
 			}
 		}
 		double[][] arrayF = new double[produktFlussliste.size()][1];
@@ -239,10 +239,10 @@ implements FlowValueMaps {
 		}
 
 		for(Flow ef : elementarFlussliste) {
-			HashMap<FlowValueType, Double> valueMap = new HashMap<FlowValueType, Double>();
-			valueMap.put(FlowValueType.MeanValue, matrixG.get(elementarFlussliste.indexOf(ef),0));
-			valueMap.put(FlowValueType.LowerBound, ivG.getValue(elementarFlussliste.indexOf(ef)).getLowerBound());
-			valueMap.put(FlowValueType.UpperBound, ivG.getValue(elementarFlussliste.indexOf(ef)).getUpperBound());
+			HashMap<ValueType, Double> valueMap = new HashMap<ValueType, Double>();
+			valueMap.put(ValueType.MeanValue, matrixG.get(elementarFlussliste.indexOf(ef),0));
+			valueMap.put(ValueType.LowerBound, ivG.getValue(elementarFlussliste.indexOf(ef)).getLowerBound());
+			valueMap.put(ValueType.UpperBound, ivG.getValue(elementarFlussliste.indexOf(ef)).getUpperBound());
 			efv.put(ef, valueMap);
 		}	
 		produktFlussliste.addAll(vorUndKoppelProdukte);
@@ -250,12 +250,12 @@ implements FlowValueMaps {
 		double[][] arrayA1l = new double[produktFlussliste.size()][modulliste.size()];
 		double[][] arrayA1u = new double[produktFlussliste.size()][modulliste.size()];
 		for(FlowValueMaps m : modulliste){
-			HashMap<Flow, HashMap<FlowValueType, Double>> modulVektor = m.getProduktflussvektor();
+			HashMap<Flow, HashMap<ValueType, Double>> modulVektor = m.getProduktflussvektor();
 			for (Flow key : produktFlussliste) {
 				if (modulVektor.containsKey(key)) {
-					arrayA1[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.MeanValue);
-					arrayA1l[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.LowerBound);
-					arrayA1u[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(FlowValueType.UpperBound);
+					arrayA1[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.MeanValue);
+					arrayA1l[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.LowerBound);
+					arrayA1u[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.UpperBound);
 				} else {
 					arrayA1[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=0;
 					arrayA1l[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=0;
@@ -269,10 +269,10 @@ implements FlowValueMaps {
 		Matrix matrixG1 = matrixA1.times(matrixS);
 		IvariVector ivG1 = imA1.multVector(ivS);
 		for(Flow pf : produktFlussliste) {
-			HashMap<FlowValueType, Double> valueMap = new HashMap<FlowValueType, Double>();
-			valueMap.put(FlowValueType.MeanValue, matrixG1.get(produktFlussliste.indexOf(pf),0));
-			valueMap.put(FlowValueType.LowerBound, ivG1.getValue(produktFlussliste.indexOf(pf)).getLowerBound());
-			valueMap.put(FlowValueType.UpperBound, ivG1.getValue(produktFlussliste.indexOf(pf)).getUpperBound());
+			HashMap<ValueType, Double> valueMap = new HashMap<ValueType, Double>();
+			valueMap.put(ValueType.MeanValue, matrixG1.get(produktFlussliste.indexOf(pf),0));
+			valueMap.put(ValueType.LowerBound, ivG1.getValue(produktFlussliste.indexOf(pf)).getLowerBound());
+			valueMap.put(ValueType.UpperBound, ivG1.getValue(produktFlussliste.indexOf(pf)).getUpperBound());
 			pfv.put(pf, valueMap);
 		}			
 	}
@@ -294,7 +294,7 @@ implements FlowValueMaps {
 	 */
 
 	@Override
-	public HashMap<Flow, HashMap<FlowValueType, Double>> getElementarflussvektor() throws ArithmeticException {
+	public HashMap<Flow, HashMap<ValueType, Double>> getElementarflussvektor() throws ArithmeticException {
 		try {
 			aktualisiere();
 		} catch (Exception e) {
@@ -336,7 +336,7 @@ implements FlowValueMaps {
 	 */
 
 	@Override
-	public HashMap<Flow, HashMap<FlowValueType, Double>> getProduktflussvektor() throws ArithmeticException {
+	public HashMap<Flow, HashMap<ValueType, Double>> getProduktflussvektor() throws ArithmeticException {
 		try {
 			aktualisiere();
 		} catch (Exception e) {

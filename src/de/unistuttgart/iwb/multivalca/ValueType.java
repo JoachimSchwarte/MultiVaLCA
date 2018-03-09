@@ -8,10 +8,10 @@ package de.unistuttgart.iwb.multivalca;
  * Zusammenstellung der möglichen Werttypen
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.1
+ * @version 0.43
  */
 
-public enum FlowValueType {
+public enum ValueType {
 	MeanValue,
 	UpperBound,
 	LowerBound
