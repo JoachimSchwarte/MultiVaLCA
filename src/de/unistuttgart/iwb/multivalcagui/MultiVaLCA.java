@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.44
+ * @version 0.45
  */
 
 public class MultiVaLCA {
@@ -200,7 +200,6 @@ public class MultiVaLCA {
 	private JLabel lblP12n8 = new JLabel(); 			// Status
 	private JButton btnP12n1 = new JButton(); 			// "speichern"
 	private JButton btnP12n2 = new JButton(); 			// "Grenzwerte bestätigen"
-	private JButton btnP12n3 = new JButton(); 			// "fertig"
 
 	/**
 	 * Launch the application.
@@ -481,9 +480,7 @@ public class MultiVaLCA {
 		txtP12n6.setEnabled(false);		
 		
 		btnP12n2.setEnabled(false);
-		panel_12.add(btnP12n2, "cell 1 8,alignx center");
-		btnP12n3.setEnabled(false);
-		panel_12.add(btnP12n3, "cell 2 8,alignx center");
+		panel_12.add(btnP12n2, "cell 1 8 2 1,alignx center");
 		panel_12.add(lblP12n8, "cell 0 9 4 1,alignx center");		
 		
 		cl.show(panel, "leer");
@@ -1052,6 +1049,109 @@ public class MultiVaLCA {
 				}		
 			}
 		});
+		
+		/*
+		 * neuer CF
+		 */
+		
+		btnP12n1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String nameCF = txtP12n1.getText();
+				String nameFl = txtP12n2.getText();
+				String nameWK = txtP12n3.getText();
+				String facText = txtP12n4.getText();
+				boolean inputOK = true;
+				if (nameCF.equals("") || nameFl.equals("") || nameWK.equals("") || facText.equals("")) {
+					lblP12n8.setText(GuiStrings.getGS("stat07",l));
+					inputOK = false;					
+				}
+				Double facVal = 0.0;
+				try {
+					facVal = Double.parseDouble(facText);
+				} catch (NumberFormatException e){
+					facVal = 0.0;
+				}
+				if (facVal <= 0.0) {
+					lblP12n8.setText(GuiStrings.getGS("stat26",l));
+					inputOK = false;	
+				}
+				if (ImpactCategory.containsName(nameWK) == false) {
+					lblP12n8.setText(GuiStrings.getGS("stat27",l));
+					inputOK = false;
+				}
+				if (Flow.containsName(nameFl) == false) {
+					lblP12n8.setText(GuiStrings.getGS("stat11",l));
+					inputOK = false;
+				}
+				if (CharacFactor.containsName(nameCF)) {
+					lblP12n8.setText(GuiStrings.getGS("stat03",l));
+					inputOK = false;
+				}
+				if (inputOK == true) {
+					CharacFactor.instance(nameCF, Flow.getInstance(nameFl), ImpactCategory.getInstance(nameWK), facVal);
+					txtP12n1.setEnabled(false);
+					txtP12n2.setEnabled(false);
+					txtP12n3.setEnabled(false);
+					txtP12n4.setEnabled(false);
+					txtP12n5.setText(facText);
+					txtP12n5.setEnabled(true);
+					txtP12n6.setText(facText);
+					txtP12n6.setEnabled(true);
+					btnP12n1.setEnabled(false);
+					btnP12n2.setEnabled(true);
+				}				
+			}			
+		});
+		
+		btnP12n2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String lbText = txtP12n5.getText();
+				String obText = txtP12n6.getText();
+				Double lbv;
+				Double obv;
+				try {
+					lbv = Double.parseDouble(lbText);
+				} catch (NumberFormatException e){
+					lbv = 0.0;
+				}
+				try {
+					obv = Double.parseDouble(obText);
+				} catch (NumberFormatException e){
+					obv = 0.0;
+				}
+				String facText = txtP12n4.getText();
+				Double facVal = Double.parseDouble(facText);
+				if ((lbv > facVal) || (obv < facVal) || (lbv < 0)) {
+					txtP12n5.setText(txtP12n4.getText());
+					txtP12n6.setText(txtP12n4.getText());
+					lblP12n8.setText(GuiStrings.getGS("stat21", l));
+				} else {
+					String nameCF = txtP12n1.getText();
+					CharacFactor.setLowerBound(nameCF, lbv);
+					CharacFactor.setUpperBound(nameCF, obv);
+					txtP12n1.setText("");
+					txtP12n2.setText("");
+					txtP12n3.setText("");
+					txtP12n4.setText("");
+					txtP12n5.setText("");
+					txtP12n6.setText("");
+					txtP12n1.setEnabled(true);
+					txtP12n2.setEnabled(true);
+					txtP12n3.setEnabled(true);
+					txtP12n4.setEnabled(true);
+					txtP12n5.setEnabled(false);
+					txtP12n6.setEnabled(false);
+					btnP12n1.setEnabled(true);
+					btnP12n2.setEnabled(false);		
+					lblP12n8.setText(GuiStrings.getGS("stat01", l));
+				}
+				
+			}
+			
+		});
+
 	}
 
 
@@ -1372,7 +1472,6 @@ public class MultiVaLCA {
 			lblP12n8.setText(GuiStrings.getGS("stat01", l));
 			btnP12n1.setText(GuiStrings.getGS("bt01", l));
 			btnP12n2.setText(GuiStrings.getGS("bt10", l));
-			btnP12n3.setText(GuiStrings.getGS("bt04", l));
 			
 			cl.show(panel, "neuCF");		
 		}

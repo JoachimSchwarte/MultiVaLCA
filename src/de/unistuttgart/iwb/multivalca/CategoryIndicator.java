@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.43
+ * @version 0.45
  */
 
 public class CategoryIndicator {

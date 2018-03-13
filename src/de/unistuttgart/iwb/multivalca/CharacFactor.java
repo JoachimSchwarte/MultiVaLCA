@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.44
+ * @version 0.45
  */
 
 public class CharacFactor {
@@ -31,6 +31,7 @@ public class CharacFactor {
 		this.name = name;
 		this.fluss = fluss;
 		this.wirkung = wirkung;
+		this.werte = new HashMap<ValueType, Double>();
 		this.werte.put(ValueType.MeanValue, wert);
 		this.werte.put(ValueType.LowerBound, wert);
 		this.werte.put(ValueType.UpperBound, wert);
@@ -86,7 +87,7 @@ public class CharacFactor {
 	 * ... den gesuchten Charakterisierungsfaktor
 	 */
 	
-	public CharacFactor getInstance(String string) {
+	public static CharacFactor getInstance(String string) {
 		return allInstances.get(string);
 	}
 	
@@ -131,17 +132,25 @@ public class CharacFactor {
 		return wirkung;
 	}
 	
-	public CharacFactor instance(String name, Flow fluss, ImpactCategory wirkung, Double wert) {
+	public static CharacFactor instance(String name, Flow fluss, ImpactCategory wirkung, Double wert) {
 		if (allInstances.containsKey(name) == false) {
 			new CharacFactor(name, fluss, wirkung, wert);
 		}
 		return allInstances.get(name);
 	}
 	
-	public void setLowerBound(String name, Double lv) {
+	public static void setLowerBound(String name, Double lv) {
 		HashMap<ValueType, Double> values = getInstance(name).getValues();
 		values.put(ValueType.LowerBound, lv);
-		new CharacFactor(name, getInstance(name).getInstance(name).getFlow(), 
+		new CharacFactor(name, getInstance(name).getFlow(), 
+				getInstance(name).getWirkung(), values);
+		
+	}
+	
+	public static void setUpperBound(String name, Double lv) {
+		HashMap<ValueType, Double> values = getInstance(name).getValues();
+		values.put(ValueType.UpperBound, lv);
+		new CharacFactor(name, getInstance(name).getFlow(), 
 				getInstance(name).getWirkung(), values);
 		
 	}

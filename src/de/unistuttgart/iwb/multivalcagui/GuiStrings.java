@@ -8,14 +8,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.44
+ * @version 0.45
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.43";
-		String date = "12.03.2018";
+		String vn = " 0.45";
+		String date = "13.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -119,6 +119,8 @@ public class GuiStrings {
 			case "p12n1": r = "Neuer Charakterisierungsfaktors"; break;
 			case "p12n2": r = "Name des Charakterisierungsfaktors"; break;
 			case "p12n3": r = "Faktor"; break;
+			case "stat26": r = ">>> unzulässiger Faktor <<<"; break;
+			case "stat27": r = ">>> Die angegebene Wirkungskategorie existiert nicht. <<<"; break;
 
 			}		
 		}	
@@ -225,6 +227,8 @@ public class GuiStrings {
 			case "p12n1": r = "New Charakterization Factor"; break;
 			case "p12n2": r = "Name of the Charakterization Factor"; break;
 			case "p12n3": r = "Factor"; break;
+			case "stat26": r = ">>> Illegal Factor <<<"; break;
+			case "stat27": r = ">>> The entered Impact Category does not exist. <<<"; break;
 		
 			}		
 		}
