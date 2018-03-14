@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.46
+ * @version 0.47
  */
 
 public class MultiVaLCA {
@@ -61,6 +61,9 @@ public class MultiVaLCA {
 	private final Action listCategoriesAction 	= new listCategoriesAction();
 	private final Action newCFAction 			= new newCFAction();
 	private final Action listCFAction 			= new listCFAction();
+	private final Action newLCIAAction 			= new newLCIAAction();
+	private final Action listLCIAAction 		= new listLCIAAction();
+	private final Action calculateLCIAAction 	= new calculateLCIAAction();
 	
 	
 	//
@@ -542,6 +545,10 @@ public class MultiVaLCA {
 		mntmCF.setAction(newCFAction);
 		mnNew.add(mntmCF);
 		
+		JMenuItem mntmLCIAnew = new JMenuItem();
+		mntmLCIAnew.setAction(newLCIAAction);
+		mnNew.add(mntmLCIAnew);
+		
 		JMenu mnListe = new JMenu(GuiStrings.getGS("mp4", l));
 		menuBar.add(mnListe);
 		
@@ -565,12 +572,20 @@ public class MultiVaLCA {
 		mntmCFs.setAction(listCFAction);
 		mnListe.add(mntmCFs);
 		
+		JMenuItem mntmLCIAlist = new JMenuItem();
+		mntmLCIAlist.setAction(listLCIAAction);
+		mnListe.add(mntmLCIAlist);
+		
 		JMenu mnBerechnen = new JMenu(GuiStrings.getGS("mp5", l));
 		menuBar.add(mnBerechnen);
 		
 		JMenuItem mntmLci = new JMenuItem();
 		mntmLci.setAction(calculateAction);
 		mnBerechnen.add(mntmLci);
+		
+		JMenuItem mntmLCIAcalc = new JMenuItem();
+		mntmLCIAcalc.setAction(calculateLCIAAction);
+		mnBerechnen.add(mntmLCIAcalc);
 			
 		JMenu mnPrefs = new JMenu(GuiStrings.getGS("mp3", l));
 		menuBar.add(mnPrefs);
@@ -1034,6 +1049,12 @@ public class MultiVaLCA {
 				mntmCF.setToolTipText(GuiStrings.getGS("mp15e",l));
 				mntmCFs.setText(GuiStrings.getGS("mp45",l));
 				mntmCFs.setToolTipText(GuiStrings.getGS("mp45e",l));
+				mntmLCIAnew.setText(GuiStrings.getGS("mp16",l));
+				mntmLCIAnew.setToolTipText(GuiStrings.getGS("mp16e",l));
+				mntmLCIAlist.setText(GuiStrings.getGS("mp46",l));
+				mntmLCIAlist.setToolTipText(GuiStrings.getGS("mp46e",l));
+				mntmLCIAcalc.setText(GuiStrings.getGS("mp52",l));
+				mntmLCIAcalc.setToolTipText(GuiStrings.getGS("mp52e",l));
 				lblP05n1.setText(GuiStrings.getGS("mp31e", l));
 				lblP05n2.setText(GuiStrings.getGS("mp31", l));
 				btn05n1.setText(GuiStrings.getGS("bt01", l));
@@ -1496,8 +1517,7 @@ public class MultiVaLCA {
 			btnP12n2.setText(GuiStrings.getGS("bt10", l));
 			
 			cl.show(panel, "neuCF");		
-		}
-		
+		}		
 	}
 	private class listCFAction extends AbstractAction {
 		private static final long serialVersionUID = 5499424576812764168L;
@@ -1530,9 +1550,46 @@ public class MultiVaLCA {
 						cf.getValues().get(ValueType.UpperBound)});
 			}
 			
-			cl.show(panel, "cfList");
-			
+			cl.show(panel, "cfList");		
+		}		
+	}
+
+	private class newLCIAAction extends AbstractAction {
+		private static final long serialVersionUID = -7780878398290965073L;
+		public newLCIAAction() {
+			putValue(NAME, GuiStrings.getGS("mp16", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp16e", l));
 		}
-		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}		
+	}
+	
+	private class listLCIAAction extends AbstractAction {
+		private static final long serialVersionUID = 3661738843444354844L;
+		public listLCIAAction() {
+			putValue(NAME, GuiStrings.getGS("mp46", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp46e", l));
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}		
+	}
+	
+	private class calculateLCIAAction extends AbstractAction {
+		private static final long serialVersionUID = -7444593062727670849L;
+		public calculateLCIAAction() {
+			putValue(NAME, GuiStrings.getGS("mp52", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp52e", l));
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}		
 	}
 }

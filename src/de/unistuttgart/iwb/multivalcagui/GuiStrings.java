@@ -8,13 +8,13 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.46
+ * @version 0.47
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.46";
+		String vn = " 0.47";
 		String date = "14.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
@@ -124,6 +124,13 @@ public class GuiStrings {
 			case "mp45": r = "Charakterisierungsfaktoren"; break;
 			case "mp45e": r = "Liste aller Charakterisierungsfaktoren"; break;
 			case "p13n1": r = "Kategorie"; break;
+			case "mp16": r = "Bewertungsmethode"; break;
+			case "mp16e": r = "neue Bewertungsmethode erfassen"; break;
+			case "mp46": r = "Bewertungsmethoden"; break;
+			case "mp46e": r = "Liste aller Bewertungsmethoden"; break;
+			case "mp52": r = "Wirkungsabschätzung berechnen"; break;
+			case "mp52e": r = "Wirkungsabschätzung für einzelne Objekte"; break;
+			
 
 			}		
 		}	
@@ -235,6 +242,12 @@ public class GuiStrings {
 			case "mp45": r = "Charakterization Factors"; break;
 			case "mp45e": r = "List of all Charakterization Factors"; break;
 			case "p13n1": r = "Category"; break;
+			case "mp16": r = "LCIA Method"; break;
+			case "mp16e": r = "Create new LCIA Method"; break;
+			case "mp46": r = "LCIA Methods"; break;
+			case "mp46e": r = "List of all LCIA Methods"; break;
+			case "mp52": r = "LCIA Evaluation"; break;
+			case "mp52e": r = "LCIA for single Objects"; break;
 		
 			}		
 		}
