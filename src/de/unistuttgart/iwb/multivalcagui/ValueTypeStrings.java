@@ -1,6 +1,7 @@
 /*	
  * MultiVaLCA
  */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.util.HashMap;
@@ -10,10 +11,10 @@ import de.unistuttgart.iwb.multivalca.ValueType;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Realisierung der Enumeration FlowValueType
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.291
+ * @version 0.46
  */
 
-public class FlowValueTypeStrings {
+public class ValueTypeStrings {
 	public static HashMap<ValueType, String> getFVTS(Language l) {
 		HashMap<ValueType, String> r = new HashMap<ValueType, String>();
 		if (l == Language.Deutsch) {

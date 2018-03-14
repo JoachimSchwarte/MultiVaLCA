@@ -28,7 +28,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.42
+ * @version 0.46
  */
 
 class XMLExportAction extends AbstractAction {
@@ -174,6 +174,33 @@ class XMLExportAction extends AbstractAction {
 				catind.appendChild(document.createTextNode(ic.getEinheit().getName()));        	
             }
             
+            Element allecfs = document.createElement("CFactors");
+            root.appendChild(allecfs);
+            
+            for(String cfName : CharacFactor.getAllInstances().keySet()) {
+            	CharacFactor cf = CharacFactor.getAllInstances().get(cfName);
+            	Element cfElement = document.createElement("CFactor");
+            	allecfs.appendChild(cfElement);
+            	Element cfname = document.createElement("CFName");
+            	cfElement.appendChild(cfname);	
+            	cfname.appendChild(document.createTextNode(cf.getName()));
+            	Element cfflow = document.createElement("CFFlow");
+            	cfElement.appendChild(cfflow);	
+            	cfflow.appendChild(document.createTextNode(cf.getFlow().getName()));
+            	Element cfcat = document.createElement("CFCategory");
+            	cfElement.appendChild(cfcat);	
+            	cfcat.appendChild(document.createTextNode(cf.getWirkung().getName()));
+            	Element cfv1 = document.createElement("CFMainValue");
+            	cfElement.appendChild(cfv1);	
+            	cfv1.appendChild(document.createTextNode(cf.getValue(ValueType.MeanValue).toString()));
+            	Element cfv2 = document.createElement("CFLowerBound");
+            	cfElement.appendChild(cfv2);	
+            	cfv2.appendChild(document.createTextNode(cf.getValue(ValueType.LowerBound).toString()));
+            	Element cfv3 = document.createElement("CFUpperBound");
+            	cfElement.appendChild(cfv3);	
+            	cfv3.appendChild(document.createTextNode(cf.getValue(ValueType.UpperBound).toString()));
+            	
+            }
 
             
          // JFileChooser-Objekt erstellen

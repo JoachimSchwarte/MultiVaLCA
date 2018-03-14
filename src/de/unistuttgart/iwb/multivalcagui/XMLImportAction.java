@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.42
+ * @version 0.46
  */
 
 class XMLImportAction extends AbstractAction {
@@ -271,6 +271,49 @@ class XMLImportAction extends AbstractAction {
 						}
 						CategoryIndicator indi = CategoryIndicator.instance(indiname);
 						ImpactCategory.instance(catname, indi);
+					}
+					
+					nl = docEle.getElementsByTagName("CFactor");
+					if (nl.getLength() != 0) {
+						CharacFactor.clear();
+					}
+					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
+						String cfname = "";
+						String cfflow = "";
+						String cfcat = "";
+						String cfmv = "";
+						String cflv = "";
+						String cfuv = "";
+						Double facVal = 0.0;					
+						for (int j = 0; j < nlc.getLength(); j++) {	
+							if (nlc.item(j).getNodeName().equals("CFName")) {
+								cfname = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("CFFlow")) {
+								cfflow = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("CFCategory")) {
+								cfcat = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("CFMainValue")) {
+								cfmv = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("CFLowerBound")) {
+								cflv = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("CFUpperBound")) {
+								cfuv = nlc.item(j).getTextContent();
+							}
+						}
+						facVal = Double.parseDouble(cfmv);
+						CharacFactor.instance(cfname, Flow.getInstance(cfflow), ImpactCategory.getInstance(cfcat), facVal);
+						Double lbv;
+						Double obv;
+						lbv = Double.parseDouble(cflv);
+						obv = Double.parseDouble(cfuv);
+						CharacFactor.setLowerBound(cfname, lbv);
+						CharacFactor.setUpperBound(cfname, obv);
 					}
 					
 				} catch (SAXException | IOException e1) {

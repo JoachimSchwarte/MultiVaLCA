@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.45
+ * @version 0.46
  */
 
 public class MultiVaLCA {
@@ -60,6 +60,7 @@ public class MultiVaLCA {
 	private final Action newCategoryAction 		= new newCategoryAction();
 	private final Action listCategoriesAction 	= new listCategoriesAction();
 	private final Action newCFAction 			= new newCFAction();
+	private final Action listCFAction 			= new listCFAction();
 	
 	
 	//
@@ -200,6 +201,13 @@ public class MultiVaLCA {
 	private JLabel lblP12n8 = new JLabel(); 			// Status
 	private JButton btnP12n1 = new JButton(); 			// "speichern"
 	private JButton btnP12n2 = new JButton(); 			// "Grenzwerte bestätigen"
+	//
+	// Panel 13; CF-Liste
+	//
+	private JPanel panel_13 = new JPanel();
+	private JLabel lblP13n1 = new JLabel();
+	private JTable cfTable 		= new JTable();
+	DefaultTableModel cfTableModel 		= new DefaultTableModel(0,5);
 
 	/**
 	 * Launch the application.
@@ -481,7 +489,15 @@ public class MultiVaLCA {
 		
 		btnP12n2.setEnabled(false);
 		panel_12.add(btnP12n2, "cell 1 8 2 1,alignx center");
-		panel_12.add(lblP12n8, "cell 0 9 4 1,alignx center");		
+		panel_12.add(lblP12n8, "cell 0 9 4 1,alignx center");				
+		//
+		// Panel 13; CF-iste
+		//
+		panel.add(panel_13, "cfList");		
+		panel_13.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
+		lblP13n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_13.add(lblP13n1, "cell 0 0,alignx center,aligny top");		
+		panel_13.add(new JScrollPane(cfTable), "cell 0 1,alignx center,aligny top");
 		
 		cl.show(panel, "leer");
 	
@@ -544,6 +560,10 @@ public class MultiVaLCA {
 		JMenuItem mntmCategories = new JMenuItem();
 		mntmCategories.setAction(listCategoriesAction);
 		mnListe.add(mntmCategories);
+		
+		JMenuItem mntmCFs = new JMenuItem();
+		mntmCFs.setAction(listCFAction);
+		mnListe.add(mntmCFs);
 		
 		JMenu mnBerechnen = new JMenu(GuiStrings.getGS("mp5", l));
 		menuBar.add(mnBerechnen);
@@ -1012,6 +1032,8 @@ public class MultiVaLCA {
 				mntmCategories.setToolTipText(GuiStrings.getGS("mp44e",l));
 				mntmCF.setText(GuiStrings.getGS("mp15",l));
 				mntmCF.setToolTipText(GuiStrings.getGS("mp15e",l));
+				mntmCFs.setText(GuiStrings.getGS("mp45",l));
+				mntmCFs.setToolTipText(GuiStrings.getGS("mp45e",l));
 				lblP05n1.setText(GuiStrings.getGS("mp31e", l));
 				lblP05n2.setText(GuiStrings.getGS("mp31", l));
 				btn05n1.setText(GuiStrings.getGS("bt01", l));
@@ -1313,14 +1335,14 @@ public class MultiVaLCA {
 				for(Flow pf : akModul.getElementarflussvektor().keySet()){
 					for (ValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
 						pmTableModel.addRow(new Object[] {"", pf.getName(), 
-								FlowValueTypeStrings.getFVTS(l).get(vt),
+								ValueTypeStrings.getFVTS(l).get(vt),
 								akModul.getElementarflussvektor().get(pf).get(vt)});
 					}
 				}						
 				for(Flow pf : akModul.getProduktflussvektor().keySet()){
 					for (ValueType vt : akModul.getProduktflussvektor().get(pf).keySet()) {
 						pmTableModel.addRow(new Object[] {"", pf.getName(), 
-								FlowValueTypeStrings.getFVTS(l).get(vt),
+								ValueTypeStrings.getFVTS(l).get(vt),
 								akModul.getProduktflussvektor().get(pf).get(vt)});							
 					}							
 				}
@@ -1402,7 +1424,7 @@ public class MultiVaLCA {
 							for(Flow sysFluss : sysErgebnis.keySet()){
 								for (ValueType vt : sysAktuell.getElementarflussvektor().get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
-											FlowValueTypeStrings.getFVTS(l).get(vt),								
+											ValueTypeStrings.getFVTS(l).get(vt),								
 											sysErgebnis.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
 								}
 							}
@@ -1474,6 +1496,42 @@ public class MultiVaLCA {
 			btnP12n2.setText(GuiStrings.getGS("bt10", l));
 			
 			cl.show(panel, "neuCF");		
+		}
+		
+	}
+	private class listCFAction extends AbstractAction {
+		private static final long serialVersionUID = 5499424576812764168L;
+		public listCFAction() {
+			putValue(NAME, GuiStrings.getGS("mp45", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp45e", l));
+		}
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			lblP13n1.setText(GuiStrings.getGS("mp45e", l));
+			cfTableModel.setRowCount(0);
+			cfTable.setModel(cfTableModel);
+			TableColumnModel tcm = cfTable.getColumnModel();
+			tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("p06n1", l));
+			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("mp11", l));
+			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p13n1", l));
+			tcm.getColumn(3).setHeaderValue(GuiStrings.getGS("p01n3", l));
+			tcm.getColumn(4).setHeaderValue(GuiStrings.getGS("p12n3", l));
+			for(String cfName : CharacFactor.getAllInstances().keySet()) {
+				CharacFactor cf = CharacFactor.getInstance(cfName);
+				cfTableModel.addRow(new Object[] {cf.getName(),
+						cf.getFlow().getName(), cf.getWirkung().getName(),
+						ValueTypeStrings.getFVTS(l).get(ValueType.MeanValue),
+						cf.getValues().get(ValueType.MeanValue)});
+				cfTableModel.addRow(new Object[] {"",
+						"", "", ValueTypeStrings.getFVTS(l).get(ValueType.LowerBound),
+						cf.getValues().get(ValueType.LowerBound)});
+				cfTableModel.addRow(new Object[] {"",
+						"", "", ValueTypeStrings.getFVTS(l).get(ValueType.UpperBound),
+						cf.getValues().get(ValueType.UpperBound)});
+			}
+			
+			cl.show(panel, "cfList");
+			
 		}
 		
 	}
