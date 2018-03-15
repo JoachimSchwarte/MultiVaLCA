@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.471
+ * @version 0.472
  */
 
 public class MultiVaLCA {
@@ -216,14 +216,18 @@ public class MultiVaLCA {
 	//
 	private JPanel panel_14 = new JPanel();
 	private JTextField txtP14n1 = new JTextField();		// Eingabefeld LCIA-Name
-	private JTextField txtP14n2 = new JTextField();		// Eingabefeld CF-Name
+	private JTextField txtP14n2 = new JTextField();		// Eingabefeld Kategorie
+	private JTextField txtP14n3 = new JTextField();		// Eingabefeld CF-Name
 	private JLabel lblP14n1 = new JLabel(); 			// "Neue Bewertungsmethode"
 	private JLabel lblP14n2 = new JLabel(); 			// "Name der Bewertungsmethode"
-	private JLabel lblP14n3 = new JLabel(); 			// "Name des Charakterisierungsfaktors"
-	private JLabel lblP14n4 = new JLabel(); 			// Status
+	private JLabel lblP14n3 = new JLabel(); 			// "Wirkungskategorie"
+	private JLabel lblP14n4 = new JLabel(); 			// "Charakterisierungsfaktor"
+	private JLabel lblP14n5 = new JLabel(); 			// Status
 	private JButton btnP14n1 = new JButton(); 			// "neue Bewertungsmethode anlegen"
-	private JButton btnP14n2 = new JButton(); 			// "Charakterisierungsfaktor hinzufügen"
-	private JButton btnP14n3 = new JButton(); 			// "fertig"
+	private JButton btnP14n2 = new JButton(); 			// Wirkungskategorie "hinzufügen"
+	private JButton btnP14n3 = new JButton(); 			// "weiter"
+	private JButton btnP14n4 = new JButton(); 			// Charakterisierungsfaktor "hinzufügen"
+	private JButton btnP14n5 = new JButton(); 			// "fertig"
 	
 	
 	
@@ -522,7 +526,7 @@ public class MultiVaLCA {
 		//
 		panel.add(panel_14, "neuLCIA");
 		panel_14.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP14n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_14.add(lblP14n1, "flowy,cell 1 0 2 1,alignx center,growy");
 		
@@ -544,7 +548,17 @@ public class MultiVaLCA {
 		btnP14n3.setEnabled(false);
 		panel_14.add(btnP14n3, "cell 2 4,alignx center");	
 		
-		panel_14.add(lblP14n4, "cell 0 5 4 1,alignx center");	
+		panel_14.add(lblP14n4, "cell 1 5,grow");		
+		txtP14n3.setText("");
+		panel_14.add(txtP14n3, "cell 2 5,grow");
+		txtP14n3.setColumns(10);	
+		
+		btnP14n4.setEnabled(false);
+		panel_14.add(btnP14n4, "cell 1 6,alignx center");		
+		btnP14n5.setEnabled(false);
+		panel_14.add(btnP14n5, "cell 2 6,alignx center");	
+		
+		panel_14.add(lblP14n5, "cell 0 7 4 1,alignx center");	
 		
 		cl.show(panel, "leer");
 	
@@ -1608,11 +1622,14 @@ public class MultiVaLCA {
 		public void actionPerformed(ActionEvent arg0) {
 			lblP14n1.setText(GuiStrings.getGS("p14n1", l));
 			lblP14n2.setText(GuiStrings.getGS("p14n2", l));
-			lblP14n3.setText(GuiStrings.getGS("p12n2", l));
-			lblP14n4.setText(GuiStrings.getGS("stat01", l));			
+			lblP14n3.setText(GuiStrings.getGS("mp14", l));
+			lblP14n4.setText(GuiStrings.getGS("mp15", l));
+			lblP14n5.setText(GuiStrings.getGS("stat01", l));			
 			btnP14n1.setText(GuiStrings.getGS("bt01", l));
 			btnP14n2.setText(GuiStrings.getGS("bt11", l));	
-			btnP14n3.setText(GuiStrings.getGS("bt04", l));	
+			btnP14n3.setText(GuiStrings.getGS("bt07", l));	
+			btnP14n4.setText(GuiStrings.getGS("bt11", l));	
+			btnP14n5.setText(GuiStrings.getGS("bt04", l));	
 			
 			cl.show(panel, "neuLCIA");	
 			
