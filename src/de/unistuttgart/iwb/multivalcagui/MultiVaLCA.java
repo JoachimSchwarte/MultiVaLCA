@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.472
+ * @version 0.473
  */
 
 public class MultiVaLCA {
@@ -542,6 +542,7 @@ public class MultiVaLCA {
 		txtP14n2.setText("");
 		panel_14.add(txtP14n2, "cell 2 3,grow");
 		txtP14n2.setColumns(10);	
+		txtP14n2.setEnabled(false);
 		
 		btnP14n2.setEnabled(false);
 		panel_14.add(btnP14n2, "cell 1 4,alignx center");		
@@ -552,6 +553,7 @@ public class MultiVaLCA {
 		txtP14n3.setText("");
 		panel_14.add(txtP14n3, "cell 2 5,grow");
 		txtP14n3.setColumns(10);	
+		txtP14n3.setEnabled(false);
 		
 		btnP14n4.setEnabled(false);
 		panel_14.add(btnP14n4, "cell 1 6,alignx center");		
@@ -1249,6 +1251,65 @@ public class MultiVaLCA {
 					lblP12n8.setText(GuiStrings.getGS("stat01", l));
 				}
 				
+			}
+			
+		});		
+		
+		/*
+		 * neu LCIA
+		 */
+		
+		btnP14n1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String nameILCA = txtP14n1.getText();
+				boolean inputOK = true;
+				if (nameILCA.equals("")) {
+					lblP14n5.setText(GuiStrings.getGS("stat02",l));
+					inputOK = false;					
+				}
+				if (LCIAMethod.containsName(nameILCA)) {
+					lblP14n5.setText(GuiStrings.getGS("stat03",l));
+					inputOK = false;
+				}
+				if (inputOK == true) {
+					LCIAMethod.instance(nameILCA);
+					txtP14n1.setEnabled(false);
+					txtP14n2.setEnabled(true);
+					btnP14n1.setEnabled(false);
+					btnP14n2.setEnabled(true);
+					lblP14n5.setText(GuiStrings.getGS("stat28",l) + 
+							LCIAMethod.instance(nameILCA).categoryList().size() +
+							GuiStrings.getGS("stat29",l) +
+							LCIAMethod.instance(nameILCA).getFactorSet().size() +
+							GuiStrings.getGS("stat05",l));
+				}			
+			}			
+		});
+		
+		btnP14n2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nameILCA = txtP14n1.getText();
+				String nameWK = txtP14n2.getText();
+				boolean inputOK = true;
+				if (ImpactCategory.containsName(nameWK) == false) {
+					lblP14n5.setText(GuiStrings.getGS("stat27",l));
+					inputOK = false;					
+				}
+				if (inputOK == true) {
+					LCIAMethod.instance(nameILCA).addCategory(ImpactCategory.getInstance(nameWK));
+					txtP14n1.setEnabled(false);
+					txtP14n2.setEnabled(true);
+					btnP14n1.setEnabled(false);
+					btnP14n2.setEnabled(true);	
+					lblP14n5.setText(GuiStrings.getGS("stat28",l) + 
+							LCIAMethod.instance(nameILCA).categoryList().size() +
+							GuiStrings.getGS("stat29",l) +
+							LCIAMethod.instance(nameILCA).getFactorSet().size() +
+							GuiStrings.getGS("stat05",l));
+				}
+			
 			}
 			
 		});

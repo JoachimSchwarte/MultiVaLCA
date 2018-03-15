@@ -8,13 +8,13 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.472
+ * @version 0.473
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.472";
+		String vn = " 0.473";
 		String date = "15.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
@@ -133,6 +133,8 @@ public class GuiStrings {
 			case "p14n1": r = "Neue Bewertungsmethode"; break;
 			case "p14n2": r = "Name der Bewertungsmethode"; break;
 			case "bt11": r = "hinzufügen"; break;
+			case "stat28": r = ">>> Kategorien: "; break;
+			case "stat29": r = " <<< >>> Charakterisierungsfaktoren: "; break;
 			
 
 			}		
@@ -254,6 +256,8 @@ public class GuiStrings {
 			case "p14n1": r = "New LCIA Method"; break;
 			case "p14n2": r = "Name of the LCIA Method"; break;
 			case "bt11": r = "Add"; break;
+			case "stat28": r = ">>> Categories: "; break;
+			case "stat29": r = " <<< >>> Characterization Factors: "; break;
 		
 			}		
 		}
