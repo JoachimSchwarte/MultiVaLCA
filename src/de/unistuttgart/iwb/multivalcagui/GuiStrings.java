@@ -8,14 +8,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.47
+ * @version 0.471
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.47";
-		String date = "14.03.2018";
+		String vn = " 0.471";
+		String date = "15.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -130,6 +130,9 @@ public class GuiStrings {
 			case "mp46e": r = "Liste aller Bewertungsmethoden"; break;
 			case "mp52": r = "Wirkungsabschätzung berechnen"; break;
 			case "mp52e": r = "Wirkungsabschätzung für einzelne Objekte"; break;
+			case "p14n1": r = "Neue Bewertungsmethode"; break;
+			case "p14n2": r = "Name der Bewertungsmethode"; break;
+			case "bt11": r = "Faktor hinzufügen"; break;
 			
 
 			}		
@@ -232,15 +235,15 @@ public class GuiStrings {
 			case "mp44": r = "Impact Categories"; break;
 			case "mp44e": r = "List of all Impact Categories"; break;
 			case "p11n1": r = "Category Indicator"; break;
-			case "mp15": r = "Charakterization Factor"; break;
-			case "mp15e": r = "Create new Charakterization Factor"; break;
-			case "p12n1": r = "New Charakterization Factor"; break;
-			case "p12n2": r = "Name of the Charakterization Factor"; break;
+			case "mp15": r = "Characterization Factor"; break;
+			case "mp15e": r = "Create new Characterization Factor"; break;
+			case "p12n1": r = "New Characterization Factor"; break;
+			case "p12n2": r = "Name of the Characterization Factor"; break;
 			case "p12n3": r = "Factor"; break;
 			case "stat26": r = ">>> Illegal Factor <<<"; break;
 			case "stat27": r = ">>> The entered Impact Category does not exist. <<<"; break;
-			case "mp45": r = "Charakterization Factors"; break;
-			case "mp45e": r = "List of all Charakterization Factors"; break;
+			case "mp45": r = "Characterization Factors"; break;
+			case "mp45e": r = "List of all Characterization Factors"; break;
 			case "p13n1": r = "Category"; break;
 			case "mp16": r = "LCIA Method"; break;
 			case "mp16e": r = "Create new LCIA Method"; break;
@@ -248,6 +251,9 @@ public class GuiStrings {
 			case "mp46e": r = "List of all LCIA Methods"; break;
 			case "mp52": r = "LCIA Evaluation"; break;
 			case "mp52e": r = "LCIA for single Objects"; break;
+			case "p14n1": r = "New LCIA Method"; break;
+			case "p14n2": r = "Name of the LCIA Method"; break;
+			case "bt11": r = "Add Factor"; break;
 		
 			}		
 		}

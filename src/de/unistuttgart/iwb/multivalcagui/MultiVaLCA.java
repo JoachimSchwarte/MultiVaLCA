@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.47
+ * @version 0.471
  */
 
 public class MultiVaLCA {
@@ -211,6 +211,22 @@ public class MultiVaLCA {
 	private JLabel lblP13n1 = new JLabel();
 	private JTable cfTable 		= new JTable();
 	DefaultTableModel cfTableModel 		= new DefaultTableModel(0,5);
+	//
+	// Panel 14; Neue Bewertungsmethode
+	//
+	private JPanel panel_14 = new JPanel();
+	private JTextField txtP14n1 = new JTextField();		// Eingabefeld LCIA-Name
+	private JTextField txtP14n2 = new JTextField();		// Eingabefeld CF-Name
+	private JLabel lblP14n1 = new JLabel(); 			// "Neue Bewertungsmethode"
+	private JLabel lblP14n2 = new JLabel(); 			// "Name der Bewertungsmethode"
+	private JLabel lblP14n3 = new JLabel(); 			// "Name des Charakterisierungsfaktors"
+	private JLabel lblP14n4 = new JLabel(); 			// Status
+	private JButton btnP14n1 = new JButton(); 			// "neue Bewertungsmethode anlegen"
+	private JButton btnP14n2 = new JButton(); 			// "Charakterisierungsfaktor hinzufügen"
+	private JButton btnP14n3 = new JButton(); 			// "fertig"
+	
+	
+	
 
 	/**
 	 * Launch the application.
@@ -448,7 +464,7 @@ public class MultiVaLCA {
 		panel_11.add(lblP11n1, "cell 0 0,alignx center,aligny top");		
 		panel_11.add(new JScrollPane(catTable), "cell 0 1,alignx center,aligny top");
 		//
-		// Panel 12; Neues Prozessmodul
+		// Panel 12; Neuer Charakterisierungsfaktor
 		//
 		panel.add(panel_12, "neuCF");
 		panel_12.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
@@ -459,7 +475,7 @@ public class MultiVaLCA {
 		panel_12.add(lblP12n2, "cell 1 1,grow");		
 		txtP12n1.setText("");
 		panel_12.add(txtP12n1, "cell 2 1,grow");
-		txtP02n1.setColumns(10);			
+		txtP12n1.setColumns(10);			
 		
 		panel_12.add(lblP12n3, "cell 1 2,grow");	
 		txtP12n2.setText("");
@@ -501,6 +517,34 @@ public class MultiVaLCA {
 		lblP13n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_13.add(lblP13n1, "cell 0 0,alignx center,aligny top");		
 		panel_13.add(new JScrollPane(cfTable), "cell 0 1,alignx center,aligny top");
+		//
+		// Panel 14; Neue Bewertungsmethode (LCIA)
+		//
+		panel.add(panel_14, "neuLCIA");
+		panel_14.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
+		lblP14n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_14.add(lblP14n1, "flowy,cell 1 0 2 1,alignx center,growy");
+		
+		panel_14.add(lblP14n2, "cell 1 1,grow");		
+		txtP14n1.setText("");
+		panel_14.add(txtP14n1, "cell 2 1,grow");
+		txtP14n1.setColumns(10);	
+		
+		btnP14n1.setEnabled(true);
+		panel_14.add(btnP14n1, "cell 1 2 2 1,alignx center");	
+		
+		panel_14.add(lblP14n3, "cell 1 3,grow");		
+		txtP14n2.setText("");
+		panel_14.add(txtP14n2, "cell 2 3,grow");
+		txtP14n2.setColumns(10);	
+		
+		btnP14n2.setEnabled(false);
+		panel_14.add(btnP14n2, "cell 1 4,alignx center");		
+		btnP14n3.setEnabled(false);
+		panel_14.add(btnP14n3, "cell 2 4,alignx center");	
+		
+		panel_14.add(lblP14n4, "cell 0 5 4 1,alignx center");	
 		
 		cl.show(panel, "leer");
 	
@@ -1562,7 +1606,15 @@ public class MultiVaLCA {
 		}
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
+			lblP14n1.setText(GuiStrings.getGS("p14n1", l));
+			lblP14n2.setText(GuiStrings.getGS("p14n2", l));
+			lblP14n3.setText(GuiStrings.getGS("p12n2", l));
+			lblP14n4.setText(GuiStrings.getGS("stat01", l));			
+			btnP14n1.setText(GuiStrings.getGS("bt01", l));
+			btnP14n2.setText(GuiStrings.getGS("bt11", l));	
+			btnP14n3.setText(GuiStrings.getGS("bt04", l));	
+			
+			cl.show(panel, "neuLCIA");	
 			
 		}		
 	}
