@@ -127,5 +127,4 @@ public class IvariMatrix {
         }	
 		return r;
 	}
-
 }
