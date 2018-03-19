@@ -8,14 +8,14 @@ import java.util.HashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.473
+ * @version 0.481
  */
 
 public class LCIAMethod {
 	
 	// Klassenvariable:
 	
-	private static HashMap<String, LCIAMethod> allLMs = new HashMap<String, LCIAMethod>();
+	private static HashMap<String, LCIAMethod> allInstances = new HashMap<String, LCIAMethod>();
 	
 	// Instanzvariablen:
 	
@@ -30,7 +30,7 @@ public class LCIAMethod {
 	private LCIAMethod(String name) {
 		super();
 		this.name = name;
-		allLMs.put(name, this);
+		allInstances.put(name, this);
 	}
 	
 	// Methoden:
@@ -40,7 +40,7 @@ public class LCIAMethod {
 	 */
 	
 	public static void clear() {
-		allLMs.clear();
+		allInstances.clear();
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class LCIAMethod {
 	 */
 	
 	public static boolean containsName(String string) {
-		return allLMs.containsKey(string);
+		return allInstances.containsKey(string);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class LCIAMethod {
 	 */
 	 
 	public static HashMap<String, LCIAMethod> getAllLMs() {
-		return allLMs;
+		return allInstances;
 	}
 	
 	/**
@@ -78,10 +78,10 @@ public class LCIAMethod {
 	 */
 	
 	public static LCIAMethod instance(String name) {
-		if (allLMs.containsKey(name) == false) {
+		if (allInstances.containsKey(name) == false) {
 			new LCIAMethod(name);
 		} 
-		return allLMs.get(name);
+		return allInstances.get(name);
 	}
 	
 	/**
@@ -137,6 +137,10 @@ public class LCIAMethod {
 	
 	public HashMap<String, ImpactCategory> categoryList() {	
 		return wkl;
+	}
+	
+	public static HashMap<String, LCIAMethod> getAllInstances() {
+		return allInstances;
 	}
 	
 		

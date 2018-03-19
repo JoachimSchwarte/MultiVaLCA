@@ -8,13 +8,13 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.48
+ * @version 0.481
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.48";
+		String vn = " 0.481";
 		String date = "19.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
@@ -127,7 +127,7 @@ public class GuiStrings {
 			case "mp16": r = "Bewertungsmethode"; break;
 			case "mp16e": r = "neue Bewertungsmethode erfassen"; break;
 			case "mp46": r = "Bewertungsmethoden"; break;
-			case "mp46e": r = "Liste aller Bewertungsmethoden"; break;
+			case "mp46e": r = "Liste der Bewertungsmethoden"; break;
 			case "mp52": r = "Wirkungsabschätzung berechnen"; break;
 			case "mp52e": r = "Wirkungsabschätzung für einzelne Objekte"; break;
 			case "p14n1": r = "Neue Bewertungsmethode"; break;
@@ -135,6 +135,7 @@ public class GuiStrings {
 			case "bt11": r = "hinzufügen"; break;
 			case "stat28": r = ">>> Kategorien: "; break;
 			case "stat29": r = " <<< >>> Charakterisierungsfaktoren: "; break;
+			case "stat30": r = ">>> Der angegebene Charakterisierungsfaktor existiert nicht. <<<"; break;
 			
 
 			}		
@@ -250,7 +251,7 @@ public class GuiStrings {
 			case "mp16": r = "LCIA Method"; break;
 			case "mp16e": r = "Create new LCIA Method"; break;
 			case "mp46": r = "LCIA Methods"; break;
-			case "mp46e": r = "List of all LCIA Methods"; break;
+			case "mp46e": r = "List of LCIA Methods"; break;
 			case "mp52": r = "LCIA Evaluation"; break;
 			case "mp52e": r = "LCIA for single Objects"; break;
 			case "p14n1": r = "New LCIA Method"; break;
@@ -258,6 +259,7 @@ public class GuiStrings {
 			case "bt11": r = "Add"; break;
 			case "stat28": r = ">>> Categories: "; break;
 			case "stat29": r = " <<< >>> Characterization Factors: "; break;
+			case "stat30": r = ">>> The entered Characterization Factor does not exist. <<<"; break;
 		
 			}		
 		}

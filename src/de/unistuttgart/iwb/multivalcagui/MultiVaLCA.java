@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.48
+ * @version 0.481
  */
 
 public class MultiVaLCA {
@@ -63,8 +63,7 @@ public class MultiVaLCA {
 	private final Action listCFAction 			= new listCFAction();
 	private final Action newLCIAAction 			= new newLCIAAction();
 	private final Action listLCIAAction 		= new listLCIAAction();
-	private final Action calculateLCIAAction 	= new calculateLCIAAction();
-	
+	private final Action calculateLCIAAction 	= new calculateLCIAAction();	
 	
 	//
 	// Panel 1; Neuer Fluss
@@ -225,12 +224,15 @@ public class MultiVaLCA {
 	private JLabel lblP14n5 = new JLabel(); 			// Status
 	private JButton btnP14n1 = new JButton(); 			// "neue Bewertungsmethode anlegen"
 	private JButton btnP14n2 = new JButton(); 			// Wirkungskategorie "hinzufügen"
-	private JButton btnP14n3 = new JButton(); 			// "weiter"
-	private JButton btnP14n4 = new JButton(); 			// Charakterisierungsfaktor "hinzufügen"
-	private JButton btnP14n5 = new JButton(); 			// "fertig"
-	
-	
-	
+	private JButton btnP14n3 = new JButton(); 			// Charakterisierungsfaktor "hinzufügen"
+	private JButton btnP14n4 = new JButton(); 			// "fertig"
+	//
+	// Panel 15; Liste der Bewertungsmethoden
+	//
+	private JPanel panel_15 = new JPanel();
+	private JLabel lblP15n1 = new JLabel();
+	private JTable bmTable 		= new JTable();
+	DefaultTableModel bmTableModel 		= new DefaultTableModel(0,3);	
 
 	/**
 	 * Launch the application.
@@ -545,9 +547,7 @@ public class MultiVaLCA {
 		txtP14n2.setEnabled(false);
 		
 		btnP14n2.setEnabled(false);
-		panel_14.add(btnP14n2, "cell 1 4,alignx center");		
-		btnP14n3.setEnabled(false);
-		panel_14.add(btnP14n3, "cell 2 4,alignx center");	
+		panel_14.add(btnP14n2, "cell 1 4 2 1,alignx center");		
 		
 		panel_14.add(lblP14n4, "cell 1 5,grow");		
 		txtP14n3.setText("");
@@ -555,12 +555,20 @@ public class MultiVaLCA {
 		txtP14n3.setColumns(10);	
 		txtP14n3.setEnabled(false);
 		
+		btnP14n3.setEnabled(false);
+		panel_14.add(btnP14n3, "cell 1 6,alignx center");		
 		btnP14n4.setEnabled(false);
-		panel_14.add(btnP14n4, "cell 1 6,alignx center");		
-		btnP14n5.setEnabled(false);
-		panel_14.add(btnP14n5, "cell 2 6,alignx center");	
+		panel_14.add(btnP14n4, "cell 2 6,alignx center");	
 		
 		panel_14.add(lblP14n5, "cell 0 7 4 1,alignx center");	
+		//
+		// Panel 15; Liste der Bewertungsmethoden
+		//
+		panel.add(panel_15, "bmList");		
+		panel_15.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
+		lblP15n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_15.add(lblP15n1, "cell 0 0,alignx center,aligny top");		
+		panel_15.add(new JScrollPane(bmTable), "cell 0 1,alignx center,aligny top");
 		
 		cl.show(panel, "leer");
 	
@@ -1276,8 +1284,10 @@ public class MultiVaLCA {
 					LCIAMethod.instance(nameILCA);
 					txtP14n1.setEnabled(false);
 					txtP14n2.setEnabled(true);
+					txtP14n3.setEnabled(true);
 					btnP14n1.setEnabled(false);
 					btnP14n2.setEnabled(true);
+					btnP14n3.setEnabled(true);
 					lblP14n5.setText(GuiStrings.getGS("stat28",l) + 
 							LCIAMethod.instance(nameILCA).categoryList().size() +
 							GuiStrings.getGS("stat29",l) +
@@ -1299,19 +1309,52 @@ public class MultiVaLCA {
 				}
 				if (inputOK == true) {
 					LCIAMethod.instance(nameILCA).addCategory(ImpactCategory.getInstance(nameWK));
-					txtP14n1.setEnabled(false);
-					txtP14n2.setEnabled(true);
-					btnP14n1.setEnabled(false);
-					btnP14n2.setEnabled(true);	
+					btnP14n4.setEnabled(true);
+					lblP14n5.setText(GuiStrings.getGS("stat28",l) + 
+							LCIAMethod.instance(nameILCA).categoryList().size() +
+							GuiStrings.getGS("stat29",l) +
+							LCIAMethod.instance(nameILCA).getFactorSet().size() +
+							GuiStrings.getGS("stat05",l));
+				}			
+			}
+			
+		});
+		btnP14n3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nameILCA = txtP14n1.getText();
+				String nameCF = txtP14n3.getText();
+				boolean inputOK = true;
+				if (CharacFactor.containsName(nameCF) == false) {
+					lblP14n5.setText(GuiStrings.getGS("stat30",l));
+					inputOK = false;					
+				}
+				if (inputOK == true) {
+					LCIAMethod.instance(nameILCA).addFactor(CharacFactor.getInstance(nameCF));
+					btnP14n4.setEnabled(true);				
 					lblP14n5.setText(GuiStrings.getGS("stat28",l) + 
 							LCIAMethod.instance(nameILCA).categoryList().size() +
 							GuiStrings.getGS("stat29",l) +
 							LCIAMethod.instance(nameILCA).getFactorSet().size() +
 							GuiStrings.getGS("stat05",l));
 				}
-			
 			}
-			
+		});
+		btnP14n4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnP14n1.setEnabled(true);
+				btnP14n2.setEnabled(false);
+				btnP14n3.setEnabled(false);
+				btnP14n4.setEnabled(false);
+				txtP14n1.setEnabled(true);
+				txtP14n2.setEnabled(false);
+				txtP14n3.setEnabled(false);
+				txtP14n1.setText("");
+				txtP14n2.setText("");
+				txtP14n3.setText("");
+				lblP14n5.setText(GuiStrings.getGS("stat01", l));
+			}
 		});
 
 	}
@@ -1688,12 +1731,10 @@ public class MultiVaLCA {
 			lblP14n5.setText(GuiStrings.getGS("stat01", l));			
 			btnP14n1.setText(GuiStrings.getGS("bt01", l));
 			btnP14n2.setText(GuiStrings.getGS("bt11", l));	
-			btnP14n3.setText(GuiStrings.getGS("bt07", l));	
-			btnP14n4.setText(GuiStrings.getGS("bt11", l));	
-			btnP14n5.setText(GuiStrings.getGS("bt04", l));	
+			btnP14n3.setText(GuiStrings.getGS("bt11", l));	
+			btnP14n4.setText(GuiStrings.getGS("bt04", l));	
 			
-			cl.show(panel, "neuLCIA");	
-			
+			cl.show(panel, "neuLCIA");				
 		}		
 	}
 	
@@ -1705,8 +1746,24 @@ public class MultiVaLCA {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			lblP15n1.setText(GuiStrings.getGS("mp46e", l));
+			bmTableModel.setRowCount(0);
+			bmTable.setModel(bmTableModel);
+			TableColumnModel tcm = bmTable.getColumnModel();
+			tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp16", l));
+			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p08n1", l));
+			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p08n2", l));
+			for(String bmName : LCIAMethod.getAllInstances().keySet()) {
+				LCIAMethod bm = LCIAMethod.instance(bmName);
+				bmTableModel.addRow(new Object[] {bm.getName(),"",""});
+				for(String wkName : bm.categoryList().keySet()) {
+					bmTableModel.addRow(new Object[] {"",GuiStrings.getGS("mp14", l),wkName});
+				}
+				for(String cfName : bm.getFactorSet().keySet()) {
+					bmTableModel.addRow(new Object[] {"",GuiStrings.getGS("mp15", l),cfName});
+				}				
+			}			
+			cl.show(panel, "bmList");
 		}		
 	}
 	
