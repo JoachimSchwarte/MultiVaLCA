@@ -9,6 +9,7 @@ import de.unistuttgart.iwb.multivalca.FlowType;
 /**
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Realisierung der Enumeration FlowType
+ * 
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.291
  */

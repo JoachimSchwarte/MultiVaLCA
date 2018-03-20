@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.483
+ * @version 0.484
  */
 
 public class MultiVaLCA {
@@ -232,7 +232,15 @@ public class MultiVaLCA {
 	private JPanel panel_15 = new JPanel();
 	private JLabel lblP15n1 = new JLabel();
 	private JTable bmTable 		= new JTable();
-	DefaultTableModel bmTableModel 		= new DefaultTableModel(0,3);	
+	DefaultTableModel bmTableModel 		= new DefaultTableModel(0,3);
+	//
+	// Panel 16; Berechnung der Wirkungsabschätzung
+	//
+	private JPanel panel_16 = new JPanel();	
+	private JLabel lblP16n1 = new JLabel();				// "Wirkungsabschätzung"
+	private JLabel lblP16n2 = new JLabel();				// "Object-Typ"
+	private JButton btnP16n1 = new JButton(); 			// "Berechnungsergebnisse anzeigen
+	private JComboBox<String> cobP16n1 = new JComboBox<String>();	// Objekt-Typen
 
 	/**
 	 * Launch the application.
@@ -569,6 +577,22 @@ public class MultiVaLCA {
 		lblP15n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_15.add(lblP15n1, "cell 0 0,alignx center,aligny top");		
 		panel_15.add(new JScrollPane(bmTable), "cell 0 1,alignx center,aligny top");
+		//
+		// Panel 16; Berechnung der Wirkungsabschätzung
+		//
+		panel.add(panel_16, "berechnen2");
+		panel_16.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));	
+		lblP16n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_16.add(lblP16n1, "cell 1 0 2 1,alignx center,aligny top");
+		
+		panel_16.add(lblP16n2, "cell 1 1,grow");
+		panel_16.add(cobP16n1, "cell 2 1,grow");
+		
+		
+		btnP16n1.setEnabled(false);
+		panel_16.add(btnP16n1, "cell 1 4 2 0,alignx center");
+		
 		
 		cl.show(panel, "leer");
 	
