@@ -28,7 +28,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.46
+ * @version 0.482
  */
 
 class XMLExportAction extends AbstractAction {
@@ -201,7 +201,32 @@ class XMLExportAction extends AbstractAction {
             	cfv3.appendChild(document.createTextNode(cf.getValue(ValueType.UpperBound).toString()));
             	
             }
-
+            
+            Element alleMethods = document.createElement("LCIAMethods");
+            root.appendChild(alleMethods);
+            
+            for(String lciaName : LCIAMethod.getAllInstances().keySet()) {
+            	LCIAMethod thisLCIA = LCIAMethod.getAllInstances().get(lciaName);
+            	Element lcia = document.createElement("LCIAMethod");
+            	alleMethods.appendChild(lcia);
+            	Element name = document.createElement("LCIA-Name");
+            	lcia.appendChild(name);
+            	name.appendChild(document.createTextNode(lciaName));
+            	Element categoryList = document.createElement("LCIA-Categories");
+            	lcia.appendChild(categoryList);
+            	for (String imcat : thisLCIA.categoryList().keySet()) {
+            		Element thiscat = document.createElement("LCIA-Category");
+            		categoryList.appendChild(thiscat);
+            		thiscat.appendChild(document.createTextNode(imcat));
+            	}
+            	Element factorList = document.createElement("LCIA-Factors");
+            	lcia.appendChild(factorList);
+            	for (String imfac : thisLCIA.getFactorSet().keySet()) {
+            		Element thisfac = document.createElement("LCIA-Factor");
+            		factorList.appendChild(thisfac);
+            		thisfac.appendChild(document.createTextNode(imfac));
+            	}
+            }
             
          // JFileChooser-Objekt erstellen
 	        JFileChooser chooser = new JFileChooser();
