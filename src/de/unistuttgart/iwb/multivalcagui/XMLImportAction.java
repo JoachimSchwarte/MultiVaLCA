@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.46
+ * @version 0.483
  */
 
 class XMLImportAction extends AbstractAction {
@@ -314,6 +314,39 @@ class XMLImportAction extends AbstractAction {
 						obv = Double.parseDouble(cfuv);
 						CharacFactor.setLowerBound(cfname, lbv);
 						CharacFactor.setUpperBound(cfname, obv);
+					}
+					
+					nl = docEle.getElementsByTagName("LCIAMethod");
+					if (nl.getLength() != 0) {
+						LCIAMethod.clear();
+					}
+					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
+						String lciaName = "";
+						for (int j = 0; j < nlc.getLength(); j++) {
+							if (nlc.item(j).getNodeName().equals("LCIA-Name")) {							
+								lciaName = nlc.item(j).getTextContent();
+								LCIAMethod.instance(lciaName);
+							}							
+							if (nlc.item(j).getNodeName().equals("LCIA-Categories")) {
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("LCIA-Category")) {
+										String as = nlc2.item(k).getTextContent();
+										LCIAMethod.instance(lciaName).addCategory(ImpactCategory.getInstance(as));
+									}
+								}
+							}
+							if (nlc.item(j).getNodeName().equals("LCIA-Factors")) {
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("LCIA-Factor")) {
+										String as = nlc2.item(k).getTextContent();
+										LCIAMethod.instance(lciaName).addFactor(CharacFactor.getInstance(as));
+									}
+								}							
+							}							
+						}					
 					}
 					
 				} catch (SAXException | IOException e1) {
