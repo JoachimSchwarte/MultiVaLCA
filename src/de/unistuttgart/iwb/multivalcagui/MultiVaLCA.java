@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.484
+ * @version 0.485
  */
 
 public class MultiVaLCA {
@@ -706,7 +706,7 @@ public class MultiVaLCA {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP01n1.getText();
-				HashMap<FlowType, String> ft = FlowTypeStrings.getFTS(l);
+				HashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
 				String typs = comboBox.getItemAt(comboBox.getSelectedIndex());
 				FlowType typ = FlowType.Elementary;
 				for (FlowType fte : ft.keySet()) {
@@ -1403,7 +1403,7 @@ public class MultiVaLCA {
 			lblP01n4.setText(GuiStrings.getGS("p01n4", l));
 			lblP01n5.setText(GuiStrings.getGS("stat01", l));
 			btnP01n1.setText(GuiStrings.getGS("bt01", l));
-			HashMap<FlowType, String> ft = FlowTypeStrings.getFTS(l);
+			HashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
 			String[] fta = new String[ft.size()];
 			int i=0;
 			for (FlowType f : FlowType.values()) {
@@ -1514,7 +1514,7 @@ public class MultiVaLCA {
 			for(String flussname : Flow.getAllInstances().keySet()) {
 				Flow fluss = Flow.getInstance(flussname);			
 				flowsTableModel.addRow(new Object[] {fluss.getName(), 
-						FlowTypeStrings.getFTS(l).get(fluss.getType()), fluss.getEinheit()});			
+						FlowTypeStringMap.getFTS(l).get(fluss.getType()), fluss.getEinheit()});			
 			}			
 			cl.show(panel, "listeFluss");
 		}
@@ -1542,14 +1542,14 @@ public class MultiVaLCA {
 				for(Flow pf : akModul.getElementarflussvektor().keySet()){
 					for (ValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
 						pmTableModel.addRow(new Object[] {"", pf.getName(), 
-								ValueTypeStrings.getFVTS(l).get(vt),
+								ValueTypeStringMap.getFVTS(l).get(vt),
 								akModul.getElementarflussvektor().get(pf).get(vt)});
 					}
 				}						
 				for(Flow pf : akModul.getProduktflussvektor().keySet()){
 					for (ValueType vt : akModul.getProduktflussvektor().get(pf).keySet()) {
 						pmTableModel.addRow(new Object[] {"", pf.getName(), 
-								ValueTypeStrings.getFVTS(l).get(vt),
+								ValueTypeStringMap.getFVTS(l).get(vt),
 								akModul.getProduktflussvektor().get(pf).get(vt)});							
 					}							
 				}
@@ -1631,7 +1631,7 @@ public class MultiVaLCA {
 							for(Flow sysFluss : sysErgebnis.keySet()){
 								for (ValueType vt : sysAktuell.getElementarflussvektor().get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
-											ValueTypeStrings.getFVTS(l).get(vt),								
+											ValueTypeStringMap.getFVTS(l).get(vt),								
 											sysErgebnis.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
 								}
 							}
@@ -1726,13 +1726,13 @@ public class MultiVaLCA {
 				CharacFactor cf = CharacFactor.getInstance(cfName);
 				cfTableModel.addRow(new Object[] {cf.getName(),
 						cf.getFlow().getName(), cf.getWirkung().getName(),
-						ValueTypeStrings.getFVTS(l).get(ValueType.MeanValue),
+						ValueTypeStringMap.getFVTS(l).get(ValueType.MeanValue),
 						cf.getValues().get(ValueType.MeanValue)});
 				cfTableModel.addRow(new Object[] {"",
-						"", "", ValueTypeStrings.getFVTS(l).get(ValueType.LowerBound),
+						"", "", ValueTypeStringMap.getFVTS(l).get(ValueType.LowerBound),
 						cf.getValues().get(ValueType.LowerBound)});
 				cfTableModel.addRow(new Object[] {"",
-						"", "", ValueTypeStrings.getFVTS(l).get(ValueType.UpperBound),
+						"", "", ValueTypeStringMap.getFVTS(l).get(ValueType.UpperBound),
 						cf.getValues().get(ValueType.UpperBound)});
 			}
 			
@@ -1799,8 +1799,27 @@ public class MultiVaLCA {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			lblP16n1.setText(GuiStrings.getGS("p16n1", l));
+			lblP16n2.setText(GuiStrings.getGS("p16n2", l));
+			btnP16n1.setText(GuiStrings.getGS("bt12", l));
+			HashMap<ObjectType, String> ot = ObjectTypeStringMap.getOTS(l);
+			String[] ota = new String[ot.size()];
+			int i=0;
+			for (ObjectType o : ObjectType.values()) {
+				String otl = ot.get(o);
+				ota[i] = otl;
+				i++;
+			}
+			cobP16n1.setModel(new DefaultComboBoxModel<String>(ota));
 			
+			cl.show(panel, "berechnen2");
+			
+			
+//			private JPanel panel_16 = new JPanel();	
+//			private JLabel lblP16n1 = new JLabel();				// "Wirkungsabschätzung"
+//			private JLabel lblP16n2 = new JLabel();				// "Object-Typ"
+//			private JButton btnP16n1 = new JButton(); 			// "Berechnungsergebnisse anzeigen
+//			private JComboBox<String> cobP16n1 = new JComboBox<String>();	// Objekt-Typen
 		}		
 	}
 }

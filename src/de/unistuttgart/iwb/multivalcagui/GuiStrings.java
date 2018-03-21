@@ -8,14 +8,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.484
+ * @version 0.485
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.484";
-		String date = "20.03.2018";
+		String vn = " 0.485";
+		String date = "21.03.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -136,6 +136,12 @@ public class GuiStrings {
 			case "stat28": r = ">>> Kategorien: "; break;
 			case "stat29": r = " <<< >>> Charakterisierungsfaktoren: "; break;
 			case "stat30": r = ">>> Der angegebene Charakterisierungsfaktor existiert nicht. <<<"; break;
+			case "p16n1": r = "Wirkungsabschätzung"; break;
+			case "p16n2": r = "Objekttyp"; break;
+			case "bt12": r = "Berechnungsergebnisse anzeigen"; break;
+			case "cob01": r = "Elementarfluss"; break;
+			case "cob02": r = "Produktfluss"; break;
+			case "cob03": r = "Hauptwert"; break;
 			
 
 			}		
@@ -260,6 +266,12 @@ public class GuiStrings {
 			case "stat28": r = ">>> Categories: "; break;
 			case "stat29": r = " <<< >>> Characterization Factors: "; break;
 			case "stat30": r = ">>> The entered Characterization Factor does not exist. <<<"; break;
+			case "p16n1": r = "LCIA Evaluation"; break;
+			case "p16n2": r = "Object Type"; break;
+			case "bt12": r = "Display Results"; break;
+			case "cob01": r = "elementary Flow"; break;
+			case "cob02": r = "Product"; break;
+			case "cob03": r = "Main Value"; break;
 		
 			}		
 		}

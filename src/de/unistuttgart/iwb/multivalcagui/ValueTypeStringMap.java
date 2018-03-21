@@ -11,22 +11,15 @@ import de.unistuttgart.iwb.multivalca.ValueType;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Realisierung der Enumeration FlowValueType
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.46
+ * @version 0.485
  */
 
-public class ValueTypeStrings {
+public class ValueTypeStringMap {
 	public static HashMap<ValueType, String> getFVTS(Language l) {
 		HashMap<ValueType, String> r = new HashMap<ValueType, String>();
-		if (l == Language.Deutsch) {
-			r.put(ValueType.MeanValue, "Hauptwert");
-			r.put(ValueType.LowerBound, "Untergrenze");
-			r.put(ValueType.UpperBound, "Obergrenze");
-		}	
-		if (l == Language.English) {
-			r.put(ValueType.MeanValue, "Main Value");
-			r.put(ValueType.LowerBound, "Lower Bound");
-			r.put(ValueType.UpperBound, "Upper Bound");		
-		}
+		r.put(ValueType.MeanValue, GuiStrings.getGS("cob03",l));
+		r.put(ValueType.LowerBound, GuiStrings.getGS("p02n5",l));
+		r.put(ValueType.UpperBound, GuiStrings.getGS("p02n6",l));
 		return r;
 	}
 

@@ -1,6 +1,7 @@
 /*	
  * MultiVaLCA
  */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.util.HashMap;
@@ -11,20 +12,14 @@ import de.unistuttgart.iwb.multivalca.FlowType;
  * multilinguale Realisierung der Enumeration FlowType
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.291
+ * @version 0.485
  */
 
-public class FlowTypeStrings {
+public class FlowTypeStringMap {
 	public static HashMap<FlowType, String> getFTS(Language l) {
 		HashMap<FlowType, String> r = new HashMap<FlowType, String>();
-		if (l == Language.Deutsch) {
-			r.put(FlowType.Elementary, "Elementarfluss");
-			r.put(FlowType.Product, "Produktfluss");			
-		}	
-		if (l == Language.English) {
-			r.put(FlowType.Elementary, "elementary Flow");
-			r.put(FlowType.Product, "Product");			
-		}
+		r.put(FlowType.Elementary, GuiStrings.getGS("cob01",l));
+		r.put(FlowType.Product, GuiStrings.getGS("cob02",l));	
 		return r;
 	}
 }
