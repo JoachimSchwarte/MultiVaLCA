@@ -9,12 +9,14 @@ import Jama.Matrix;
 import de.unistuttgart.iwb.ivari.*;
 
 /**
+ *  * Diese Klasse dient zur Erzeugung von Produktsystemen.
+ * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.28
+ * @version 0.486
  */
 
 public class ProductSystem 
-implements FlowValueMaps {
+implements FlowValueMaps, ImpactValueMaps {
 	
 	
 	// Klassenvariable:
@@ -386,4 +388,11 @@ implements FlowValueMaps {
 	public void setVorUndKoppelProdukte(LinkedList<Flow> vk) {
 		vorUndKoppelProdukte = vk;
 	}
+
+	@Override
+	public HashMap<ImpactCategory, HashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -9,11 +9,11 @@ import java.util.HashMap;
  * Diese Klasse dient zur Erzeugung von Prozessmodulen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.43
+ * @version 0.486
  */
 
 public class ProcessModule 
-implements FlowValueMaps {
+implements FlowValueMaps, ImpactValueMaps {
 	
 	// Klassenvariable:
 	
@@ -176,5 +176,13 @@ implements FlowValueMaps {
 		NameCheck.getInstance().addWVName(string);
 		this.name = string;	
 	}
+
+	@Override
+	public HashMap<ImpactCategory, HashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }
 
