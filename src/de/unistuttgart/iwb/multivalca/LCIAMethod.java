@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.481
+ * @version 0.487
  */
 
 public class LCIAMethod {

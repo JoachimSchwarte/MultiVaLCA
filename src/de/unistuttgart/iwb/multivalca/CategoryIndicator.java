@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.45
+ * @version 0.487
  */
 
 public class CategoryIndicator {
@@ -23,7 +23,7 @@ public class CategoryIndicator {
 	
 	// Konstruktor basierend auf den Instanzvariablen:
 
-	public CategoryIndicator(String name) {
+	private CategoryIndicator(String name) {
 		super();
 		this.setName(name);
 		allInstances.put(name, this);

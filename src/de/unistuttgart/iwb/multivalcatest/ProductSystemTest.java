@@ -5,7 +5,7 @@ package de.unistuttgart.iwb.multivalcatest;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.28
+ * @version 0.487
  */
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,7 +29,17 @@ class ProductSystemTest {
 	HashMap<Flow, Double> f = new HashMap<Flow, Double>();
 	LinkedList<Flow> vkp = new LinkedList<Flow>();
 	ProductSystem ProductP2 = ProductSystem.instance("PS1", f, vkp);
-	private void initialize() {
+	CategoryIndicator ci1 = CategoryIndicator.instance("CO2");
+	CategoryIndicator ci2 = CategoryIndicator.instance("SO2");
+	ImpactCategory ic1 = ImpactCategory.instance("Global Warming", ci1);
+	ImpactCategory ic2 = ImpactCategory.instance("Acidification", ci2);
+	CharacFactor cf11 = CharacFactor.instance("CF11", e1, ic1, 1.);
+	CharacFactor cf12 = CharacFactor.instance("CF12", e1, ic2, 10.);
+	CharacFactor cf21 = CharacFactor.instance("CF21", e2, ic1, 100.);
+	CharacFactor cf22 = CharacFactor.instance("CF22", e2, ic2, 1.);
+	LCIAMethod m1 = LCIAMethod.instance("M1");
+	
+	private void init1() {
 		ProductSystem.clear();
 		Modul1.addFluss(r1, ValueType.MeanValue, -1000.);
 		Modul1.addFluss(r1, ValueType.UpperBound, -950.);
@@ -67,14 +77,20 @@ class ProductSystemTest {
 		f.put(p2, 1.);
 		ProductP2 = ProductSystem.instance("PS1", f, vkp);
 		ProductP2.addProzessmodul(Modul1);
-		ProductP2.addProzessmodul(Modul2);
-		
-	};
-
+		ProductP2.addProzessmodul(Modul2);	
+	}
+	private void init2() {
+		m1.addCategory(ic1);
+		m1.addCategory(ic2);
+		m1.addFactor(cf11);
+		m1.addFactor(cf12);
+		m1.addFactor(cf21);
+		m1.addFactor(cf22);
+	}
 
 	@Test
 	void test01() {
-		initialize();
+		init1();
 		HashMap<Flow, HashMap<ValueType, Double>> efv = Modul1.getElementarflussvektor();
 		HashMap<ValueType, Double> vv = efv.get(r1);
 		assertEquals(-1000., vv.get(ValueType.MeanValue), .001);
@@ -84,7 +100,7 @@ class ProductSystemTest {
 	
 	@Test
 	void test02() {
-		initialize();
+		init1();
 		HashMap<Flow, HashMap<ValueType, Double>> efv = ProductP2.getElementarflussvektor();
 		HashMap<ValueType, Double> vv = efv.get(r1);
 		assertEquals(-3300., vv.get(ValueType.MeanValue), .001);
@@ -103,6 +119,21 @@ class ProductSystemTest {
 		assertEquals(915., vv.get(ValueType.LowerBound), .001);
 		assertEquals(1295., vv.get(ValueType.UpperBound), .001);
 
+	}
+	
+	@Test
+	void test03() {
+		init1();
+		init2();
+		HashMap<ImpactCategory, HashMap<ValueType, Double>> ivm = Modul1.getImpactValueMap(m1);
+		System.out.println(ivm);
+		System.out.println(ic1.getName() + " " + ivm.keySet().contains(ic1));
+		for (ImpactCategory ici : ivm.keySet()) {
+			System.out.println(ici.getName());
+			System.out.println(ici + " " + ic1);
+			System.out.println(ImpactCategory.getAllInstances());
+		}
+		assertEquals(21000., ivm.get(ic1).get(ValueType.MeanValue), .001);
 	}
 
 }
