@@ -5,7 +5,7 @@ package de.unistuttgart.iwb.multivalcatest;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.487
+ * @version 0.488
  */
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,15 +29,6 @@ class ProductSystemTest {
 	HashMap<Flow, Double> f = new HashMap<Flow, Double>();
 	LinkedList<Flow> vkp = new LinkedList<Flow>();
 	ProductSystem ProductP2 = ProductSystem.instance("PS1", f, vkp);
-	CategoryIndicator ci1 = CategoryIndicator.instance("CO2");
-	CategoryIndicator ci2 = CategoryIndicator.instance("SO2");
-	ImpactCategory ic1 = ImpactCategory.instance("Global Warming", ci1);
-	ImpactCategory ic2 = ImpactCategory.instance("Acidification", ci2);
-	CharacFactor cf11 = CharacFactor.instance("CF11", e1, ic1, 1.);
-	CharacFactor cf12 = CharacFactor.instance("CF12", e1, ic2, 10.);
-	CharacFactor cf21 = CharacFactor.instance("CF21", e2, ic1, 100.);
-	CharacFactor cf22 = CharacFactor.instance("CF22", e2, ic2, 1.);
-	LCIAMethod m1 = LCIAMethod.instance("M1");
 	
 	private void init1() {
 		ProductSystem.clear();
@@ -79,14 +70,6 @@ class ProductSystemTest {
 		ProductP2.addProzessmodul(Modul1);
 		ProductP2.addProzessmodul(Modul2);	
 	}
-	private void init2() {
-		m1.addCategory(ic1);
-		m1.addCategory(ic2);
-		m1.addFactor(cf11);
-		m1.addFactor(cf12);
-		m1.addFactor(cf21);
-		m1.addFactor(cf22);
-	}
 
 	@Test
 	void test01() {
@@ -123,17 +106,31 @@ class ProductSystemTest {
 	
 	@Test
 	void test03() {
+		CategoryIndicator ci1 = CategoryIndicator.instance("CO2");
+		CategoryIndicator ci2 = CategoryIndicator.instance("SO2");
+		ImpactCategory ic1 = ImpactCategory.instance("Global Warming", ci1);
+		ImpactCategory ic2 = ImpactCategory.instance("Acidification", ci2);
+		CharacFactor cf11 = CharacFactor.instance("CF11", e1, ic1, 1.);
+		CharacFactor.setLowerBound("CF11", 0.8);
+		CharacFactor.setUpperBound("CF11", 1.2);
+		CharacFactor cf12 = CharacFactor.instance("CF12", e1, ic2, 10.);
+		CharacFactor cf21 = CharacFactor.instance("CF21", e2, ic1, 100.);
+		CharacFactor.setLowerBound("CF21", 90.);
+		CharacFactor.setUpperBound("CF21", 110.);
+		CharacFactor cf22 = CharacFactor.instance("CF22", e2, ic2, 1.);
+		LCIAMethod m1 = LCIAMethod.instance("M1"); 
+		m1.addCategory(ic1);
+		m1.addCategory(ic2);
+		m1.addFactor(cf11);
+		m1.addFactor(cf12);
+		m1.addFactor(cf21);
+		m1.addFactor(cf22);
 		init1();
-		init2();
 		HashMap<ImpactCategory, HashMap<ValueType, Double>> ivm = Modul1.getImpactValueMap(m1);
-		System.out.println(ivm);
-		System.out.println(ic1.getName() + " " + ivm.keySet().contains(ic1));
-		for (ImpactCategory ici : ivm.keySet()) {
-			System.out.println(ici.getName());
-			System.out.println(ici + " " + ic1);
-			System.out.println(ImpactCategory.getAllInstances());
-		}
 		assertEquals(21000., ivm.get(ic1).get(ValueType.MeanValue), .001);
+		assertEquals(10200., ivm.get(ic2).get(ValueType.MeanValue), .001);
+		assertEquals(14140., ivm.get(ic1).get(ValueType.LowerBound), .001);
+		assertEquals(28940., ivm.get(ic1).get(ValueType.UpperBound), .001);
 	}
 
 }

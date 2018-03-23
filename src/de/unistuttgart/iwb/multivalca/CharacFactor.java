@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.45
+ * @version 0.488
  */
 
 public class CharacFactor {
@@ -143,16 +143,13 @@ public class CharacFactor {
 		HashMap<ValueType, Double> values = getInstance(name).getValues();
 		values.put(ValueType.LowerBound, lv);
 		new CharacFactor(name, getInstance(name).getFlow(), 
-				getInstance(name).getWirkung(), values);
-		
+				getInstance(name).getWirkung(), values);	
 	}
 	
 	public static void setUpperBound(String name, Double lv) {
 		HashMap<ValueType, Double> values = getInstance(name).getValues();
 		values.put(ValueType.UpperBound, lv);
 		new CharacFactor(name, getInstance(name).getFlow(), 
-				getInstance(name).getWirkung(), values);
-		
+				getInstance(name).getWirkung(), values);		
 	}
-
 }

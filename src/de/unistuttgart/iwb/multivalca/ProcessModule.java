@@ -11,7 +11,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * Diese Klasse dient zur Erzeugung von Prozessmodulen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.487
+ * @version 0.488
  */
 
 public class ProcessModule 
@@ -183,18 +183,17 @@ implements FlowValueMaps, ImpactValueMaps {
 	public HashMap<ImpactCategory, HashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
 		HashMap<ImpactCategory, HashMap<ValueType, Double>> wv =
 				new HashMap<ImpactCategory, HashMap<ValueType, Double>>();
-		HashMap<ValueType, Double> values = new HashMap<ValueType, Double>();
-		values.put(ValueType.MeanValue, 0.);
-		values.put(ValueType.LowerBound, 0.);
-		values.put(ValueType.UpperBound, 0.);
+		HashMap<ValueType, Double> values0 = new HashMap<ValueType, Double>();
+		values0.put(ValueType.MeanValue, 0.);
+		values0.put(ValueType.LowerBound, 0.);
+		values0.put(ValueType.UpperBound, 0.);
 		for (String wk : bm.categoryList().keySet()){
-			System.out.println(wk);
-			System.out.println(bm.categoryList().get(wk));
-			wv.put(bm.categoryList().get(wk), values);
+			wv.put(bm.categoryList().get(wk), values0);
 		}
 		for (String cfName : bm.getFactorSet().keySet()){
 			CharacFactor cf = bm.getFactorSet().get(cfName);
 			if (efv.containsKey(cf.getFlow())) {
+				HashMap<ValueType, Double> values = new HashMap<ValueType, Double>();				
 				double mv0 = wv.get(cf.getWirkung()).get(ValueType.MeanValue);
 				IvariScalar iv0 = new IvariScalar();
 				iv0.setLowerBound(wv.get(cf.getWirkung()).get(ValueType.LowerBound));
@@ -208,16 +207,13 @@ implements FlowValueMaps, ImpactValueMaps {
 				ivf.setLowerBound(efv.get(cf.getFlow()).get(ValueType.LowerBound));
 				ivf.setUpperBound(efv.get(cf.getFlow()).get(ValueType.UpperBound));
 				double mvr = mvc * mvf;
-				System.out.println(cfName + " " + mv0 + " " + mvc + " " + mvf + " " + mvr);
 				IvariScalar ivr = ivc.mult(ivf);
 				values.put(ValueType.MeanValue, mv0 + mvr);
-				values.put(ValueType.LowerBound, values.get(ValueType.LowerBound) + ivr.getLowerBound());
-				values.put(ValueType.UpperBound, values.get(ValueType.UpperBound) + ivr.getUpperBound());
+				values.put(ValueType.LowerBound, iv0.getLowerBound() + ivr.getLowerBound());
+				values.put(ValueType.UpperBound, iv0.getUpperBound() + ivr.getUpperBound());
 				wv.put(cf.getWirkung(), values);
-				System.out.println(values);
-			}			
+			}		
 		}
-		System.out.println(wv);
 		return wv;
 	}
 }
