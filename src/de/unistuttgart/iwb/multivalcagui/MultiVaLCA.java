@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.49
+ * @version 0.491
  */
 
 public class MultiVaLCA {
@@ -238,9 +238,13 @@ public class MultiVaLCA {
 	//
 	private JPanel panel_16 = new JPanel();	
 	private JLabel lblP16n1 = new JLabel();				// "Wirkungsabschätzung"
-	private JLabel lblP16n2 = new JLabel();				// "Object-Typ"
+	private JLabel lblP16n2 = new JLabel();				// "Objekttyp"
+	private JLabel lblP16n3 = new JLabel();				// "Objektname"
+	private JLabel lblP16n4 = new JLabel();				// "Bewertungsmethode"
 	private JButton btnP16n1 = new JButton(); 			// "Berechnungsergebnisse anzeigen
-	private JComboBox<String> cobP16n1 = new JComboBox<String>();	// Objekt-Typen
+	private JComboBox<String> cobP16n1 = new JComboBox<String>();	// Objekttypen
+	private JComboBox<String> cobP16n2 = new JComboBox<String>();	// Objektnamen
+	private JComboBox<String> cobP16n3 = new JComboBox<String>();	// Methoden
 
 	/**
 	 * Launch the application.
@@ -588,6 +592,10 @@ public class MultiVaLCA {
 		
 		panel_16.add(lblP16n2, "cell 1 1,grow");
 		panel_16.add(cobP16n1, "cell 2 1,grow");
+		panel_16.add(lblP16n3, "cell 1 2,grow");
+		panel_16.add(cobP16n2, "cell 2 2,grow");
+		panel_16.add(lblP16n4, "cell 1 3,grow");
+		panel_16.add(cobP16n3, "cell 2 3,grow");
 		
 		
 		btnP16n1.setEnabled(false);
@@ -1801,6 +1809,8 @@ public class MultiVaLCA {
 		public void actionPerformed(ActionEvent e) {
 			lblP16n1.setText(GuiStrings.getGS("p16n1", l));
 			lblP16n2.setText(GuiStrings.getGS("p16n2", l));
+			lblP16n3.setText(GuiStrings.getGS("p16n3", l));
+			lblP16n4.setText(GuiStrings.getGS("mp16", l));
 			btnP16n1.setText(GuiStrings.getGS("bt12", l));
 			HashMap<ObjectType, String> ot = ObjectTypeStringMap.getOTS(l);
 			String[] ota = new String[ot.size()];
