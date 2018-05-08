@@ -494,42 +494,34 @@ public class MultiVaLCA {
 		panel_12.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP12n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_12.add(lblP12n1, "flowy,cell 1 0 2 1,alignx center,growy");
-		
+		panel_12.add(lblP12n1, "flowy,cell 1 0 2 1,alignx center,growy");	
 		panel_12.add(lblP12n2, "cell 1 1,grow");		
 		txtP12n1.setText("");
 		panel_12.add(txtP12n1, "cell 2 1,grow");
-		txtP12n1.setColumns(10);			
-		
+		txtP12n1.setColumns(10);					
 		panel_12.add(lblP12n3, "cell 1 2,grow");	
 		txtP12n2.setText("");
 		panel_12.add(txtP12n2, "cell 2 2,grow");
-		txtP12n2.setColumns(10);
-		
+		txtP12n2.setColumns(10);		
 		panel_12.add(lblP12n4, "cell 1 3,grow");
 		txtP12n3.setText("");
 		panel_12.add(txtP12n3, "cell 2 3,grow");
-		txtP12n3.setColumns(10);
-		
+		txtP12n3.setColumns(10);		
 		panel_12.add(lblP12n5, "cell 1 4,grow");
 		txtP12n4.setText("");
 		panel_12.add(txtP12n4, "cell 2 4,grow");
 		txtP12n4.setColumns(10);	
-
-		panel_12.add(btnP12n1, "cell 1 5 2 1,alignx center");	
-		
+		panel_12.add(btnP12n1, "cell 1 5 2 1,alignx center");		
 		panel_12.add(lblP12n6, "cell 1 6,grow");	
 		txtP12n5.setText("");
 		panel_12.add(txtP12n5, "cell 2 6,grow");
 		txtP12n5.setColumns(10);
-		txtP12n5.setEnabled(false);	
-		
+		txtP12n5.setEnabled(false);			
 		panel_12.add(lblP12n7, "cell 1 7,grow");
 		txtP12n6.setText("");
 		panel_12.add(txtP12n6, "cell 2 7,grow");
 		txtP12n6.setColumns(10);		
-		txtP12n6.setEnabled(false);		
-		
+		txtP12n6.setEnabled(false);			
 		btnP12n2.setEnabled(false);
 		panel_12.add(btnP12n2, "cell 1 8 2 1,alignx center");
 		panel_12.add(lblP12n8, "cell 0 9 4 1,alignx center");				
@@ -548,36 +540,29 @@ public class MultiVaLCA {
 		panel_14.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP14n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_14.add(lblP14n1, "flowy,cell 1 0 2 1,alignx center,growy");
-		
+		panel_14.add(lblP14n1, "flowy,cell 1 0 2 1,alignx center,growy");		
 		panel_14.add(lblP14n2, "cell 1 1,grow");		
 		txtP14n1.setText("");
 		panel_14.add(txtP14n1, "cell 2 1,grow");
-		txtP14n1.setColumns(10);	
-		
+		txtP14n1.setColumns(10);			
 		btnP14n1.setEnabled(true);
-		panel_14.add(btnP14n1, "cell 1 2 2 1,alignx center");	
-		
+		panel_14.add(btnP14n1, "cell 1 2 2 1,alignx center");			
 		panel_14.add(lblP14n3, "cell 1 3,grow");		
 		txtP14n2.setText("");
 		panel_14.add(txtP14n2, "cell 2 3,grow");
 		txtP14n2.setColumns(10);	
-		txtP14n2.setEnabled(false);
-		
+		txtP14n2.setEnabled(false);		
 		btnP14n2.setEnabled(false);
-		panel_14.add(btnP14n2, "cell 1 4 2 1,alignx center");		
-		
+		panel_14.add(btnP14n2, "cell 1 4 2 1,alignx center");				
 		panel_14.add(lblP14n4, "cell 1 5,grow");		
 		txtP14n3.setText("");
 		panel_14.add(txtP14n3, "cell 2 5,grow");
 		txtP14n3.setColumns(10);	
-		txtP14n3.setEnabled(false);
-		
+		txtP14n3.setEnabled(false);		
 		btnP14n3.setEnabled(false);
 		panel_14.add(btnP14n3, "cell 1 6,alignx center");		
 		btnP14n4.setEnabled(false);
-		panel_14.add(btnP14n4, "cell 2 6,alignx center");	
-		
+		panel_14.add(btnP14n4, "cell 2 6,alignx center");			
 		panel_14.add(lblP14n5, "cell 0 7 4 1,alignx center");	
 		//
 		// Panel 15; Liste der Bewertungsmethoden
@@ -594,8 +579,7 @@ public class MultiVaLCA {
 		panel_16.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
 		lblP16n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_16.add(lblP16n1, "cell 1 0 2 1,alignx center,aligny top");
-		
+		panel_16.add(lblP16n1, "cell 1 0 2 1,alignx center,aligny top");		
 		panel_16.add(lblP16n2, "cell 1 1,grow");
 		panel_16.add(cobP16n1, "cell 2 1,grow");
 		panel_16.add(lblP16n3, "cell 1 2,grow");
@@ -603,12 +587,10 @@ public class MultiVaLCA {
 		panel_16.add(lblP16n4, "cell 1 3,grow");
 		panel_16.add(cobP16n3, "cell 2 3,grow");
 		panel_16.add(lblP16n5, "cell 1 4,grow");
-		panel_16.add(cobP16n4, "cell 2 4,grow");
-		
+		panel_16.add(cobP16n4, "cell 2 4,grow");	
 		cobP16n2.setEnabled(false);
 		cobP16n3.setEnabled(false);
-		cobP16n4.setEnabled(false);
-		
+		cobP16n4.setEnabled(false);		
 		btnP16n1.setEnabled(false);
 		panel_16.add(btnP16n1, "cell 1 5 2 0,alignx center");
 		panel_16.add(new JScrollPane(waTable), "cell 1 6 2 0,alignx center,aligny top");
