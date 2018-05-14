@@ -12,7 +12,7 @@ import de.unistuttgart.iwb.ivari.*;
  *  * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.493
+ * @version 0.494
  */
 
 public class ProductSystem 
