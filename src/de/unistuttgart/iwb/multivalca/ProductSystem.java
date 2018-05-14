@@ -12,7 +12,7 @@ import de.unistuttgart.iwb.ivari.*;
  *  * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.492
+ * @version 0.493
  */
 
 public class ProductSystem 
@@ -163,7 +163,9 @@ implements FlowValueMaps, ImpactValueMaps {
 			for (Flow key : modulVektor.keySet()) {		
 				if ((produktFlussliste.contains(key) == false) &&
 					(vorUndKoppelProdukte.contains(key) == false) &&
-					(m.getProduktflussvektor().get(key) != null))	{
+					(m.getProduktflussvektor().containsKey(key)) &&
+					(m.getProduktflussvektor().get(key).get(ValueType.MeanValue) != 0)
+					)	{
 					produktFlussliste.add(key);	
 				}				
 			}
