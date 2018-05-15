@@ -3,7 +3,7 @@
  */
 
 package de.unistuttgart.iwb.multivalca;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import de.unistuttgart.iwb.ivari.IvariScalar;
 
@@ -11,7 +11,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * Diese Klasse dient zur Erzeugung von Prozessmodulen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.488
+ * @version 0.495
  */
 
 public class ProcessModule 
@@ -19,15 +19,15 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	// Klassenvariable:
 	
-	private static HashMap<String, ProcessModule> allInstances = new HashMap<String, ProcessModule>();
+	private static LinkedHashMap<String, ProcessModule> allInstances = new LinkedHashMap<String, ProcessModule>();
 	
 	// Instanzvariablen:
 	
 	private String name;
-	private HashMap<Flow, HashMap<ValueType, Double>> efv = 
-			new HashMap<Flow, HashMap<ValueType, Double>>(); //Elementarflüsse
-	private HashMap<Flow, HashMap<ValueType, Double>> pfv = 
-			new HashMap<Flow, HashMap<ValueType, Double>>(); //Produktflüsse
+	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = 
+			new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); //Elementarflüsse
+	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pfv = 
+			new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); //Produktflüsse
 	
 	// Konstruktor:
 			
@@ -67,7 +67,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	 * ... alle vorhandenen Prozessmodule
 	 */
 	
-	public static HashMap<String, ProcessModule> getAllInstances() {
+	public static LinkedHashMap<String, ProcessModule> getAllInstances() {
 		return allInstances;
 	}
 	
@@ -126,16 +126,16 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	public void addFluss(Flow fluss, ValueType fvt, Double wert) {	
 		if (fluss.getType() == FlowType.Elementary) {
-			HashMap<ValueType, Double> valueMap = efv.get(fluss);
+			LinkedHashMap<ValueType, Double> valueMap = efv.get(fluss);
 			if (valueMap == null) {
-				valueMap = new HashMap<ValueType, Double>();
+				valueMap = new LinkedHashMap<ValueType, Double>();
 			}
 			valueMap.put(fvt, wert);
 			efv.put(fluss, valueMap);
 		} else { 
-			HashMap<ValueType, Double> valueMap = pfv.get(fluss);
+			LinkedHashMap<ValueType, Double> valueMap = pfv.get(fluss);
 			if (valueMap == null) {
-				valueMap = new HashMap<ValueType, Double>();
+				valueMap = new LinkedHashMap<ValueType, Double>();
 			}
 			valueMap.put(fvt, wert);
 			pfv.put(fluss, valueMap);
@@ -143,7 +143,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	}
 	
 	@Override
-	public HashMap<Flow, HashMap<ValueType, Double>> getElementarflussvektor() {
+	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getElementarflussvektor() {
 		return efv; 
 	}	
 	
@@ -153,7 +153,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	}
 	
 	@Override
-	public HashMap<Flow, HashMap<ValueType, Double>> getProduktflussvektor() {
+	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor() {
 		return pfv; 
 	}
 	
@@ -180,10 +180,10 @@ implements FlowValueMaps, ImpactValueMaps {
 	}
 
 	@Override
-	public HashMap<ImpactCategory, HashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
-		HashMap<ImpactCategory, HashMap<ValueType, Double>> wv =
-				new HashMap<ImpactCategory, HashMap<ValueType, Double>>();
-		HashMap<ValueType, Double> values0 = new HashMap<ValueType, Double>();
+	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
+		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wv =
+				new LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>>();
+		LinkedHashMap<ValueType, Double> values0 = new LinkedHashMap<ValueType, Double>();
 		values0.put(ValueType.MeanValue, 0.);
 		values0.put(ValueType.LowerBound, 0.);
 		values0.put(ValueType.UpperBound, 0.);
@@ -193,7 +193,7 @@ implements FlowValueMaps, ImpactValueMaps {
 		for (String cfName : bm.getFactorSet().keySet()){
 			CharacFactor cf = bm.getFactorSet().get(cfName);
 			if (efv.containsKey(cf.getFlow())) {
-				HashMap<ValueType, Double> values = new HashMap<ValueType, Double>();				
+				LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();				
 				double mv0 = wv.get(cf.getWirkung()).get(ValueType.MeanValue);
 				IvariScalar iv0 = new IvariScalar();
 				iv0.setLowerBound(wv.get(cf.getWirkung()).get(ValueType.LowerBound));

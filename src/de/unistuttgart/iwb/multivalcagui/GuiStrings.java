@@ -14,8 +14,8 @@ package de.unistuttgart.iwb.multivalcagui;
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.494";
-		String date = "14.05.2018";
+		String vn = " 0.495";
+		String date = "15.05.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;

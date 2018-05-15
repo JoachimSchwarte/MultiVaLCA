@@ -4,7 +4,7 @@
 
 package de.unistuttgart.iwb.multivalca;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Dieses Interface muss von all jenen Klassen implementiert werden,
@@ -13,11 +13,11 @@ import java.util.HashMap;
  * innerhalb einer Produktkomposition auftreten können.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.486
+ * @version 0.495
  */
 
 public interface ImpactValueMaps {
 	
-	public HashMap<ImpactCategory, HashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm);
+	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm);
 
 }

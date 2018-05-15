@@ -4,25 +4,25 @@
 
 package de.unistuttgart.iwb.multivalca;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.488
+ * @version 0.495
  */
 
 public class CharacFactor {
 	
 	// Klassenvariable:
 	
-	private static HashMap<String, CharacFactor> allInstances = new HashMap<String, CharacFactor>();
+	private static LinkedHashMap<String, CharacFactor> allInstances = new LinkedHashMap<String, CharacFactor>();
 	
 	// Instanzvariablen:
 	
 	private String name;
 	private Flow fluss;
 	private ImpactCategory wirkung;
-	private HashMap<ValueType, Double> werte;
+	private LinkedHashMap<ValueType, Double> werte;
 	
 	// Konstruktoren:
 
@@ -31,14 +31,14 @@ public class CharacFactor {
 		this.name = name;
 		this.fluss = fluss;
 		this.wirkung = wirkung;
-		this.werte = new HashMap<ValueType, Double>();
+		this.werte = new LinkedHashMap<ValueType, Double>();
 		this.werte.put(ValueType.MeanValue, wert);
 		this.werte.put(ValueType.LowerBound, wert);
 		this.werte.put(ValueType.UpperBound, wert);
 		allInstances.put(name, this);
 	}
 	
-	private CharacFactor(String name, Flow fluss, ImpactCategory wirkung, HashMap<ValueType, Double> werte) {
+	private CharacFactor(String name, Flow fluss, ImpactCategory wirkung, LinkedHashMap<ValueType, Double> werte) {
 		super();
 		this.name = name;
 		this.fluss = fluss;
@@ -75,7 +75,7 @@ public class CharacFactor {
 	 * ... alle vorhandenen Charakterisierungsfaktoren
 	 */
 	
-	public static HashMap<String, CharacFactor> getAllInstances() {
+	public static LinkedHashMap<String, CharacFactor> getAllInstances() {
 		return allInstances;
 	}
 	
@@ -119,7 +119,7 @@ public class CharacFactor {
 		return werte.get(vt);
 	}
 	
-	public HashMap<ValueType, Double> getValues() {
+	public LinkedHashMap<ValueType, Double> getValues() {
 		return werte;
 	}
 
@@ -140,14 +140,14 @@ public class CharacFactor {
 	}
 	
 	public static void setLowerBound(String name, Double lv) {
-		HashMap<ValueType, Double> values = getInstance(name).getValues();
+		LinkedHashMap<ValueType, Double> values = getInstance(name).getValues();
 		values.put(ValueType.LowerBound, lv);
 		new CharacFactor(name, getInstance(name).getFlow(), 
 				getInstance(name).getWirkung(), values);	
 	}
 	
 	public static void setUpperBound(String name, Double lv) {
-		HashMap<ValueType, Double> values = getInstance(name).getValues();
+		LinkedHashMap<ValueType, Double> values = getInstance(name).getValues();
 		values.put(ValueType.UpperBound, lv);
 		new CharacFactor(name, getInstance(name).getFlow(), 
 				getInstance(name).getWirkung(), values);		

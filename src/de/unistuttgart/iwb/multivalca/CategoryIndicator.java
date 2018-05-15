@@ -4,18 +4,18 @@
 
 package de.unistuttgart.iwb.multivalca;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.488
+ * @version 0.495
  */
 
 public class CategoryIndicator {
 	
 	// Klassenvariable:
 	
-		private static HashMap<String, CategoryIndicator> allInstances = new HashMap<String, CategoryIndicator>();
+		private static LinkedHashMap<String, CategoryIndicator> allInstances = new LinkedHashMap<String, CategoryIndicator>();
 	
 	// Instanzvariablen:
 	

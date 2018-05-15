@@ -4,26 +4,26 @@
 
 package de.unistuttgart.iwb.multivalca;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.488
+ * @version 0.495
  */
 
 public class LCIAMethod {
 	
 	// Klassenvariable:
 	
-	private static HashMap<String, LCIAMethod> allInstances = new HashMap<String, LCIAMethod>();
+	private static LinkedHashMap<String, LCIAMethod> allInstances = new LinkedHashMap<String, LCIAMethod>();
 	
 	// Instanzvariablen:
 	
 	private String name;
-	private HashMap<String, CharacFactor> faktorSet = 
-			new HashMap<String, CharacFactor>();
-	private HashMap<String, ImpactCategory> wkl = 
-			new HashMap<String, ImpactCategory>();
+	private LinkedHashMap<String, CharacFactor> faktorSet = 
+			new LinkedHashMap<String, CharacFactor>();
+	private LinkedHashMap<String, ImpactCategory> wkl = 
+			new LinkedHashMap<String, ImpactCategory>();
 
 	// Konstruktor:
 	
@@ -61,7 +61,7 @@ public class LCIAMethod {
 	 * ... alle vorhandenen Bewertungsmethoden
 	 */
 	 
-	public static HashMap<String, LCIAMethod> getAllLMs() {
+	public static LinkedHashMap<String, LCIAMethod> getAllLMs() {
 		return allInstances;
 	}
 	
@@ -114,7 +114,7 @@ public class LCIAMethod {
 	 * ... Liste aller vorhandenen Charakterisierungsfaktoren
 	 */
 	
-	public HashMap<String, CharacFactor> getFactorSet() {
+	public LinkedHashMap<String, CharacFactor> getFactorSet() {
 		return faktorSet;
 	}
 	
@@ -135,11 +135,11 @@ public class LCIAMethod {
 	 * addWK(...) explizit der Liste hinzugefügt wurden.
 	 */
 	
-	public HashMap<String, ImpactCategory> categoryList() {	
+	public LinkedHashMap<String, ImpactCategory> categoryList() {	
 		return wkl;
 	}
 	
-	public static HashMap<String, LCIAMethod> getAllInstances() {
+	public static LinkedHashMap<String, LCIAMethod> getAllInstances() {
 		return allInstances;
 	}
 	

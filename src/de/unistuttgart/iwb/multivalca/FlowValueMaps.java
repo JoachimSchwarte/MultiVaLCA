@@ -3,7 +3,7 @@
  */
 
 package de.unistuttgart.iwb.multivalca;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Dieses Interface muss von all jenen Klassen implementiert werden,
@@ -13,7 +13,7 @@ import java.util.HashMap;
  * auftreten können.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.21
+ * @version 0.495
  */
 
 public interface FlowValueMaps {
@@ -23,7 +23,7 @@ public interface FlowValueMaps {
 	 * ... den Elementarflussvektor des aktuellen Objekts.
 	 */
 	
-	public HashMap<Flow, HashMap<ValueType, Double>> getElementarflussvektor();
+	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getElementarflussvektor();
 	
 	/**
 	 * @return
@@ -37,5 +37,5 @@ public interface FlowValueMaps {
 	 * ... den Produktflussvektor des aktuellen Objekts.
 	 */
 	
-	public HashMap<Flow, HashMap<ValueType, Double>> getProduktflussvektor();
+	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor();
 }

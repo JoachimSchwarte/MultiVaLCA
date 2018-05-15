@@ -28,7 +28,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.482
+ * @version 0.495
  */
 
 class XMLExportAction extends AbstractAction {

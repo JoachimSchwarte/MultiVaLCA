@@ -5,12 +5,12 @@ package de.unistuttgart.iwb.multivalcatest;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.488
+ * @version 0.495
  */
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ class ProductSystemTest {
 	Flow p2 = Flow.instance("P2", FlowType.Product, FlowUnit.Items);
 	ProcessModule Modul1 = ProcessModule.instance("M1");
 	ProcessModule Modul2 = ProcessModule.instance("M2");
-	HashMap<Flow, Double> f = new HashMap<Flow, Double>();
+	LinkedHashMap<Flow, Double> f = new LinkedHashMap<Flow, Double>();
 	LinkedList<Flow> vkp = new LinkedList<Flow>();
 	ProductSystem ProductP2 = ProductSystem.instance("PS1", f, vkp);
 	
@@ -74,8 +74,8 @@ class ProductSystemTest {
 	@Test
 	void test01() {
 		init1();
-		HashMap<Flow, HashMap<ValueType, Double>> efv = Modul1.getElementarflussvektor();
-		HashMap<ValueType, Double> vv = efv.get(r1);
+		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = Modul1.getElementarflussvektor();
+		LinkedHashMap<ValueType, Double> vv = efv.get(r1);
 		assertEquals(-1000., vv.get(ValueType.MeanValue), .001);
 		assertEquals(-950., vv.get(ValueType.UpperBound), .001);
 		assertEquals(-1050., vv.get(ValueType.LowerBound), .001);
@@ -84,8 +84,8 @@ class ProductSystemTest {
 	@Test
 	void test02() {
 		init1();
-		HashMap<Flow, HashMap<ValueType, Double>> efv = ProductP2.getElementarflussvektor();
-		HashMap<ValueType, Double> vv = efv.get(r1);
+		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = ProductP2.getElementarflussvektor();
+		LinkedHashMap<ValueType, Double> vv = efv.get(r1);
 		assertEquals(-3300., vv.get(ValueType.MeanValue), .001);
 		assertEquals(-3655., vv.get(ValueType.LowerBound), .001);
 		assertEquals(-2955., vv.get(ValueType.UpperBound), .001);
@@ -126,7 +126,7 @@ class ProductSystemTest {
 		m1.addFactor(cf21);
 		m1.addFactor(cf22);
 		init1();
-		HashMap<ImpactCategory, HashMap<ValueType, Double>> ivm = Modul1.getImpactValueMap(m1);
+		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> ivm = Modul1.getImpactValueMap(m1);
 		assertEquals(21000., ivm.get(ic1).get(ValueType.MeanValue), .001);
 		assertEquals(10200., ivm.get(ic2).get(ValueType.MeanValue), .001);
 		assertEquals(14140., ivm.get(ic1).get(ValueType.LowerBound), .001);

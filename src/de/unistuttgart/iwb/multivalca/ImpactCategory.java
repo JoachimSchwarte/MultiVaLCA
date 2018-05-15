@@ -4,18 +4,18 @@
 
 package de.unistuttgart.iwb.multivalca;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.488
+ * @version 0.495
  */
 
 public class ImpactCategory {
 	
 	// Klassenvariable:
 	
-	private static HashMap<String, ImpactCategory> allInstances = new HashMap<String, ImpactCategory>();
+	private static LinkedHashMap<String, ImpactCategory> allInstances = new LinkedHashMap<String, ImpactCategory>();
 	
 	// Instanzvariablen:
 	
@@ -58,7 +58,7 @@ public class ImpactCategory {
 	 * ... alle vorhandenen Wirkungskategorien
 	 */
 	
-	public static HashMap<String, ImpactCategory> getAllInstances() {
+	public static LinkedHashMap<String, ImpactCategory> getAllInstances() {
 		return allInstances;
 	}
 	

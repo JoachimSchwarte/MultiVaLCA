@@ -6,7 +6,7 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import javax.swing.AbstractAction;
@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.483
+ * @version 0.495
  */
 
 class XMLImportAction extends AbstractAction {
@@ -92,7 +92,7 @@ class XMLImportAction extends AbstractAction {
 						String pmname = "";	
 						String fvename = "";	
 						String fvemenge = "";
-						HashMap<Flow, HashMap<ValueType, Double>> pmfv = new HashMap<Flow, HashMap<ValueType, Double>>();						
+						LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pmfv = new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();						
 						for (int j = 0; j < nlc.getLength(); j++) {							
 							if (nlc.item(j).getNodeName().equals("ModuleName")) {									
 								pmname = nlc.item(j).getTextContent();
@@ -109,21 +109,21 @@ class XMLImportAction extends AbstractAction {
 											if (nlc3.item(l).getNodeName().equals("EFV-MainValue")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<ValueType, Double> vt = new HashMap<ValueType, Double>();
+												LinkedHashMap<ValueType, Double> vt = new LinkedHashMap<ValueType, Double>();
 												vt.put(ValueType.MeanValue, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 											if (nlc3.item(l).getNodeName().equals("EFV-LowerBound")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												LinkedHashMap<ValueType, Double> vt = pmfv.get(akFluss);
 												vt.put(ValueType.LowerBound, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 											if (nlc3.item(l).getNodeName().equals("EFV-UpperBound")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												LinkedHashMap<ValueType, Double> vt = pmfv.get(akFluss);
 												vt.put(ValueType.UpperBound, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
@@ -143,21 +143,21 @@ class XMLImportAction extends AbstractAction {
 											if (nlc3.item(l).getNodeName().equals("PFV-MainValue")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<ValueType, Double> vt = new HashMap<ValueType, Double>();
+												LinkedHashMap<ValueType, Double> vt = new LinkedHashMap<ValueType, Double>();
 												vt.put(ValueType.MeanValue, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 											if (nlc3.item(l).getNodeName().equals("PFV-LowerBound")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												LinkedHashMap<ValueType, Double> vt = pmfv.get(akFluss);
 												vt.put(ValueType.LowerBound, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
 											if (nlc3.item(l).getNodeName().equals("PFV-UpperBound")) {
 												fvemenge = nlc3.item(l).getTextContent();
 												Flow akFluss = Flow.getInstance(fvename);
-												HashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												LinkedHashMap<ValueType, Double> vt = pmfv.get(akFluss);
 												vt.put(ValueType.UpperBound, Double.parseDouble(fvemenge));
 												pmfv.put(akFluss, vt);
 											}
@@ -178,14 +178,14 @@ class XMLImportAction extends AbstractAction {
 					if (nl.getLength() != 0) {
 						ProductSystem.clear();
 					}
-					HashMap<String, LinkedList<String>> mnls = new HashMap<String, LinkedList<String>>();
+					LinkedHashMap<String, LinkedList<String>> mnls = new LinkedHashMap<String, LinkedList<String>>();
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String psname = "";	
 						String bvename = "";
 						String bvemenge = "";	
 						LinkedList<String> mnl = new LinkedList<String>();
-						HashMap<Flow, Double> bv = new HashMap<Flow, Double>();
+						LinkedHashMap<Flow, Double> bv = new LinkedHashMap<Flow, Double>();
 						LinkedList<Flow> vuk = new LinkedList<Flow>();
 						for (int j = 0; j < nlc.getLength(); j++) {	
 							if (nlc.item(j).getNodeName().equals("PS-Name")) {

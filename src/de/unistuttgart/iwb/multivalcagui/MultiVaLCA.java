@@ -11,7 +11,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -32,13 +32,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-
 import de.unistuttgart.iwb.multivalca.*;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.494
+ * @version 0.495
  */
 
 public class MultiVaLCA {
@@ -708,7 +707,7 @@ public class MultiVaLCA {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP01n1.getText();
-				HashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
+				LinkedHashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
 				String typs = comboBox.getItemAt(comboBox.getSelectedIndex());
 				FlowType typ = FlowType.Elementary;
 				for (FlowType fte : ft.keySet()) {
@@ -928,7 +927,7 @@ public class MultiVaLCA {
 					if (nameVorhanden == true) {
 						lblP03n7.setText(GuiStrings.getGS("stat03", l));
 					} else {
-						ProductSystem.instance(name, new HashMap<Flow, Double>(), 
+						ProductSystem.instance(name, new LinkedHashMap<Flow, Double>(), 
 								new LinkedList<Flow>());
 						lblP03n7.setText(GuiStrings.getGS("stat12", l) + 
 								ProductSystem.getAllInstances().size() + GuiStrings.getGS("stat05", l));
@@ -1491,7 +1490,7 @@ public class MultiVaLCA {
 			lblP01n4.setText(GuiStrings.getGS("p01n4", l));
 			lblP01n5.setText(GuiStrings.getGS("stat01", l));
 			btnP01n1.setText(GuiStrings.getGS("bt01", l));
-			HashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
+			LinkedHashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
 			String[] fta = new String[ft.size()];
 			int i=0;
 			for (FlowType f : FlowType.values()) {
@@ -1708,7 +1707,7 @@ public class MultiVaLCA {
 			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("mp11", l));
 			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p01n3", l));
 			tcm.getColumn(3).setHeaderValue(GuiStrings.getGS("p02n4", l));
-			HashMap<Flow, HashMap<ValueType, Double>> sysErgebnis = new HashMap<Flow, HashMap<ValueType, Double>>();
+			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> sysErgebnis = new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 			if (ProductSystem.getAllInstances().size() > 0) {
 				for(String sysName : ProductSystem.getAllInstances().keySet()) {
 					lciTableModel.addRow(new Object[] {sysName,"","",""});
@@ -1724,6 +1723,16 @@ public class MultiVaLCA {
 								}
 							}
 						}
+/*						if (sysAktuell.getProduktflussvektor().size() > 0) {
+							sysErgebnis = sysAktuell.getProduktflussvektor();
+							for(Flow sysFluss : sysErgebnis.keySet()){
+								for (ValueType vt : sysAktuell.getProduktflussvektor().get(sysFluss).keySet()) {
+									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
+											ValueTypeStringMap.getFVTS(l).get(vt),								
+											sysErgebnis.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
+								}
+							}
+						} */
 					} catch (ArithmeticException vz) {
 							lciTableModel.addRow(new Object[] 
 									{"",vz.getMessage(),"",""});					
@@ -1899,7 +1908,7 @@ public class MultiVaLCA {
 			tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp14", l));
 			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p11n1", l));
 			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p16n5", l));
-			HashMap<ObjectType, String> ot = ObjectTypeStringMap.getOTS(l);
+			LinkedHashMap<ObjectType, String> ot = ObjectTypeStringMap.getOTS(l);
 			String[] ota = new String[ot.size()];
 			int i=0;
 			for (ObjectType o : ObjectType.values()) {
@@ -1909,7 +1918,7 @@ public class MultiVaLCA {
 			}
 			cobP16n1.setModel(new DefaultComboBoxModel<String>(ota));
 			
-			HashMap<ValueType, String> vt = ValueTypeStringMap.getFVTS(l);
+			LinkedHashMap<ValueType, String> vt = ValueTypeStringMap.getFVTS(l);
 			String[] vta = new String[vt.size()];		
 			i=0;
 			for (ValueType v : ValueType.values()) {

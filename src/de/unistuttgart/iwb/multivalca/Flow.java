@@ -4,7 +4,7 @@
 
 package de.unistuttgart.iwb.multivalca;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 /**
@@ -13,14 +13,14 @@ import java.util.Set;
  * Instanzvariablen zur Verfügung.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.21
+ * @version 0.495
  */
 
 public class Flow {	
 	
 	// Klassenvariable:
 	
-	private static HashMap<String,Flow> allInstances = new HashMap<String,Flow>();
+	private static LinkedHashMap<String,Flow> allInstances = new LinkedHashMap<String,Flow>();
 	
 	// Instanzvariablen:	
 
@@ -65,7 +65,7 @@ public class Flow {
 	 * ... alle vorhandenen Flussobjekte
 	 */
 	
-	public static HashMap<String,Flow> getAllInstances() {
+	public static LinkedHashMap<String,Flow> getAllInstances() {
 		return allInstances;
 	}
 	
