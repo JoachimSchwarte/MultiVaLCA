@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.5
  */
 
 public class MultiVaLCA {
@@ -945,12 +945,16 @@ public class MultiVaLCA {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String modname = txtP03n2.getText();
-				if (modname.equals("") || modname.equals(txtP03n1.getText())) {
+				if (modname.equals("") || modname.equals(txtP03n1.getText()) ||
+						ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulliste().contains(ProcessModule.getInstance(modname))) {
 					if (modname.equals("")) {
 						lblP03n7.setText(GuiStrings.getGS("stat07", l));
 					}
 					if (modname.equals(txtP03n1.getText())) {
 						lblP03n7.setText(GuiStrings.getGS("stat13", l));
+					}
+					if (ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulliste().contains(ProcessModule.getInstance(modname)) ) {
+						lblP03n7.setText(GuiStrings.getGS("stat31", l));
 					}
 				} else {
 					boolean nameVorhanden = false;
