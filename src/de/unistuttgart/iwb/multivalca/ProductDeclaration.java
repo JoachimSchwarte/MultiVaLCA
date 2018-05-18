@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
  * von Objekten des Typs "Produktdeklaration".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.501
+ * @version 0.502
  */
 
 public class ProductDeclaration 
@@ -118,6 +118,7 @@ implements ImpactValueMaps {
 		return bm;
 	}
 	
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -144,6 +145,7 @@ implements ImpactValueMaps {
 		bm = bm1;
 	}
 
+	@Override
 	public void setName(String string) {
 		NameCheck.removeWVName(this.name);
 		NameCheck.getInstance().addWVName(string);

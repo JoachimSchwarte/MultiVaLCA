@@ -13,11 +13,13 @@ import java.util.LinkedHashMap;
  * innerhalb einer Produktkomposition auftreten können.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.502
  */
 
 public interface ImpactValueMaps {
 	
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm);
+	public String getName();
+	public void setName(String string);
 
 }
