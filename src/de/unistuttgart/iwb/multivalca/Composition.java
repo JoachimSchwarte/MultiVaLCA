@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * von Objekten des Typs "Komposition".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.502
+ * @version 0.503
  */
 
 public class Composition 
@@ -129,15 +129,23 @@ return name;
 
 @Override
 public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
-LinkedHashMap<ImpactCategory, Double> wv =
-		new LinkedHashMap<ImpactCategory, Double>();
+LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wv =
+		new LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>>();
 for (String wkName : bm.categoryList().keySet()){
 	ImpactCategory wk = bm.categoryList().get(wkName);
-	wv.put(wk, 0.);
+	LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+	for (ValueType vt : values.keySet()) {
+		values.put(vt, 0.);
+	}
+	wv.put(wk, values);
 }
 for (ImpactValueMaps wvKomponente : zusammensetzung){
 	for (ImpactCategory kategorie : wvKomponente.getImpactValueMap(bm).keySet()){
-		wv.put(kategorie, wv.get(kategorie) + wvKomponente.getImpactValueMap(bm).get(kategorie));
+		LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+		for (ValueType vt : values.keySet()) {
+			values.put(vt, wv.get(kategorie).get(vt) + wvKomponente.getImpactValueMap(bm).get(kategorie).get(vt));
+		}
+		wv.put(kategorie, values);
 	}
 }
 return wv;

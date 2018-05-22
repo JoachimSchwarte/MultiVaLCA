@@ -11,7 +11,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * Diese Klasse dient zur Erzeugung von Prozessmodulen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.503
  */
 
 public class ProcessModule 

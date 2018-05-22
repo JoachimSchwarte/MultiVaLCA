@@ -5,14 +5,13 @@
 package de.unistuttgart.iwb.multivalca;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedHashMap;
 
 /**
  * Diese Klasse dient zur Erzeugung und Nutzung
  * von Objekten des Typs "Komponente".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.502
+ * @version 0.503
  */
 
 public class Component 
@@ -172,10 +171,14 @@ implements ImpactValueMaps {
 		if (Composition.containsName(kompoName)) {
 			komponente = Composition.getInstance(kompoName);					
 		}
-		LinkedHashMap<ImpactCategory, Double> wvKomponente = komponente.getImpactValueMap(bm);
-		for (String wkName : bm.kategorieListe().keySet()){
-			ImpactCategory wk = bm.kategorieListe().get(wkName);
-			wvKomponente.put(wk, wvKomponente.get(wk)*menge);
+		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wvKomponente = komponente.getImpactValueMap(bm);
+		for (String wkName : bm.categoryList().keySet()){
+			ImpactCategory wk = bm.categoryList().get(wkName);
+			LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+			for (ValueType vt : values.keySet()) {
+				values.put(vt, values.get(vt)*menge);
+			}
+			wvKomponente.put(wk, values);
 		}
 		return wvKomponente;
 	}

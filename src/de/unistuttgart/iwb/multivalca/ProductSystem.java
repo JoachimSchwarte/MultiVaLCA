@@ -12,7 +12,7 @@ import de.unistuttgart.iwb.ivari.*;
  *  * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.5
+ * @version 0.503
  */
 
 public class ProductSystem 
@@ -69,7 +69,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	 * ... den Wahrheitswert, den die Überprüfung liefert
 	 */
 	
-	public boolean containsName(String string) {
+	public static boolean containsName(String string) {
 		return allInstances.containsKey(string);
 	}
 	
