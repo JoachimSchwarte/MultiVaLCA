@@ -8,13 +8,13 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.504
+ * @version 0.505
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.504";
+		String vn = " 0.505";
 		String date = "22.05.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
@@ -161,6 +161,7 @@ public class GuiStrings {
 			case "mp47e": r = "Liste der Produktdeklarationen"; break;
 			case "mp48e": r = "Liste der Komponenten"; break;
 			case "mp49e": r = "Liste der Kompositionen"; break;
+			case "p17n2": r = "Name des zu deklarierenden Produkts"; break;
 
 			}		
 		}	
@@ -309,6 +310,7 @@ public class GuiStrings {
 			case "mp47e": r = "List of Product Declarations"; break;
 			case "mp48e": r = "List of Components"; break;
 			case "mp49e": r = "List of Compositions"; break;
+			case "p17n2": r = "Name of the Product to declare"; break;
 		
 			}		
 		}

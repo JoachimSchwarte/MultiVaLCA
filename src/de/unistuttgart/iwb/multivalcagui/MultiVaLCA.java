@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.504
+ * @version 0.505
  */
 
 public class MultiVaLCA {
@@ -260,7 +260,25 @@ public class MultiVaLCA {
 	// Panel 17; Neue Produktdeklaration
 	//
 	private JPanel panel_17 = new JPanel();
-	private JLabel lblP17n1 = new JLabel();
+	private JLabel lblP17n1 = new JLabel();				// "neue Produktdeklaration"
+	private JLabel lblP17n2 = new JLabel();				// "Name des ..."
+	private JLabel lblP17n3 = new JLabel();				// "Bewertungsmethode"
+	private JLabel lblP17n4 = new JLabel();				// "Wirkungskategorie"
+	private JLabel lblP17n5 = new JLabel();				// "Menge"
+	private JLabel lblP17n6 = new JLabel();				// "Untergrenze"
+	private JLabel lblP17n7 = new JLabel();				// "Obergrenze"
+	private JLabel lblP17n8 = new JLabel();				// Status
+	private JButton btnP17n1 = new JButton(); 			// "neue Produktdeklaration anlegen"
+	private JButton btnP17n2 = new JButton(); 			// "Wirkungsabschätzung hinzufügen"
+	private JButton btnP17n3 = new JButton(); 			// "Grenzwerte bestätigen"
+	private JButton btnP17n4 = new JButton(); 			// "fertig"
+	private JTextField txtP17n1 = new JTextField();		// Eingabefeld Produkt-Name
+	private JTextField txtP17n2 = new JTextField();		// Eingabefeld LCIA-Method
+	private JTextField txtP17n3 = new JTextField();		// Eingabefeld Wirkungskategorie
+	private JTextField txtP17n4 = new JTextField();		// Eingabefeld LCIA-Name
+	private JTextField txtP17n5 = new JTextField();		// Eingabefeld Untergrenze
+	private JTextField txtP17n6 = new JTextField();		// Eingabefeld Obergrenze
+	
 	//
 	// Panel 18; Neue Komponente
 	//
@@ -635,9 +653,78 @@ public class MultiVaLCA {
 		//
 		panel.add(panel_17, "neuDekl");
 		panel_17.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));
 		lblP17n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_17.add(lblP17n1, "flowy,cell 1 0 2 1,alignx center,growy");	
+		
+		panel_17.add(lblP17n2, "cell 1 1,grow");		
+		txtP17n1.setText("");
+		panel_17.add(txtP17n1, "cell 2 1,grow");
+		txtP17n1.setColumns(10);
+		panel_17.add(lblP17n3, "cell 1 2,grow");		
+		txtP17n2.setText("");
+		panel_17.add(txtP17n2, "cell 2 2,grow");
+		txtP17n2.setColumns(10);		
+		panel_17.add(btnP17n1, "cell 1 3 2 1,alignx center");		
+		panel_17.add(lblP17n4, "cell 1 4,grow");	
+		txtP17n3.setText("");
+		panel_17.add(txtP17n3, "cell 2 4,grow");
+		txtP17n3.setColumns(10);
+		txtP17n3.setEnabled(false);	
+		panel_17.add(lblP17n5, "cell 1 5,grow");
+		txtP17n4.setText("");
+		panel_17.add(txtP17n4, "cell 2 5,grow");
+		txtP17n4.setColumns(10);
+		txtP17n4.setEnabled(false);				
+		btnP17n2.setEnabled(false);
+		panel_17.add(btnP17n2, "cell 1 6 2 1,alignx center");		
+		panel_17.add(lblP17n6, "cell 1 7,grow");	
+		txtP17n5.setText("");
+		panel_17.add(txtP17n5, "cell 2 7,grow");
+		txtP17n5.setColumns(10);
+		txtP17n5.setEnabled(false);	
+		panel_17.add(lblP17n7, "cell 1 8,grow");
+		txtP17n6.setText("");
+		panel_17.add(txtP17n6, "cell 2 8,grow");
+		txtP17n6.setColumns(10);
+		txtP17n6.setEnabled(false);	
+		
+		btnP17n3.setEnabled(false);
+		panel_17.add(btnP17n3, "cell 1 9,alignx center");
+		btnP17n4.setEnabled(false);
+		panel_17.add(btnP17n4, "cell 2 9,alignx center");
+		panel_17.add(lblP17n8, "cell 0 10 4 1,alignx center");	
+		
+/*		
+		panel_02.add(btnP02n1, "cell 1 2 2 1,alignx center");		
+		panel_02.add(lblP02n3, "cell 1 3,grow");	
+		txtP02n2.setText("");
+		panel_02.add(txtP02n2, "cell 2 3,grow");
+		txtP02n2.setColumns(10);
+		txtP02n2.setEnabled(false);	
+		panel_02.add(lblP02n4, "cell 1 4,grow");
+		txtP02n3.setText("");
+		panel_02.add(txtP02n3, "cell 2 4,grow");
+		txtP02n3.setColumns(10);
+		txtP02n3.setEnabled(false);		
+		btnP02n2.setEnabled(false);
+		panel_02.add(btnP02n2, "cell 1 5 2 1,alignx center");	
+		panel_02.add(lblP02n6, "cell 1 6,grow");	
+		txtP02n4.setText("");
+		panel_02.add(txtP02n4, "cell 2 6,grow");
+		txtP02n4.setColumns(10);
+		txtP02n4.setEnabled(false);	
+		panel_02.add(lblP02n7, "cell 1 7,grow");
+		txtP02n5.setText("");
+		panel_02.add(txtP02n5, "cell 2 7,grow");
+		txtP02n5.setColumns(10);
+		txtP02n5.setEnabled(false);		
+		btnP02n4.setEnabled(false);
+		panel_02.add(btnP02n4, "cell 1 8,alignx center");
+		btnP02n3.setEnabled(false);
+		panel_02.add(btnP02n3, "cell 2 8,alignx center");
+		panel_02.add(lblP02n5, "cell 0 9 4 1,alignx center");	
+		*/
 		//
 		// Panel 18; Neue Komponente
 		//
@@ -2070,6 +2157,17 @@ public class MultiVaLCA {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			lblP17n1.setText(GuiStrings.getGS("p17n1", l));
+			lblP17n2.setText(GuiStrings.getGS("p17n2", l));
+			lblP17n3.setText(GuiStrings.getGS("mp16", l));
+			btnP17n1.setText(GuiStrings.getGS("mp17e", l));
+			lblP17n4.setText(GuiStrings.getGS("mp14", l));
+			lblP17n5.setText(GuiStrings.getGS("p02n4", l));
+			btnP17n2.setText(GuiStrings.getGS("bt11", l));
+			lblP17n6.setText(GuiStrings.getGS("p02n5", l));
+			lblP17n7.setText(GuiStrings.getGS("p02n6", l));
+			btnP17n3.setText(GuiStrings.getGS("bt10", l));
+			btnP17n4.setText(GuiStrings.getGS("bt04", l));
+			lblP17n8.setText(GuiStrings.getGS("stat01", l));
 			
 			
 			cl.show(panel, "neuDekl");
