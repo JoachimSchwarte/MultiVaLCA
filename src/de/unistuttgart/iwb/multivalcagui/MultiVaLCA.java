@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.5
+ * @version 0.504
  */
 
 public class MultiVaLCA {
@@ -65,6 +65,12 @@ public class MultiVaLCA {
 	private final Action newLCIAAction 			= new newLCIAAction();
 	private final Action listLCIAAction 		= new listLCIAAction();
 	private final Action calculateLCIAAction 	= new calculateLCIAAction();	
+	private final Action newDeclarationAction 	= new newDeclarationAction();
+	private final Action newComponentAction 	= new newComponentAction();
+	private final Action newCompositionAction 	= new newCompositionAction();
+	private final Action listDeclarationAction 	= new listDeclarationAction();
+	private final Action listComponentAction 	= new listComponentAction();
+	private final Action listCompositionAction 	= new listCompositionAction();
 	
 	//
 	// Panel 1; Neuer Fluss
@@ -250,6 +256,37 @@ public class MultiVaLCA {
 	private JComboBox<String> cobP16n4 = new JComboBox<String>();	// Werttypen
 	private JTable waTable 		= new JTable();
 	DefaultTableModel waTableModel 		= new DefaultTableModel(0,3);
+	//
+	// Panel 17; Neue Produktdeklaration
+	//
+	private JPanel panel_17 = new JPanel();
+	private JLabel lblP17n1 = new JLabel();
+	//
+	// Panel 18; Neue Komponente
+	//
+	private JPanel panel_18 = new JPanel();
+	private JLabel lblP18n1 = new JLabel();
+	//
+	// Panel 19; Neue Komposition
+	//
+	private JPanel panel_19 = new JPanel();
+	private JLabel lblP19n1 = new JLabel();
+	//
+	// Panel 20; Liste der Deklarationen
+	//
+	private JPanel panel_20 = new JPanel();
+	private JLabel lblP20n1 = new JLabel();
+	//
+	// Panel 21; Liste der Komponenten
+	//
+	private JPanel panel_21 = new JPanel();
+	private JLabel lblP21n1 = new JLabel();
+	//
+	// Panel 22; Liste der Kompositionen
+	//
+	private JPanel panel_22 = new JPanel();
+	private JLabel lblP22n1 = new JLabel();
+
 
 	/**
 	 * Launch the application.
@@ -593,6 +630,54 @@ public class MultiVaLCA {
 		btnP16n1.setEnabled(false);
 		panel_16.add(btnP16n1, "cell 1 5 2 0,alignx center");
 		panel_16.add(new JScrollPane(waTable), "cell 1 6 2 0,alignx center,aligny top");
+		//
+		// Panel 17; Neue Produktdeklaration
+		//
+		panel.add(panel_17, "neuDekl");
+		panel_17.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
+		lblP17n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_17.add(lblP17n1, "flowy,cell 1 0 2 1,alignx center,growy");	
+		//
+		// Panel 18; Neue Komponente
+		//
+		panel.add(panel_18, "neuKente");
+		panel_18.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
+		lblP18n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_18.add(lblP18n1, "cell 1 0 2 1,alignx center,aligny top");
+		//
+		// Panel 19; Neue Komposition
+		//
+		panel.add(panel_19, "neuKtion");
+		panel_19.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
+		lblP19n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_19.add(lblP19n1, "cell 1 0 2 1,alignx center,aligny top");
+		//
+		// Panel 20; Liste der Deklarationen
+		//
+		panel.add(panel_20, "listDekl");
+		panel_20.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
+		lblP20n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_20.add(lblP20n1, "cell 1 0 2 1,alignx center,aligny top");
+		//
+		// Panel 21; Liste der Komponenten
+		//
+		panel.add(panel_21, "listKente");
+		panel_21.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
+		lblP21n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_21.add(lblP21n1, "cell 1 0 2 1,alignx center,aligny top");
+		//
+		// Panel 22; Liste der Kompositionen
+		//
+		panel.add(panel_22, "listKtion");
+		panel_22.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
+		lblP22n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_22.add(lblP22n1, "cell 1 0 2 1,alignx center,aligny top");
 		
 		
 		cl.show(panel, "leer");
@@ -641,6 +726,18 @@ public class MultiVaLCA {
 		JMenuItem mntmLCIAnew = new JMenuItem();
 		mntmLCIAnew.setAction(newLCIAAction);
 		mnNew.add(mntmLCIAnew);
+				
+		JMenuItem mntmDeclaration = new JMenuItem();
+		mntmDeclaration.setAction(newDeclarationAction);
+		mnNew.add(mntmDeclaration);
+		
+		JMenuItem mntmComponent = new JMenuItem();
+		mntmComponent.setAction(newComponentAction);
+		mnNew.add(mntmComponent);
+		
+		JMenuItem mntmComposition = new JMenuItem();
+		mntmComposition.setAction(newCompositionAction);
+		mnNew.add(mntmComposition);	
 		
 		JMenu mnListe = new JMenu(GuiStrings.getGS("mp4", l));
 		menuBar.add(mnListe);
@@ -668,6 +765,18 @@ public class MultiVaLCA {
 		JMenuItem mntmLCIAlist = new JMenuItem();
 		mntmLCIAlist.setAction(listLCIAAction);
 		mnListe.add(mntmLCIAlist);
+		
+		JMenuItem mntmDeclarationlist = new JMenuItem();
+		mntmDeclarationlist.setAction(listDeclarationAction);
+		mnListe.add(mntmDeclarationlist);
+		
+		JMenuItem mntmComponentlist = new JMenuItem();
+		mntmComponentlist.setAction(listComponentAction);
+		mnListe.add(mntmComponentlist);
+		
+		JMenuItem mntmCompositionlist = new JMenuItem();
+		mntmCompositionlist.setAction(listCompositionAction);
+		mnListe.add(mntmCompositionlist);
 		
 		JMenu mnBerechnen = new JMenu(GuiStrings.getGS("mp5", l));
 		menuBar.add(mnBerechnen);
@@ -1150,6 +1259,20 @@ public class MultiVaLCA {
 				mntmLCIAnew.setToolTipText(GuiStrings.getGS("mp16e",l));
 				mntmLCIAlist.setText(GuiStrings.getGS("mp46",l));
 				mntmLCIAlist.setToolTipText(GuiStrings.getGS("mp46e",l));
+				
+				mntmDeclaration.setText(GuiStrings.getGS("mp17",l));
+				mntmDeclaration.setToolTipText(GuiStrings.getGS("mp17e",l));
+				mntmDeclarationlist.setText(GuiStrings.getGS("mp47",l));
+				mntmDeclarationlist.setToolTipText(GuiStrings.getGS("mp47e",l));
+				mntmComponent.setText(GuiStrings.getGS("mp18",l));
+				mntmComponent.setToolTipText(GuiStrings.getGS("mp18e",l));
+				mntmComponentlist.setText(GuiStrings.getGS("mp48",l));
+				mntmComponentlist.setToolTipText(GuiStrings.getGS("mp48e",l));
+				mntmComposition.setText(GuiStrings.getGS("mp19",l));
+				mntmComposition.setToolTipText(GuiStrings.getGS("mp19e",l));
+				mntmCompositionlist.setText(GuiStrings.getGS("mp49",l));
+				mntmCompositionlist.setToolTipText(GuiStrings.getGS("mp49e",l));
+				
 				mntmLCIAcalc.setText(GuiStrings.getGS("mp52",l));
 				mntmLCIAcalc.setToolTipText(GuiStrings.getGS("mp52e",l));
 				lblP05n1.setText(GuiStrings.getGS("mp31e", l));
@@ -1932,14 +2055,110 @@ public class MultiVaLCA {
 			}
 			cobP16n4.setModel(new DefaultComboBoxModel<String>(vta));
 			
-			cl.show(panel, "berechnen2");
-			
-			
-//			private JPanel panel_16 = new JPanel();	
-//			private JLabel lblP16n1 = new JLabel();				// "Wirkungsabschätzung"
-//			private JLabel lblP16n2 = new JLabel();				// "Object-Typ"
-//			private JButton btnP16n1 = new JButton(); 			// "Berechnungsergebnisse anzeigen
-//			private JComboBox<String> cobP16n1 = new JComboBox<String>();	// Objekt-Typen
+			cl.show(panel, "berechnen2");		
+
 		}		
+	}
+	
+	private class newDeclarationAction extends AbstractAction {
+		private static final long serialVersionUID = 2203400316440970860L;
+		public newDeclarationAction() {
+			putValue(NAME, GuiStrings.getGS("mp17", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp17e", l));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			lblP17n1.setText(GuiStrings.getGS("p17n1", l));
+			
+			
+			cl.show(panel, "neuDekl");
+		}
+		
+	}
+	
+	private class newComponentAction extends AbstractAction {
+		private static final long serialVersionUID = 415176321121976554L;
+		public newComponentAction() {
+			putValue(NAME, GuiStrings.getGS("mp18", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp18e", l));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			lblP18n1.setText(GuiStrings.getGS("p18n1", l));
+		
+			
+			cl.show(panel, "neuKente");
+		}
+		
+	}
+	
+	private class newCompositionAction extends AbstractAction {
+		private static final long serialVersionUID = -4249650427101951850L;
+		public newCompositionAction() {
+			putValue(NAME, GuiStrings.getGS("mp19", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp19e", l));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			lblP19n1.setText(GuiStrings.getGS("p19n1", l));
+			
+			
+			cl.show(panel, "neuKtion");
+		}
+		
+	}
+	
+	private class listDeclarationAction extends AbstractAction {
+		private static final long serialVersionUID = 2203400316440970860L;
+		public listDeclarationAction() {
+			putValue(NAME, GuiStrings.getGS("mp47", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp47e", l));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			lblP20n1.setText(GuiStrings.getGS("mp47e", l));
+			
+			
+			cl.show(panel, "listDekl");
+		}
+		
+	}
+	
+	private class listComponentAction extends AbstractAction {
+		private static final long serialVersionUID = 415176321121976554L;
+		public listComponentAction() {
+			putValue(NAME, GuiStrings.getGS("mp48", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp48e", l));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			lblP21n1.setText(GuiStrings.getGS("mp48e", l));
+			
+			
+			cl.show(panel, "listKente");		
+		}
+		
+	}
+	
+	private class listCompositionAction extends AbstractAction {
+		private static final long serialVersionUID = -4249650427101951850L;
+		public listCompositionAction() {
+			putValue(NAME, GuiStrings.getGS("mp49", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp49e", l));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			lblP22n1.setText(GuiStrings.getGS("mp49e", l));
+			
+			
+			cl.show(panel, "listKtion");		
+		}
+		
 	}
 }

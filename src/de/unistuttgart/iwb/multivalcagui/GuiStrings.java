@@ -8,14 +8,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.5
+ * @version 0.504
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.5";
-		String date = "15.05.2018";
+		String vn = " 0.504";
+		String date = "22.05.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -146,6 +146,21 @@ public class GuiStrings {
 			case "p16n4": r = "Werttyp"; break;
 			case "p16n5": r = "Wert"; break;
 			case "stat31": r = ">>> Das Modul ist bereits Bestandteil des Produktsystems. <<<"; break;
+			case "mp17": r = "Produktdeklaration"; break;
+			case "mp18": r = "Komponente"; break;
+			case "mp19": r = "Komposition"; break;
+			case "p17n1": r = "Neue Produktdeklaration"; break;
+			case "p18n1": r = "Neue Komponente"; break;
+			case "p19n1": r = "Neue Komposition"; break;
+			case "mp17e": r = "neue Produktdeklaration erfassen"; break;
+			case "mp18e": r = "neue Komponente erfassen"; break;
+			case "mp19e": r = "neue Komposition erfassen"; break;
+			case "mp47": r = "Produktdeklarationen"; break;
+			case "mp48": r = "Komponenten"; break;
+			case "mp49": r = "Kompositionen"; break;
+			case "mp47e": r = "Liste der Produktdeklarationen"; break;
+			case "mp48e": r = "Liste der Komponenten"; break;
+			case "mp49e": r = "Liste der Kompositionen"; break;
 
 			}		
 		}	
@@ -279,6 +294,21 @@ public class GuiStrings {
 			case "p16n4": r = "Type of Value"; break;
 			case "p16n5": r = "Value"; break;
 			case "stat31": r = ">>> The Module is already present in the Product System. <<<"; break;
+			case "mp17": r = "Product Declaration"; break;
+			case "mp18": r = "Component"; break;
+			case "mp19": r = "Composition"; break;
+			case "p17n1": r = "New Product Declaration"; break;
+			case "p18n1": r = "New Component"; break;
+			case "p19n1": r = "New Composition"; break;
+			case "mp17e": r = "Create new Product Declaration"; break;
+			case "mp18e": r = "Create new Component"; break;
+			case "mp19e": r = "Create new Composition"; break;
+			case "mp47": r = "Product Declarations"; break;
+			case "mp48": r = "Components"; break;
+			case "mp49": r = "Compositions"; break;
+			case "mp47e": r = "List of Product Declarations"; break;
+			case "mp48e": r = "List of Components"; break;
+			case "mp49e": r = "List of Compositions"; break;
 		
 			}		
 		}
