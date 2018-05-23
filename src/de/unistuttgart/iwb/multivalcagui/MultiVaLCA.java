@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.505
+ * @version 0.506
  */
 
 public class MultiVaLCA {
@@ -102,8 +102,8 @@ public class MultiVaLCA {
 	private JLabel lblP02n7 = new JLabel();				// "Obergrenze"
 	private JButton btnP02n1 = new JButton(); 			// "neues Prozessmodul anlegen"
 	private JButton btnP02n2 = new JButton();			// "Grenzwerte bestätigen"
-	private JButton btnP02n3 = new JButton();			// "fertig"
-	private JButton btnP02n4 = new JButton();			// "Fluss hinzufügen"
+	private JButton btnP02n4 = new JButton();			// "fertig"
+	private JButton btnP02n3 = new JButton();			// "Fluss hinzufügen"
 	//
 	// Panel 3; Neues Produktsystem
 	//
@@ -398,10 +398,10 @@ public class MultiVaLCA {
 		panel_02.add(txtP02n5, "cell 2 7,grow");
 		txtP02n5.setColumns(10);
 		txtP02n5.setEnabled(false);		
-		btnP02n4.setEnabled(false);
-		panel_02.add(btnP02n4, "cell 1 8,alignx center");
 		btnP02n3.setEnabled(false);
-		panel_02.add(btnP02n3, "cell 2 8,alignx center");
+		panel_02.add(btnP02n3, "cell 1 8,alignx center");
+		btnP02n4.setEnabled(false);
+		panel_02.add(btnP02n4, "cell 2 8,alignx center");
 		panel_02.add(lblP02n5, "cell 0 9 4 1,alignx center");		
 		//
 		// Panel 3; Neues Produktsystem
@@ -1001,8 +1001,8 @@ public class MultiVaLCA {
 						txtP02n4.setEnabled(true);
 						txtP02n5.setText(txtP02n3.getText());
 						txtP02n5.setEnabled(true);
-						btnP02n4.setEnabled(true);
-						btnP02n3.setEnabled(false);
+						btnP02n3.setEnabled(true);
+						btnP02n4.setEnabled(false);
 						txtP02n4.setEnabled(true);
 						int anzPFlow = ProcessModule.getInstance(mname).getProduktflussvektor().size();
 						int anzEFlow = ProcessModule.getInstance(mname).getElementarflussvektor().size();
@@ -1017,7 +1017,7 @@ public class MultiVaLCA {
 			}
 		});
 		
-		btnP02n4.addActionListener(new ActionListener() {
+		btnP02n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String fug = txtP02n4.getText();
@@ -1060,15 +1060,14 @@ public class MultiVaLCA {
 					txtP02n4.setEnabled(false);
 					txtP02n5.setEnabled(false);
 					btnP02n2.setEnabled(true);
-					btnP02n3.setEnabled(true);
-					btnP02n4.setEnabled(false);
-					lblP02n5.setText(GuiStrings.getGS("stat01", l));
-					
+					btnP02n4.setEnabled(true);
+					btnP02n3.setEnabled(false);
+					lblP02n5.setText(GuiStrings.getGS("stat01", l));				
 				}
 			}			
 		});
 		
-		btnP02n3.addActionListener(new ActionListener() {
+		btnP02n4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				btnP02n1.setEnabled(true);
@@ -1078,8 +1077,8 @@ public class MultiVaLCA {
 				txtP02n4.setText("");
 				txtP02n5.setText("");
 				btnP02n2.setEnabled(false);
-				btnP02n3.setEnabled(false);
 				btnP02n4.setEnabled(false);
+				btnP02n3.setEnabled(false);
 				txtP02n1.setEnabled(true);
 				txtP02n2.setEnabled(false);
 				txtP02n3.setEnabled(false);
@@ -1619,7 +1618,14 @@ public class MultiVaLCA {
 						nameVektor.addElement(obName);
 					}
 					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
-				}				
+				}
+				if (cobP16n1.getSelectedItem().toString().equals(GuiStrings.getGS("mp17", l))) {
+					Vector<String> nameVektor = new Vector<String>();
+					for (String obName : ProductDeclaration.getAllInstances().keySet()) {
+						nameVektor.addElement(obName);
+					}
+					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
+				}
 			}		
 		});
 		cobP16n2.addActionListener(new ActionListener() {
@@ -1677,10 +1683,177 @@ public class MultiVaLCA {
 								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});							
 					}
 				}
+				if (cobP16n1.getSelectedItem().toString().equals(GuiStrings.getGS("mp17", l))) {
+					ProductDeclaration akObj = ProductDeclaration.getInstance(cobP16n2.getSelectedItem().toString());
+					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
+					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {					
+						waTableModel.addRow(new Object[] {wName.getName(), 
+								wName.getEinheit().getName(),
+								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});							
+					}
+				}
 
+			}
+		});	
+		
+		/*
+		 * neue Produktdeklaration
+		 */
+		
+		btnP17n1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String nameProd = txtP17n1.getText();
+				String nameLCIA = txtP17n2.getText();
+				boolean inputOK = true;
+				if (ProductDeclaration.containsName(nameProd) == true) {
+					lblP17n8.setText(GuiStrings.getGS("stat03",l));
+					inputOK = false;					
+				}
+				if (LCIAMethod.containsName(nameLCIA) == false) {
+					lblP17n8.setText(GuiStrings.getGS("stat33",l));
+					inputOK = false;					
+				}
+				if (nameProd.equals("")) {
+					lblP17n8.setText(GuiStrings.getGS("stat02",l));
+					inputOK = false;
+				}
+				if (nameLCIA.equals("")) {
+					lblP17n8.setText(GuiStrings.getGS("stat32",l));
+					inputOK = false;
+				}
+				if (inputOK == true) {
+					LCIAMethod bm = LCIAMethod.instance(nameLCIA);
+					ProductDeclaration.instance(nameProd).setBM(bm);
+					btnP17n1.setEnabled(false);	
+					txtP17n1.setEnabled(false);
+					txtP17n2.setEnabled(false);
+					btnP17n2.setEnabled(true);
+					txtP17n3.setEnabled(true);
+					txtP17n4.setEnabled(true);
+					lblP17n8.setText(GuiStrings.getGS("stat34",l) + 
+							ProductDeclaration.getAllInstances().size() +
+							GuiStrings.getGS("stat05",l));
+				}			
+			}		
+		});
+		
+		btnP17n2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String nameProd = txtP17n1.getText();
+				String nameLCIA = txtP17n2.getText();
+				String fname = txtP17n3.getText();
+				String fmenge = txtP17n4.getText();
+				Double menge;
+				try {
+					menge = Double.parseDouble(fmenge);
+				} catch (NumberFormatException e){
+					menge = 0.0;
+				}
+				if (fname.equals("") || (menge == 0.0)) {
+					lblP17n8.setText(GuiStrings.getGS("stat07", l));
+				} else {
+					if (LCIAMethod.instance(nameLCIA).categoryList().containsKey(fname)) {
+						ImpactCategory ic = ImpactCategory.getInstance(fname);
+						LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+						values.put(ValueType.MeanValue, menge);
+						values.put(ValueType.LowerBound, menge);
+						values.put(ValueType.UpperBound, menge);
+						ProductDeclaration.getInstance(nameProd).addWirkung(ic, values);
+						txtP17n3.setEnabled(false);
+						txtP17n4.setEnabled(false);
+						btnP17n2.setEnabled(false);
+						txtP17n5.setText(txtP17n4.getText());
+						txtP17n5.setEnabled(true);
+						txtP17n6.setText(txtP17n4.getText());
+						txtP17n6.setEnabled(true);
+						btnP17n3.setEnabled(true);
+						lblP17n8.setText(GuiStrings.getGS("stat01", l));
+						
+					} else {
+						lblP17n8.setText(GuiStrings.getGS("stat35", l));
+					}					
+				}
 			}
 		});
 		
+		btnP17n3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String fug = txtP17n5.getText();
+				String fog = txtP17n6.getText();
+				Double fugv;
+				Double fogv;
+				try {
+					fugv = Double.parseDouble(fug);
+				} catch (NumberFormatException e){
+					fugv = 0.0;
+				}
+				try {
+					fogv = Double.parseDouble(fog);
+				} catch (NumberFormatException e){
+					fogv = 0.0;
+				}
+				String fmenge = txtP17n4.getText();
+				Double menge;
+				try {
+					menge = Double.parseDouble(fmenge);
+				} catch (NumberFormatException e){
+					menge = 0.0;
+				}
+				if ((fugv > menge) || (fogv < menge)) {
+					txtP17n5.setText(txtP17n4.getText());
+					txtP17n6.setText(txtP17n4.getText());
+					lblP17n8.setText(GuiStrings.getGS("stat21", l));
+				} else {
+					String nameProd = txtP17n1.getText();
+					String fname = txtP17n3.getText();
+					ImpactCategory ic = ImpactCategory.getInstance(fname);
+					LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+					values.put(ValueType.MeanValue, menge);
+					values.put(ValueType.LowerBound, fugv);
+					values.put(ValueType.UpperBound, fogv);
+					ProductDeclaration.getInstance(nameProd).addWirkung(ic, values);
+					txtP17n3.setText("");
+					txtP17n4.setText("");
+					txtP17n5.setText("");
+					txtP17n6.setText("");
+					txtP17n3.setEnabled(true);
+					txtP17n4.setEnabled(true);
+					txtP17n5.setEnabled(false);
+					txtP17n6.setEnabled(false);
+					btnP17n2.setEnabled(true);				
+					btnP17n3.setEnabled(false);
+					btnP17n4.setEnabled(true);
+					lblP17n8.setText(GuiStrings.getGS("stat01", l));				
+				}
+			}			
+		});
+		
+		btnP17n4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				btnP17n1.setEnabled(true);
+				txtP17n1.setText("");
+				txtP17n2.setText("");
+				txtP17n3.setText("");
+				txtP17n4.setText("");
+				txtP17n5.setText("");
+				txtP17n5.setText("");
+				btnP17n2.setEnabled(false);
+				btnP17n4.setEnabled(false);
+				btnP17n3.setEnabled(false);
+				txtP17n1.setEnabled(true);
+				txtP17n2.setEnabled(true);
+				txtP17n3.setEnabled(false);
+				txtP17n4.setEnabled(false);
+				txtP17n5.setEnabled(false);
+				txtP17n6.setEnabled(false);
+				lblP17n8.setText(GuiStrings.getGS("stat01", l));
+			}
+		});
+
 
 	}
 
@@ -1734,8 +1907,8 @@ public class MultiVaLCA {
 			lblP02n7.setText(GuiStrings.getGS("p02n6", l));
 			btnP02n1.setText(GuiStrings.getGS("bt02", l));
 			btnP02n2.setText(GuiStrings.getGS("bt03", l));
-			btnP02n3.setText(GuiStrings.getGS("bt04", l));
-			btnP02n4.setText(GuiStrings.getGS("bt10", l));
+			btnP02n4.setText(GuiStrings.getGS("bt04", l));
+			btnP02n3.setText(GuiStrings.getGS("bt10", l));
 			cl.show(panel, "neuModul");
 		}
 	}

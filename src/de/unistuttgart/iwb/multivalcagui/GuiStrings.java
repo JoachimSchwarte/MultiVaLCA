@@ -8,14 +8,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.505
+ * @version 0.506
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.505";
-		String date = "22.05.2018";
+		String vn = " 0.506";
+		String date = "23.05.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -162,6 +162,11 @@ public class GuiStrings {
 			case "mp48e": r = "Liste der Komponenten"; break;
 			case "mp49e": r = "Liste der Kompositionen"; break;
 			case "p17n2": r = "Name des zu deklarierenden Produkts"; break;
+			case "stat32": r = ">>> Es wurde keine Bewertungsmethode angegeben. <<<"; break;
+			case "stat33": r = ">>> Die angegebene Bewertungsmethode existiert nicht. <<<"; break;
+			case "stat34": r = ">>> Anzahl Produktdeklarationen: "; break;
+			case "stat35": r = ">>> Unkorrekte Wirkungskategorie <<<"; break;
+
 
 			}		
 		}	
@@ -311,6 +316,10 @@ public class GuiStrings {
 			case "mp48e": r = "List of Components"; break;
 			case "mp49e": r = "List of Compositions"; break;
 			case "p17n2": r = "Name of the Product to declare"; break;
+			case "stat32": r = ">>> No LCIA Method was entered. <<<"; break;
+			case "stat33": r = ">>> LCIA Method  does not exist. <<<"; break;
+			case "stat34": r = ">>> Number of Product Declarations: "; break;
+			case "stat35": r = ">>> Incorrect Impact Category <<<"; break;
 		
 			}		
 		}

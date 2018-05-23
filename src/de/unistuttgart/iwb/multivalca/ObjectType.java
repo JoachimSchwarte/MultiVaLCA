@@ -9,10 +9,11 @@ package de.unistuttgart.iwb.multivalca;
  * Wirkungsabschätzung (LCIA) durchgeführt werden kann.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.484
+ * @version 0.506
  */
 
 public enum ObjectType {
 	ProcessModule,
-	ProductSystem
+	ProductSystem,
+	ProductDeclaration
 }
