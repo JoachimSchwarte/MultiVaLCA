@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.506
+ * @version 0.507
  */
 
 public class MultiVaLCA {
@@ -83,7 +83,7 @@ public class MultiVaLCA {
 	private JLabel lblP01n4 = new JLabel();				// "Einheit"
 	private JLabel lblP01n5 = new JLabel();				// Status
 	private JButton btnP01n1 = new JButton();			// "speichern" 
-	private JComboBox<String> comboBox = new JComboBox<String>();
+	private JComboBox<String> cbbP01n1 = new JComboBox<String>();
 	//
 	// Panel 2; Neues Prozessmodul
 	//
@@ -262,12 +262,13 @@ public class MultiVaLCA {
 	private JPanel panel_17 = new JPanel();
 	private JLabel lblP17n1 = new JLabel();				// "neue Produktdeklaration"
 	private JLabel lblP17n2 = new JLabel();				// "Name des ..."
-	private JLabel lblP17n3 = new JLabel();				// "Bewertungsmethode"
-	private JLabel lblP17n4 = new JLabel();				// "Wirkungskategorie"
-	private JLabel lblP17n5 = new JLabel();				// "Menge"
-	private JLabel lblP17n6 = new JLabel();				// "Untergrenze"
-	private JLabel lblP17n7 = new JLabel();				// "Obergrenze"
-	private JLabel lblP17n8 = new JLabel();				// Status
+	private JLabel lblP17n3 = new JLabel();				// "Einheit"
+	private JLabel lblP17n4 = new JLabel();				// "Bewertungsmethode"
+	private JLabel lblP17n5 = new JLabel();				// "Wirkungskategorie"
+	private JLabel lblP17n6 = new JLabel();				// "Menge"
+	private JLabel lblP17n7 = new JLabel();				// "Untergrenze"
+	private JLabel lblP17n8 = new JLabel();				// "Obergrenze"
+	private JLabel lblP17n9 = new JLabel();				// Status
 	private JButton btnP17n1 = new JButton(); 			// "neue Produktdeklaration anlegen"
 	private JButton btnP17n2 = new JButton(); 			// "Wirkungsabschätzung hinzufügen"
 	private JButton btnP17n3 = new JButton(); 			// "Grenzwerte bestätigen"
@@ -294,6 +295,8 @@ public class MultiVaLCA {
 	//
 	private JPanel panel_20 = new JPanel();
 	private JLabel lblP20n1 = new JLabel();
+	private JTable pdTable 		= new JTable();
+	DefaultTableModel pdTableModel 		= new DefaultTableModel(0,3);
 	//
 	// Panel 21; Liste der Komponenten
 	//
@@ -356,7 +359,7 @@ public class MultiVaLCA {
 		panel_01.add(txtP01n1, "cell 2 1,grow");
 		txtP01n1.setColumns(10);	
 		panel_01.add(lblP01n3, "cell 1 2,grow");	
-		panel_01.add(comboBox, "cell 2 2,grow");	
+		panel_01.add(cbbP01n1, "cell 2 2,grow");	
 		panel_01.add(lblP01n4, "cell 1 3,grow");	
 		JComboBox<FlowUnit> comboBox_1 = new JComboBox<FlowUnit>();
 		comboBox_1.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
@@ -653,7 +656,7 @@ public class MultiVaLCA {
 		//
 		panel.add(panel_17, "neuDekl");
 		panel_17.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));
 		lblP17n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_17.add(lblP17n1, "flowy,cell 1 0 2 1,alignx center,growy");	
 		
@@ -661,70 +664,43 @@ public class MultiVaLCA {
 		txtP17n1.setText("");
 		panel_17.add(txtP17n1, "cell 2 1,grow");
 		txtP17n1.setColumns(10);
-		panel_17.add(lblP17n3, "cell 1 2,grow");		
+		panel_17.add(lblP17n3, "cell 1 2,grow");	
+		JComboBox<FlowUnit> comboBox_2 = new JComboBox<FlowUnit>();
+		comboBox_2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
+		panel_17.add(comboBox_2, "cell 2 2,grow");	
+		panel_17.add(lblP17n4, "cell 1 3,grow");		
 		txtP17n2.setText("");
-		panel_17.add(txtP17n2, "cell 2 2,grow");
+		panel_17.add(txtP17n2, "cell 2 3,grow");
 		txtP17n2.setColumns(10);		
-		panel_17.add(btnP17n1, "cell 1 3 2 1,alignx center");		
-		panel_17.add(lblP17n4, "cell 1 4,grow");	
+		panel_17.add(btnP17n1, "cell 1 4 2 1,alignx center");		
+		panel_17.add(lblP17n5, "cell 1 5,grow");	
 		txtP17n3.setText("");
-		panel_17.add(txtP17n3, "cell 2 4,grow");
+		panel_17.add(txtP17n3, "cell 2 5,grow");
 		txtP17n3.setColumns(10);
 		txtP17n3.setEnabled(false);	
-		panel_17.add(lblP17n5, "cell 1 5,grow");
+		panel_17.add(lblP17n6, "cell 1 6,grow");
 		txtP17n4.setText("");
-		panel_17.add(txtP17n4, "cell 2 5,grow");
+		panel_17.add(txtP17n4, "cell 2 6,grow");
 		txtP17n4.setColumns(10);
 		txtP17n4.setEnabled(false);				
 		btnP17n2.setEnabled(false);
-		panel_17.add(btnP17n2, "cell 1 6 2 1,alignx center");		
-		panel_17.add(lblP17n6, "cell 1 7,grow");	
+		panel_17.add(btnP17n2, "cell 1 7 2 1,alignx center");		
+		panel_17.add(lblP17n7, "cell 1 8,grow");	
 		txtP17n5.setText("");
-		panel_17.add(txtP17n5, "cell 2 7,grow");
+		panel_17.add(txtP17n5, "cell 2 8,grow");
 		txtP17n5.setColumns(10);
 		txtP17n5.setEnabled(false);	
-		panel_17.add(lblP17n7, "cell 1 8,grow");
+		panel_17.add(lblP17n8, "cell 1 9,grow");
 		txtP17n6.setText("");
-		panel_17.add(txtP17n6, "cell 2 8,grow");
+		panel_17.add(txtP17n6, "cell 2 9,grow");
 		txtP17n6.setColumns(10);
 		txtP17n6.setEnabled(false);	
 		
 		btnP17n3.setEnabled(false);
-		panel_17.add(btnP17n3, "cell 1 9,alignx center");
+		panel_17.add(btnP17n3, "cell 1 10,alignx center");
 		btnP17n4.setEnabled(false);
-		panel_17.add(btnP17n4, "cell 2 9,alignx center");
-		panel_17.add(lblP17n8, "cell 0 10 4 1,alignx center");	
-		
-/*		
-		panel_02.add(btnP02n1, "cell 1 2 2 1,alignx center");		
-		panel_02.add(lblP02n3, "cell 1 3,grow");	
-		txtP02n2.setText("");
-		panel_02.add(txtP02n2, "cell 2 3,grow");
-		txtP02n2.setColumns(10);
-		txtP02n2.setEnabled(false);	
-		panel_02.add(lblP02n4, "cell 1 4,grow");
-		txtP02n3.setText("");
-		panel_02.add(txtP02n3, "cell 2 4,grow");
-		txtP02n3.setColumns(10);
-		txtP02n3.setEnabled(false);		
-		btnP02n2.setEnabled(false);
-		panel_02.add(btnP02n2, "cell 1 5 2 1,alignx center");	
-		panel_02.add(lblP02n6, "cell 1 6,grow");	
-		txtP02n4.setText("");
-		panel_02.add(txtP02n4, "cell 2 6,grow");
-		txtP02n4.setColumns(10);
-		txtP02n4.setEnabled(false);	
-		panel_02.add(lblP02n7, "cell 1 7,grow");
-		txtP02n5.setText("");
-		panel_02.add(txtP02n5, "cell 2 7,grow");
-		txtP02n5.setColumns(10);
-		txtP02n5.setEnabled(false);		
-		btnP02n4.setEnabled(false);
-		panel_02.add(btnP02n4, "cell 1 8,alignx center");
-		btnP02n3.setEnabled(false);
-		panel_02.add(btnP02n3, "cell 2 8,alignx center");
-		panel_02.add(lblP02n5, "cell 0 9 4 1,alignx center");	
-		*/
+		panel_17.add(btnP17n4, "cell 2 10,alignx center");
+		panel_17.add(lblP17n9, "cell 0 11 4 1,alignx center");	
 		//
 		// Panel 18; Neue Komponente
 		//
@@ -745,10 +721,10 @@ public class MultiVaLCA {
 		// Panel 20; Liste der Deklarationen
 		//
 		panel.add(panel_20, "listDekl");
-		panel_20.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
+		panel_20.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));
 		lblP20n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_20.add(lblP20n1, "cell 1 0 2 1,alignx center,aligny top");
+		panel_20.add(lblP20n1, "cell 0 0,alignx center,aligny top");
+		panel_20.add(new JScrollPane(pdTable), "cell 0 1,alignx center,aligny top");
 		//
 		// Panel 21; Liste der Komponenten
 		//
@@ -904,7 +880,7 @@ public class MultiVaLCA {
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP01n1.getText();
 				LinkedHashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
-				String typs = comboBox.getItemAt(comboBox.getSelectedIndex());
+				String typs = cbbP01n1.getItemAt(cbbP01n1.getSelectedIndex());
 				FlowType typ = FlowType.Elementary;
 				for (FlowType fte : ft.keySet()) {
 					if (ft.get(fte) == typs) {
@@ -931,7 +907,7 @@ public class MultiVaLCA {
 						lblP01n5.setText(GuiStrings.getGS("stat04", l) + 
 								Flow.getAllNames().size() + GuiStrings.getGS("stat05", l));
 						txtP01n1.setText("");
-						comboBox.setSelectedIndex(0);
+						cbbP01n1.setSelectedIndex(0);
 						comboBox_1.setSelectedIndex(0);
 					}	
 				} 		
@@ -1705,33 +1681,35 @@ public class MultiVaLCA {
 			public void actionPerformed(ActionEvent arg0) {
 				String nameProd = txtP17n1.getText();
 				String nameLCIA = txtP17n2.getText();
+				FlowUnit einheit = comboBox_2.getItemAt(comboBox_2.getSelectedIndex());
 				boolean inputOK = true;
 				if (ProductDeclaration.containsName(nameProd) == true) {
-					lblP17n8.setText(GuiStrings.getGS("stat03",l));
+					lblP17n9.setText(GuiStrings.getGS("stat03",l));
 					inputOK = false;					
 				}
 				if (LCIAMethod.containsName(nameLCIA) == false) {
-					lblP17n8.setText(GuiStrings.getGS("stat33",l));
+					lblP17n9.setText(GuiStrings.getGS("stat33",l));
 					inputOK = false;					
 				}
 				if (nameProd.equals("")) {
-					lblP17n8.setText(GuiStrings.getGS("stat02",l));
+					lblP17n9.setText(GuiStrings.getGS("stat02",l));
 					inputOK = false;
 				}
 				if (nameLCIA.equals("")) {
-					lblP17n8.setText(GuiStrings.getGS("stat32",l));
+					lblP17n9.setText(GuiStrings.getGS("stat32",l));
 					inputOK = false;
 				}
 				if (inputOK == true) {
 					LCIAMethod bm = LCIAMethod.instance(nameLCIA);
-					ProductDeclaration.instance(nameProd).setBM(bm);
+					ProductDeclaration.instance(nameProd, einheit).setBM(bm);
 					btnP17n1.setEnabled(false);	
 					txtP17n1.setEnabled(false);
+					comboBox_2.setEnabled(false);
 					txtP17n2.setEnabled(false);
 					btnP17n2.setEnabled(true);
 					txtP17n3.setEnabled(true);
 					txtP17n4.setEnabled(true);
-					lblP17n8.setText(GuiStrings.getGS("stat34",l) + 
+					lblP17n9.setText(GuiStrings.getGS("stat34",l) + 
 							ProductDeclaration.getAllInstances().size() +
 							GuiStrings.getGS("stat05",l));
 				}			
@@ -1752,7 +1730,7 @@ public class MultiVaLCA {
 					menge = 0.0;
 				}
 				if (fname.equals("") || (menge == 0.0)) {
-					lblP17n8.setText(GuiStrings.getGS("stat07", l));
+					lblP17n9.setText(GuiStrings.getGS("stat07", l));
 				} else {
 					if (LCIAMethod.instance(nameLCIA).categoryList().containsKey(fname)) {
 						ImpactCategory ic = ImpactCategory.getInstance(fname);
@@ -1769,10 +1747,10 @@ public class MultiVaLCA {
 						txtP17n6.setText(txtP17n4.getText());
 						txtP17n6.setEnabled(true);
 						btnP17n3.setEnabled(true);
-						lblP17n8.setText(GuiStrings.getGS("stat01", l));
+						lblP17n9.setText(GuiStrings.getGS("stat01", l));
 						
 					} else {
-						lblP17n8.setText(GuiStrings.getGS("stat35", l));
+						lblP17n9.setText(GuiStrings.getGS("stat35", l));
 					}					
 				}
 			}
@@ -1805,7 +1783,7 @@ public class MultiVaLCA {
 				if ((fugv > menge) || (fogv < menge)) {
 					txtP17n5.setText(txtP17n4.getText());
 					txtP17n6.setText(txtP17n4.getText());
-					lblP17n8.setText(GuiStrings.getGS("stat21", l));
+					lblP17n9.setText(GuiStrings.getGS("stat21", l));
 				} else {
 					String nameProd = txtP17n1.getText();
 					String fname = txtP17n3.getText();
@@ -1826,7 +1804,7 @@ public class MultiVaLCA {
 					btnP17n2.setEnabled(true);				
 					btnP17n3.setEnabled(false);
 					btnP17n4.setEnabled(true);
-					lblP17n8.setText(GuiStrings.getGS("stat01", l));				
+					lblP17n9.setText(GuiStrings.getGS("stat01", l));				
 				}
 			}			
 		});
@@ -1845,12 +1823,14 @@ public class MultiVaLCA {
 				btnP17n4.setEnabled(false);
 				btnP17n3.setEnabled(false);
 				txtP17n1.setEnabled(true);
+				comboBox_2.setEnabled(true);
+				comboBox_2.setSelectedIndex(0);
 				txtP17n2.setEnabled(true);
 				txtP17n3.setEnabled(false);
 				txtP17n4.setEnabled(false);
 				txtP17n5.setEnabled(false);
 				txtP17n6.setEnabled(false);
-				lblP17n8.setText(GuiStrings.getGS("stat01", l));
+				lblP17n9.setText(GuiStrings.getGS("stat01", l));
 			}
 		});
 
@@ -1885,7 +1865,7 @@ public class MultiVaLCA {
 				fta[i] = ftl;
 				i++;
 			}
-			comboBox.setModel(new DefaultComboBoxModel<String>(fta));
+			cbbP01n1.setModel(new DefaultComboBoxModel<String>(fta));
 			cl.show(panel, "neuFluss");
 						
 		}
@@ -2110,16 +2090,22 @@ public class MultiVaLCA {
 								}
 							}
 						}
-/*						if (sysAktuell.getProduktflussvektor().size() > 0) {
+						if (sysAktuell.getProduktflussvektor().size() > 0) {
 							sysErgebnis = sysAktuell.getProduktflussvektor();
 							for(Flow sysFluss : sysErgebnis.keySet()){
-								for (ValueType vt : sysAktuell.getProduktflussvektor().get(sysFluss).keySet()) {
-									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
-											ValueTypeStringMap.getFVTS(l).get(vt),								
-											sysErgebnis.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
+								boolean ausgabe = false;
+								if (sysAktuell.getVorUndKoppelprodukte().contains(sysFluss)) {
+									ausgabe = true;
+								}
+								if (ausgabe == true) {
+									for (ValueType vt : sysAktuell.getProduktflussvektor().get(sysFluss).keySet()) {
+										lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
+												ValueTypeStringMap.getFVTS(l).get(vt),								
+												sysErgebnis.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
+									}
 								}
 							}
-						} */
+						} 
 					} catch (ArithmeticException vz) {
 							lciTableModel.addRow(new Object[] 
 									{"",vz.getMessage(),"",""});					
@@ -2331,16 +2317,17 @@ public class MultiVaLCA {
 		public void actionPerformed(ActionEvent arg0) {
 			lblP17n1.setText(GuiStrings.getGS("p17n1", l));
 			lblP17n2.setText(GuiStrings.getGS("p17n2", l));
-			lblP17n3.setText(GuiStrings.getGS("mp16", l));
+			lblP17n3.setText(GuiStrings.getGS("p01n4", l));
+			lblP17n4.setText(GuiStrings.getGS("mp16", l));
 			btnP17n1.setText(GuiStrings.getGS("mp17e", l));
-			lblP17n4.setText(GuiStrings.getGS("mp14", l));
-			lblP17n5.setText(GuiStrings.getGS("p02n4", l));
+			lblP17n5.setText(GuiStrings.getGS("mp14", l));
+			lblP17n6.setText(GuiStrings.getGS("p02n4", l));
 			btnP17n2.setText(GuiStrings.getGS("bt11", l));
-			lblP17n6.setText(GuiStrings.getGS("p02n5", l));
-			lblP17n7.setText(GuiStrings.getGS("p02n6", l));
+			lblP17n7.setText(GuiStrings.getGS("p02n5", l));
+			lblP17n8.setText(GuiStrings.getGS("p02n6", l));
 			btnP17n3.setText(GuiStrings.getGS("bt10", l));
 			btnP17n4.setText(GuiStrings.getGS("bt04", l));
-			lblP17n8.setText(GuiStrings.getGS("stat01", l));
+			lblP17n9.setText(GuiStrings.getGS("stat01", l));
 			
 			
 			cl.show(panel, "neuDekl");
@@ -2392,8 +2379,16 @@ public class MultiVaLCA {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			lblP20n1.setText(GuiStrings.getGS("mp47e", l));
-			
-			
+			pdTableModel.setRowCount(0);
+			pdTable.setModel(pdTableModel);
+			TableColumnModel tcm = pdTable.getColumnModel();
+			tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("p06n1", l));
+			tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p01n4", l));
+			tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("mp16", l));
+			for(String pdName : ProductDeclaration.getAllInstances().keySet()) {
+				ProductDeclaration pd = ProductDeclaration.getInstance(pdName);			
+				pdTableModel.addRow(new Object[] {pd.getName(), pd.getEinheit(), pd.getBM().getName()});			
+			}
 			cl.show(panel, "listDekl");
 		}
 		

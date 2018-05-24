@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
  * von Objekten des Typs "Produktdeklaration".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.502
+ * @version 0.507
  */
 
 public class ProductDeclaration 
@@ -26,13 +26,15 @@ implements ImpactValueMaps {
 
 	private String name;
 	private LCIAMethod bm;
+	private FlowUnit einheit;
 	private LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wvAlle = new LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>>();
 	
 	// Konstruktor:
 
-	private ProductDeclaration(String name) {
+	private ProductDeclaration(String name, FlowUnit einheit) {
 		super();
 		this.name = name;
+		this.einheit = einheit;
 		NameCheck.getInstance().addWVName(name);
 		allInstances.put(name, this);
 	}
@@ -91,8 +93,8 @@ implements ImpactValueMaps {
 	 * ... das Produktobjekt
 	 */
 	
-	public static ProductDeclaration instance(String name) {
-		return new ProductDeclaration(name);
+	public static ProductDeclaration instance(String name, FlowUnit einheit) {
+		return new ProductDeclaration(name, einheit);
 	}
 	
 	/**
@@ -116,6 +118,10 @@ implements ImpactValueMaps {
 	
 	public LCIAMethod getBM() {
 		return bm;
+	}
+	
+	public FlowUnit getEinheit() {
+		return einheit;
 	}
 	
 	@Override
