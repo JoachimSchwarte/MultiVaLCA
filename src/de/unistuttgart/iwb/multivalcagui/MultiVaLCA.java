@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.507
+ * @version 0.508
  */
 
 public class MultiVaLCA {
@@ -278,18 +278,38 @@ public class MultiVaLCA {
 	private JTextField txtP17n3 = new JTextField();		// Eingabefeld Wirkungskategorie
 	private JTextField txtP17n4 = new JTextField();		// Eingabefeld LCIA-Name
 	private JTextField txtP17n5 = new JTextField();		// Eingabefeld Untergrenze
-	private JTextField txtP17n6 = new JTextField();		// Eingabefeld Obergrenze
-	
+	private JTextField txtP17n6 = new JTextField();		// Eingabefeld Obergrenze	
 	//
 	// Panel 18; Neue Komponente
 	//
-	private JPanel panel_18 = new JPanel();
-	private JLabel lblP18n1 = new JLabel();
+	private JPanel panel_18 = new JPanel();		
+	private JLabel lblP18n1 = new JLabel();				// "neue Komponente"
+	private JLabel lblP18n2 = new JLabel();				// "Name der Komponente"
+	private JLabel lblP18n3 = new JLabel();				// "Bezug"
+	private JLabel lblP18n4 = new JLabel();				// "Menge"
+	private JLabel lblP18n5 = new JLabel();				// "Untergrenze"
+	private JLabel lblP18n6 = new JLabel();				// "Obergrenze"
+	private JLabel lblP18n7 = new JLabel();				// Status
+	private JTextField txtP18n1 = new JTextField();		// Eingabefeld Name
+	private JTextField txtP18n2 = new JTextField();		// Eingabefeld Bezug
+	private JTextField txtP18n3 = new JTextField();		// Eingabefeld Menge
+	private JTextField txtP18n4 = new JTextField();		// Eingabefeld Untergrenze
+	private JTextField txtP18n5 = new JTextField();		// Eingabefeld Obergrenze
+	private JButton btnP18n1 = new JButton(); 			// "neue Komponente anlegen"
+	private JButton btnP18n2 = new JButton(); 			// "fertig"
 	//
 	// Panel 19; Neue Komposition
 	//
 	private JPanel panel_19 = new JPanel();
 	private JLabel lblP19n1 = new JLabel();
+	private JLabel lblP19n2 = new JLabel();				// "Name der Komposition"
+	private JLabel lblP19n3 = new JLabel();				// "hinzuzufügende Komponente"
+	private JLabel lblP19n4 = new JLabel();				// Status
+	private JTextField txtP19n1 = new JTextField();		// Eingabefeld Name
+	private JTextField txtP19n2 = new JTextField();		// Eingabefeld Komponente
+	private JButton btnP19n1 = new JButton(); 			// "neue Komposition anlegen"
+	private JButton btnP19n2 = new JButton(); 			// "Grenzwerte bestätigen"
+	private JButton btnP19n3 = new JButton(); 			// "fertig"
 	//
 	// Panel 20; Liste der Deklarationen
 	//
@@ -658,8 +678,7 @@ public class MultiVaLCA {
 		panel_17.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));
 		lblP17n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_17.add(lblP17n1, "flowy,cell 1 0 2 1,alignx center,growy");	
-		
+		panel_17.add(lblP17n1, "flowy,cell 1 0 2 1,alignx center,growy");			
 		panel_17.add(lblP17n2, "cell 1 1,grow");		
 		txtP17n1.setText("");
 		panel_17.add(txtP17n1, "cell 2 1,grow");
@@ -694,8 +713,7 @@ public class MultiVaLCA {
 		txtP17n6.setText("");
 		panel_17.add(txtP17n6, "cell 2 9,grow");
 		txtP17n6.setColumns(10);
-		txtP17n6.setEnabled(false);	
-		
+		txtP17n6.setEnabled(false);		
 		btnP17n3.setEnabled(false);
 		panel_17.add(btnP17n3, "cell 1 10,alignx center");
 		btnP17n4.setEnabled(false);
@@ -706,9 +724,36 @@ public class MultiVaLCA {
 		//
 		panel.add(panel_18, "neuKente");
 		panel_18.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));	
 		lblP18n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_18.add(lblP18n1, "cell 1 0 2 1,alignx center,aligny top");
+		panel_18.add(lblP18n2, "cell 1 1,grow");		
+		txtP18n1.setText("");
+		panel_18.add(txtP18n1, "cell 2 1,grow");
+		txtP18n1.setColumns(10);
+		panel_18.add(lblP18n3, "cell 1 2,grow");		
+		txtP18n2.setText("");
+		panel_18.add(txtP18n2, "cell 2 2,grow");
+		txtP18n2.setColumns(10);
+		panel_18.add(lblP18n4, "cell 1 3,grow");		
+		txtP18n3.setText("");
+		panel_18.add(txtP18n3, "cell 2 3,grow");
+		txtP18n3.setColumns(10);
+		btnP18n1.setEnabled(true);
+		panel_18.add(btnP18n1, "cell 1 4 2 1,alignx center");
+		panel_18.add(lblP18n5, "cell 1 5,grow");		
+		txtP18n4.setText("");
+		txtP18n4.setEnabled(false);
+		panel_18.add(txtP18n4, "cell 2 5,grow");
+		txtP18n4.setColumns(10);
+		panel_18.add(lblP18n6, "cell 1 6,grow");		
+		txtP18n5.setText("");
+		panel_18.add(txtP18n5, "cell 2 6,grow");
+		txtP18n5.setColumns(10);
+		txtP18n5.setEnabled(false);
+		btnP18n2.setEnabled(false);
+		panel_18.add(btnP18n2, "cell 1 7 2 1,alignx center");
+		panel_18.add(lblP18n7, "cell 0 8 4 1,alignx center");			
 		//
 		// Panel 19; Neue Komposition
 		//
@@ -717,11 +762,28 @@ public class MultiVaLCA {
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
 		lblP19n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_19.add(lblP19n1, "cell 1 0 2 1,alignx center,aligny top");
+		panel_19.add(lblP19n2, "cell 1 1,grow");		
+		txtP19n1.setText("");
+		panel_19.add(txtP19n1, "cell 2 1,grow");
+		txtP19n1.setColumns(10);
+		btnP19n1.setEnabled(true);
+		panel_19.add(btnP19n1, "cell 1 2 2 1,alignx center");
+		panel_19.add(lblP19n3, "cell 1 3,grow");		
+		txtP19n2.setText("");
+		panel_19.add(txtP19n2, "cell 2 3,grow");
+		txtP19n2.setColumns(10);
+		txtP19n2.setEnabled(false);
+		btnP19n2.setEnabled(false);
+		panel_19.add(btnP19n2, "cell 1 4,alignx center");
+		btnP19n3.setEnabled(false);
+		panel_19.add(btnP19n3, "cell 2 4,alignx center");
+		panel_19.add(lblP19n4, "cell 0 5 4 1,alignx center");	
 		//
 		// Panel 20; Liste der Deklarationen
 		//
 		panel.add(panel_20, "listDekl");
-		panel_20.setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));
+		panel_20.setLayout(new MigLayout("", "[74px,grow]", "[14px][gro"
+				+ "w]"));
 		lblP20n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_20.add(lblP20n1, "cell 0 0,alignx center,aligny top");
 		panel_20.add(new JScrollPane(pdTable), "cell 0 1,alignx center,aligny top");
@@ -2345,6 +2407,14 @@ public class MultiVaLCA {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			lblP18n1.setText(GuiStrings.getGS("p18n1", l));
+			lblP18n2.setText(GuiStrings.getGS("p18n2", l));
+			lblP18n3.setText(GuiStrings.getGS("p18n3", l));
+			lblP18n4.setText(GuiStrings.getGS("p02n4", l));
+			lblP18n5.setText(GuiStrings.getGS("p02n5", l));
+			lblP18n6.setText(GuiStrings.getGS("p02n6", l));
+			lblP18n7.setText(GuiStrings.getGS("stat01", l));
+			btnP18n1.setText(GuiStrings.getGS("bt13", l));
+			btnP18n2.setText(GuiStrings.getGS("bt04", l));
 		
 			
 			cl.show(panel, "neuKente");
@@ -2362,6 +2432,12 @@ public class MultiVaLCA {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			lblP19n1.setText(GuiStrings.getGS("p19n1", l));
+			lblP19n2.setText(GuiStrings.getGS("p19n2", l));
+			lblP19n3.setText(GuiStrings.getGS("p19n3", l));
+			lblP19n4.setText(GuiStrings.getGS("stat01", l));
+			btnP19n1.setText(GuiStrings.getGS("bt14", l));
+			btnP19n2.setText(GuiStrings.getGS("bt15", l));
+			btnP19n3.setText(GuiStrings.getGS("bt04", l));
 			
 			
 			cl.show(panel, "neuKtion");

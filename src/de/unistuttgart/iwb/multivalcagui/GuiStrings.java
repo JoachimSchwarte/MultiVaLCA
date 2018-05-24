@@ -8,13 +8,13 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.507
+ * @version 0.508
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.507";
+		String vn = " 0.508";
 		String date = "24.05.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
@@ -166,6 +166,13 @@ public class GuiStrings {
 			case "stat33": r = ">>> Die angegebene Bewertungsmethode existiert nicht. <<<"; break;
 			case "stat34": r = ">>> Anzahl Produktdeklarationen: "; break;
 			case "stat35": r = ">>> Unkorrekte Wirkungskategorie <<<"; break;
+			case "p18n2": r = "Name der Komponente"; break;
+			case "p18n3": r = "Bezug"; break;
+			case "bt13": r = "neue Komponente anlegen"; break;
+			case "p19n2": r = "Name der Komposition"; break;
+			case "p19n3": r = "hinzuzufügende Komponente"; break;
+			case "bt14": r = "neue Komposition anlegen"; break;
+			case "bt15": r = "Komponente hinzufügen"; break;
 
 
 			}		
@@ -239,9 +246,9 @@ public class GuiStrings {
 			case "mp42e": r = "List of all Process Modules"; break;
 			case "mp43": r = "Product Systems"; break;
 			case "mp43e": r = "List of all Product Systems"; break;
-			case "p02n5": r = "lower Bound"; break;
-			case "p02n6": r = "upper Bound"; break;
-			case "bt10": r = "confirm Bounds"; break;
+			case "p02n5": r = "Lower Bound"; break;
+			case "p02n6": r = "Upper Bound"; break;
+			case "bt10": r = "Confirm Bounds"; break;
 			case "stat21": r = ">>> Illegal Entry <<<"; break;
 			case "p06n1": r = "Name"; break;
 			case "p08n1": r = "Type of Element"; break;
@@ -320,6 +327,13 @@ public class GuiStrings {
 			case "stat33": r = ">>> LCIA Method  does not exist. <<<"; break;
 			case "stat34": r = ">>> Number of Product Declarations: "; break;
 			case "stat35": r = ">>> Incorrect Impact Category <<<"; break;
+			case "p18n2": r = "Name of the Component"; break;
+			case "p18n3": r = "Reference"; break;
+			case "bt13": r = "Create new Component"; break;
+			case "p19n2": r = "Name of the Composition"; break;
+			case "p19n3": r = "Component to add"; break;
+			case "bt14": r = "Create new Composition"; break;
+			case "bt15": r = "Add Component"; break;
 		
 			}		
 		}
