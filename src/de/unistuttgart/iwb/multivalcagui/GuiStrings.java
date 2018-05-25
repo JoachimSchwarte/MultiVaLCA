@@ -8,14 +8,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.508
+ * @version 0.509
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.508";
-		String date = "24.05.2018";
+		String vn = " 0.509";
+		String date = "25.05.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -173,6 +173,7 @@ public class GuiStrings {
 			case "p19n3": r = "hinzuzufügende Komponente"; break;
 			case "bt14": r = "neue Komposition anlegen"; break;
 			case "bt15": r = "Komponente hinzufügen"; break;
+			case "stat36": r = ">>> Der Name ist anderweitig vergeben. <<<"; break;
 
 
 			}		
@@ -334,6 +335,7 @@ public class GuiStrings {
 			case "p19n3": r = "Component to add"; break;
 			case "bt14": r = "Create new Composition"; break;
 			case "bt15": r = "Add Component"; break;
+			case "stat36": r = ">>> The name is in use otherwise. <<<"; break;
 		
 			}		
 		}

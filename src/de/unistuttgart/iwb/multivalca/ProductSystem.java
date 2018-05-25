@@ -12,7 +12,7 @@ import de.unistuttgart.iwb.ivari.*;
  *  * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.503
+ * @version 0.509
  */
 
 public class ProductSystem 
@@ -45,8 +45,7 @@ implements FlowValueMaps, ImpactValueMaps {
 		name = string;
 		bedarfsvektor = f;
 		vorUndKoppelProdukte = vk;
-		NameCheck.getInstance().addFVName(name);
-		NameCheck.getInstance().addWVName(name);
+		NameCheck.getInstance().add(name);
 		allInstances.put(name, this);
 	}
 	
@@ -373,10 +372,8 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 
 	public void setName(String string) {
-		NameCheck.removeFVName(this.name);
-		NameCheck.removeWVName(this.name);
-		NameCheck.getInstance().addFVName(string);
-		NameCheck.getInstance().addWVName(string);
+		NameCheck.remove(this.name);
+		NameCheck.getInstance().add(string);
 		this.name = string;			
 	}
 	

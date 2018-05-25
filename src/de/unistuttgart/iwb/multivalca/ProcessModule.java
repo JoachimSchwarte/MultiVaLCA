@@ -11,7 +11,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * Diese Klasse dient zur Erzeugung von Prozessmodulen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.503
+ * @version 0.509
  */
 
 public class ProcessModule 
@@ -34,8 +34,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	private ProcessModule(String name) {
 		super();
 		setName(name);
-		NameCheck.getInstance().addFVName(getName());
-		NameCheck.getInstance().addWVName(getName());
+		NameCheck.getInstance().add(getName());
 		allInstances.put(getName(), this);
 	}
 	
@@ -109,8 +108,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	public static void removeInstance(String string) {
 		allInstances.remove(string);
-		NameCheck.removeFVName(string);
-		NameCheck.removeWVName(string);
+		NameCheck.remove(string);
 	}
 	
 	/**
@@ -172,10 +170,8 @@ implements FlowValueMaps, ImpactValueMaps {
 	}
 
 	public void setName(String string) {
-		NameCheck.removeFVName(this.name);
-		NameCheck.removeWVName(this.name);
-		NameCheck.getInstance().addFVName(string);
-		NameCheck.getInstance().addWVName(string);
+		NameCheck.remove(this.name);
+		NameCheck.getInstance().add(string);
 		this.name = string;	
 	}
 

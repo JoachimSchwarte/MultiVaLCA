@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.508
+ * @version 0.509
  */
 
 public class MultiVaLCA {
@@ -1749,15 +1749,19 @@ public class MultiVaLCA {
 					lblP17n9.setText(GuiStrings.getGS("stat03",l));
 					inputOK = false;					
 				}
-				if (LCIAMethod.containsName(nameLCIA) == false) {
+				if (NameCheck.contains(nameProd) == true  && inputOK == true) {
+					lblP17n9.setText(GuiStrings.getGS("stat36",l));
+					inputOK = false;					
+				}
+				if (LCIAMethod.containsName(nameLCIA) == false && inputOK == true) {
 					lblP17n9.setText(GuiStrings.getGS("stat33",l));
 					inputOK = false;					
 				}
-				if (nameProd.equals("")) {
+				if (nameProd.equals("") && inputOK == true) {
 					lblP17n9.setText(GuiStrings.getGS("stat02",l));
 					inputOK = false;
 				}
-				if (nameLCIA.equals("")) {
+				if (nameLCIA.equals("") && inputOK == true) {
 					lblP17n9.setText(GuiStrings.getGS("stat32",l));
 					inputOK = false;
 				}

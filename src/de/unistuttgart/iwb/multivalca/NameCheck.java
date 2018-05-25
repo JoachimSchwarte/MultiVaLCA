@@ -13,7 +13,7 @@ import java.util.HashSet;
  * muss.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.1
+ * @version 0.509
  */
 
 public class NameCheck {	
@@ -125,5 +125,22 @@ public class NameCheck {
 	
 	public void addWVName(String name) {
 	    wvNames.add(name);		
+	}
+	
+	public void add(String name) {
+		fvNames.add(name);	
+	    wvNames.add(name);		
+	}
+	
+	public static void remove(String name) {
+		fvNames.remove(name);
+	    wvNames.remove(name);			    
+	}
+	
+	public static boolean contains(String name) {
+		boolean rv = false;
+	    if (fvNames.contains(name)) rv = true;		
+	    if (wvNames.contains(name)) rv = true;	
+	    return rv;
 	}
 }
