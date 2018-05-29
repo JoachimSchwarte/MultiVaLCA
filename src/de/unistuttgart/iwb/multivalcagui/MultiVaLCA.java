@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.509
+ * @version 0.510
  */
 
 public class MultiVaLCA {
@@ -49,6 +49,8 @@ public class MultiVaLCA {
 	private CardLayout cl = new CardLayout(0, 0);
 	private final Action newFlowAction 			= new newFlowAction();
 	private final Action newModuleAction 		= new newModuleAction();
+	private final Action newSMAction 			= new newSMAction();
+	private final Action newGMAction 			= new newGMAction();
 	private final Action newProductAction 		= new newProductAction();
 	private final Action aboutAction 			= new aboutAction();
 	private final Action prefsAction 			= new prefsAction();
@@ -327,6 +329,11 @@ public class MultiVaLCA {
 	//
 	private JPanel panel_22 = new JPanel();
 	private JLabel lblP22n1 = new JLabel();
+	//
+	// Panel 23; Liste der Kompositionen
+	//
+	private JPanel panel_23 = new JPanel();
+	private JLabel lblP23n1 = new JLabel();
 
 
 	/**
@@ -802,7 +809,15 @@ public class MultiVaLCA {
 		panel_22.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
 		lblP22n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_22.add(lblP22n1, "cell 1 0 2 1,alignx center,aligny top");
+		panel_22.add(lblP22n1, "cell 1 0 2 1,alignx center,aligny top");		
+		//
+		// Panel 23; Prozessmodulgruppe
+		//
+		panel.add(panel_23, "pmGroup");
+		panel_23.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+				"[20px][20px][20px][20px][20px][20px][20px,grow]"));
+		lblP23n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_23.add(lblP23n1, "cell 1 0 2 1,alignx center,aligny top");
 		
 		
 		cl.show(panel, "leer");
@@ -832,10 +847,18 @@ public class MultiVaLCA {
 		mntmFlow.setAction(newFlowAction);
 		mnNew.add(mntmFlow);
 		
-		JMenuItem mntmProcessModule = new JMenuItem();
+		JMenu mntmProcessModule = new JMenu();
 		mntmProcessModule.setAction(newModuleAction);
 		mnNew.add(mntmProcessModule);
 		
+		JMenuItem mntmSingleModule = new JMenuItem();
+		mntmSingleModule.setAction(newSMAction);
+		mntmProcessModule.add(mntmSingleModule);
+		
+		JMenuItem mntmGroupModule = new JMenuItem();
+		mntmGroupModule.setAction(newGMAction);
+		mntmProcessModule.add(mntmGroupModule);	
+				
 		JMenuItem mntmProductSystem = new JMenuItem();
 		mntmProductSystem.setAction(newProductAction);
 		mnNew.add(mntmProductSystem);
@@ -1353,6 +1376,10 @@ public class MultiVaLCA {
 				mntmFlow.setToolTipText(GuiStrings.getGS("mp11e",l));
 				mntmProcessModule.setText(GuiStrings.getGS("mp12",l));
 				mntmProcessModule.setToolTipText(GuiStrings.getGS("mp12e",l));
+				mntmSingleModule.setText(GuiStrings.getGS("mp121",l));
+				mntmSingleModule.setToolTipText(GuiStrings.getGS("mp121e",l));
+				mntmGroupModule.setText(GuiStrings.getGS("mp122",l));
+				mntmGroupModule.setToolTipText(GuiStrings.getGS("mp122e",l));
 				mntmProductSystem.setText(GuiStrings.getGS("mp13",l));
 				mntmProductSystem.setToolTipText(GuiStrings.getGS("mp13e",l));
 				mntmNewMenuItem_3.setText(GuiStrings.getGS("mp31",l));
@@ -1944,6 +1971,19 @@ public class MultiVaLCA {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	private class newSMAction extends AbstractAction {
+		private static final long serialVersionUID = -8680747211949829392L;
+		public newSMAction() {
+			putValue(NAME, GuiStrings.getGS("mp121", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp121e", l));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
 			lblP02n1.setText(GuiStrings.getGS("p02n1", l));
 			lblP02n2.setText(GuiStrings.getGS("p02n2", l));
 			lblP02n3.setText(GuiStrings.getGS("p01n2", l));
@@ -1956,7 +1996,25 @@ public class MultiVaLCA {
 			btnP02n4.setText(GuiStrings.getGS("bt04", l));
 			btnP02n3.setText(GuiStrings.getGS("bt10", l));
 			cl.show(panel, "neuModul");
+			
 		}
+		
+	}
+	private class newGMAction extends AbstractAction {
+		private static final long serialVersionUID = -8803373580213989936L;
+		public newGMAction() {
+			putValue(NAME, GuiStrings.getGS("mp122", l));
+			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp122e", l));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			lblP23n1.setText(GuiStrings.getGS("mp122", l));
+			cl.show(panel, "pmGroup");
+			
+			
+		}
+		
 	}
 	private class newProductAction extends AbstractAction {
 		private static final long serialVersionUID = -7757652453649226474L;

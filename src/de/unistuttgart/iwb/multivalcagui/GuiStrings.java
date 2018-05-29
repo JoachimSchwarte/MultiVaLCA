@@ -8,14 +8,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.509
+ * @version 0.510
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.509";
-		String date = "25.05.2018";
+		String vn = " 0.510";
+		String date = "29.05.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -24,7 +24,7 @@ public class GuiStrings {
 			case "info1": r = "Dr.-Ing. Joachim Schwarte"; break;
 			case "info2": r = "Insitut für Werkstoffe im Bauwesen"; break;
 			case "info3": r = "Universität Stuttgart"; break;
-			case "mp1": r = "Neu"; break;
+			case "mp1": r = "Neu/Bearbeiten"; break;
 			case "mp11": r = "Fluss"; break;
 			case "mp11e": r = "neues Flussobjekt erfassen"; break;
 			case "mp12": r = "Prozessmodul"; break;
@@ -174,6 +174,10 @@ public class GuiStrings {
 			case "bt14": r = "neue Komposition anlegen"; break;
 			case "bt15": r = "Komponente hinzufügen"; break;
 			case "stat36": r = ">>> Der Name ist anderweitig vergeben. <<<"; break;
+			case "mp121": r = "Einzelmodul"; break;
+			case "mp122": r = "Prozessmodulgruppe"; break;
+			case "mp121e": r = "einzelnes Prozessmodul erfassen"; break;
+			case "mp122e": r = "Gruppe von Prozessmodul erfassen"; break;
 
 
 			}		
@@ -186,7 +190,7 @@ public class GuiStrings {
 			case "info1": r = "Dr.-Ing. Joachim Schwarte"; break;
 			case "info2": r = "Institute for Construction Materials"; break;
 			case "info3": r = "University of Stuttgart"; break;
-			case "mp1": r = "New"; break;
+			case "mp1": r = "New/Edit"; break;
 			case "mp11": r = "Flow"; break;
 			case "mp11e": r = "Create new Flow"; break;
 			case "mp12": r = "Process Module"; break;
@@ -336,6 +340,10 @@ public class GuiStrings {
 			case "bt14": r = "Create new Composition"; break;
 			case "bt15": r = "Add Component"; break;
 			case "stat36": r = ">>> The name is in use otherwise. <<<"; break;
+			case "mp121": r = "Single Module"; break;
+			case "mp122": r = "Group of Process Modules"; break;
+			case "mp121e": r = "Create single Process Module"; break;
+			case "mp122e": r = "Create Group of Process Modules"; break;
 		
 			}		
 		}
