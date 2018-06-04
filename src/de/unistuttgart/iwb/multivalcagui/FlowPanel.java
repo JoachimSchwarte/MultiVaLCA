@@ -23,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.514
  */
 
 public class FlowPanel extends MCAPanel{
@@ -44,6 +44,7 @@ public class FlowPanel extends MCAPanel{
 	}
 	
 	private void initUI( ) {
+		Language l = GUILanguage.getChosenLanguage();
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP01n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -58,8 +59,7 @@ public class FlowPanel extends MCAPanel{
 		cbbP01n2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
 		add(cbbP01n2, "cell 2 3,grow");			
 		add(btnP01n1, "cell 1 4 2 1,alignx center");
-		add(lblP01n5, "cell 0 5 4 1,alignx center");
-		Language l = Language.Deutsch;
+		add(lblP01n5, "cell 0 5 4 1,alignx center");		
 		
 		btnP01n1.addActionListener(new ActionListener() {
 			@Override
@@ -104,7 +104,7 @@ public class FlowPanel extends MCAPanel{
 	
 	@Override
 	public void showSelf() {
-		Language l = Language.Deutsch;
+		Language l = GUILanguage.getChosenLanguage();
 		lblP01n1.setText(GuiStrings.getGS("p01n1", l));
 		lblP01n2.setText(GuiStrings.getGS("p01n2", l));
 		lblP01n3.setText(GuiStrings.getGS("p01n3", l));

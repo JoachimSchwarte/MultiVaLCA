@@ -37,12 +37,12 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.513
+ * @version 0.514
  */
 
 public class MultiVaLCA {
 	
-	Language l = Language.Deutsch;
+	Language l = GUILanguage.getChosenLanguage();
 	
 	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();
@@ -1372,6 +1372,7 @@ public class MultiVaLCA {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				l = comboBox2.getItemAt(comboBox2.getSelectedIndex());
+				GUILanguage.setChosenLanguage(l);
 				frame.setTitle(GuiStrings.getGS("head1",l)+"   "+GuiStrings.getGS("head2",l));
 				mnDatei.setText(GuiStrings.getGS("mp6",l));
 				mnNew.setText(GuiStrings.getGS("mp1",l));
