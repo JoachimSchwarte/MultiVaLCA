@@ -12,10 +12,10 @@ import java.util.LinkedHashMap;
  * von Objekten des Typs "Produktdeklaration".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.507
+ * @version 0.511
  */
 
-public class ProductDeclaration 
+public class ProductDeclaration extends MCAObject 
 implements ImpactValueMaps {
 	
 	// Klassenvariable:
@@ -24,7 +24,6 @@ implements ImpactValueMaps {
 	
 	// Instanzvariablen:	
 
-	private String name;
 	private LCIAMethod bm;
 	private FlowUnit einheit;
 	private LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wvAlle = new LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>>();
@@ -32,8 +31,7 @@ implements ImpactValueMaps {
 	// Konstruktor:
 
 	private ProductDeclaration(String name, FlowUnit einheit) {
-		super();
-		this.name = name;
+		super(name);
 		this.einheit = einheit;
 		NameCheck.getInstance().addWVName(name);
 		allInstances.put(name, this);
@@ -125,11 +123,6 @@ implements ImpactValueMaps {
 	}
 	
 	@Override
-	public String getName() {
-		return name;
-	}
-	
-	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
 		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wvAktuell =
 				new LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>>();
@@ -151,11 +144,4 @@ implements ImpactValueMaps {
 		bm = bm1;
 	}
 
-	@Override
-	public void setName(String string) {
-		NameCheck.removeWVName(this.name);
-		NameCheck.getInstance().addWVName(string);
-		this.name = string;		
-
-	}
 }

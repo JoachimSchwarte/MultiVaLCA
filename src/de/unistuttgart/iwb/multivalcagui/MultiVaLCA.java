@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.510
+ * @version 0.511
  */
 
 public class MultiVaLCA {
@@ -47,7 +47,7 @@ public class MultiVaLCA {
 	private JFrame frame = new JFrame();;
 	private JPanel panel = new JPanel();
 	private CardLayout cl = new CardLayout(0, 0);
-	private final Action newFlowAction 			= new newFlowAction();
+//	private final Action newFlowAction 			= new newFlowAction();
 	private final Action newModuleAction 		= new newModuleAction();
 	private final Action newSMAction 			= new newSMAction();
 	private final Action newGMAction 			= new newGMAction();
@@ -77,7 +77,7 @@ public class MultiVaLCA {
 	//
 	// Panel 1; Neuer Fluss
 	//
-	private JPanel panel_01 = new JPanel();
+/*	private JPanel panel_01 = new JPanel();
 	private JTextField txtP01n1 = new JTextField(); 	// Eingabefeld Flussname
 	private JLabel lblP01n1 = new JLabel();				// "Neuer Fluss"
 	private JLabel lblP01n2 = new JLabel();				// "Name des Flusses"
@@ -85,7 +85,7 @@ public class MultiVaLCA {
 	private JLabel lblP01n4 = new JLabel();				// "Einheit"
 	private JLabel lblP01n5 = new JLabel();				// Status
 	private JButton btnP01n1 = new JButton();			// "speichern" 
-	private JComboBox<String> cbbP01n1 = new JComboBox<String>();
+	private JComboBox<String> cbbP01n1 = new JComboBox<String>(); */
 	//
 	// Panel 2; Neues Prozessmodul
 	//
@@ -376,8 +376,8 @@ public class MultiVaLCA {
 		//
 		// Panel 1; Neuer Fluss
 		//	
-		panel.add(panel_01, "neuFluss");
-		panel_01.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+		panel.add(new FlowPanel("neuFluss"), "neuFluss");
+/*		panel_01.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP01n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_01.add(lblP01n1, "flowy,cell 1 0 2 1,alignx center,growy");			
@@ -392,7 +392,7 @@ public class MultiVaLCA {
 		comboBox_1.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
 		panel_01.add(comboBox_1, "cell 2 3,grow");			
 		panel_01.add(btnP01n1, "cell 1 4 2 1,alignx center");
-		panel_01.add(lblP01n5, "cell 0 5 4 1,alignx center");		
+		panel_01.add(lblP01n5, "cell 0 5 4 1,alignx center");		*/
 		//
 		// Panel 2; Neues Prozessmodul
 		//
@@ -844,7 +844,14 @@ public class MultiVaLCA {
 		menuBar.add(mnNew);
 		
 		JMenuItem mntmFlow = new JMenuItem();
-		mntmFlow.setAction(newFlowAction);
+		Action a = new MCAAction(GuiStrings.getGS("mp11", l), GuiStrings.getGS("mp11e", l), "neuFluss") {
+			@Override
+			public void performAction(ActionEvent e) {
+				cl.show(panel, getKey());
+				MCAPanel.get(getKey()).showMe();
+			}		
+		};
+		mntmFlow.setAction(a);
 		mnNew.add(mntmFlow);
 		
 		JMenu mntmProcessModule = new JMenu();
@@ -960,7 +967,7 @@ public class MultiVaLCA {
 		 * neuer Fluss
 		 */
 		
-		btnP01n1.addActionListener(new ActionListener() {
+/*		btnP01n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP01n1.getText();
@@ -990,14 +997,14 @@ public class MultiVaLCA {
 					} else {
 						Flow.instance(name, typ, einheit);
 						lblP01n5.setText(GuiStrings.getGS("stat04", l) + 
-								Flow.getAllNames().size() + GuiStrings.getGS("stat05", l));
+								MCAObject.getAllNames(Flow.class).size() + GuiStrings.getGS("stat05", l));
 						txtP01n1.setText("");
 						cbbP01n1.setSelectedIndex(0);
 						comboBox_1.setSelectedIndex(0);
 					}	
 				} 		
 			}
-		});
+		}); */
 
 		/*
 		 * neues Prozessmodul
@@ -1936,7 +1943,7 @@ public class MultiVaLCA {
 	 * Actions der Menupunkte
 	 */
 
-	private class newFlowAction extends AbstractAction {
+/*	private class newFlowAction extends AbstractAction {
 		private static final long serialVersionUID = 3159283296670804375L;
 		public newFlowAction() {
 			putValue(NAME, GuiStrings.getGS("mp11", l));
@@ -1962,7 +1969,7 @@ public class MultiVaLCA {
 			cl.show(panel, "neuFluss");
 						
 		}
-	}
+	} */
 	private class newModuleAction extends AbstractAction {
 		private static final long serialVersionUID = 6190606710625748526L;
 		public newModuleAction() {

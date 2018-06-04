@@ -11,10 +11,10 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * Diese Klasse dient zur Erzeugung von Prozessmodulen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.509
+ * @version 0.511
  */
 
-public class ProcessModule 
+public class ProcessModule extends MCAObject  
 implements FlowValueMaps, ImpactValueMaps {
 	
 	// Klassenvariable:
@@ -23,7 +23,6 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	// Instanzvariablen:
 	
-	private String name;
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = 
 			new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); //Elementarflüsse
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pfv = 
@@ -32,8 +31,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	// Konstruktor:
 			
 	private ProcessModule(String name) {
-		super();
-		setName(name);
+		super(name);
 		NameCheck.getInstance().add(getName());
 		allInstances.put(getName(), this);
 	}
@@ -144,11 +142,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getElementarflussvektor() {
 		return efv; 
 	}	
-	
-	@Override
-	public String getName() {
-		return name;
-	}
+
 	
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor() {
@@ -169,11 +163,6 @@ implements FlowValueMaps, ImpactValueMaps {
 		pfv.remove(fluss);
 	}
 
-	public void setName(String string) {
-		NameCheck.remove(this.name);
-		NameCheck.getInstance().add(string);
-		this.name = string;	
-	}
 
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {

@@ -12,10 +12,10 @@ import de.unistuttgart.iwb.ivari.*;
  *  * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.509
+ * @version 0.511
  */
 
-public class ProductSystem 
+public class ProductSystem extends MCAObject 
 implements FlowValueMaps, ImpactValueMaps {
 	
 	
@@ -25,7 +25,6 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	// Instanzvariablen:
 	
-	private String name;
 	private LinkedList<FlowValueMaps> modulliste 
 			= new LinkedList<FlowValueMaps>();
 	private LinkedHashMap<Flow, Double> bedarfsvektor 
@@ -39,10 +38,10 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	// Konstruktor:
 
-	private ProductSystem(String string, 
+	private ProductSystem(String name, 
 			LinkedHashMap<Flow, Double> f,
 			LinkedList<Flow> vk) {
-		name = string;
+		super(name);
 		bedarfsvektor = f;
 		vorUndKoppelProdukte = vk;
 		NameCheck.getInstance().add(name);
@@ -325,11 +324,6 @@ implements FlowValueMaps, ImpactValueMaps {
 	public LinkedList<FlowValueMaps> getModulliste() {
 		return modulliste;
 	}
-	
-	@Override
-	public String getName() {
-		return name;
-	}
 
 	/**
 	 * @throws ArithmeticException
@@ -368,13 +362,6 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	public void setBedarfsvektor(LinkedHashMap<Flow, Double> bv) {
 		bedarfsvektor = bv;
-	}
-	
-
-	public void setName(String string) {
-		NameCheck.remove(this.name);
-		NameCheck.getInstance().add(string);
-		this.name = string;			
 	}
 	
 	/**

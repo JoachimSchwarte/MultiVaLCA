@@ -8,10 +8,10 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.511
  */
 
-public class LCIAMethod {
+public class LCIAMethod extends MCAObject {
 	
 	// Klassenvariable:
 	
@@ -19,7 +19,6 @@ public class LCIAMethod {
 	
 	// Instanzvariablen:
 	
-	private String name;
 	private LinkedHashMap<String, CharacFactor> faktorSet = 
 			new LinkedHashMap<String, CharacFactor>();
 	private LinkedHashMap<String, ImpactCategory> wkl = 
@@ -28,8 +27,7 @@ public class LCIAMethod {
 	// Konstruktor:
 	
 	private LCIAMethod(String name) {
-		super();
-		this.name = name;
+		super(name);
 		allInstances.put(name, this);
 	}
 	
@@ -117,15 +115,7 @@ public class LCIAMethod {
 	public LinkedHashMap<String, CharacFactor> getFactorSet() {
 		return faktorSet;
 	}
-	
-	/**
-	 * @return
-	 * ... den Namen der Bewertugsmethode
-	 */
-	
-	public String getName() {
-		return name;
-	}
+
 		
 	/**
 	 * @return

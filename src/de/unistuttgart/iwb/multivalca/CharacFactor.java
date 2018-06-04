@@ -8,10 +8,10 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.511
  */
 
-public class CharacFactor {
+public class CharacFactor extends MCAObject {
 	
 	// Klassenvariable:
 	
@@ -19,7 +19,6 @@ public class CharacFactor {
 	
 	// Instanzvariablen:
 	
-	private String name;
 	private Flow fluss;
 	private ImpactCategory wirkung;
 	private LinkedHashMap<ValueType, Double> werte;
@@ -27,8 +26,7 @@ public class CharacFactor {
 	// Konstruktoren:
 
 	private CharacFactor(String name, Flow fluss, ImpactCategory wirkung, Double wert) {
-		super();
-		this.name = name;
+		super(name);
 		this.fluss = fluss;
 		this.wirkung = wirkung;
 		this.werte = new LinkedHashMap<ValueType, Double>();
@@ -39,8 +37,7 @@ public class CharacFactor {
 	}
 	
 	private CharacFactor(String name, Flow fluss, ImpactCategory wirkung, LinkedHashMap<ValueType, Double> werte) {
-		super();
-		this.name = name;
+		super(name);
 		this.fluss = fluss;
 		this.wirkung = wirkung;
 		this.werte = werte;	
@@ -99,15 +96,7 @@ public class CharacFactor {
 	public Flow getFlow() {
 		return fluss;
 	}
-	
-	/**
-	 * @return
-	 * ... den Namen des CharakterFaktor-Objekts.
-	 */
 
-	public String getName() {
-		return name;
-	}
 	
 	/**
 	 * @return

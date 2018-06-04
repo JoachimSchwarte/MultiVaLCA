@@ -1,6 +1,7 @@
 /*	
  * MultiVaLCA
  */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.event.ActionEvent;
@@ -24,10 +25,9 @@ import org.xml.sax.SAXException;
 
 import de.unistuttgart.iwb.multivalca.*;
 
-
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.511
  */
 
 class XMLImportAction extends AbstractAction {
@@ -59,7 +59,7 @@ class XMLImportAction extends AbstractAction {
 					
 					NodeList nl = docEle.getElementsByTagName("Flow");
 					if (nl.getLength() != 0) {
-						Flow.clear();
+						MCAObject.clear(Flow.class);
 						NameCheck.clear();
 					}
 					for (int i = 0; i < nl.getLength(); i++) {

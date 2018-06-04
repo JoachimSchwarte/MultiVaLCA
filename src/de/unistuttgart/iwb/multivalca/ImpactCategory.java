@@ -8,10 +8,10 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.511
  */
 
-public class ImpactCategory {
+public class ImpactCategory extends MCAObject {
 	
 	// Klassenvariable:
 	
@@ -19,14 +19,12 @@ public class ImpactCategory {
 	
 	// Instanzvariablen:
 	
-	private String name;
 	private CategoryIndicator einheit;
 	
 	// Konstruktor basierend auf den Instanzvariablen:
 	
 	private ImpactCategory(String name, CategoryIndicator einheit) {
-		super();
-		this.name = name;
+		super(name);
 		this.einheit = einheit;
 		allInstances.put(name, this);
 	}
@@ -86,15 +84,6 @@ public class ImpactCategory {
 
 	public CategoryIndicator getEinheit() {
 		return einheit;
-	}
-	
-	/**
-	 * @return
-	 * ... den Namen der Wirkungskategorie.
-	 */
-	
-	public String getName() {
-		return name;
 	}
 	
 	public static ImpactCategory getInstance(String name) {

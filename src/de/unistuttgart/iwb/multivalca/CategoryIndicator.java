@@ -8,24 +8,20 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.511
  */
 
-public class CategoryIndicator {
+public class CategoryIndicator extends MCAObject {
 	
 	// Klassenvariable:
 	
 		private static LinkedHashMap<String, CategoryIndicator> allInstances = new LinkedHashMap<String, CategoryIndicator>();
 	
-	// Instanzvariablen:
-	
-	private String name;
-	
+
 	// Konstruktor basierend auf den Instanzvariablen:
 
 	private CategoryIndicator(String name) {
-		super();
-		this.setName(name);
+		super(name);
 		allInstances.put(name, this);
 	}
 	
@@ -39,13 +35,6 @@ public class CategoryIndicator {
 		allInstances.clear();
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 	
 	public static CategoryIndicator instance(String name) {
 		if (allInstances.containsKey(name) == false) {

@@ -11,10 +11,10 @@ import java.util.LinkedHashMap;
  * von Objekten des Typs "Komponente".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.503
+ * @version 0.511
  */
 
-public class Component 
+public class Component extends MCAObject  
 implements ImpactValueMaps {
 	
 	// Klassenvariable:
@@ -22,16 +22,14 @@ implements ImpactValueMaps {
 	private static LinkedHashMap<String,Component> allInstances = new LinkedHashMap<String,Component>();
 	
 	// Instanzvariablen:	
-
-	private String name;	
+	
 	private ImpactValueMaps komponente;
 	private Double menge;
 	
 	// Konstruktor:
 
 	private Component(String name, ImpactValueMaps komponente, double menge) {
-		super();
-		this.name = name;
+		super(name);
 		this.komponente = komponente;
 		this.menge = menge;
 		allInstances.put(name, this);
@@ -147,11 +145,6 @@ implements ImpactValueMaps {
 	public Double getMenge() {
 		return menge;
 	}
-	
-	@Override
-	public String getName() {
-		return name;
-	}
 
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
@@ -183,10 +176,10 @@ implements ImpactValueMaps {
 		return wvKomponente;
 	}
 
-	@Override
+/*	@Override
 	public void setName(String string) {
 		NameCheck.removeWVName(this.name);
 		NameCheck.getInstance().addWVName(string);
 		this.name = string;		
-	}
+	}*/
 }

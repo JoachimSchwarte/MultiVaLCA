@@ -5,7 +5,6 @@
 package de.unistuttgart.iwb.multivalca;
 
 import java.util.LinkedHashMap;
-import java.util.Set;
 
 /**
  * Diese Klasse dient zur Erzeugung von Flussobjekten.
@@ -13,52 +12,31 @@ import java.util.Set;
  * Instanzvariablen zur Verfügung.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.511
  */
 
-public class Flow {	
+public class Flow extends MCAObject {	
 	
 	// Klassenvariable:
 	
-	private static LinkedHashMap<String,Flow> allInstances = new LinkedHashMap<String,Flow>();
+	 private static LinkedHashMap<String,Flow> allInstances = new LinkedHashMap<String,Flow>();
 	
 	// Instanzvariablen:	
 
-	private String name;
 	private FlowType typ; 
 	private FlowUnit einheit;
 	
 	// Konstruktor:
 	
 	private Flow(String name, FlowType typ, FlowUnit einheit) {
-		this.name = name;
+		super(name);
 		this.typ = typ;
 		this.einheit = einheit;
-		allInstances.put(name, this);
 	}
 	
 	// Methoden:
 	
-	/**
-	 * Löscht alle Klassenvariablen
-	 */
-	
-	public static void clear() {
-		allInstances.clear();
-	}
-	
-	/**
-	 * Überprüft, ob bereits ein Fluss-Objekt des gegebenen
-	 * Namens existiert.
-	 * @param string
-	 * ist der zu prüfende Name
-	 * @return
-	 * ... den Wahrheitswert, den die Überprüfung liefert
-	 */
-	
-	public static boolean containsName(String string) {
-		return allInstances.keySet().contains(string);
-	}
+
 	
 	/**
 	 * @return
@@ -66,16 +44,8 @@ public class Flow {
 	 */
 	
 	public static LinkedHashMap<String,Flow> getAllInstances() {
+	
 		return allInstances;
-	}
-	
-	/**
-	 * @return
-	 * ... die Namen aller vorhandenen Flussobjekte
-	 */
-	
-	public static Set<String> getAllNames() {
-		return allInstances.keySet();
 	}
 	
 	/**
@@ -122,15 +92,6 @@ public class Flow {
 	
 	public FlowUnit getEinheit() {
 		return einheit;
-	}
-	
-	/**
-	 * @return
-	 * ... den Namen des Flussobjektes.
-	 */
-	
-	public String getName() {
-		return name;
 	}
 	
 	/**
