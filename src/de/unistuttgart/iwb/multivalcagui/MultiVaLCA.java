@@ -37,14 +37,14 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.512
  */
 
 public class MultiVaLCA {
 	
 	Language l = Language.Deutsch;
 	
-	private JFrame frame = new JFrame();;
+	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();
 	private CardLayout cl = new CardLayout(0, 0);
 //	private final Action newFlowAction 			= new newFlowAction();

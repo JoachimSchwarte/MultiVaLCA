@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.512
  */
 
 public class MCAObject {
@@ -22,8 +22,7 @@ public class MCAObject {
 	private String name;
 	
 	protected MCAObject(String name) {
-		this.name = name;
-		
+		this.name = name;		
 		Class<? extends MCAObject> clazz = this.getClass ();
 		LinkedHashMap<String,MCAObject> result = instanceMap.get(clazz);
 		if (result == null) {
@@ -40,28 +39,14 @@ public class MCAObject {
 	public final void setName(String name) {
 		NameCheck.remove(this.name);
 		NameCheck.getInstance().add(name);
-		this.name = name;	
-		
+		this.name = name;			
 	}
-	
-	/**
-	 * Löscht alle Klassenvariablen
-	 */
 	
 	public static void clear(Class<?> clazz) {
 		LinkedHashMap<String, MCAObject> c = instanceMap.get(clazz);
 		if (c != null) 
 			c.clear();
 	}
-	
-	/**
-	 * Überprüft, ob bereits ein Objekt des gegebenen
-	 * Namens existiert.
-	 * @param string
-	 * ist der zu prüfende Name
-	 * @return
-	 * ... den Wahrheitswert, den die Überprüfung liefert
-	 */
 	
 	public static boolean containsName(String string) {
 		Set<String> allkeys = new HashSet<>();	
@@ -71,11 +56,6 @@ public class MCAObject {
 		}
 		return allkeys.contains(string);
 	}
-	
-	/**
-	 * @return
-	 * ... die Namen aller vorhandenen Flussobjekte
-	 */
 	
 	public static Set<String> getAllNames(Class<?> clazz) {
 		LinkedHashMap<String, MCAObject> c = instanceMap.get(clazz);

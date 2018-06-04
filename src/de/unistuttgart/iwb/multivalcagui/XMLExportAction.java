@@ -28,7 +28,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.512
  */
 
 class XMLExportAction extends AbstractAction {
@@ -52,7 +52,7 @@ class XMLExportAction extends AbstractAction {
             Element allefluesse = document.createElement("Flows");
             root.appendChild(allefluesse);
             
-            for(String pfname : Flow.getAllInstances().keySet()) {
+            for(String pfname : Flow.getAllInstances(Flow.class).keySet()) {
             	Flow pf = Flow.getInstance(pfname); 
             	Element fluss = document.createElement("Flow");
             	allefluesse.appendChild(fluss);
