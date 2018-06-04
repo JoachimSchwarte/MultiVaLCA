@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.512
+ * @version 0.513
  */
 
 public class Flow extends MCAObject {	
@@ -24,7 +24,6 @@ public class Flow extends MCAObject {
 		super(name);
 		this.typ = typ;
 		this.einheit = einheit;
-
 	}
 	
 	// Methoden:

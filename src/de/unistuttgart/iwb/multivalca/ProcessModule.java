@@ -8,18 +8,12 @@ import java.util.LinkedHashMap;
 import de.unistuttgart.iwb.ivari.IvariScalar;
 
 /**
- * Diese Klasse dient zur Erzeugung von Prozessmodulen.
- * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.513
  */
 
 public class ProcessModule extends MCAObject  
 implements FlowValueMaps, ImpactValueMaps {
-	
-	// Klassenvariable:
-	
-	private static LinkedHashMap<String, ProcessModule> allInstances = new LinkedHashMap<String, ProcessModule>();
 	
 	// Instanzvariablen:
 	
@@ -32,93 +26,37 @@ implements FlowValueMaps, ImpactValueMaps {
 			
 	private ProcessModule(String name) {
 		super(name);
-		NameCheck.getInstance().add(getName());
-		allInstances.put(getName(), this);
 	}
 	
 	// Methoden:
-	
-	/**
-	 * Löscht alle Klassenvariablen
-	 */
-	
-	public static void clear() {
-		allInstances.clear();
+
+	public static LinkedHashMap<String, ProcessModule> getAllInstances() {
+		LinkedHashMap<String,ProcessModule> a = new LinkedHashMap<String,ProcessModule>();
+		for (String s : MCAObject.getAllNames(ProcessModule.class)) {
+			a.put(s, (ProcessModule)MCAObject.getAllInstances(ProcessModule.class).get(s));			
+		}
+		return a;
 	}
-	
-	/**
-	 * Überprüft, ob bereits ein Prozessmodul
-	 * des genannten Namens existiert.
-	 * @param string
-	 * ist der zu prüfende Name
-	 * @return
-	 * ... den Wahrheitswert, den die Überprüfung liefert
-	 */
 	
 	public static boolean containsName(String string) {
-		return allInstances.containsKey(string);
+		return getAllInstances().containsKey(string);
 	}
-	
-	/**
-	 * @return
-	 * ... alle vorhandenen Prozessmodule
-	 */
-	
-	public static LinkedHashMap<String, ProcessModule> getAllInstances() {
-		return allInstances;
-	}
-	
-	/**
-	 * Liefert ein Prozessmodul
-	 * @param string
-	 * Name des Prozessmoduls
-	 * @return
-	 * ... das gesuchte Prozessmodul
-	 */
-	
+
 	public static ProcessModule getInstance(String string) {
-		return allInstances.get(string);		
+		return getAllInstances().get(string);		
 	}
-	
-	/**
-	 * Erzeugt ein leeres benanntes Prozessmodul durch Aufruf des
-	 * privaten Konstruktors sofern noch kein Prozessmodul gleichem
-	 * Namens existiert. Ansonsten wird das existierende Prozessmodul
-	 * zurückgegeben.
-	 * @param name
-	 * Der Name des Prozessmoduls
-	 * @return
-	 * ... das Prozessmodul
-	 */
-	
+
 	public static ProcessModule instance(String name) {
-		if (allInstances.containsKey(name) == false) {
+		if (getAllInstances().containsKey(name) == false) {
 			new ProcessModule(name);
 		}
-		return allInstances.get(name);
+		return getAllInstances().get(name);
 	}
-	
-	/**
-	 * Löscht ein Prozessmodul
-	 * @param string
-	 * Name des zu löschenden Prozessmoduls
-	 */
-	
+
 	public static void removeInstance(String string) {
-		allInstances.remove(string);
+		getAllInstances().remove(string);
 		NameCheck.remove(string);
 	}
-	
-	/**
-	 * Fügt dem Prozessmodul einen quantifizierten Fluss hinzu.
-	 * Die Methode kann für alle Flusstypen verwendet werden.
-	 * @param fluss
-	 * Der Fluss, der dem Prozessmodul hinzugefügt werden soll
-	 * @param wert
-	 * Die Menge, die in das Prozessmodul hinein (negatives
-	 * Vorzeichen) oder aus dem Prozessmodul hinaus (positives 
-	 * Vorzeichen) fließt.
-	 */
 	
 	public void addFluss(Flow fluss, ValueType fvt, Double wert) {	
 		if (fluss.getType() == FlowType.Elementary) {
@@ -142,27 +80,16 @@ implements FlowValueMaps, ImpactValueMaps {
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getElementarflussvektor() {
 		return efv; 
 	}	
-
 	
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor() {
 		return pfv; 
 	}
 	
-
-	
-	/**
-	 * Entfernt einen Fluss aus dem betroffenen Flussvektor.
-	 * 
-	 * @param fluss
-	 * der zu entfernende Fluß
-	 */
-	
 	public void removeFluss(Flow fluss) {
 		efv.remove(fluss);
 		pfv.remove(fluss);
 	}
-
 
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
