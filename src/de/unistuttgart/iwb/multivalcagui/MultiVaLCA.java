@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.514
+ * @version 0.515
  */
 
 public class MultiVaLCA {
@@ -49,7 +49,7 @@ public class MultiVaLCA {
 	private CardLayout cl = new CardLayout(0, 0);
 //	private final Action newFlowAction 			= new newFlowAction();
 	private final Action newModuleAction 		= new newModuleAction();
-	private final Action newSMAction 			= new newSMAction();
+//	private final Action newSMAction 			= new newSMAction();
 	private final Action newGMAction 			= new newGMAction();
 	private final Action newProductAction 		= new newProductAction();
 	private final Action aboutAction 			= new aboutAction();
@@ -89,7 +89,7 @@ public class MultiVaLCA {
 	//
 	// Panel 2; Neues Prozessmodul
 	//
-	private JPanel panel_02 = new JPanel();
+/*	private JPanel panel_02 = new JPanel();
 	private JTextField txtP02n1 = new JTextField();		// Eingabefeld Modulname
 	private JTextField txtP02n2 = new JTextField();		// Eingabefeld Flussname  
 	private JTextField txtP02n3 = new JTextField();		// Eingabefeld Menge
@@ -105,7 +105,7 @@ public class MultiVaLCA {
 	private JButton btnP02n1 = new JButton(); 			// "neues Prozessmodul anlegen"
 	private JButton btnP02n2 = new JButton();			// "Grenzwerte bestätigen"
 	private JButton btnP02n4 = new JButton();			// "fertig"
-	private JButton btnP02n3 = new JButton();			// "Fluss hinzufügen"
+	private JButton btnP02n3 = new JButton();			// "Fluss hinzufügen" */
 	//
 	// Panel 3; Neues Produktsystem
 	//
@@ -396,8 +396,8 @@ public class MultiVaLCA {
 		//
 		// Panel 2; Neues Prozessmodul
 		//
-		panel.add(panel_02, "neuModul");
-		panel_02.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
+		panel.add(new ProcessModulePanel("neuModul"), "neuModul");
+/*		panel_02.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_02.add(lblP02n1, "flowy,cell 1 0 2 1,alignx center,growy");	
@@ -432,7 +432,7 @@ public class MultiVaLCA {
 		panel_02.add(btnP02n3, "cell 1 8,alignx center");
 		btnP02n4.setEnabled(false);
 		panel_02.add(btnP02n4, "cell 2 8,alignx center");
-		panel_02.add(lblP02n5, "cell 0 9 4 1,alignx center");		
+		panel_02.add(lblP02n5, "cell 0 9 4 1,alignx center");		*/
 		//
 		// Panel 3; Neues Produktsystem
 		//		
@@ -844,14 +844,14 @@ public class MultiVaLCA {
 		menuBar.add(mnNew);
 		
 		JMenuItem mntmFlow = new JMenuItem();
-		Action a = new MCAAction(GuiStrings.getGS("mp11", l), GuiStrings.getGS("mp11e", l), "neuFluss") {
+		Action a1 = new MCAAction(GuiStrings.getGS("mp11", l), GuiStrings.getGS("mp11e", l), "neuFluss") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
 				MCAPanel.get(getKey()).showMe();
 			}		
 		};
-		mntmFlow.setAction(a);
+		mntmFlow.setAction(a1);
 		mnNew.add(mntmFlow);
 		
 		JMenu mntmProcessModule = new JMenu();
@@ -859,7 +859,14 @@ public class MultiVaLCA {
 		mnNew.add(mntmProcessModule);
 		
 		JMenuItem mntmSingleModule = new JMenuItem();
-		mntmSingleModule.setAction(newSMAction);
+		Action a2 = new MCAAction(GuiStrings.getGS("mp121", l), GuiStrings.getGS("mp121e", l), "neuModul") {
+			@Override
+			public void performAction(ActionEvent e) {
+				cl.show(panel, getKey());
+				MCAPanel.get(getKey()).showMe();
+			}		
+		};
+		mntmSingleModule.setAction(a2);
 		mntmProcessModule.add(mntmSingleModule);
 		
 		JMenuItem mntmGroupModule = new JMenuItem();
@@ -1010,7 +1017,7 @@ public class MultiVaLCA {
 		 * neues Prozessmodul
 		 */
 		
-		btnP02n1.addActionListener(new ActionListener() {
+/*		btnP02n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP02n1.getText();	
@@ -1154,7 +1161,7 @@ public class MultiVaLCA {
 				txtP02n5.setEnabled(false);
 				lblP02n5.setText(GuiStrings.getGS("stat01", l));
 			}
-		});
+		}); */
 
 		/*
 		 * neues Produktsystem
@@ -1983,7 +1990,7 @@ public class MultiVaLCA {
 			
 		}
 	}
-	private class newSMAction extends AbstractAction {
+/*	private class newSMAction extends AbstractAction {
 		private static final long serialVersionUID = -8680747211949829392L;
 		public newSMAction() {
 			putValue(NAME, GuiStrings.getGS("mp121", l));
@@ -2007,7 +2014,7 @@ public class MultiVaLCA {
 			
 		}
 		
-	}
+	} */
 	private class newGMAction extends AbstractAction {
 		private static final long serialVersionUID = -8803373580213989936L;
 		public newGMAction() {
