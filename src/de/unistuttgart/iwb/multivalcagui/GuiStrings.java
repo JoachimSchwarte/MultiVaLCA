@@ -8,14 +8,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.515
+ * @version 0.516
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.515";
-		String date = "05.06.2018";
+		String vn = " 0.516";
+		String date = "06.06.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -178,6 +178,12 @@ public class GuiStrings {
 			case "mp122": r = "Prozessmodulgruppe"; break;
 			case "mp121e": r = "einzelnes Prozessmodul erfassen"; break;
 			case "mp122e": r = "Gruppe von Prozessmodul erfassen"; break;
+			case "p20n1": r = "Neue Prozessmodulgruppe"; break;
+			case "p20n2": r = "Name der Gruppe"; break;
+			case "p20n3": r = "relevanter Produktfluss"; break;
+			case "p20n4": r = "Name des hinzuzufügenden Moduls"; break;
+			case "bt16": r = "neue Gruppe anlegen"; break;
+			case "bt17": r = "Modul zur Gruppe hinzufügen"; break;
 
 
 			}		
@@ -344,6 +350,12 @@ public class GuiStrings {
 			case "mp122": r = "Group of Process Modules"; break;
 			case "mp121e": r = "Create single Process Module"; break;
 			case "mp122e": r = "Create Group of Process Modules"; break;
+			case "p20n1": r = "New Process Module Group"; break;
+			case "p20n2": r = "Name of the Group"; break;
+			case "p20n3": r = "Relevant Product Flow"; break;
+			case "p20n4": r = "Name of the Module to add"; break;
+			case "bt16": r = "Create new Group"; break;
+			case "bt17": r = "Add Module to Group"; break;
 		
 			}		
 		}
