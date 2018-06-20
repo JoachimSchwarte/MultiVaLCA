@@ -13,14 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.Flow;
-import de.unistuttgart.iwb.multivalca.NameCheck;
+import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.515
+ * @version 0.517
  */
 
 public class ProcessModulePanel extends MCAPanel{
@@ -100,7 +100,7 @@ public class ProcessModulePanel extends MCAPanel{
 					lblP02n5.setText(GuiStrings.getGS("stat20", l));
 					txtP02n1.setText("");
 				}
-				if (NameCheck.containsFVName(name)) {
+				if (MCAObject.containsName(name)) {
 					nameOk = false;
 					lblP02n5.setText(GuiStrings.getGS("stat03", l));
 					txtP02n1.setText("");

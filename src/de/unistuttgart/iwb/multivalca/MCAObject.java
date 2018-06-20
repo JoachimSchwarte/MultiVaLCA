@@ -64,7 +64,7 @@ public class MCAObject {
 	
 	public static LinkedHashMap<String, MCAObject> getAllInstances(Class<?> clazz) {
 		LinkedHashMap<String, MCAObject> c = instanceMap.get(clazz);
-		return c != null ? c : new LinkedHashMap<>();
-		
+		return c != null ? c : new LinkedHashMap<>();	
 	}
+
 }

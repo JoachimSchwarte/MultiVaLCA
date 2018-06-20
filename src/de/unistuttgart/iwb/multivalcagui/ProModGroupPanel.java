@@ -12,11 +12,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.MCAObject;
+import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.516
+ * @version 0.517
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -72,12 +76,41 @@ public class ProModGroupPanel extends MCAPanel{
 		
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String fmenge = txt03.getText();
+				Double menge;
+				try {
+					menge = Double.parseDouble(fmenge);
+				} catch (NumberFormatException e){
+					menge = 0.0;
+				}
+				if (menge == 0.0) {
+					lbl06.setText(GuiStrings.getGS("stat07", l));
+				}
+				String flname = txt02.getText();
+				boolean flOk = true;					
+				if (ProcessModule.getAllInstances().containsKey(flname) == false) {
+					flOk = false;
+					lbl06.setText(GuiStrings.getGS("stat37", l));
+				}			
 				String name = txt01.getText();	
 				boolean nameOk = true;
 				if (name.equals("")) {
 					nameOk = false;
 					lbl06.setText(GuiStrings.getGS("stat02", l));
 				} 
+				if (name != name.replaceAll(" ","")) {
+					nameOk = false;
+					lbl06.setText(GuiStrings.getGS("stat20", l));
+					txt01.setText("");
+				}
+				if (MCAObject.containsName(name)) {
+					nameOk = false;
+					lbl06.setText(GuiStrings.getGS("stat03", l));
+					txt01.setText("");
+				}	
+				if (menge != 0.0 && flOk == true && nameOk == true) {
+					ProcessModuleGroup.createInstance(name, Flow.getInstance(flname), menge);
+				}
 				
 			}			
 		});
