@@ -8,13 +8,13 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.517
+ * @version 0.518
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.517";
+		String vn = " 0.518";
 		String date = "20.06.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
@@ -184,7 +184,9 @@ public class GuiStrings {
 			case "p20n4": r = "Name des hinzuzufügenden Moduls"; break;
 			case "bt16": r = "neue Gruppe anlegen"; break;
 			case "bt17": r = "Modul zur Gruppe hinzufügen"; break;
-			case "stat37": r = ">>> Das angegebene Prozessmodul existiert nicht. <<<"; break;
+			case "stat37": r = ">>> Der angegebene Fluss existiert nicht. <<<"; break;
+			case "stat38": r = ">>> Das angegebene Prozessmodul existiert nicht. <<<"; break;
+			case "stat39": r = ">>> Das angegebene Prozessmodul ist inkompatibel. <<<"; break;
 
 
 			}		
@@ -357,7 +359,9 @@ public class GuiStrings {
 			case "p20n4": r = "Name of the Module to add"; break;
 			case "bt16": r = "Create new Group"; break;
 			case "bt17": r = "Add Module to Group"; break;
-			case "stat37": r = ">>> The Process Module does not exist. <<<"; break;
+			case "stat37": r = ">>> The Flow does not exist. <<<"; break;
+			case "stat38": r = ">>> The Process Module does not exist. <<<"; break;
+			case "stat39": r = ">>> The Process Module is not compatible. <<<"; break;
 		
 			}		
 		}

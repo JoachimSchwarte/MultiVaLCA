@@ -20,7 +20,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.517
+ * @version 0.518
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -88,7 +88,7 @@ public class ProModGroupPanel extends MCAPanel{
 				}
 				String flname = txt02.getText();
 				boolean flOk = true;					
-				if (ProcessModule.getAllInstances().containsKey(flname) == false) {
+				if (Flow.getAllInstances().containsKey(flname) == false) {
 					flOk = false;
 					lbl06.setText(GuiStrings.getGS("stat37", l));
 				}			
@@ -110,9 +110,54 @@ public class ProModGroupPanel extends MCAPanel{
 				}	
 				if (menge != 0.0 && flOk == true && nameOk == true) {
 					ProcessModuleGroup.createInstance(name, Flow.getInstance(flname), menge);
-				}
-				
+					txt01.setEnabled(false);
+					txt02.setEnabled(false);
+					txt03.setEnabled(false);
+					btn01.setEnabled(false);
+					txt04.setEnabled(true);
+					btn02.setEnabled(true);
+				}				
 			}			
+		});
+		
+		btn02.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String name = txt04.getText();	
+				String flname = txt02.getText();
+				boolean nameOk = true;
+				if (name.equals("")) {
+					nameOk = false;
+					lbl06.setText(GuiStrings.getGS("stat02", l));
+				} 
+				if (nameOk == true && ProcessModule.getAllInstances().containsKey(name) == false) {
+					nameOk = false;
+					lbl06.setText(GuiStrings.getGS("stat38", l));
+				}
+				if (nameOk == true && ProcessModule.getAllInstances().get(name).getProduktflussvektor().containsKey(Flow.getAllInstances().get(flname)) == false) {
+					nameOk = false;
+					lbl06.setText(GuiStrings.getGS("stat39", l));					
+				}
+				if (nameOk == true) {
+					btn03.setEnabled(true);
+				}			
+			}
+		});
+		
+		btn03.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txt01.setText("");
+				txt02.setText("");
+				txt03.setText("");
+				txt04.setText("");
+				txt01.setEnabled(true);
+				txt02.setEnabled(true);
+				txt03.setEnabled(true);
+				txt04.setEnabled(false);
+				btn01.setEnabled(true);
+				btn02.setEnabled(false);
+				btn03.setEnabled(false);
+				
+			}
 		});
 	}
 
