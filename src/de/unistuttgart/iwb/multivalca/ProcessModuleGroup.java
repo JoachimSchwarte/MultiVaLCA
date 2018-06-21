@@ -5,10 +5,11 @@
 package de.unistuttgart.iwb.multivalca;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.517
+ * @version 0.519
  */
 
 public class ProcessModuleGroup extends MCAObject  
@@ -16,7 +17,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	// Instanzvariablen:
 	
-	private LinkedHashMap<Flow, Double> modList = new LinkedHashMap<Flow, Double>();
+	private LinkedList<ProcessModule> modList = new LinkedList<ProcessModule>();
 	private Flow refFlow;
 	private double refValue;
 
@@ -56,6 +57,14 @@ implements FlowValueMaps, ImpactValueMaps {
 			a.put(s, (ProcessModuleGroup)MCAObject.getAllInstances(ProcessModuleGroup.class).get(s));			
 		}
 		return a;
+	}
+
+	public void addModule(ProcessModule pm) {
+		modList.add(pm);
+	}
+	
+	public LinkedList<ProcessModule> getModList(){
+		return modList;
 	}
 
 }

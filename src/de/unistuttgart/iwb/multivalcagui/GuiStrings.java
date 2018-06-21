@@ -8,14 +8,14 @@ package de.unistuttgart.iwb.multivalcagui;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Beschriftung aller statischen GUI-Elemente
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.518
+ * @version 0.519
  */
 
 public class GuiStrings {
 	public static String getGS(String s, Language l) {
 		String r = "";
-		String vn = " 0.518";
-		String date = "20.06.2018";
+		String vn = " 0.519";
+		String date = "21.06.2018";
 		if (l == Language.Deutsch) {
 			switch (s) {
 			case "head1": r = "MultiVaLCA"; break;
@@ -187,7 +187,8 @@ public class GuiStrings {
 			case "stat37": r = ">>> Der angegebene Fluss existiert nicht. <<<"; break;
 			case "stat38": r = ">>> Das angegebene Prozessmodul existiert nicht. <<<"; break;
 			case "stat39": r = ">>> Das angegebene Prozessmodul ist inkompatibel. <<<"; break;
-
+			case "stat40": r = ">>> Die Gruppe umfasst "; break;
+			case "stat41": r = " Prozessmodule. <<<"; break;
 
 			}		
 		}	
@@ -362,6 +363,8 @@ public class GuiStrings {
 			case "stat37": r = ">>> The Flow does not exist. <<<"; break;
 			case "stat38": r = ">>> The Process Module does not exist. <<<"; break;
 			case "stat39": r = ">>> The Process Module is not compatible. <<<"; break;
+			case "stat40": r = ">>> The Group contains "; break;
+			case "stat41": r = " Process Modules. <<<"; break;
 		
 			}		
 		}
