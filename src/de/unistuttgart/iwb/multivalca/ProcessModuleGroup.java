@@ -4,8 +4,8 @@
 
 package de.unistuttgart.iwb.multivalca;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
@@ -17,7 +17,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	// Instanzvariablen:
 	
-	private LinkedList<ProcessModule> modList = new LinkedList<ProcessModule>();
+	private HashSet<ProcessModule> modList = new HashSet<ProcessModule>();
 	private Flow refFlow;
 	private double refValue;
 
@@ -63,7 +63,7 @@ implements FlowValueMaps, ImpactValueMaps {
 		modList.add(pm);
 	}
 	
-	public LinkedList<ProcessModule> getModList(){
+	public HashSet<ProcessModule> getModList(){
 		return modList;
 	}
 
