@@ -20,7 +20,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.517
+ * @version 0.521
  */
 
 public class ProcessModulePanel extends MCAPanel{
@@ -47,8 +47,7 @@ public class ProcessModulePanel extends MCAPanel{
 		initUI();
 	}
 	
-	private void initUI( ) {
-		Language l = GUILanguage.getChosenLanguage();
+	private void initUI( ) {		
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -89,6 +88,7 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				Language l = GUILanguage.getChosenLanguage();
 				String name = txtP02n1.getText();	
 				boolean nameOk = true;
 				if (name.equals("")) {
@@ -121,6 +121,7 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				Language l = GUILanguage.getChosenLanguage();
 				String fname = txtP02n2.getText();
 				String fmenge = txtP02n3.getText();
 				Double menge;
@@ -164,6 +165,7 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				Language l = GUILanguage.getChosenLanguage();
 				String fug = txtP02n4.getText();
 				String fog = txtP02n5.getText();
 				Double fugv;
@@ -214,6 +216,7 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				Language l = GUILanguage.getChosenLanguage();
 				btnP02n1.setEnabled(true);
 				txtP02n2.setText("");
 				txtP02n3.setText("");

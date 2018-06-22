@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -6,12 +10,16 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.CategoryIndicator;
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
 import net.miginfocom.swing.MigLayout;
+
+/**
+ * @author Dr.-Ing. Joachim Schwarte
+ * @version 0.521
+ */
 
 public class ImpactCatPanel extends MCAPanel {
 	

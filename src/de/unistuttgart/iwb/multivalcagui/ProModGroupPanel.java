@@ -20,7 +20,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.519
+ * @version 0.521
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -45,7 +45,6 @@ public class ProModGroupPanel extends MCAPanel{
 	}
 	
 	private void initUI( ) {
-		Language l = GUILanguage.getChosenLanguage();
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lbl01.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -76,6 +75,7 @@ public class ProModGroupPanel extends MCAPanel{
 		
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Language l = GUILanguage.getChosenLanguage();
 				String fmenge = txt03.getText();
 				Double menge;
 				try {
@@ -122,6 +122,7 @@ public class ProModGroupPanel extends MCAPanel{
 		
 		btn02.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Language l = GUILanguage.getChosenLanguage();
 				String name = txt04.getText();	
 				String flname = txt02.getText();
 				boolean nameOk = true;

@@ -23,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.514
+ * @version 0.521
  */
 
 public class FlowPanel extends MCAPanel{
