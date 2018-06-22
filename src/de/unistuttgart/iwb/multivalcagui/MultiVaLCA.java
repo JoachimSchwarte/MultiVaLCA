@@ -57,7 +57,6 @@ public class MultiVaLCA {
 	private final Action calculateAction 		= new calculateAction();	
 	private final Action xmlExportAction 		= new XMLExportAction(l);
 	private final Action xmlImportAction 		= new XMLImportAction(l);
-	private final Action newCategoryAction 		= new newCategoryAction();
 	private final Action listCategoriesAction 	= new listCategoriesAction();
 	private final Action newCFAction 			= new newCFAction();
 	private final Action listCFAction 			= new listCFAction();
@@ -142,14 +141,7 @@ public class MultiVaLCA {
 	//
 	// Panel 10; Neue Wirkungskategorie
 	//
-	private JPanel panel_10 = new JPanel();
-	private JTextField txtP10n1 = new JTextField();		// Eingabefeld Kategorie
-	private JTextField txtP10n2 = new JTextField();		// Eingabefeld Indikator
-	private JLabel lblP10n1 = new JLabel(); 			// "Neue Wirkungskategorie"
-	private JLabel lblP10n2 = new JLabel();				// "Name der Wirkungskategorie"
-	private JLabel lblP10n3 = new JLabel();				// "Indikator"
-	private JLabel lblP10n4 = new JLabel();				// Status
-	private JButton btnP10n1 = new JButton(); 			// "speichern"
+
 	//
 	// Panel 11; Kategorieliste
 	//
@@ -467,22 +459,7 @@ public class MultiVaLCA {
 		//
 		// Panel 10; Neue Wirkungskategorie
 		//
-		panel.add(panel_10, "neuKategorie");
-		panel_10.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lblP10n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_10.add(lblP10n1, "flowy,cell 1 0 2 1,alignx center,growy");	
-		panel_10.add(lblP10n2, "cell 1 1,grow");	
-		txtP10n1.setText("");
-		panel_10.add(txtP10n1, "cell 2 1,grow");	
-		txtP10n1.setColumns(10);
-		panel_10.add(lblP10n3, "cell 1 2,grow");	
-		txtP10n2.setText("");
-		panel_10.add(txtP10n2, "cell 2 2,grow");	
-		txtP10n2.setColumns(10);
-		panel_10.add(btnP10n1, "cell 1 3 2 1,alignx center");	
-		btnP10n1.setEnabled(true);
-		panel_10.add(lblP10n4, "cell 0 4 4 1,alignx center");	
+		panel.add(new ImpactCatPanel("neuImCat"), "neuImCat");
 		//
 		// Panel 11; Kategorieliste
 		//
@@ -805,7 +782,14 @@ public class MultiVaLCA {
 		mnNew.add(mntmProductSystem);
 		
 		JMenuItem mntmCategory = new JMenuItem();
-		mntmCategory.setAction(newCategoryAction);
+		Action a5 = new MCAAction(GuiStrings.getGS("mp14", l), GuiStrings.getGS("mp14e", l), "neuImCat") {
+			@Override
+			public void performAction(ActionEvent e) {
+				cl.show(panel, getKey());
+				MCAPanel.get(getKey()).showMe();
+			}			
+		};
+		mntmCategory.setAction(a5);
 		mnNew.add(mntmCategory);
 		
 		JMenuItem mntmCF = new JMenuItem();
@@ -1186,33 +1170,7 @@ public class MultiVaLCA {
 		 * neue Wirkungskategorie
 		 */
 		
-		btnP10n1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String name = txtP10n1.getText();	
-				String wi = txtP10n2.getText();
-				boolean inputOK = true;
-				if (wi.equals("")) {
-					lblP10n4.setText(GuiStrings.getGS("stat24",l));
-					inputOK = false;
-				} 
-				if (name.equals("")) {
-					lblP10n4.setText(GuiStrings.getGS("stat22",l));
-					inputOK = false;
-				} 
-				if (ImpactCategory.containsName(name)) {
-					lblP10n4.setText(GuiStrings.getGS("stat23",l));
-					inputOK = false;
-				}
-				if (inputOK == true) {
-					CategoryIndicator indi = CategoryIndicator.instance(wi);
-					ImpactCategory.instance(name, indi);
-					lblP10n4.setText(GuiStrings.getGS("stat25",l) + ImpactCategory.getAllInstances().size() + GuiStrings.getGS("stat05",l));
-					txtP10n1.setText("");
-					txtP10n2.setText("");
-				}		
-			}
-		});
+
 		
 		/*
 		 * neuer CF
@@ -1989,22 +1947,7 @@ public class MultiVaLCA {
 			cl.show(panel, "berechnen");
 		}		
 	}
-	private class newCategoryAction extends AbstractAction {
-		private static final long serialVersionUID = 3009404662175614709L;
-		public newCategoryAction() {
-			putValue(NAME, GuiStrings.getGS("mp14", l));
-			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp14e", l));
-		}
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			lblP10n1.setText(GuiStrings.getGS("p10n1", l));
-			lblP10n2.setText(GuiStrings.getGS("p10n2", l));
-			lblP10n3.setText(GuiStrings.getGS("p10n3", l));
-			btnP10n1.setText(GuiStrings.getGS("bt01", l));	
-			lblP10n4.setText(GuiStrings.getGS("stat01", l));
-			cl.show(panel, "neuKategorie");
-		}	
-	}
+
 	private class listCategoriesAction extends AbstractAction {
 		private static final long serialVersionUID = 8545097901306456895L;
 		public listCategoriesAction() {

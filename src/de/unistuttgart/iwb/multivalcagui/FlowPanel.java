@@ -44,7 +44,6 @@ public class FlowPanel extends MCAPanel{
 	}
 	
 	private void initUI( ) {
-		Language l = GUILanguage.getChosenLanguage();
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP01n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -64,6 +63,7 @@ public class FlowPanel extends MCAPanel{
 		btnP01n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				Language l = GUILanguage.getChosenLanguage();
 				String name = txtP01n1.getText();
 				LinkedHashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
 				String typs = cbbP01n1.getItemAt(cbbP01n1.getSelectedIndex());

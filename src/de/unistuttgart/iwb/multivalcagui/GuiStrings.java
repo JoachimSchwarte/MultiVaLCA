@@ -116,7 +116,7 @@ public class GuiStrings {
 			case "p11n1": r = "Wirkungsindikator"; break;
 			case "mp15": r = "Charakterisierungsfaktor"; break;
 			case "mp15e": r = "neuen Charakterisierungsfaktor erfassen"; break;
-			case "p12n1": r = "Neuer Charakterisierungsfaktors"; break;
+			case "p12n1": r = "Neuer Charakterisierungsfaktor"; break;
 			case "p12n2": r = "Name des Charakterisierungsfaktors"; break;
 			case "p12n3": r = "Faktor"; break;
 			case "stat26": r = ">>> unzulässiger Faktor <<<"; break;
