@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * @version 0.511
  */
 
-public abstract class MCAPanel extends JPanel{
+public abstract class MCAPanel extends JPanel{ 
 	protected final String key;
 	private static final HashMap<String, MCAPanel> PANEL_MAP = new HashMap<>();
 	
