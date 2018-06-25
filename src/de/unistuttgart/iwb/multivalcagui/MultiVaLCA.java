@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.521
+ * @version 0.522
  */
 
 public class MultiVaLCA {
@@ -1824,6 +1824,24 @@ public class MultiVaLCA {
 			tcm.getColumn(3).setHeaderValue(GuiStrings.getGS("p02n4", l));
 			for(String mn : ProcessModule.getAllInstances().keySet()) {
 				ProcessModule akModul = ProcessModule.getInstance(mn);
+				pmTableModel.addRow(new Object[] {mn, "", "", ""});
+				for(Flow pf : akModul.getElementarflussvektor().keySet()){
+					for (ValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
+						pmTableModel.addRow(new Object[] {"", pf.getName(), 
+								ValueTypeStringMap.getFVTS(l).get(vt),
+								akModul.getElementarflussvektor().get(pf).get(vt)});
+					}
+				}						
+				for(Flow pf : akModul.getProduktflussvektor().keySet()){
+					for (ValueType vt : akModul.getProduktflussvektor().get(pf).keySet()) {
+						pmTableModel.addRow(new Object[] {"", pf.getName(), 
+								ValueTypeStringMap.getFVTS(l).get(vt),
+								akModul.getProduktflussvektor().get(pf).get(vt)});							
+					}							
+				}
+			}	
+			for(String mn : ProcessModuleGroup.getAllInstances().keySet()) {
+				ProcessModuleGroup akModul = ProcessModuleGroup.getInstance(mn);
 				pmTableModel.addRow(new Object[] {mn, "", "", ""});
 				for(Flow pf : akModul.getElementarflussvektor().keySet()){
 					for (ValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
