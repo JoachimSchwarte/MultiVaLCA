@@ -25,7 +25,7 @@ public class PMGroupPanel extends MCAPanel {
 
 	@Override
 	public void showSelf() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

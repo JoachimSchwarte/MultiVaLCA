@@ -10,6 +10,7 @@ import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
@@ -61,6 +62,24 @@ public class ProcModListPanel extends MCAPanel{
 				}							
 			}
 		}	
+		for(String mn : ProcessModuleGroup.getAllInstances().keySet()) {
+			ProcessModuleGroup akModul = ProcessModuleGroup.getInstance(mn);
+			pmTableModel.addRow(new Object[] {mn, "", "", ""});
+			for(Flow pf : akModul.getElementarflussvektor().keySet()){
+				for (ValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
+					pmTableModel.addRow(new Object[] {"", pf.getName(), 
+							ValueTypeStringMap.getFVTS(l).get(vt),
+							akModul.getElementarflussvektor().get(pf).get(vt)});
+				}
+			}						
+			for(Flow pf : akModul.getProduktflussvektor().keySet()){
+				for (ValueType vt : akModul.getProduktflussvektor().get(pf).keySet()) {
+					pmTableModel.addRow(new Object[] {"", pf.getName(), 
+							ValueTypeStringMap.getFVTS(l).get(vt),
+							akModul.getProduktflussvektor().get(pf).get(vt)});							
+				}							
+			}
+		}
 		
 	}
 
