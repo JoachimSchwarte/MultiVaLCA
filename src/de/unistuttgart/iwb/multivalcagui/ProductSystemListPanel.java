@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -13,6 +17,11 @@ import de.unistuttgart.iwb.multivalca.FlowValueMaps;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
+
+/**
+ * @author HH, JS
+ * @version 0.524
+ */
 
 public class ProductSystemListPanel extends MCAPanel {
 	

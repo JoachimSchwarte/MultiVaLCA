@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -12,8 +16,14 @@ import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
+
+/**
+ * @author HH, JS
+ * @version 0.524
+ */
 
 public class ProductSystemPanel extends MCAPanel{
 	
@@ -109,6 +119,11 @@ public class ProductSystemPanel extends MCAPanel{
 							nameVorhanden = true;
 						}
 					}
+					for(String mod : ProcessModuleGroup.getAllInstances().keySet()) {
+						if (name.equals(mod)) {
+							nameVorhanden = true;
+						}
+					}
 					for(String mod : ProductSystem.getAllInstances().keySet()) {
 						if (name.equals(mod)) {
 							nameVorhanden = true;
@@ -149,6 +164,7 @@ public class ProductSystemPanel extends MCAPanel{
 				} else {
 					boolean nameVorhanden = false;
 					boolean typmod = false;
+					boolean typgroup = false;
 					for(String modn2 : ProcessModule.getAllInstances().keySet()) {
 						if (modname.equals(modn2)) {
 							nameVorhanden = true;
@@ -163,11 +179,24 @@ public class ProductSystemPanel extends MCAPanel{
 							}
 						}
 					}
+					if (nameVorhanden == false) {
+						for(String modn3 : ProcessModuleGroup.getAllInstances().keySet()) {
+							if (modname.equals(modn3)) {
+								nameVorhanden = true;
+								typmod = false;
+								typgroup = true;
+							}
+						}
+					}
 					if (nameVorhanden == true) {
 						if (typmod == true){
 							ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProcessModule.getInstance(modname));
 						} else {
-							ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProductSystem.getAllInstances().get(modname));
+							if (typgroup == true) {
+								ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProcessModuleGroup.getAllInstances().get(modname));
+							} else {
+								ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProductSystem.getAllInstances().get(modname));
+							}
 						}
 						lblP03n7.setText(GuiStrings.getGS("stat14", l) + txtP03n1.getText() +
 								GuiStrings.getGS("stat15", l) + ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulAnzahl() 
