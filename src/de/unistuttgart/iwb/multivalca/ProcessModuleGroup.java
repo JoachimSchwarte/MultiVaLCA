@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.523
+ * @version 0.526
  */
 
 public class ProcessModuleGroup extends MCAObject  
@@ -18,8 +18,9 @@ implements FlowValueMaps, ImpactValueMaps {
 	// Instanzvariablen:
 	
 	private HashSet<ProcessModule> modList = new HashSet<ProcessModule>();
+
 	private Flow refFlow;
-	private double refValue;
+	private Double refValue;
 
 	// Konstruktor:
 	
@@ -153,6 +154,14 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	public static ProcessModuleGroup getInstance(String string) {
 		return getAllInstances().get(string);		
+	}
+	
+	public Flow getRefFlow() {
+		return refFlow;
+	}
+
+	public Double getRefValue() {
+		return refValue;
 	}
 
 }

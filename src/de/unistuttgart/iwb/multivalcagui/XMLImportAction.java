@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.513
+ * @version 0.526
  */
 
 class XMLImportAction extends AbstractAction {
@@ -173,6 +173,49 @@ class XMLImportAction extends AbstractAction {
 							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.UpperBound, pmfv.get(akFluss).get(ValueType.UpperBound));
 						}
 					}
+					
+					nl = docEle.getElementsByTagName("ProcessModuleGroup");
+					if (nl.getLength() != 0) {
+						MCAObject.clear(ProcessModuleGroup.class);
+					}
+					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
+						String pmgname = "";	
+						String rfname = "";
+						String rfvalue = "";
+						LinkedList<String> mnl = new LinkedList<String>();
+						for (int j = 0; j < nlc.getLength(); j++) {
+							if (nlc.item(j).getNodeName().equals("PMGroupName")) {
+								pmgname = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("RelevantFlowName")) {
+								rfname = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("RelevantFlowValue")) {
+								rfvalue = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("PMGroup-Modules")) {	
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("PMGroup-Module")) {
+										NodeList nlc3 = nlc2.item(k).getChildNodes();
+										for (int l = 0; l < nlc3.getLength(); l++) {
+											if (nlc3.item(l).getNodeName().equals("PMGM-Name")) {
+												String modname = nlc3.item(l).getTextContent();	
+												mnl.add(modname);
+											}											
+										}										
+									}
+								}
+								
+							}
+						}
+						ProcessModuleGroup.createInstance(pmgname, Flow.getInstance(rfname), Double.parseDouble(rfvalue));
+						for (String mi : mnl) {
+							ProcessModuleGroup.getAllInstances().get(pmgname).addModule(ProcessModule.getAllInstances().get(mi));
+						}
+						
+					}
 									
 					nl = docEle.getElementsByTagName("ProductSystem");
 					if (nl.getLength() != 0) {
@@ -248,8 +291,14 @@ class XMLImportAction extends AbstractAction {
 							if (ProcessModule.containsName(m)) {
 								ProductSystem.getInstance(psname).addProzessmodul(ProcessModule.getInstance(m));
 							} else {
-								ProductSystem.getInstance(psname).addProzessmodul(ProductSystem.getInstance(m));
-							} 
+								if (ProcessModuleGroup.containsName(m)) {
+									ProductSystem.getInstance(psname).addProzessmodul(ProcessModuleGroup.getInstance(m));
+								} else {
+									if (ProductSystem.containsName(m)) {
+										ProductSystem.getInstance(psname).addProzessmodul(ProductSystem.getInstance(m));
+									}
+								}
+							}
 						}
 					}
 					

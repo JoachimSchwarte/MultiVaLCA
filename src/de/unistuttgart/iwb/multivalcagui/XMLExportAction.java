@@ -28,7 +28,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.525
+ * @version 0.526
  */
 
 class XMLExportAction extends AbstractAction {
@@ -124,6 +124,22 @@ class XMLExportAction extends AbstractAction {
 				Element name = document.createElement("PMGroupName");
 				prozessmodulgruppe.appendChild(name);
 				name.appendChild(document.createTextNode(akModul.getName()));
+				Element rfn = document.createElement("RelevantFlowName");
+				prozessmodulgruppe.appendChild(rfn);
+				rfn.appendChild(document.createTextNode(akModul.getRefFlow().getName()));
+				Element rfv = document.createElement("RelevantFlowValue");
+				prozessmodulgruppe.appendChild(rfv);
+				rfv.appendChild(document.createTextNode(akModul.getRefValue().toString()));
+				Element modullist = document.createElement("PMGroup-Modules");
+				prozessmodulgruppe.appendChild(modullist);
+				for (FlowValueMaps mod  : ProcessModuleGroup.getInstance(pmg).getModList()) {
+					String modname = mod.getName();
+					Element modul = document.createElement("PMGroup-Module");
+					modullist.appendChild(modul);
+					Element mname = document.createElement("PMGM-Name");
+					modul.appendChild(mname);
+					mname.appendChild(document.createTextNode(modname));
+				}
 
             }
 			
