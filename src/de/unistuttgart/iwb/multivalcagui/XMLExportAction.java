@@ -28,12 +28,11 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.512
+ * @version 0.525
  */
 
 class XMLExportAction extends AbstractAction {
-
-	private static final long serialVersionUID = -4213564766954115318L;
+	
 	public XMLExportAction(Language l) {
 		putValue(NAME, GuiStrings.getGS("mp61", l));
 		putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp61e", l));
@@ -114,6 +113,19 @@ class XMLExportAction extends AbstractAction {
 	            	menge3.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(ValueType.UpperBound).toString()));
 	            }
 			}
+			
+            Element allemodgroups = document.createElement("ProcessModuleGroups");
+            root.appendChild(allemodgroups);
+            
+            for (String pmg : ProcessModuleGroup.getAllInstances().keySet()) {
+            	ProcessModuleGroup akModul = ProcessModuleGroup.getInstance(pmg);
+				Element prozessmodulgruppe = document.createElement("ProcessModuleGroup");
+				allemodgroups.appendChild(prozessmodulgruppe);
+				Element name = document.createElement("PMGroupName");
+				prozessmodulgruppe.appendChild(name);
+				name.appendChild(document.createTextNode(akModul.getName()));
+
+            }
 			
 			Element alleprosys = document.createElement("ProductSystems");
             root.appendChild(alleprosys);

@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.524
+ * @version 0.525
  */
 
 public class MultiVaLCA {
@@ -189,10 +189,6 @@ public class MultiVaLCA {
 		// Panel 22; Liste der Kompositionen
 		//
 		panel.add(new CompositionListPanel("listKtion"), "listKtion");
-		//
-		// Panel 23; Prozessmodulgruppe
-		//
-		panel.add(new PMGroupPanel("pmGroup"), "pmGroup");
 		
 		cl.show(panel, "leer"); // zeigt Startfenster an
 		
