@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.522
+ * @version 0.523
  */
 
 public class ProcessModuleGroup extends MCAObject  
@@ -97,7 +97,7 @@ implements FlowValueMaps, ImpactValueMaps {
 			for (ProcessModule pm : modList) {
 				if (pm.getProduktflussvektor().containsKey(f)) {
 					Double mv = localPFV.get(f).get(ValueType.MeanValue);
-					mv = mv + pm.getElementarflussvektor().get(f).get(ValueType.MeanValue)/
+					mv = mv + pm.getProduktflussvektor().get(f).get(ValueType.MeanValue)/
 							pm.getProduktflussvektor().get(refFlow).get(ValueType.MeanValue)*refValue/modList.size();
 					localPFV.get(f).put(ValueType.MeanValue, mv);
 					Double lb1 = localPFV.get(f).get(ValueType.LowerBound);

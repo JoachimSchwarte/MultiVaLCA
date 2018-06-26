@@ -20,7 +20,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.521
+ * @version 0.523
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -143,6 +143,7 @@ public class ProModGroupPanel extends MCAPanel{
 					lbl06.setText(GuiStrings.getGS("stat40", l) + ProcessModuleGroup.getAllInstances().get(txt01.getText()).getModList().size()
 							+ GuiStrings.getGS("stat41", l));
 					btn03.setEnabled(true);
+					txt04.setText("");
 				}			
 			}
 		});
