@@ -55,7 +55,10 @@ class XMLImportAction extends AbstractAction {
 				DocumentBuilder db = dbf.newDocumentBuilder();
 				try {
 					Document dom = db.parse(fileInput);
-					Element docEle = dom.getDocumentElement();		
+					Element docEle = dom.getDocumentElement();	
+					
+					// Erster Durchgang:
+					// Erzeugen der Objekte
 					
 					NodeList nl = docEle.getElementsByTagName("Flow");
 					if (nl.getLength() != 0) {
@@ -167,11 +170,11 @@ class XMLImportAction extends AbstractAction {
 							}
 						}
 						ProcessModule.instance(pmname);
-						for (Flow akFluss : pmfv.keySet()) {
-							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.MeanValue, pmfv.get(akFluss).get(ValueType.MeanValue));
-							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.LowerBound, pmfv.get(akFluss).get(ValueType.LowerBound));
-							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.UpperBound, pmfv.get(akFluss).get(ValueType.UpperBound));
-						}
+//						for (Flow akFluss : pmfv.keySet()) {
+//							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.MeanValue, pmfv.get(akFluss).get(ValueType.MeanValue));
+//							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.LowerBound, pmfv.get(akFluss).get(ValueType.LowerBound));
+//							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.UpperBound, pmfv.get(akFluss).get(ValueType.UpperBound));
+//						}
 					}
 					
 					nl = docEle.getElementsByTagName("ProcessModuleGroup");
@@ -211,9 +214,9 @@ class XMLImportAction extends AbstractAction {
 							}
 						}
 						ProcessModuleGroup.createInstance(pmgname, Flow.getInstance(rfname), Double.parseDouble(rfvalue));
-						for (String mi : mnl) {
-							ProcessModuleGroup.getAllInstances().get(pmgname).addModule(ProcessModule.getAllInstances().get(mi));
-						}
+//						for (String mi : mnl) {
+//							ProcessModuleGroup.getAllInstances().get(pmgname).addModule(ProcessModule.getAllInstances().get(mi));
+//						}
 						
 					}
 									
@@ -284,22 +287,6 @@ class XMLImportAction extends AbstractAction {
 						}
 						ProductSystem.instance(psname, bv, vuk);
 						mnls.put(psname, mnl);																			
-					}
-					for (String psname : mnls.keySet()) {
-						LinkedList<String> mnl = mnls.get(psname);
-						for (String m : mnl) {
-							if (ProcessModule.containsName(m)) {
-								ProductSystem.getInstance(psname).addProzessmodul(ProcessModule.getInstance(m));
-							} else {
-								if (ProcessModuleGroup.containsName(m)) {
-									ProductSystem.getInstance(psname).addProzessmodul(ProcessModuleGroup.getInstance(m));
-								} else {
-									if (ProductSystem.containsName(m)) {
-										ProductSystem.getInstance(psname).addProzessmodul(ProductSystem.getInstance(m));
-									}
-								}
-							}
-						}
 					}
 					
 					nl = docEle.getElementsByTagName("ImpactCategory");
@@ -396,6 +383,210 @@ class XMLImportAction extends AbstractAction {
 								}							
 							}							
 						}					
+					}
+					
+					// Zweiter Durchgang:
+					// Füllen der Objekte mit Inhalten
+									
+					nl = docEle.getElementsByTagName("ProcessModule");
+					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
+						String pmname = "";	
+						String fvename = "";	
+						String fvemenge = "";
+						LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pmfv = new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();						
+						for (int j = 0; j < nlc.getLength(); j++) {							
+							if (nlc.item(j).getNodeName().equals("ModuleName")) {									
+								pmname = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("ElementaryFlowVector")) {									
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("EFV-Entry")) {											
+										NodeList nlc3 = nlc2.item(k).getChildNodes();
+										for (int l = 0; l < nlc3.getLength(); l++) {
+											if (nlc3.item(l).getNodeName().equals("EFV-Name")) {
+												fvename = nlc3.item(l).getTextContent();
+											}
+											if (nlc3.item(l).getNodeName().equals("EFV-MainValue")) {
+												fvemenge = nlc3.item(l).getTextContent();
+												Flow akFluss = Flow.getInstance(fvename);
+												LinkedHashMap<ValueType, Double> vt = new LinkedHashMap<ValueType, Double>();
+												vt.put(ValueType.MeanValue, Double.parseDouble(fvemenge));
+												pmfv.put(akFluss, vt);
+											}
+											if (nlc3.item(l).getNodeName().equals("EFV-LowerBound")) {
+												fvemenge = nlc3.item(l).getTextContent();
+												Flow akFluss = Flow.getInstance(fvename);
+												LinkedHashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												vt.put(ValueType.LowerBound, Double.parseDouble(fvemenge));
+												pmfv.put(akFluss, vt);
+											}
+											if (nlc3.item(l).getNodeName().equals("EFV-UpperBound")) {
+												fvemenge = nlc3.item(l).getTextContent();
+												Flow akFluss = Flow.getInstance(fvename);
+												LinkedHashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												vt.put(ValueType.UpperBound, Double.parseDouble(fvemenge));
+												pmfv.put(akFluss, vt);
+											}
+										}											
+									}
+								}
+							}
+							if (nlc.item(j).getNodeName().equals("ProductFlowVector")) {									
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("PFV-Entry")) {											
+										NodeList nlc3 = nlc2.item(k).getChildNodes();
+										for (int l = 0; l < nlc3.getLength(); l++) {
+											if (nlc3.item(l).getNodeName().equals("PFV-Name")) {
+												fvename = nlc3.item(l).getTextContent();
+											}
+											if (nlc3.item(l).getNodeName().equals("PFV-MainValue")) {
+												fvemenge = nlc3.item(l).getTextContent();
+												Flow akFluss = Flow.getInstance(fvename);
+												LinkedHashMap<ValueType, Double> vt = new LinkedHashMap<ValueType, Double>();
+												vt.put(ValueType.MeanValue, Double.parseDouble(fvemenge));
+												pmfv.put(akFluss, vt);
+											}
+											if (nlc3.item(l).getNodeName().equals("PFV-LowerBound")) {
+												fvemenge = nlc3.item(l).getTextContent();
+												Flow akFluss = Flow.getInstance(fvename);
+												LinkedHashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												vt.put(ValueType.LowerBound, Double.parseDouble(fvemenge));
+												pmfv.put(akFluss, vt);
+											}
+											if (nlc3.item(l).getNodeName().equals("PFV-UpperBound")) {
+												fvemenge = nlc3.item(l).getTextContent();
+												Flow akFluss = Flow.getInstance(fvename);
+												LinkedHashMap<ValueType, Double> vt = pmfv.get(akFluss);
+												vt.put(ValueType.UpperBound, Double.parseDouble(fvemenge));
+												pmfv.put(akFluss, vt);
+											}
+										}											
+									}
+								}
+							}
+						}
+//						ProcessModule.instance(pmname);
+						for (Flow akFluss : pmfv.keySet()) {
+							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.MeanValue, pmfv.get(akFluss).get(ValueType.MeanValue));
+							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.LowerBound, pmfv.get(akFluss).get(ValueType.LowerBound));
+							ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.UpperBound, pmfv.get(akFluss).get(ValueType.UpperBound));
+						}
+					}
+					
+					nl = docEle.getElementsByTagName("ProcessModuleGroup");
+					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
+						String pmgname = "";	
+						LinkedList<String> mnl = new LinkedList<String>();
+						for (int j = 0; j < nlc.getLength(); j++) {
+							if (nlc.item(j).getNodeName().equals("PMGroupName")) {
+								pmgname = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("PMGroup-Modules")) {	
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("PMGroup-Module")) {
+										NodeList nlc3 = nlc2.item(k).getChildNodes();
+										for (int l = 0; l < nlc3.getLength(); l++) {
+											if (nlc3.item(l).getNodeName().equals("PMGM-Name")) {
+												String modname = nlc3.item(l).getTextContent();	
+												mnl.add(modname);
+											}											
+										}										
+									}
+								}
+								
+							}
+						}
+//						ProcessModuleGroup.createInstance(pmgname, Flow.getInstance(rfname), Double.parseDouble(rfvalue));
+						for (String mi : mnl) {
+							ProcessModuleGroup.getAllInstances().get(pmgname).addModule(ProcessModule.getAllInstances().get(mi));
+						}					
+					}
+									
+					nl = docEle.getElementsByTagName("ProductSystem");
+					mnls.clear();
+					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
+						String psname = "";	
+						String bvename = "";
+						String bvemenge = "";	
+						LinkedList<String> mnl = new LinkedList<String>();
+						LinkedHashMap<Flow, Double> bv = new LinkedHashMap<Flow, Double>();
+						LinkedList<Flow> vuk = new LinkedList<Flow>();
+						for (int j = 0; j < nlc.getLength(); j++) {	
+							if (nlc.item(j).getNodeName().equals("PS-Name")) {
+								psname = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("PS-Modules")) {
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("PS-Module")) {
+										NodeList nlc3 = nlc2.item(k).getChildNodes();
+										for (int l = 0; l < nlc3.getLength(); l++) {
+											if (nlc3.item(l).getNodeName().equals("PSM-Name")) {
+												String modname = nlc3.item(l).getTextContent();	
+												mnl.add(modname);
+											}											
+										}										
+									}
+								}
+							}
+							if (nlc.item(j).getNodeName().equals("DemandVector")) {
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("DV-Entry")) {
+										NodeList nlc3 = nlc2.item(k).getChildNodes();
+										for (int l = 0; l < nlc3.getLength(); l++) {
+											if (nlc3.item(l).getNodeName().equals("DV-Name")) {
+												bvename = nlc3.item(l).getTextContent();
+											}
+											if (nlc3.item(l).getNodeName().equals("DV-Value")) {
+												bvemenge = nlc3.item(l).getTextContent();
+												Flow akFluss = Flow.getInstance(bvename);
+												bv.put(akFluss, Double.parseDouble(bvemenge));
+											}
+										}											
+									}
+								}
+							}
+							if (nlc.item(j).getNodeName().equals("PreAndCoProducts")) {
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("PaCP-Entry")) {
+										NodeList nlc3 = nlc2.item(k).getChildNodes();
+										for (int l = 0; l < nlc3.getLength(); l++) {
+											if (nlc3.item(l).getNodeName().equals("PaCP-Name")) {
+												String flname = nlc3.item(l).getTextContent();
+												Flow akFluss = Flow.getInstance(flname);
+												vuk.add(akFluss);
+											}											
+										}										
+									}
+								}									
+							}							
+						}
+//						ProductSystem.instance(psname, bv, vuk);
+						mnls.put(psname, mnl);																			
+					}
+					for (String psname : mnls.keySet()) {
+						LinkedList<String> mnl = mnls.get(psname);
+						for (String m : mnl) {
+							if (ProcessModule.containsName(m)) {
+								ProductSystem.getInstance(psname).addProzessmodul(ProcessModule.getInstance(m));
+							} else {
+								if (ProcessModuleGroup.containsName(m)) {
+									ProductSystem.getInstance(psname).addProzessmodul(ProcessModuleGroup.getInstance(m));
+								} else {
+									if (ProductSystem.containsName(m)) {
+										ProductSystem.getInstance(psname).addProzessmodul(ProductSystem.getInstance(m));
+									}
+								}
+							}
+						}
 					}
 					
 				} catch (SAXException | IOException e1) {
