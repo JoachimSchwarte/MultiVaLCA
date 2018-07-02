@@ -28,7 +28,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.526
+ * @version 0.528
  */
 
 class XMLExportAction extends AbstractAction {
@@ -255,6 +255,64 @@ class XMLExportAction extends AbstractAction {
             		thisfac.appendChild(document.createTextNode(imfac));
             	}
             }
+            
+            Element allePDs = document.createElement("ProductDeclarations");
+            root.appendChild(allePDs);
+            
+            for (String pdName : ProductDeclaration.getAllInstances().keySet()) {
+            	ProductDeclaration thisPD = ProductDeclaration.getAllInstances().get(pdName);
+            	Element pd = document.createElement("ProductDeclaration");
+            	allePDs.appendChild(pd);
+            	Element name = document.createElement("PD-Name");
+            	pd.appendChild(name);
+            	name.appendChild(document.createTextNode(pdName));
+            	Element einheit = document.createElement("PD-Unit");
+	            pd.appendChild(einheit);
+	            einheit.appendChild(document.createTextNode(thisPD.getEinheit().toString()));
+            	Element method = document.createElement("PD-Method");
+	            pd.appendChild(method);
+	            method.appendChild(document.createTextNode(thisPD.getBM().getName()));
+				Element iv = document.createElement("ImpactValuesVector");
+				pd.appendChild(iv);	            
+	            for(ImpactCategory ic : thisPD.getImpactValueMap(thisPD.getBM()).keySet()){
+	            	Element cat = document.createElement("IVV-Entry");
+					iv.appendChild(cat);	
+	            	Element fname = document.createElement("ImpactCategorie-Name");
+	            	cat.appendChild(fname);
+	            	fname.appendChild(document.createTextNode(ic.getName()));
+	            	Element menge = document.createElement("ICV-MainValue");
+	            	cat.appendChild(menge);
+	            	menge.appendChild(document.createTextNode(thisPD.getImpactValueMap(thisPD.getBM()).get(ic).get(ValueType.MeanValue).toString()));
+	            	Element menge2 = document.createElement("ICV-LowerBound");
+	            	cat.appendChild(menge2);
+	            	menge2.appendChild(document.createTextNode(thisPD.getImpactValueMap(thisPD.getBM()).get(ic).get(ValueType.LowerBound).toString()));
+	            	Element menge3 = document.createElement("ICV-UpperBound");
+	            	cat.appendChild(menge3);
+	            	menge3.appendChild(document.createTextNode(thisPD.getImpactValueMap(thisPD.getBM()).get(ic).get(ValueType.UpperBound).toString()));
+	            }
+	            /*
+				Element efv = document.createElement("ElementaryFlowVector");
+				prozessmodul.appendChild(efv);	            
+	            for(Flow pf : akModul.getElementarflussvektor().keySet()){
+	            	Element fluss = document.createElement("EFV-Entry");
+					efv.appendChild(fluss);	
+	            	Element fname = document.createElement("EFV-Name");
+	            	fluss.appendChild(fname);
+	            	fname.appendChild(document.createTextNode(pf.getName()));
+	            	Element menge = document.createElement("EFV-MainValue");
+	            	fluss.appendChild(menge);
+	            	menge.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(ValueType.MeanValue).toString()));
+	            	Element menge2 = document.createElement("EFV-LowerBound");
+	            	fluss.appendChild(menge2);
+	            	menge2.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(ValueType.LowerBound).toString()));
+	            	Element menge3 = document.createElement("EFV-UpperBound");
+	            	fluss.appendChild(menge3);
+	            	menge3.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(ValueType.UpperBound).toString()));
+	            } */
+            }
+            
+            
+            
             
          // JFileChooser-Objekt erstellen
 	        JFileChooser chooser = new JFileChooser();
