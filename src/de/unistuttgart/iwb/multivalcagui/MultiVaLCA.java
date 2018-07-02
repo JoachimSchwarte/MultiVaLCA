@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.526
+ * @version 0.527
  */
 
 public class MultiVaLCA {
@@ -152,7 +152,7 @@ public class MultiVaLCA {
 		//
 		// Panel 13; CF-iste
 		//
-		panel.add(new CFListPanel("cfList"), "cflist");		
+		panel.add(new CFListPanel("cfList"), "cfList");		
 		//
 		// Panel 14; Neue Bewertungsmethode (LCIA)
 		//
