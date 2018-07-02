@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.526
+ * @version 0.529
  */
 
 class XMLImportAction extends AbstractAction {
@@ -385,6 +385,31 @@ class XMLImportAction extends AbstractAction {
 						}					
 					}
 					
+					nl = docEle.getElementsByTagName("ProductDeclaration");
+					if (nl.getLength() != 0) {
+						ProductDeclaration.clear();
+					}
+					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
+						String nameProd = "";
+						String einheit = "";
+						String nameLCIA = "";
+						for (int j = 0; j < nlc.getLength(); j++) {
+							if (nlc.item(j).getNodeName().equals("PD-Name")) {
+								nameProd = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("PD-Unit")) {
+								einheit = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("PD-Method")) {
+								nameLCIA = nlc.item(j).getTextContent();
+							}						
+						}
+						FlowUnit einheit2 = FlowUnit.valueOf(einheit);
+						LCIAMethod bm = LCIAMethod.instance(nameLCIA);
+						ProductDeclaration.instance(nameProd, einheit2).setBM(bm);					
+					}
+					
 					// Zweiter Durchgang:
 					// Füllen der Objekte mit Inhalten
 									
@@ -587,6 +612,49 @@ class XMLImportAction extends AbstractAction {
 								}
 							}
 						}
+					}
+					
+					nl = docEle.getElementsByTagName("ProductDeclaration");
+					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
+						String nameProd = "";
+						for (int j = 0; j < nlc.getLength(); j++) {
+							if (nlc.item(j).getNodeName().equals("PD-Name")) {
+								nameProd = nlc.item(j).getTextContent();
+							}
+							if (nlc.item(j).getNodeName().equals("ImpactValuesVector")) {
+								NodeList nlc2 = nlc.item(j).getChildNodes();
+								for (int k = 0; k < nlc2.getLength(); k++) {
+									if (nlc2.item(k).getNodeName().equals("IVV-Entry")) {											
+										NodeList nlc3 = nlc2.item(k).getChildNodes();
+										String icname = "";
+										String mMenge = "";
+										String lMenge = "";
+										String uMenge = "";
+										for (int l = 0; l < nlc3.getLength(); l++) {
+											if (nlc3.item(l).getNodeName().equals("ImpactCategorie-Name")) {
+												icname = nlc3.item(l).getTextContent();
+											}
+											if (nlc3.item(l).getNodeName().equals("ICV-MainValue")) {
+												mMenge = nlc3.item(l).getTextContent();
+											}
+											if (nlc3.item(l).getNodeName().equals("ICV-LowerBound")) {
+												lMenge = nlc3.item(l).getTextContent();
+											}
+											if (nlc3.item(l).getNodeName().equals("ICV-UpperBound")) {
+												uMenge = nlc3.item(l).getTextContent();
+											}										
+										}
+										ImpactCategory ic = ImpactCategory.getInstance(icname);
+										LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+										values.put(ValueType.MeanValue, Double.parseDouble(mMenge));
+										values.put(ValueType.LowerBound, Double.parseDouble(lMenge));
+										values.put(ValueType.UpperBound, Double.parseDouble(uMenge));									
+										ProductDeclaration.getInstance(nameProd).addWirkung(ic, values);
+									}									
+								}								
+							}
+						}					
 					}
 					
 				} catch (SAXException | IOException e1) {

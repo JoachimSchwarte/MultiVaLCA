@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.528
+ * @version 0.529
  */
 
 public class MultiVaLCA {
