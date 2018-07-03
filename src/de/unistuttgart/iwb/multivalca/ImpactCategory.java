@@ -8,14 +8,10 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.530
  */
 
 public class ImpactCategory extends MCAObject {
-	
-	// Klassenvariable:
-	
-	private static LinkedHashMap<String, ImpactCategory> allInstances = new LinkedHashMap<String, ImpactCategory>();
 	
 	// Instanzvariablen:
 	
@@ -26,18 +22,9 @@ public class ImpactCategory extends MCAObject {
 	private ImpactCategory(String name, CategoryIndicator einheit) {
 		super(name);
 		this.einheit = einheit;
-		allInstances.put(name, this);
 	}
 	
 	// Methoden:
-	
-	/**
-	 * Löscht alle Klassenvariablen
-	 */
-	
-	public static void clear() {
-		allInstances.clear();
-	}
 	
 	/**
 	 * Überprüft, ob bereits eine Wirkungskategorie
@@ -49,7 +36,7 @@ public class ImpactCategory extends MCAObject {
 	 */
 	
 	public static boolean containsName(String string) {
-		return allInstances.keySet().contains(string);
+		return getAllInstances().keySet().contains(string);
 	}
 	/**
 	 * @return
@@ -57,7 +44,11 @@ public class ImpactCategory extends MCAObject {
 	 */
 	
 	public static LinkedHashMap<String, ImpactCategory> getAllInstances() {
-		return allInstances;
+		LinkedHashMap<String,ImpactCategory> a = new LinkedHashMap<String,ImpactCategory>();
+		for (String s : MCAObject.getAllNames(ImpactCategory.class)) {
+			a.put(s, (ImpactCategory)MCAObject.getAllInstances(ImpactCategory.class).get(s));			
+		}
+		return a;
 	}
 	
 	/**
@@ -87,7 +78,7 @@ public class ImpactCategory extends MCAObject {
 	}
 	
 	public static ImpactCategory getInstance(String name) {
-		return allInstances.get(name);
+		return getAllInstances().get(name);
 	}
 
 }

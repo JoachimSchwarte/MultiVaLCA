@@ -11,40 +11,28 @@ import java.util.LinkedHashMap;
  * von Objekten des Typs "Komponente".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.530
  */
 
 public class Component extends MCAObject  
 implements ImpactValueMaps {
 	
-	// Klassenvariable:
-	
-	private static LinkedHashMap<String,Component> allInstances = new LinkedHashMap<String,Component>();
-	
 	// Instanzvariablen:	
 	
-	private ImpactValueMaps komponente;
-	private Double menge;
+	private ImpactValueMaps bezugsKomponente;
+	private LinkedHashMap<ValueType, Double> mengen = new LinkedHashMap<ValueType, Double>();
 	
 	// Konstruktor:
 
 	private Component(String name, ImpactValueMaps komponente, double menge) {
 		super(name);
-		this.komponente = komponente;
-		this.menge = menge;
-		allInstances.put(name, this);
-		NameCheck.getInstance().addWVName(name);
+		this.bezugsKomponente = komponente;
+		mengen.put(ValueType.MeanValue, menge);
+		mengen.put(ValueType.LowerBound, menge);
+		mengen.put(ValueType.UpperBound, menge);
 	}
 
 	// Methoden:
-	
-	/**
-	 * Löscht alle Klassenvariablen
-	 */
-	
-	public static void clear() {
-		allInstances.clear();
-	}
 	
 	/**
 	 * Überprüft, ob bereits eine Component
@@ -56,7 +44,7 @@ implements ImpactValueMaps {
 	 */
 	
 	public static boolean containsName(String string) {
-		return allInstances.containsKey(string);
+		return getAllInstances().containsKey(string);
 	}
 	
 	/**
@@ -65,7 +53,11 @@ implements ImpactValueMaps {
 	 */
 	
 	public static LinkedHashMap<String, Component> getAllInstances() {
-		return allInstances;
+		LinkedHashMap<String,Component> a = new LinkedHashMap<String,Component>();
+		for (String s : MCAObject.getAllNames(Component.class)) {
+			a.put(s, (Component)MCAObject.getAllInstances(Component.class).get(s));			
+		}
+		return a;
 	}
 	
 	/**
@@ -77,7 +69,7 @@ implements ImpactValueMaps {
 	 */
 	
 	public static Component getInstance(String name) { 
-		return allInstances.get(name);
+		return getAllInstances().get(name);
 	}
 	
 	/**
@@ -98,10 +90,10 @@ implements ImpactValueMaps {
 		ImpactValueMaps kompo = ProcessModule.instance("dummy"); 
 		ProcessModule.removeInstance("dummy");
 		kompo.setName(kompoName);
-		if (allInstances.containsKey(name) == false) {
+		if (getAllInstances().containsKey(name) == false) {
 			new Component(name, kompo, menge);	
 		} 
-		return allInstances.get(name);
+		return getAllInstances().get(name);
 	}
 	
 	/**
@@ -121,10 +113,10 @@ implements ImpactValueMaps {
 	 */
 	
 	public static Component newInstance(String name, ImpactValueMaps komponente, double menge) {
-		if (allInstances.containsKey(name) == false) {
+		if (getAllInstances().containsKey(name) == false) {
 			new Component(name, komponente, menge);	
 		} 
-		return allInstances.get(name);
+		return getAllInstances().get(name);
 	}
 	
 	/**
@@ -134,42 +126,33 @@ implements ImpactValueMaps {
 	 */
 
 	public ImpactValueMaps getKomponente() {
-		return komponente;
-	}
-	
-	/**
-	 * @return
-	 * ... die Mengenangabe.
-	 */
-
-	public Double getMenge() {
-		return menge;
+		return bezugsKomponente;
 	}
 
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
-		String kompoName = komponente.getName();
+		String kompoName = bezugsKomponente.getName();
 		if (ProcessModule.containsName(kompoName)) {
-			komponente = ProcessModule.getInstance(kompoName);					
+			bezugsKomponente = ProcessModule.getInstance(kompoName);					
 		}
 		if (ProductSystem.containsName(kompoName)) {
-			komponente = ProductSystem.getInstance(kompoName);					
+			bezugsKomponente = ProductSystem.getInstance(kompoName);					
 		}
 		if (ProductDeclaration.containsName(kompoName)) {
-			komponente = ProductDeclaration.getInstance(kompoName);					
+			bezugsKomponente = ProductDeclaration.getInstance(kompoName);					
 		}
 		if (Component.containsName(kompoName)) {
-			komponente = Component.getInstance(kompoName);					
+			bezugsKomponente = Component.getInstance(kompoName);					
 		}
 		if (Composition.containsName(kompoName)) {
-			komponente = Composition.getInstance(kompoName);					
+			bezugsKomponente = Composition.getInstance(kompoName);					
 		}
-		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wvKomponente = komponente.getImpactValueMap(bm);
+		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wvKomponente = bezugsKomponente.getImpactValueMap(bm);
 		for (String wkName : bm.categoryList().keySet()){
 			ImpactCategory wk = bm.categoryList().get(wkName);
 			LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
 			for (ValueType vt : values.keySet()) {
-				values.put(vt, values.get(vt)*menge);
+				values.put(vt, values.get(vt)*mengen.get(ValueType.MeanValue));
 			}
 			wvKomponente.put(wk, values);
 		}

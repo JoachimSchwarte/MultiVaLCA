@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.529
+ * @version 0.530
  */
 
 class XMLImportAction extends AbstractAction {
@@ -222,7 +222,7 @@ class XMLImportAction extends AbstractAction {
 									
 					nl = docEle.getElementsByTagName("ProductSystem");
 					if (nl.getLength() != 0) {
-						ProductSystem.clear();
+						MCAObject.clear(ProductSystem.class);
 					}
 					LinkedHashMap<String, LinkedList<String>> mnls = new LinkedHashMap<String, LinkedList<String>>();
 					for (int i = 0; i < nl.getLength(); i++) {
@@ -291,7 +291,7 @@ class XMLImportAction extends AbstractAction {
 					
 					nl = docEle.getElementsByTagName("ImpactCategory");
 					if (nl.getLength() != 0) {
-						ImpactCategory.clear();
+						MCAObject.clear(ImpactCategory.class);
 					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
@@ -311,7 +311,7 @@ class XMLImportAction extends AbstractAction {
 					
 					nl = docEle.getElementsByTagName("CFactor");
 					if (nl.getLength() != 0) {
-						CharacFactor.clear();
+						MCAObject.clear(CharacFactor.class);
 					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
@@ -354,7 +354,7 @@ class XMLImportAction extends AbstractAction {
 					
 					nl = docEle.getElementsByTagName("LCIAMethod");
 					if (nl.getLength() != 0) {
-						LCIAMethod.clear();
+						MCAObject.clear(LCIAMethod.class);
 					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
@@ -387,7 +387,7 @@ class XMLImportAction extends AbstractAction {
 					
 					nl = docEle.getElementsByTagName("ProductDeclaration");
 					if (nl.getLength() != 0) {
-						ProductDeclaration.clear();
+						MCAObject.clear(ProductDeclaration.class);
 					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();

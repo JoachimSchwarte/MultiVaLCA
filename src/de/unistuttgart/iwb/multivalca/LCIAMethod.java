@@ -12,11 +12,7 @@ import java.util.LinkedHashMap;
  */
 
 public class LCIAMethod extends MCAObject {
-	
-	// Klassenvariable:
-	
-	private static LinkedHashMap<String, LCIAMethod> allInstances = new LinkedHashMap<String, LCIAMethod>();
-	
+
 	// Instanzvariablen:
 	
 	private LinkedHashMap<String, CharacFactor> faktorSet = 
@@ -28,18 +24,9 @@ public class LCIAMethod extends MCAObject {
 	
 	private LCIAMethod(String name) {
 		super(name);
-		allInstances.put(name, this);
 	}
 	
 	// Methoden:
-	
-	/**
-	 * Löscht alle Klassenvariablen
-	 */
-	
-	public static void clear() {
-		allInstances.clear();
-	}
 	
 	/**
 	 * Überprüft, ob bereits eine Bewertungsmethode
@@ -51,16 +38,7 @@ public class LCIAMethod extends MCAObject {
 	 */
 	
 	public static boolean containsName(String string) {
-		return allInstances.containsKey(string);
-	}
-	
-	/**
-	 * @return
-	 * ... alle vorhandenen Bewertungsmethoden
-	 */
-	 
-	public static LinkedHashMap<String, LCIAMethod> getAllLMs() {
-		return allInstances;
+		return getAllInstances().containsKey(string);
 	}
 	
 	/**
@@ -76,10 +54,10 @@ public class LCIAMethod extends MCAObject {
 	 */
 	
 	public static LCIAMethod instance(String name) {
-		if (allInstances.containsKey(name) == false) {
+		if (getAllInstances().containsKey(name) == false) {
 			new LCIAMethod(name);
 		} 
-		return allInstances.get(name);
+		return getAllInstances().get(name);
 	}
 	
 	/**
@@ -130,7 +108,11 @@ public class LCIAMethod extends MCAObject {
 	}
 	
 	public static LinkedHashMap<String, LCIAMethod> getAllInstances() {
-		return allInstances;
+		LinkedHashMap<String,LCIAMethod> a = new LinkedHashMap<String,LCIAMethod>();
+		for (String s : MCAObject.getAllNames(LCIAMethod.class)) {
+			a.put(s, (LCIAMethod)MCAObject.getAllInstances(LCIAMethod.class).get(s));			
+		}
+		return a;
 	}
 	
 		

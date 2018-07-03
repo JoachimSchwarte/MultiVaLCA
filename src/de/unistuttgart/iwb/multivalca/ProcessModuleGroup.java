@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.526
+ * @version 0.530
  */
 
 public class ProcessModuleGroup extends MCAObject  

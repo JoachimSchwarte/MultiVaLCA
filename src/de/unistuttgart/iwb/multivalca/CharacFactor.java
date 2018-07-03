@@ -8,14 +8,10 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.530
  */
 
 public class CharacFactor extends MCAObject {
-	
-	// Klassenvariable:
-	
-	private static LinkedHashMap<String, CharacFactor> allInstances = new LinkedHashMap<String, CharacFactor>();
 	
 	// Instanzvariablen:
 	
@@ -33,7 +29,6 @@ public class CharacFactor extends MCAObject {
 		this.werte.put(ValueType.MeanValue, wert);
 		this.werte.put(ValueType.LowerBound, wert);
 		this.werte.put(ValueType.UpperBound, wert);
-		allInstances.put(name, this);
 	}
 	
 	private CharacFactor(String name, Flow fluss, ImpactCategory wirkung, LinkedHashMap<ValueType, Double> werte) {
@@ -41,18 +36,9 @@ public class CharacFactor extends MCAObject {
 		this.fluss = fluss;
 		this.wirkung = wirkung;
 		this.werte = werte;	
-		allInstances.put(name, this);
 	}
 	
 	// Methoden:
-	
-	/**
-	 * Löscht alle Klassenvariablen
-	 */
-	
-	public static void clear() {
-		allInstances.clear();
-	}
 	
 	/**
 	 * Überprüft, ob bereits ein Charakterisierungsfaktor
@@ -64,7 +50,7 @@ public class CharacFactor extends MCAObject {
 	 */
 	
 	public static boolean containsName(String string) {
-		return allInstances.containsKey(string);
+		return getAllInstances().containsKey(string);
 	}
 	
 	/**
@@ -73,7 +59,11 @@ public class CharacFactor extends MCAObject {
 	 */
 	
 	public static LinkedHashMap<String, CharacFactor> getAllInstances() {
-		return allInstances;
+		LinkedHashMap<String,CharacFactor> a = new LinkedHashMap<String,CharacFactor>();
+		for (String s : MCAObject.getAllNames(CharacFactor.class)) {
+			a.put(s, (CharacFactor)MCAObject.getAllInstances(CharacFactor.class).get(s));			
+		}
+		return a;
 	}
 	
 	/**
@@ -85,7 +75,7 @@ public class CharacFactor extends MCAObject {
 	 */
 	
 	public static CharacFactor getInstance(String string) {
-		return allInstances.get(string);
+		return getAllInstances().get(string);
 	}
 	
 	/**
@@ -122,10 +112,10 @@ public class CharacFactor extends MCAObject {
 	}
 	
 	public static CharacFactor instance(String name, Flow fluss, ImpactCategory wirkung, Double wert) {
-		if (allInstances.containsKey(name) == false) {
+		if (getAllInstances().containsKey(name) == false) {
 			new CharacFactor(name, fluss, wirkung, wert);
 		}
-		return allInstances.get(name);
+		return getAllInstances().get(name);
 	}
 	
 	public static void setLowerBound(String name, Double lv) {

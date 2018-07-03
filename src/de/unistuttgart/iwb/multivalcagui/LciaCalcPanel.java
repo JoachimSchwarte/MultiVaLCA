@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -23,6 +27,11 @@ import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
+
+/**
+ * @author Dr.-Ing. Joachim Schwarte
+ * @version 0.530
+ */
 
 public class LciaCalcPanel extends MCAPanel {
 	
@@ -97,7 +106,7 @@ public class LciaCalcPanel extends MCAPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Vector<String> methVektor = new Vector<String>();
-				for (String methName : LCIAMethod.getAllLMs().keySet()) {
+				for (String methName : LCIAMethod.getAllInstances().keySet()) {
 					methVektor.addElement(methName);
 				}
 				cobP16n3.setModel(new DefaultComboBoxModel<String>(methVektor));

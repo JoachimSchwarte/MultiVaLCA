@@ -5,7 +5,7 @@ package de.unistuttgart.iwb.multivalcatest;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.530
  */
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +31,7 @@ class ProductSystemTest {
 	ProductSystem ProductP2 = ProductSystem.instance("PS1", f, vkp);
 	
 	private void init1() {
-		ProductSystem.clear();
+		MCAObject.clear(ProductSystem.class);
 		Modul1.addFluss(r1, ValueType.MeanValue, -1000.);
 		Modul1.addFluss(r1, ValueType.UpperBound, -950.);
 		Modul1.addFluss(r1, ValueType.LowerBound, -1050.);

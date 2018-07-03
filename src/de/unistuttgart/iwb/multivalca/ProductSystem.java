@@ -9,19 +9,14 @@ import Jama.Matrix;
 import de.unistuttgart.iwb.ivari.*;
 
 /**
- *  * Diese Klasse dient zur Erzeugung von Produktsystemen.
+ * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.530
  */
 
 public class ProductSystem extends MCAObject 
 implements FlowValueMaps, ImpactValueMaps {
-	
-	
-	// Klassenvariable:
-	
-	private static LinkedHashMap<String, ProductSystem> allInstances = new LinkedHashMap<String, ProductSystem>();
 	
 	// Instanzvariablen:
 	
@@ -42,21 +37,11 @@ implements FlowValueMaps, ImpactValueMaps {
 			LinkedHashMap<Flow, Double> f,
 			LinkedList<Flow> vk) {
 		super(name);
-		bedarfsvektor = f;
-		vorUndKoppelProdukte = vk;
-		NameCheck.getInstance().add(name);
-		allInstances.put(name, this);
+		this.bedarfsvektor = f;
+		this.vorUndKoppelProdukte = vk;
 	}
 	
 	// Methoden:
-	
-	/**
-	 * Löscht alle Klassenvariablen
-	 */
-	
-	public static void clear() {
-		allInstances.clear();
-	}
 	
 	/**
 	 * Überprüft, ob bereits ein Produktsystem
@@ -68,7 +53,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	 */
 	
 	public static boolean containsName(String string) {
-		return allInstances.containsKey(string);
+		return getAllInstances().containsKey(string);
 	}
 	
 	/**
@@ -77,7 +62,11 @@ implements FlowValueMaps, ImpactValueMaps {
 	 */
 	
 	public static LinkedHashMap<String, ProductSystem> getAllInstances() {
-		return allInstances;
+		LinkedHashMap<String,ProductSystem> a = new LinkedHashMap<String,ProductSystem>();
+		for (String s : MCAObject.getAllNames(ProductSystem.class)) {
+			a.put(s, (ProductSystem)MCAObject.getAllInstances(ProductSystem.class).get(s));			
+		}
+		return a;
 	}
 	
 	/**
@@ -89,7 +78,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	 */
 	
 	public static ProductSystem getInstance(String string) {
-		return allInstances.get(string);		
+		return getAllInstances().get(string);		
 	}
 	
 	/**
@@ -109,13 +98,13 @@ implements FlowValueMaps, ImpactValueMaps {
 	public static ProductSystem instance(String name, 
 			LinkedHashMap<Flow, Double> f,
 			LinkedList<Flow> vk) {
-		if (allInstances.containsKey(name) == false) {
+		if (getAllInstances().containsKey(name) == false) {
 			new ProductSystem(name, f, vk);
 		} else {
-			allInstances.get(name).setBedarfsvektor(f);
-			allInstances.get(name).setVorUndKoppelProdukte(vk);
+			getAllInstances().get(name).setBedarfsvektor(f);
+			getAllInstances().get(name).setVorUndKoppelProdukte(vk);
 		}
-		return allInstances.get(name);
+		return getAllInstances().get(name);
 	}
 
 	/**

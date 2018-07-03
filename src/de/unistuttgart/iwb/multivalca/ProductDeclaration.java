@@ -12,15 +12,11 @@ import java.util.LinkedHashMap;
  * von Objekten des Typs "Produktdeklaration".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.530
  */
 
 public class ProductDeclaration extends MCAObject 
 implements ImpactValueMaps {
-	
-	// Klassenvariable:
-	
-	private static LinkedHashMap<String,ProductDeclaration> allInstances = new LinkedHashMap<String,ProductDeclaration>();
 	
 	// Instanzvariablen:	
 
@@ -33,19 +29,9 @@ implements ImpactValueMaps {
 	private ProductDeclaration(String name, FlowUnit einheit) {
 		super(name);
 		this.einheit = einheit;
-		NameCheck.getInstance().addWVName(name);
-		allInstances.put(name, this);
 	}
 	
 	// Methoden:
-	
-	/**
-	 * Löscht alle Klassenvariablen
-	 */
-	
-	public static void clear() {
-		allInstances.clear();
-	}
 	
 	/**
 	 * Überprüft, ob bereits eine Produktdeklaration
@@ -57,7 +43,7 @@ implements ImpactValueMaps {
 	 */
 	
 	public static boolean containsName(String string) {
-		return allInstances.containsKey(string);
+		return getAllInstances().containsKey(string);
 	}
 	
 	/**
@@ -66,7 +52,11 @@ implements ImpactValueMaps {
 	 */
 	
 	public static HashMap<String, ProductDeclaration> getAllInstances() {
-		return allInstances;
+		LinkedHashMap<String,ProductDeclaration> a = new LinkedHashMap<String,ProductDeclaration>();
+		for (String s : MCAObject.getAllNames(ProductDeclaration.class)) {
+			a.put(s, (ProductDeclaration)MCAObject.getAllInstances(ProductDeclaration.class).get(s));			
+		}
+		return a;
 	}
 	
 	/**
@@ -78,7 +68,7 @@ implements ImpactValueMaps {
 	 */
 	
 	public static ProductDeclaration getInstance(String string) {
-		return allInstances.get(string);		
+		return getAllInstances().get(string);		
 	}
 	
 	/**
