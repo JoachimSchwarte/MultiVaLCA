@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -14,10 +18,14 @@ import javax.swing.JTextField;
 import de.unistuttgart.iwb.multivalca.FlowUnit;
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
 import de.unistuttgart.iwb.multivalca.LCIAMethod;
-import de.unistuttgart.iwb.multivalca.NameCheck;
 import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
+
+/**
+ * @author HH, JS
+ * @version 0.531
+ */
 
 public class DeklarationPanel extends MCAPanel {
 	Language l = GUILanguage.getChosenLanguage();
@@ -101,10 +109,6 @@ public class DeklarationPanel extends MCAPanel {
 				boolean inputOK = true;
 				if (ProductDeclaration.containsName(nameProd) == true) {
 					lblP17n9.setText(GuiStrings.getGS("stat03",l));
-					inputOK = false;					
-				}
-				if (NameCheck.contains(nameProd) == true  && inputOK == true) {
-					lblP17n9.setText(GuiStrings.getGS("stat36",l));
 					inputOK = false;					
 				}
 				if (LCIAMethod.containsName(nameLCIA) == false && inputOK == true) {

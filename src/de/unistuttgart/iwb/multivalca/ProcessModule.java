@@ -9,7 +9,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.513
+ * @version 0.531
  */
 
 public class ProcessModule extends MCAObject  
@@ -55,7 +55,6 @@ implements FlowValueMaps, ImpactValueMaps {
 
 	public static void removeInstance(String string) {
 		getAllInstances().remove(string);
-		NameCheck.remove(string);
 	}
 	
 	public void addFluss(Flow fluss, ValueType fvt, Double wert) {	

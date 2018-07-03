@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * "Komposition".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.503
+ * @version 0.531
  */
 
 public class Composition extends MCAObject implements ImpactValueMaps {
@@ -30,7 +30,6 @@ public class Composition extends MCAObject implements ImpactValueMaps {
 	private Composition(String name) {
 		super(name);
 		allInstances.put(name, this);
-		NameCheck.getInstance().addWVName(name);
 	}
 
 	// Methoden:

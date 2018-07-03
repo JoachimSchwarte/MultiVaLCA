@@ -27,7 +27,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.530
+ * @version 0.531
  */
 
 class XMLImportAction extends AbstractAction {
@@ -63,7 +63,6 @@ class XMLImportAction extends AbstractAction {
 					NodeList nl = docEle.getElementsByTagName("Flow");
 					if (nl.getLength() != 0) {
 						MCAObject.clear(Flow.class);
-						NameCheck.clear();
 					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();

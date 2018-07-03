@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.512
+ * @version 0.531
  */
 
 public class MCAObject {
@@ -37,8 +37,6 @@ public class MCAObject {
 	}
 		
 	public final void setName(String name) {
-		NameCheck.remove(this.name);
-		NameCheck.getInstance().add(name);
 		this.name = name;			
 	}
 	
