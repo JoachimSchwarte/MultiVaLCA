@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.532
  */
 
 public class CategoryIndicator extends MCAObject {
@@ -37,7 +37,7 @@ public class CategoryIndicator extends MCAObject {
 
 	
 	public static CategoryIndicator instance(String name) {
-		if (allInstances.containsKey(name) == false) {
+		if (!allInstances.containsKey(name)) {
 			new CategoryIndicator(name);
 		}
 		return allInstances.get(name);

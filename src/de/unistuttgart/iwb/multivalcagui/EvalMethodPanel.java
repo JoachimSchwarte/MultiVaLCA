@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -12,6 +16,11 @@ import de.unistuttgart.iwb.multivalca.CharacFactor;
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
 import de.unistuttgart.iwb.multivalca.LCIAMethod;
 import net.miginfocom.swing.MigLayout;
+
+/**
+ * @author HH, JS
+ * @version 0.532
+ */
 
 public class EvalMethodPanel extends MCAPanel{
 	
@@ -121,7 +130,7 @@ public class EvalMethodPanel extends MCAPanel{
 				String nameILCA = txtP14n1.getText();
 				String nameCF = txtP14n3.getText();
 				boolean inputOK = true;
-				if (CharacFactor.containsName(nameCF) == false) {
+				if (!CharacFactor.containsName(nameCF)) {
 					lblP14n5.setText(GuiStrings.getGS("stat30",l));
 					inputOK = false;					
 				}

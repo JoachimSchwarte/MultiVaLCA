@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.530
+ * @version 0.532
  */
 
 public class CharacFactor extends MCAObject {
@@ -112,7 +112,7 @@ public class CharacFactor extends MCAObject {
 	}
 	
 	public static CharacFactor instance(String name, Flow fluss, ImpactCategory wirkung, Double wert) {
-		if (getAllInstances().containsKey(name) == false) {
+		if (!getAllInstances().containsKey(name)) {
 			new CharacFactor(name, fluss, wirkung, wert);
 		}
 		return getAllInstances().get(name);

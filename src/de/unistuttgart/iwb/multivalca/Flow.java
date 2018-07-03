@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.513
+ * @version 0.532
  */
 
 public class Flow extends MCAObject {	
@@ -41,7 +41,7 @@ public class Flow extends MCAObject {
 	}
 
 	public static Flow instance(String name, FlowType typ, FlowUnit einheit) {
-		if (getAllInstances().containsKey(name) == false) {
+		if (!getAllInstances().containsKey(name)) {
 			new Flow(name, typ, einheit);
 		}
 		return getAllInstances().get(name);

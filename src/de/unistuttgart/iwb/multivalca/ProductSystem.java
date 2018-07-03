@@ -12,7 +12,7 @@ import de.unistuttgart.iwb.ivari.*;
  * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.530
+ * @version 0.532
  */
 
 public class ProductSystem extends MCAObject 
@@ -98,7 +98,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	public static ProductSystem instance(String name, 
 			LinkedHashMap<Flow, Double> f,
 			LinkedList<Flow> vk) {
-		if (getAllInstances().containsKey(name) == false) {
+		if (!getAllInstances().containsKey(name)) {
 			new ProductSystem(name, f, vk);
 		} else {
 			getAllInstances().get(name).setBedarfsvektor(f);
@@ -148,7 +148,7 @@ implements FlowValueMaps, ImpactValueMaps {
 		for(FlowValueMaps m : modulliste){
 			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> modulVektor = m.getProduktflussvektor();
 			for (Flow key : modulVektor.keySet()) {		
-				if ((produktFlussliste.contains(key) == false) &&
+				if (!produktFlussliste.contains(key) &&
 					(vorUndKoppelProdukte.contains(key) == false) &&
 					(m.getProduktflussvektor().containsKey(key)) &&
 					(m.getProduktflussvektor().get(key).get(ValueType.MeanValue) != 0)
