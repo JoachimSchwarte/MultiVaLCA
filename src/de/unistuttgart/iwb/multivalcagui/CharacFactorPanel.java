@@ -3,6 +3,8 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -39,6 +41,10 @@ public class CharacFactorPanel extends MCAPanel{
 
 	private void initUI() {
 		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP12n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -83,7 +89,7 @@ public class CharacFactorPanel extends MCAPanel{
 				String facText = txtP12n4.getText();
 				boolean inputOK = true;
 				if (nameCF.equals("") || nameFl.equals("") || nameWK.equals("") || facText.equals("")) {
-					lblP12n8.setText(GuiStrings.getGS("stat07",l));
+					lblP12n8.setText(bundle.getString("stat07"));
 					inputOK = false;					
 				}
 				Double facVal = 0.0;
@@ -93,19 +99,19 @@ public class CharacFactorPanel extends MCAPanel{
 					facVal = 0.0;
 				}
 				if (facVal <= 0.0) {
-					lblP12n8.setText(GuiStrings.getGS("stat26",l));
+					lblP12n8.setText(bundle.getString("stat26"));
 					inputOK = false;	
 				}
 				if (ImpactCategory.containsName(nameWK) == false) {
-					lblP12n8.setText(GuiStrings.getGS("stat27",l));
+					lblP12n8.setText(bundle.getString("stat27"));
 					inputOK = false;
 				}
 				if (Flow.containsName(nameFl) == false) {
-					lblP12n8.setText(GuiStrings.getGS("stat11",l));
+					lblP12n8.setText(bundle.getString("stat11"));
 					inputOK = false;
 				}
 				if (CharacFactor.containsName(nameCF)) {
-					lblP12n8.setText(GuiStrings.getGS("stat03",l));
+					lblP12n8.setText(bundle.getString("stat03"));
 					inputOK = false;
 				}
 				if (inputOK == true) {
@@ -146,7 +152,7 @@ public class CharacFactorPanel extends MCAPanel{
 				if ((lbv > facVal) || (obv < facVal) || (lbv < 0)) {
 					txtP12n5.setText(txtP12n4.getText());
 					txtP12n6.setText(txtP12n4.getText());
-					lblP12n8.setText(GuiStrings.getGS("stat21", l));
+					lblP12n8.setText(bundle.getString("stat21"));
 				} else {
 					String nameCF = txtP12n1.getText();
 					CharacFactor.setLowerBound(nameCF, lbv);
@@ -165,7 +171,7 @@ public class CharacFactorPanel extends MCAPanel{
 					txtP12n6.setEnabled(false);
 					btnP12n1.setEnabled(true);
 					btnP12n2.setEnabled(false);		
-					lblP12n8.setText(GuiStrings.getGS("stat01", l));
+					lblP12n8.setText(bundle.getString("stat01"));
 				}
 				
 			}
@@ -177,16 +183,20 @@ public class CharacFactorPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP12n1.setText(GuiStrings.getGS("p12n1", l));
-		lblP12n2.setText(GuiStrings.getGS("p12n2", l));
-		lblP12n3.setText(GuiStrings.getGS("p01n2", l));
-		lblP12n4.setText(GuiStrings.getGS("p10n2", l));
-		lblP12n5.setText(GuiStrings.getGS("p12n3", l));
-		lblP12n6.setText(GuiStrings.getGS("p02n5", l));
-		lblP12n7.setText(GuiStrings.getGS("p02n6", l));
-		lblP12n8.setText(GuiStrings.getGS("stat01", l));
-		btnP12n1.setText(GuiStrings.getGS("bt01", l));
-		btnP12n2.setText(GuiStrings.getGS("bt10", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		lblP12n1.setText(bundle.getString("p12n1"));
+		lblP12n2.setText(bundle.getString("p12n2"));
+		lblP12n3.setText(bundle.getString("p01n2"));
+		lblP12n4.setText(bundle.getString("p10n2"));
+		lblP12n5.setText(bundle.getString("p12n3"));
+		lblP12n6.setText(bundle.getString("p02n5"));
+		lblP12n7.setText(bundle.getString("p02n6"));
+		lblP12n8.setText(bundle.getString("stat01"));
+		btnP12n1.setText(bundle.getString("bt01"));
+		btnP12n2.setText(bundle.getString("bt10"));
 		
 	}
 

@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -34,8 +36,11 @@ class XMLImportAction extends AbstractAction {
 
 	private static final long serialVersionUID = -8752103520306217094L;
 	public XMLImportAction(Language l) {
-		putValue(NAME, GuiStrings.getGS("mp62", l));
-		putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp62e", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		putValue(NAME, bundle.getString("mp62"));
+		putValue(SHORT_DESCRIPTION, bundle.getString("mp62e"));
 	}
 
 	@Override

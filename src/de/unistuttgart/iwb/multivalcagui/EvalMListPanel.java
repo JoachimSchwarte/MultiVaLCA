@@ -1,6 +1,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -34,21 +36,24 @@ public class EvalMListPanel extends MCAPanel {
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP15n1.setText(GuiStrings.getGS("mp46e", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP15n1.setText(bundle.getString("mp46e"));
 		bmTableModel.setRowCount(0);
 		bmTable.setModel(bmTableModel);
 		TableColumnModel tcm = bmTable.getColumnModel();
-		tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp16", l));
-		tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p08n1", l));
-		tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p08n2", l));
+		tcm.getColumn(0).setHeaderValue(bundle.getString("mp16"));
+		tcm.getColumn(1).setHeaderValue(bundle.getString("p08n1"));
+		tcm.getColumn(2).setHeaderValue(bundle.getString("p08n2"));
 		for(String bmName : LCIAMethod.getAllInstances().keySet()) {
 			LCIAMethod bm = LCIAMethod.instance(bmName);
 			bmTableModel.addRow(new Object[] {bm.getName(),"",""});
 			for(String wkName : bm.categoryList().keySet()) {
-				bmTableModel.addRow(new Object[] {"",GuiStrings.getGS("mp14", l),wkName});
+				bmTableModel.addRow(new Object[] {"",bundle.getString("mp14"),wkName});
 			}
 			for(String cfName : bm.getFactorSet().keySet()) {
-				bmTableModel.addRow(new Object[] {"",GuiStrings.getGS("mp15", l),cfName});
+				bmTableModel.addRow(new Object[] {"",bundle.getString("mp15"),cfName});
 			}				
 		}		
 		

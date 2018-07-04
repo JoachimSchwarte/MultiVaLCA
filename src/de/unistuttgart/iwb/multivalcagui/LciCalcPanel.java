@@ -2,6 +2,8 @@ package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -36,14 +38,17 @@ public class LciCalcPanel extends MCAPanel {
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP09n1.setText(GuiStrings.getGS("mp51e", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP09n1.setText(bundle.getString("mp51e"));
 		lciTableModel.setRowCount(0);
 		lciTable.setModel(lciTableModel);
 		TableColumnModel tcm = lciTable.getColumnModel();
-		tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp13", l));
-		tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("mp11", l));
-		tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p01n3", l));
-		tcm.getColumn(3).setHeaderValue(GuiStrings.getGS("p02n4", l));
+		tcm.getColumn(0).setHeaderValue(bundle.getString("mp13"));
+		tcm.getColumn(1).setHeaderValue(bundle.getString("mp11"));
+		tcm.getColumn(2).setHeaderValue(bundle.getString("p01n3"));
+		tcm.getColumn(3).setHeaderValue(bundle.getString("p02n4"));
 		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> sysErgebnis = new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 		if (ProductSystem.getAllInstances().size() > 0) {
 			for(String sysName : ProductSystem.getAllInstances().keySet()) {

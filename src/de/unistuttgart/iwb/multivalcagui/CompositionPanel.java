@@ -1,6 +1,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -52,13 +54,16 @@ public class CompositionPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP19n1.setText(GuiStrings.getGS("p19n1", l));
-		lblP19n2.setText(GuiStrings.getGS("p19n2", l));
-		lblP19n3.setText(GuiStrings.getGS("p19n3", l));
-		lblP19n4.setText(GuiStrings.getGS("stat01", l));
-		btnP19n1.setText(GuiStrings.getGS("bt14", l));
-		btnP19n2.setText(GuiStrings.getGS("bt15", l));
-		btnP19n3.setText(GuiStrings.getGS("bt04", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP19n1.setText(bundle.getString("p19n1"));
+		lblP19n2.setText(bundle.getString("p19n2"));
+		lblP19n3.setText(bundle.getString("p19n3"));
+		lblP19n4.setText(bundle.getString("stat01"));
+		btnP19n1.setText(bundle.getString("bt14"));
+		btnP19n2.setText(bundle.getString("bt15"));
+		btnP19n3.setText(bundle.getString("bt04"));
 		
 	}
 

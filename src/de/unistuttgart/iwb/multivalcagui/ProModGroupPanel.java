@@ -7,6 +7,8 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -76,6 +78,9 @@ public class ProModGroupPanel extends MCAPanel{
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Language l = GUILanguage.getChosenLanguage();
+				Locale locale = MultiVaLCA.LANGUAGES.get(l);
+				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 				String fmenge = txt03.getText();
 				Double menge;
 				try {
@@ -84,28 +89,28 @@ public class ProModGroupPanel extends MCAPanel{
 					menge = 0.0;
 				}
 				if (menge == 0.0) {
-					lbl06.setText(GuiStrings.getGS("stat07", l));
+					lbl06.setText(bundle.getString("stat07"));
 				}
 				String flname = txt02.getText();
 				boolean flOk = true;					
 				if (Flow.getAllInstances().containsKey(flname) == false) {
 					flOk = false;
-					lbl06.setText(GuiStrings.getGS("stat37", l));
+					lbl06.setText(bundle.getString("stat37"));
 				}			
 				String name = txt01.getText();	
 				boolean nameOk = true;
 				if (name.equals("")) {
 					nameOk = false;
-					lbl06.setText(GuiStrings.getGS("stat02", l));
+					lbl06.setText(bundle.getString("stat02"));
 				} 
 				if (name != name.replaceAll(" ","")) {
 					nameOk = false;
-					lbl06.setText(GuiStrings.getGS("stat20", l));
+					lbl06.setText(bundle.getString("stat20"));
 					txt01.setText("");
 				}
 				if (MCAObject.containsName(name)) {
 					nameOk = false;
-					lbl06.setText(GuiStrings.getGS("stat03", l));
+					lbl06.setText(bundle.getString("stat03"));
 					txt01.setText("");
 				}	
 				if (menge != 0.0 && flOk == true && nameOk == true) {
@@ -123,25 +128,28 @@ public class ProModGroupPanel extends MCAPanel{
 		btn02.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Language l = GUILanguage.getChosenLanguage();
+				Locale locale = MultiVaLCA.LANGUAGES.get(l);
+				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 				String name = txt04.getText();	
 				String flname = txt02.getText();
 				boolean nameOk = true;
 				if (name.equals("")) {
 					nameOk = false;
-					lbl06.setText(GuiStrings.getGS("stat02", l));
+					lbl06.setText(bundle.getString("stat02"));
 				} 
 				if (nameOk == true && ProcessModule.getAllInstances().containsKey(name) == false) {
 					nameOk = false;
-					lbl06.setText(GuiStrings.getGS("stat38", l));
+					lbl06.setText(bundle.getString("stat38"));
 				}
 				if (nameOk == true && ProcessModule.getAllInstances().get(name).getProduktflussvektor().containsKey(Flow.getAllInstances().get(flname)) == false) {
 					nameOk = false;
-					lbl06.setText(GuiStrings.getGS("stat39", l));					
+					lbl06.setText(bundle.getString("stat39"));					
 				}
 				if (nameOk == true) {
 					ProcessModuleGroup.getAllInstances().get(txt01.getText()).addModule(ProcessModule.getAllInstances().get(txt04.getText()));
-					lbl06.setText(GuiStrings.getGS("stat40", l) + ProcessModuleGroup.getAllInstances().get(txt01.getText()).getModList().size()
-							+ GuiStrings.getGS("stat41", l));
+					lbl06.setText(bundle.getString("stat40") + ProcessModuleGroup.getAllInstances().get(txt01.getText()).getModList().size()
+							+ bundle.getString("stat41"));
 					btn03.setEnabled(true);
 					txt04.setText("");
 				}			
@@ -169,16 +177,19 @@ public class ProModGroupPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lbl01.setText(GuiStrings.getGS("p20n1", l));
-		lbl02.setText(GuiStrings.getGS("p20n2", l));
-		lbl03.setText(GuiStrings.getGS("p20n3", l));
-		lbl04.setText(GuiStrings.getGS("p02n4", l));
-		lbl05.setText(GuiStrings.getGS("p20n4", l));
-		lbl06.setText(GuiStrings.getGS("stat01", l));
-		btn01.setText(GuiStrings.getGS("bt16", l));
-		btn02.setText(GuiStrings.getGS("bt17", l));
-		btn02.setText(GuiStrings.getGS("bt17", l));
-		btn03.setText(GuiStrings.getGS("bt04", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lbl01.setText(bundle.getString("p20n1"));
+		lbl02.setText(bundle.getString("p20n2"));
+		lbl03.setText(bundle.getString("p20n3"));
+		lbl04.setText(bundle.getString("p02n4"));
+		lbl05.setText(bundle.getString("p20n4"));
+		lbl06.setText(bundle.getString("stat01"));
+		btn01.setText(bundle.getString("bt16"));
+		btn02.setText(bundle.getString("bt17"));
+		btn02.setText(bundle.getString("bt17"));
+		btn03.setText(bundle.getString("bt04"));
 		
 	}
 

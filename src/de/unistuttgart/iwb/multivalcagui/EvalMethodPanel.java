@@ -7,6 +7,8 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -43,7 +45,10 @@ public class EvalMethodPanel extends MCAPanel{
 	}
 
 	private void initUI() {
-		Language l = GUILanguage.getChosenLanguage(); //nun zweimal initiiert
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale); //nun zweimal initiiert
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP14n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -78,11 +83,11 @@ public class EvalMethodPanel extends MCAPanel{
 				String nameILCA = txtP14n1.getText();
 				boolean inputOK = true;
 				if (nameILCA.equals("")) {
-					lblP14n5.setText(GuiStrings.getGS("stat02",l));
+					lblP14n5.setText(bundle.getString("stat02"));
 					inputOK = false;					
 				}
 				if (LCIAMethod.containsName(nameILCA)) {
-					lblP14n5.setText(GuiStrings.getGS("stat03",l));
+					lblP14n5.setText(bundle.getString("stat03"));
 					inputOK = false;
 				}
 				if (inputOK == true) {
@@ -93,11 +98,11 @@ public class EvalMethodPanel extends MCAPanel{
 					btnP14n1.setEnabled(false);
 					btnP14n2.setEnabled(true);
 					btnP14n3.setEnabled(true);
-					lblP14n5.setText(GuiStrings.getGS("stat28",l) + 
+					lblP14n5.setText(bundle.getString("stat28") + 
 							LCIAMethod.instance(nameILCA).categoryList().size() +
-							GuiStrings.getGS("stat29",l) +
+							bundle.getString("stat29") +
 							LCIAMethod.instance(nameILCA).getFactorSet().size() +
-							GuiStrings.getGS("stat05",l));
+							bundle.getString("stat05"));
 				}			
 			}			
 		});
@@ -109,17 +114,17 @@ public class EvalMethodPanel extends MCAPanel{
 				String nameWK = txtP14n2.getText();
 				boolean inputOK = true;
 				if (ImpactCategory.containsName(nameWK) == false) {
-					lblP14n5.setText(GuiStrings.getGS("stat27",l));
+					lblP14n5.setText(bundle.getString("stat27"));
 					inputOK = false;					
 				}
 				if (inputOK == true) {
 					LCIAMethod.instance(nameILCA).addCategory(ImpactCategory.getInstance(nameWK));
 					btnP14n4.setEnabled(true);
-					lblP14n5.setText(GuiStrings.getGS("stat28",l) + 
+					lblP14n5.setText(bundle.getString("stat28") + 
 							LCIAMethod.instance(nameILCA).categoryList().size() +
-							GuiStrings.getGS("stat29",l) +
+							bundle.getString("stat29") +
 							LCIAMethod.instance(nameILCA).getFactorSet().size() +
-							GuiStrings.getGS("stat05",l));
+							bundle.getString("stat05"));
 				}			
 			}
 			
@@ -131,17 +136,17 @@ public class EvalMethodPanel extends MCAPanel{
 				String nameCF = txtP14n3.getText();
 				boolean inputOK = true;
 				if (!CharacFactor.containsName(nameCF)) {
-					lblP14n5.setText(GuiStrings.getGS("stat30",l));
+					lblP14n5.setText(bundle.getString("stat30"));
 					inputOK = false;					
 				}
 				if (inputOK == true) {
 					LCIAMethod.instance(nameILCA).addFactor(CharacFactor.getInstance(nameCF));
 					btnP14n4.setEnabled(true);				
-					lblP14n5.setText(GuiStrings.getGS("stat28",l) + 
+					lblP14n5.setText(bundle.getString("stat28") + 
 							LCIAMethod.instance(nameILCA).categoryList().size() +
-							GuiStrings.getGS("stat29",l) +
+							bundle.getString("stat29") +
 							LCIAMethod.instance(nameILCA).getFactorSet().size() +
-							GuiStrings.getGS("stat05",l));
+							bundle.getString("stat05"));
 				}
 			}
 		});
@@ -159,7 +164,7 @@ public class EvalMethodPanel extends MCAPanel{
 				txtP14n1.setText("");
 				txtP14n2.setText("");
 				txtP14n3.setText("");
-				lblP14n5.setText(GuiStrings.getGS("stat01", l));
+				lblP14n5.setText(bundle.getString("stat01"));
 			}
 		});	
 	}
@@ -167,15 +172,18 @@ public class EvalMethodPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP14n1.setText(GuiStrings.getGS("p14n1", l));
-		lblP14n2.setText(GuiStrings.getGS("p14n2", l));
-		lblP14n3.setText(GuiStrings.getGS("mp14", l));
-		lblP14n4.setText(GuiStrings.getGS("mp15", l));
-		lblP14n5.setText(GuiStrings.getGS("stat01", l));			
-		btnP14n1.setText(GuiStrings.getGS("bt01", l));
-		btnP14n2.setText(GuiStrings.getGS("bt11", l));	
-		btnP14n3.setText(GuiStrings.getGS("bt11", l));	
-		btnP14n4.setText(GuiStrings.getGS("bt04", l));	
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP14n1.setText(bundle.getString("p14n1"));
+		lblP14n2.setText(bundle.getString("p14n2"));
+		lblP14n3.setText(bundle.getString("mp14"));
+		lblP14n4.setText(bundle.getString("mp15"));
+		lblP14n5.setText(bundle.getString("stat01"));			
+		btnP14n1.setText(bundle.getString("bt01"));
+		btnP14n2.setText(bundle.getString("bt11"));	
+		btnP14n3.setText(bundle.getString("bt11"));	
+		btnP14n4.setText(bundle.getString("bt04"));	
 		
 	}
 

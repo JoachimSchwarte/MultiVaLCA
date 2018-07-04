@@ -1,6 +1,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 
@@ -38,11 +40,14 @@ public class InfoPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblInfo1.setText(GuiStrings.getGS("head1", l));
-		lblInfo2.setText(GuiStrings.getGS("info1", l));
-		lblInfo3.setText(GuiStrings.getGS("info2", l));
-		lblInfo4.setText(GuiStrings.getGS("info3", l));
-		lblInfo5.setText(GuiStrings.getGS("head2", l)+"     "+GuiStrings.getGS("date", l));		
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblInfo1.setText(bundle.getString("head1"));
+		lblInfo2.setText(bundle.getString("info1"));
+		lblInfo3.setText(bundle.getString("info2"));
+		lblInfo4.setText(bundle.getString("info3"));
+		lblInfo5.setText(bundle.getString("head2")+"     "+bundle.getString("date"));		
 		
 		
 	}

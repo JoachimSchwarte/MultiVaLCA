@@ -1,6 +1,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -34,12 +36,15 @@ public class ImpactListPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP11n1.setText(GuiStrings.getGS("mp44e", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP11n1.setText(bundle.getString("mp44e"));
 		catTableModel.setRowCount(0);
 		catTable.setModel(catTableModel);
 		TableColumnModel tcm = catTable.getColumnModel();
-		tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp14", l));
-		tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p11n1", l));
+		tcm.getColumn(0).setHeaderValue(bundle.getString("mp14"));
+		tcm.getColumn(1).setHeaderValue(bundle.getString("p11n1"));
 		for(String catName : ImpactCategory.getAllInstances().keySet()) {
 			ImpactCategory ic = ImpactCategory.getInstance(catName);			
 			catTableModel.addRow(new Object[] {ic.getName(), 

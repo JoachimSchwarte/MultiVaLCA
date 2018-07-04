@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -53,7 +55,10 @@ public class ProductSystemPanel extends MCAPanel{
 	}
 		
 		private void initUI() {
-		Language l = GUILanguage.getChosenLanguage();
+			Language l = GUILanguage.getChosenLanguage();
+			Locale locale = MultiVaLCA.LANGUAGES.get(l);
+			String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP03n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -104,11 +109,11 @@ public class ProductSystemPanel extends MCAPanel{
 				boolean nameOk = true;
 				if (name.equals("")) {
 					nameOk = false;
-					lblP03n7.setText(GuiStrings.getGS("stat02", l));
+					lblP03n7.setText(bundle.getString("stat02"));
 				} 
 				if (name != name.replaceAll(" ","")) {
 					nameOk = false;
-					lblP03n7.setText(GuiStrings.getGS("stat20", l));
+					lblP03n7.setText(bundle.getString("stat20"));
 					txtP03n1.setText("");
 				}	
 				if (nameOk == true) {
@@ -130,12 +135,12 @@ public class ProductSystemPanel extends MCAPanel{
 						}
 					}
 					if (nameVorhanden == true) {
-						lblP03n7.setText(GuiStrings.getGS("stat03", l));
+						lblP03n7.setText(bundle.getString("stat03"));
 					} else {
 						ProductSystem.instance(name, new LinkedHashMap<Flow, Double>(), 
 								new LinkedList<Flow>());
-						lblP03n7.setText(GuiStrings.getGS("stat12", l) + 
-								ProductSystem.getAllInstances().size() + GuiStrings.getGS("stat05", l));
+						lblP03n7.setText(bundle.getString("stat12") + 
+								ProductSystem.getAllInstances().size() + bundle.getString("stat05"));
 
 						btnP03n1.setEnabled(false);
 						txtP03n1.setEnabled(false);
@@ -153,13 +158,13 @@ public class ProductSystemPanel extends MCAPanel{
 				if (modname.equals("") || modname.equals(txtP03n1.getText()) ||
 						ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulliste().contains(ProcessModule.getInstance(modname))) {
 					if (modname.equals("")) {
-						lblP03n7.setText(GuiStrings.getGS("stat07", l));
+						lblP03n7.setText(bundle.getString("stat07"));
 					}
 					if (modname.equals(txtP03n1.getText())) {
-						lblP03n7.setText(GuiStrings.getGS("stat13", l));
+						lblP03n7.setText(bundle.getString("stat13"));
 					}
 					if (ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulliste().contains(ProcessModule.getInstance(modname)) ) {
-						lblP03n7.setText(GuiStrings.getGS("stat31", l));
+						lblP03n7.setText(bundle.getString("stat31"));
 					}
 				} else {
 					boolean nameVorhanden = false;
@@ -198,13 +203,13 @@ public class ProductSystemPanel extends MCAPanel{
 								ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProductSystem.getAllInstances().get(modname));
 							}
 						}
-						lblP03n7.setText(GuiStrings.getGS("stat14", l) + txtP03n1.getText() +
-								GuiStrings.getGS("stat15", l) + ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulAnzahl() 
-								+ GuiStrings.getGS("stat16", l));
+						lblP03n7.setText(bundle.getString("stat14") + txtP03n1.getText() +
+								bundle.getString("stat15") + ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulAnzahl() 
+								+ bundle.getString("stat16"));
 						txtP03n2.setText("");
 						btnP03n3.setEnabled(true);
 					} else {
-						lblP03n7.setText(GuiStrings.getGS("stat17", l));
+						lblP03n7.setText(bundle.getString("stat17"));
 					}					
 				}
 			}
@@ -220,7 +225,7 @@ public class ProductSystemPanel extends MCAPanel{
 				txtP03n3.setEnabled(true);
 				txtP03n4.setEnabled(true);
 				btnP03n4.setEnabled(true);
-				lblP03n7.setText(GuiStrings.getGS("stat01", l));
+				lblP03n7.setText(bundle.getString("stat01"));
 			}
 		});
 		
@@ -236,18 +241,18 @@ public class ProductSystemPanel extends MCAPanel{
 					menge = 0.0;
 				}
 				if (fname.equals("") || (menge == 0.0)) {
-					lblP03n7.setText(GuiStrings.getGS("stat07", l));
+					lblP03n7.setText(bundle.getString("stat07"));
 				} else {
 					if (Flow.containsName(fname)) {
 						Flow akFlow = Flow.getInstance(fname);
 						ProductSystem.getInstance(txtP03n1.getText()).addBedarf(akFlow, Double.parseDouble(txtP03n4.getText()));
-						lblP03n7.setText(GuiStrings.getGS("stat18", l) + 
-								ProductSystem.getInstance(txtP03n1.getText()).getBedarfsvektor().size() + GuiStrings.getGS("stat10", l));
+						lblP03n7.setText(bundle.getString("stat18") + 
+								ProductSystem.getInstance(txtP03n1.getText()).getBedarfsvektor().size() + bundle.getString("stat10"));
 						btnP03n5.setEnabled(true);	
 						txtP03n3.setText("");
 						txtP03n4.setText("");
 					} else {
-						lblP03n7.setText(GuiStrings.getGS("stat11", l));
+						lblP03n7.setText(bundle.getString("stat11"));
 					}					
 				}
 			}
@@ -270,7 +275,7 @@ public class ProductSystemPanel extends MCAPanel{
 				btnP03n6.setEnabled(true);
 				btnP03n7.setEnabled(true);
 				
-				lblP03n7.setText(GuiStrings.getGS("stat01", l));
+				lblP03n7.setText(bundle.getString("stat01"));
 			}
 		});
 		
@@ -279,16 +284,16 @@ public class ProductSystemPanel extends MCAPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				String vkname = txtP03n5.getText();
 				if (vkname.equals("")) {
-					lblP03n7.setText(GuiStrings.getGS("stat07", l));
+					lblP03n7.setText(bundle.getString("stat07"));
 				} else {					
 					if (Flow.containsName(vkname)) {
 						Flow akFlow = Flow.getInstance(vkname);
 						ProductSystem.getInstance(txtP03n1.getText()).addVuK(akFlow);
 						txtP03n5.setText("");
-						lblP03n7.setText(GuiStrings.getGS("stat19", l) + 
-								ProductSystem.getInstance(txtP03n1.getText()).getVorUndKoppelprodukte().size() + GuiStrings.getGS("stat10", l));										
+						lblP03n7.setText(bundle.getString("stat19") + 
+								ProductSystem.getInstance(txtP03n1.getText()).getVorUndKoppelprodukte().size() + ("stat10"));										
 					} else {
-						lblP03n7.setText(GuiStrings.getGS("stat11", l));
+						lblP03n7.setText(bundle.getString("stat11"));
 					}					
 				}
 			}
@@ -315,7 +320,7 @@ public class ProductSystemPanel extends MCAPanel{
 				btnP03n6.setEnabled(false);
 				btnP03n7.setEnabled(false);
 				
-				lblP03n7.setText(GuiStrings.getGS("stat01", l));
+				lblP03n7.setText(bundle.getString("stat01"));
 			}
 			
 		});
@@ -327,20 +332,23 @@ public class ProductSystemPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP03n1.setText(GuiStrings.getGS("p03n1", l));
-		lblP03n2.setText(GuiStrings.getGS("p03n2", l));
-		lblP03n3.setText(GuiStrings.getGS("p03n3", l));
-		lblP03n4.setText(GuiStrings.getGS("p03n4", l));
-		lblP03n5.setText(GuiStrings.getGS("p02n4", l));
-		lblP03n6.setText(GuiStrings.getGS("p03n6", l));
-		lblP03n7.setText(GuiStrings.getGS("stat01", l));
-		btnP03n1.setText(GuiStrings.getGS("bt05", l));
-		btnP03n2.setText(GuiStrings.getGS("bt06", l));
-		btnP03n3.setText(GuiStrings.getGS("bt07", l));
-		btnP03n4.setText(GuiStrings.getGS("bt08", l));
-		btnP03n5.setText(GuiStrings.getGS("bt07", l));
-		btnP03n6.setText(GuiStrings.getGS("bt09", l));
-		btnP03n7.setText(GuiStrings.getGS("bt04", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP03n1.setText(bundle.getString("p03n1"));
+		lblP03n2.setText(bundle.getString("p03n2"));
+		lblP03n3.setText(bundle.getString("p03n3"));
+		lblP03n4.setText(bundle.getString("p03n4"));
+		lblP03n5.setText(bundle.getString("p02n4"));
+		lblP03n6.setText(bundle.getString("p03n6"));
+		lblP03n7.setText(bundle.getString("stat01"));
+		btnP03n1.setText(bundle.getString("bt05"));
+		btnP03n2.setText(bundle.getString("bt06"));
+		btnP03n3.setText(bundle.getString("bt07"));
+		btnP03n4.setText(bundle.getString("bt08"));
+		btnP03n5.setText(bundle.getString("bt07"));
+		btnP03n6.setText(bundle.getString("bt09"));
+		btnP03n7.setText(bundle.getString("bt04"));
 		}
 		
 	}

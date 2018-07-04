@@ -1,6 +1,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 
@@ -26,7 +28,10 @@ public class CompositionListPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP22n1.setText(GuiStrings.getGS("mp49e", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP22n1.setText(bundle.getString("mp49e"));
 		
 	}
 

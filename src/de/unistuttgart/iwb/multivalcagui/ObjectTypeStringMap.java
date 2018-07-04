@@ -5,6 +5,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import de.unistuttgart.iwb.multivalca.ObjectType;
 
@@ -18,10 +20,13 @@ import de.unistuttgart.iwb.multivalca.ObjectType;
 
 public class ObjectTypeStringMap {
 	public static LinkedHashMap<ObjectType, String> getOTS(Language l) {
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		LinkedHashMap<ObjectType, String> r = new LinkedHashMap<ObjectType, String>();
-		r.put(ObjectType.ProcessModule, GuiStrings.getGS("mp12",l));
-		r.put(ObjectType.ProductSystem, GuiStrings.getGS("mp13",l));
-		r.put(ObjectType.ProductDeclaration, GuiStrings.getGS("mp17",l));	
+		r.put(ObjectType.ProcessModule, bundle.getString("mp12"));
+		r.put(ObjectType.ProductSystem, bundle.getString("mp13"));
+		r.put(ObjectType.ProductDeclaration, bundle.getString("mp17"));	
 		return r;
 	}
 }

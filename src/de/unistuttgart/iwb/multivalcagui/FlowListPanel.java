@@ -1,6 +1,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -32,13 +34,16 @@ public class FlowListPanel extends MCAPanel {
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP06n1.setText(GuiStrings.getGS("mp41e", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP06n1.setText(bundle.getString("mp41e"));
 		flowsTableModel.setRowCount(0);
 		flowsTable.setModel(flowsTableModel);
 		TableColumnModel tcm = flowsTable.getColumnModel();
-		tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("p06n1", l));
-		tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p01n3", l));
-		tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p01n4", l));
+		tcm.getColumn(0).setHeaderValue(bundle.getString("p06n1"));
+		tcm.getColumn(1).setHeaderValue(bundle.getString("p01n3"));
+		tcm.getColumn(2).setHeaderValue(bundle.getString("p01n4"));
 		for(String flussname : Flow.getAllInstances().keySet()) {
 			Flow fluss = Flow.getInstance(flussname);			
 			flowsTableModel.addRow(new Object[] {fluss.getName(), 

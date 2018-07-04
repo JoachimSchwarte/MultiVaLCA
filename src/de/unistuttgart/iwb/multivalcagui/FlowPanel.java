@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -64,6 +66,9 @@ public class FlowPanel extends MCAPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Language l = GUILanguage.getChosenLanguage();
+				Locale locale = MultiVaLCA.LANGUAGES.get(l);
+				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 				String name = txtP01n1.getText();
 				LinkedHashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
 				String typs = cbbP01n1.getItemAt(cbbP01n1.getSelectedIndex());
@@ -78,20 +83,20 @@ public class FlowPanel extends MCAPanel{
 				boolean nameOk = true;
 				if (name.equals("")) {
 					nameOk = false;
-					lblP01n5.setText(GuiStrings.getGS("stat02", l));
+					lblP01n5.setText(bundle.getString("stat02"));
 				}
 				if (name != name.replaceAll(" ","")) {
 					nameOk = false;
-					lblP01n5.setText(GuiStrings.getGS("stat20", l));
+					lblP01n5.setText(bundle.getString("stat20"));
 					txtP01n1.setText("");
 				}								
 				if (nameOk == true) {
 					if (Flow.containsName(name)) {
-						lblP01n5.setText(GuiStrings.getGS("stat03", l));
+						lblP01n5.setText(bundle.getString("stat03"));
 					} else {
 						Flow.instance(name, typ, einheit);
-						lblP01n5.setText(GuiStrings.getGS("stat04", l) + 
-								MCAObject.getAllNames(Flow.class).size() + GuiStrings.getGS("stat05", l));
+						lblP01n5.setText(bundle.getString("stat04") + 
+								MCAObject.getAllNames(Flow.class).size() + bundle.getString("stat05"));
 						txtP01n1.setText("");
 						cbbP01n1.setSelectedIndex(0);
 						cbbP01n2.setSelectedIndex(0);
@@ -105,12 +110,15 @@ public class FlowPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP01n1.setText(GuiStrings.getGS("p01n1", l));
-		lblP01n2.setText(GuiStrings.getGS("p01n2", l));
-		lblP01n3.setText(GuiStrings.getGS("p01n3", l));
-		lblP01n4.setText(GuiStrings.getGS("p01n4", l));
-		lblP01n5.setText(GuiStrings.getGS("stat01", l));
-		btnP01n1.setText(GuiStrings.getGS("bt01", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP01n1.setText(bundle.getString("p01n1"));
+		lblP01n2.setText(bundle.getString("p01n2"));
+		lblP01n3.setText(bundle.getString("p01n3"));
+		lblP01n4.setText(bundle.getString("p01n4"));
+		lblP01n5.setText(bundle.getString("stat01"));
+		btnP01n1.setText(bundle.getString("bt01"));
 		LinkedHashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
 		String[] fta = new String[ft.size()];
 		int i=0;

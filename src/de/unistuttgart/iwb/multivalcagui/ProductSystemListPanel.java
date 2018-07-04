@@ -5,6 +5,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -45,13 +47,16 @@ public class ProductSystemListPanel extends MCAPanel {
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP08n1.setText(GuiStrings.getGS("mp43e", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP08n1.setText(bundle.getString("mp43e"));
 		psTableModel.setRowCount(0);
 		psTable.setModel(psTableModel);
 		TableColumnModel tcm = psTable.getColumnModel();
-		tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp13", l));
-		tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p08n1", l));
-		tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p08n2", l));
+		tcm.getColumn(0).setHeaderValue(bundle.getString("mp13"));
+		tcm.getColumn(1).setHeaderValue(bundle.getString("p08n1"));
+		tcm.getColumn(2).setHeaderValue(bundle.getString("p08n2"));
 		for(String psn : ProductSystem.getAllInstances().keySet()) {
 			psTableModel.addRow(new Object[] {psn, "", ""});
 			for (FlowValueMaps mnif : ProductSystem.getInstance(psn).getModulliste()){
@@ -63,19 +68,19 @@ public class ProductSystemListPanel extends MCAPanel {
 					}
 				}
 				if (typmod == true){
-					psTableModel.addRow(new Object[] {"",GuiStrings.getGS("mp12", l), mni});							
+					psTableModel.addRow(new Object[] {"",bundle.getString("mp12"), mni});							
 				} else {
-					psTableModel.addRow(new Object[] {"",GuiStrings.getGS("p08n3", l), mni});	
+					psTableModel.addRow(new Object[] {"",bundle.getString("p08n3"), mni});	
 				}					
 			}
 			for (Flow bvf : ProductSystem.getInstance(psn).getBedarfsvektor().keySet()) {
-				psTableModel.addRow(new Object[] {"" ,GuiStrings.getGS("p08n4", l) 
+				psTableModel.addRow(new Object[] {"" ,bundle.getString("p08n4") 
 						,"" + bvf.getName() + " (" + 
 								ProductSystem.getInstance(psn).getBedarfsvektor().get(bvf) + 
 						" " + bvf.getEinheit()+")"});
 			}
 			for (Flow vk : ProductSystem.getInstance(psn).getVorUndKoppelprodukte()) {
-				psTableModel.addRow(new Object[] {"" ,GuiStrings.getGS("p03n6", l) 
+				psTableModel.addRow(new Object[] {"" ,bundle.getString("p03n6") 
 						,vk.getName() });		
 			}
 		}

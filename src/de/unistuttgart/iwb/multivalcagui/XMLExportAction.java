@@ -6,6 +6,8 @@ package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -34,8 +36,11 @@ import de.unistuttgart.iwb.multivalca.*;
 class XMLExportAction extends AbstractAction {
 	
 	public XMLExportAction(Language l) {
-		putValue(NAME, GuiStrings.getGS("mp61", l));
-		putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp61e", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		putValue(NAME, bundle.getString("mp61"));
+		putValue(SHORT_DESCRIPTION, bundle.getString("mp61e"));
 	}
 
 	@Override

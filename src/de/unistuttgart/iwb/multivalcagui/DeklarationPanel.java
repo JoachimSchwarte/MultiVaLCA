@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -29,6 +31,9 @@ import net.miginfocom.swing.MigLayout;
 
 public class DeklarationPanel extends MCAPanel {
 	Language l = GUILanguage.getChosenLanguage();
+	Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	private JLabel lblP17n1 = new JLabel();				// "neue Produktdeklaration"
 	private JLabel lblP17n2 = new JLabel();				// "Name des ..."
 	private JLabel lblP17n3 = new JLabel();				// "Einheit"
@@ -108,19 +113,19 @@ public class DeklarationPanel extends MCAPanel {
 				FlowUnit einheit = comboBox_2.getItemAt(comboBox_2.getSelectedIndex());
 				boolean inputOK = true;
 				if (ProductDeclaration.containsName(nameProd) == true) {
-					lblP17n9.setText(GuiStrings.getGS("stat03",l));
+					lblP17n9.setText(bundle.getString("stat03"));
 					inputOK = false;					
 				}
 				if (LCIAMethod.containsName(nameLCIA) == false && inputOK == true) {
-					lblP17n9.setText(GuiStrings.getGS("stat33",l));
+					lblP17n9.setText(bundle.getString("stat33"));
 					inputOK = false;					
 				}
 				if (nameProd.equals("") && inputOK == true) {
-					lblP17n9.setText(GuiStrings.getGS("stat02",l));
+					lblP17n9.setText(bundle.getString("stat02"));
 					inputOK = false;
 				}
 				if (nameLCIA.equals("") && inputOK == true) {
-					lblP17n9.setText(GuiStrings.getGS("stat32",l));
+					lblP17n9.setText(bundle.getString("stat32"));
 					inputOK = false;
 				}
 				if (inputOK == true) {
@@ -133,9 +138,9 @@ public class DeklarationPanel extends MCAPanel {
 					btnP17n2.setEnabled(true);
 					txtP17n3.setEnabled(true);
 					txtP17n4.setEnabled(true);
-					lblP17n9.setText(GuiStrings.getGS("stat34",l) + 
+					lblP17n9.setText(bundle.getString("stat34") + 
 							ProductDeclaration.getAllInstances().size() +
-							GuiStrings.getGS("stat05",l));
+							bundle.getString("stat05"));
 				}			
 			}		
 		});
@@ -154,7 +159,7 @@ public class DeklarationPanel extends MCAPanel {
 					menge = 0.0;
 				}
 				if (fname.equals("") || (menge == 0.0)) {
-					lblP17n9.setText(GuiStrings.getGS("stat07", l));
+					lblP17n9.setText(bundle.getString("stat07"));
 				} else {
 					if (LCIAMethod.instance(nameLCIA).categoryList().containsKey(fname)) {
 						ImpactCategory ic = ImpactCategory.getInstance(fname);
@@ -171,10 +176,10 @@ public class DeklarationPanel extends MCAPanel {
 						txtP17n6.setText(txtP17n4.getText());
 						txtP17n6.setEnabled(true);
 						btnP17n3.setEnabled(true);
-						lblP17n9.setText(GuiStrings.getGS("stat01", l));
+						lblP17n9.setText(bundle.getString("stat01"));
 						
 					} else {
-						lblP17n9.setText(GuiStrings.getGS("stat35", l));
+						lblP17n9.setText(bundle.getString("stat35"));
 					}					
 				}
 			}
@@ -207,7 +212,7 @@ public class DeklarationPanel extends MCAPanel {
 				if ((fugv > menge) || (fogv < menge)) {
 					txtP17n5.setText(txtP17n4.getText());
 					txtP17n6.setText(txtP17n4.getText());
-					lblP17n9.setText(GuiStrings.getGS("stat21", l));
+					lblP17n9.setText(bundle.getString("stat21"));
 				} else {
 					String nameProd = txtP17n1.getText();
 					String fname = txtP17n3.getText();
@@ -228,7 +233,7 @@ public class DeklarationPanel extends MCAPanel {
 					btnP17n2.setEnabled(true);				
 					btnP17n3.setEnabled(false);
 					btnP17n4.setEnabled(true);
-					lblP17n9.setText(GuiStrings.getGS("stat01", l));				
+					lblP17n9.setText(bundle.getString("stat01"));				
 				}
 			}			
 		});
@@ -254,26 +259,25 @@ public class DeklarationPanel extends MCAPanel {
 				txtP17n4.setEnabled(false);
 				txtP17n5.setEnabled(false);
 				txtP17n6.setEnabled(false);
-				lblP17n9.setText(GuiStrings.getGS("stat01", l));
+				lblP17n9.setText(bundle.getString("stat01"));
 			}
 		});	
 	}
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		lblP17n1.setText(GuiStrings.getGS("p17n1", l));
-		lblP17n2.setText(GuiStrings.getGS("p17n2", l));
-		lblP17n3.setText(GuiStrings.getGS("p01n4", l));
-		lblP17n4.setText(GuiStrings.getGS("mp16", l));
-		btnP17n1.setText(GuiStrings.getGS("mp17e", l));
-		lblP17n5.setText(GuiStrings.getGS("mp14", l));
-		lblP17n6.setText(GuiStrings.getGS("p02n4", l));
-		btnP17n2.setText(GuiStrings.getGS("bt11", l));
-		lblP17n7.setText(GuiStrings.getGS("p02n5", l));
-		lblP17n8.setText(GuiStrings.getGS("p02n6", l));
-		btnP17n3.setText(GuiStrings.getGS("bt10", l));
-		btnP17n4.setText(GuiStrings.getGS("bt04", l));
-		lblP17n9.setText(GuiStrings.getGS("stat01", l));	
+		lblP17n1.setText(bundle.getString("p17n1"));
+		lblP17n2.setText(bundle.getString("p17n2"));
+		lblP17n3.setText(bundle.getString("p01n4"));
+		lblP17n4.setText(bundle.getString("mp16"));
+		btnP17n1.setText(bundle.getString("mp17e"));
+		lblP17n5.setText(bundle.getString("mp14"));
+		lblP17n6.setText(bundle.getString("p02n4"));
+		btnP17n2.setText(bundle.getString("bt11"));
+		lblP17n7.setText(bundle.getString("p02n5"));
+		lblP17n8.setText(bundle.getString("p02n6"));
+		btnP17n3.setText(bundle.getString("bt10"));
+		btnP17n4.setText(bundle.getString("bt04"));
+		lblP17n9.setText(bundle.getString("stat01"));	
 	}
 }

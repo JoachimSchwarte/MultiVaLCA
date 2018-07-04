@@ -11,5 +11,6 @@ package de.unistuttgart.iwb.multivalcagui;
 
 public enum Language {
 	Deutsch,
-	English
+	English,
+	Francais
 }

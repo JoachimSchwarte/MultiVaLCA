@@ -7,6 +7,8 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -57,25 +59,28 @@ public class ImpactCatPanel extends MCAPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Language l = GUILanguage.getChosenLanguage();
+				Locale locale = MultiVaLCA.LANGUAGES.get(l);
+				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 				String name = txtP10n1.getText();	
 				String wi = txtP10n2.getText();
 				boolean inputOK = true;
 				if (wi.equals("")) {
-					lblP10n4.setText(GuiStrings.getGS("stat24",l));
+					lblP10n4.setText(bundle.getString("stat24"));
 					inputOK = false;
 				} 
 				if (name.equals("")) {
-					lblP10n4.setText(GuiStrings.getGS("stat22",l));
+					lblP10n4.setText(bundle.getString("stat22"));
 					inputOK = false;
 				} 
 				if (ImpactCategory.containsName(name)) {
-					lblP10n4.setText(GuiStrings.getGS("stat23",l));
+					lblP10n4.setText(bundle.getString("stat23"));
 					inputOK = false;
 				}
 				if (inputOK == true) {
 					CategoryIndicator indi = CategoryIndicator.instance(wi);
 					ImpactCategory.instance(name, indi);
-					lblP10n4.setText(GuiStrings.getGS("stat25",l) + ImpactCategory.getAllInstances().size() + GuiStrings.getGS("stat05",l));
+					lblP10n4.setText(bundle.getString("stat25") + ImpactCategory.getAllInstances().size() + bundle.getString("stat05"));
 					txtP10n1.setText("");
 					txtP10n2.setText("");
 				}		
@@ -87,11 +92,14 @@ public class ImpactCatPanel extends MCAPanel {
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP10n1.setText(GuiStrings.getGS("p10n1", l));
-		lblP10n2.setText(GuiStrings.getGS("p10n2", l));
-		lblP10n3.setText(GuiStrings.getGS("p10n3", l));
-		btnP10n1.setText(GuiStrings.getGS("bt01", l));	
-		lblP10n4.setText(GuiStrings.getGS("stat01", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP10n1.setText(bundle.getString("p10n1"));
+		lblP10n2.setText(bundle.getString("p10n2"));
+		lblP10n3.setText(bundle.getString("p10n3"));
+		btnP10n1.setText(bundle.getString("bt01"));	
+		lblP10n4.setText(bundle.getString("stat01"));
 		
 		
 	}

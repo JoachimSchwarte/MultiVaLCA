@@ -7,6 +7,8 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -48,6 +50,10 @@ public class ProcessModulePanel extends MCAPanel{
 	}
 	
 	private void initUI( ) {		
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -88,27 +94,26 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Language l = GUILanguage.getChosenLanguage();
 				String name = txtP02n1.getText();	
 				boolean nameOk = true;
 				if (name.equals("")) {
 					nameOk = false;
-					lblP02n5.setText(GuiStrings.getGS("stat02", l));
+					lblP02n5.setText(bundle.getString("stat02"));
 				} 
 				if (name != name.replaceAll(" ","")) {
 					nameOk = false;
-					lblP02n5.setText(GuiStrings.getGS("stat20", l));
+					lblP02n5.setText(bundle.getString("stat20"));
 					txtP02n1.setText("");
 				}
 				if (MCAObject.containsName(name)) {
 					nameOk = false;
-					lblP02n5.setText(GuiStrings.getGS("stat03", l));
+					lblP02n5.setText(bundle.getString("stat03"));
 					txtP02n1.setText("");
 				}			
 				if (nameOk == true) {
 					ProcessModule.instance(name);
-					lblP02n5.setText(GuiStrings.getGS("stat06", l) + 
-							ProcessModule.getAllInstances().size() + GuiStrings.getGS("stat05", l));
+					lblP02n5.setText(bundle.getString("stat06") + 
+							ProcessModule.getAllInstances().size() + bundle.getString("stat05"));
 					btnP02n1.setEnabled(false);
 					txtP02n1.setEnabled(false);
 					btnP02n2.setEnabled(true);
@@ -121,7 +126,6 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Language l = GUILanguage.getChosenLanguage();
 				String fname = txtP02n2.getText();
 				String fmenge = txtP02n3.getText();
 				Double menge;
@@ -131,7 +135,7 @@ public class ProcessModulePanel extends MCAPanel{
 					menge = 0.0;
 				}
 				if (fname.equals("") || (menge == 0.0)) {
-					lblP02n5.setText(GuiStrings.getGS("stat07", l));
+					lblP02n5.setText(bundle.getString("stat07"));
 				} else {
 					if (Flow.containsName(fname)) {
 						Flow akFlow = Flow.getInstance(fname);
@@ -152,11 +156,11 @@ public class ProcessModulePanel extends MCAPanel{
 						int anzPFlow = ProcessModule.getInstance(mname).getProduktflussvektor().size();
 						int anzEFlow = ProcessModule.getInstance(mname).getElementarflussvektor().size();
 						int anzGesamt = anzPFlow + anzEFlow;
-						lblP02n5.setText(GuiStrings.getGS("stat08", l) + mname + GuiStrings.getGS("stat09", l) +
-								anzGesamt + GuiStrings.getGS("stat10", l));
+						lblP02n5.setText(bundle.getString("stat08") + mname + bundle.getString("stat09") +
+								anzGesamt + bundle.getString("stat10"));
 						
 					} else {
-						lblP02n5.setText(GuiStrings.getGS("stat11", l));
+						lblP02n5.setText(bundle.getString("stat11"));
 					}					
 				}
 			}
@@ -165,7 +169,6 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Language l = GUILanguage.getChosenLanguage();
 				String fug = txtP02n4.getText();
 				String fog = txtP02n5.getText();
 				Double fugv;
@@ -190,7 +193,7 @@ public class ProcessModulePanel extends MCAPanel{
 				if ((fugv > menge) || (fogv < menge)) {
 					txtP02n4.setText(txtP02n3.getText());
 					txtP02n5.setText(txtP02n3.getText());
-					lblP02n5.setText(GuiStrings.getGS("stat21", l));
+					lblP02n5.setText(bundle.getString("stat21"));
 				} else {
 					String mname = txtP02n1.getText();
 					String fname = txtP02n2.getText();
@@ -208,7 +211,7 @@ public class ProcessModulePanel extends MCAPanel{
 					btnP02n2.setEnabled(true);
 					btnP02n4.setEnabled(true);
 					btnP02n3.setEnabled(false);
-					lblP02n5.setText(GuiStrings.getGS("stat01", l));				
+					lblP02n5.setText(bundle.getString("stat01"));				
 				}
 			}			
 		});
@@ -216,7 +219,6 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Language l = GUILanguage.getChosenLanguage();
 				btnP02n1.setEnabled(true);
 				txtP02n2.setText("");
 				txtP02n3.setText("");
@@ -231,7 +233,7 @@ public class ProcessModulePanel extends MCAPanel{
 				txtP02n3.setEnabled(false);
 				txtP02n4.setEnabled(false);
 				txtP02n5.setEnabled(false);
-				lblP02n5.setText(GuiStrings.getGS("stat01", l));
+				lblP02n5.setText(bundle.getString("stat01"));
 			}
 		});		
 	}
@@ -239,17 +241,20 @@ public class ProcessModulePanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP02n1.setText(GuiStrings.getGS("p02n1", l));
-		lblP02n2.setText(GuiStrings.getGS("p02n2", l));
-		lblP02n3.setText(GuiStrings.getGS("p01n2", l));
-		lblP02n4.setText(GuiStrings.getGS("p02n4", l));
-		lblP02n5.setText(GuiStrings.getGS("stat01", l));
-		lblP02n6.setText(GuiStrings.getGS("p02n5", l));
-		lblP02n7.setText(GuiStrings.getGS("p02n6", l));
-		btnP02n1.setText(GuiStrings.getGS("bt02", l));
-		btnP02n2.setText(GuiStrings.getGS("bt03", l));
-		btnP02n4.setText(GuiStrings.getGS("bt04", l));
-		btnP02n3.setText(GuiStrings.getGS("bt10", l));		
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP02n1.setText(bundle.getString("p02n1"));
+		lblP02n2.setText(bundle.getString("p02n2"));
+		lblP02n3.setText(bundle.getString("p01n2"));
+		lblP02n4.setText(bundle.getString("p02n4"));
+		lblP02n5.setText(bundle.getString("stat01"));
+		lblP02n6.setText(bundle.getString("p02n5"));
+		lblP02n7.setText(bundle.getString("p02n6"));
+		btnP02n1.setText(bundle.getString("bt02"));
+		btnP02n2.setText(bundle.getString("bt03"));
+		btnP02n4.setText(bundle.getString("bt04"));
+		btnP02n3.setText(bundle.getString("bt10"));		
 	}
 
 }

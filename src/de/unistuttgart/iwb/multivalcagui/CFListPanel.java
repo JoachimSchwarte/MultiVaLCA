@@ -1,6 +1,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -34,15 +36,19 @@ public class CFListPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP13n1.setText(GuiStrings.getGS("mp45e", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+
+		lblP13n1.setText(bundle.getString("mp45e"));
 		cfTableModel.setRowCount(0);
 		cfTable.setModel(cfTableModel);
 		TableColumnModel tcm = cfTable.getColumnModel();
-		tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("p06n1", l));
-		tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("mp11", l));
-		tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p13n1", l));
-		tcm.getColumn(3).setHeaderValue(GuiStrings.getGS("p01n3", l));
-		tcm.getColumn(4).setHeaderValue(GuiStrings.getGS("p12n3", l));
+		tcm.getColumn(0).setHeaderValue(bundle.getObject("p06n1"));
+		tcm.getColumn(1).setHeaderValue(bundle.getObject("mp11"));
+		tcm.getColumn(2).setHeaderValue(bundle.getObject("p13n1"));
+		tcm.getColumn(3).setHeaderValue(bundle.getObject("p01n3"));
+		tcm.getColumn(4).setHeaderValue(bundle.getObject("p12n3"));
 		for(String cfName : CharacFactor.getAllInstances().keySet()) {
 			CharacFactor cf = CharacFactor.getInstance(cfName);
 			cfTableModel.addRow(new Object[] {cf.getName(),

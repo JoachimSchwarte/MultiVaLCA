@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -55,6 +57,9 @@ public class LciaCalcPanel extends MCAPanel {
 
 	private void initUI() {
 		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
 		lblP16n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -79,21 +84,21 @@ public class LciaCalcPanel extends MCAPanel {
 				cobP16n2.setEnabled(true);
 				cobP16n3.setEnabled(false);
 				waTableModel.setRowCount(0);
-				if (cobP16n1.getSelectedItem().toString().equals(GuiStrings.getGS("mp12", l))) {
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp12"))) {
 					Vector<String> nameVektor = new Vector<String>();
 					for (String obName : ProcessModule.getAllInstances().keySet()) {
 						nameVektor.addElement(obName);
 					}
 					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
 				}
-				if (cobP16n1.getSelectedItem().toString().equals(GuiStrings.getGS("mp13", l))) {
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp13"))) {
 					Vector<String> nameVektor = new Vector<String>();
 					for (String obName : ProductSystem.getAllInstances().keySet()) {
 						nameVektor.addElement(obName);
 					}
 					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
 				}
-				if (cobP16n1.getSelectedItem().toString().equals(GuiStrings.getGS("mp17", l))) {
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp17"))) {
 					Vector<String> nameVektor = new Vector<String>();
 					for (String obName : ProductDeclaration.getAllInstances().keySet()) {
 						nameVektor.addElement(obName);
@@ -139,7 +144,7 @@ public class LciaCalcPanel extends MCAPanel {
 				if (ValueTypeStringMap.getFVTS(l).get(ValueType.LowerBound).equals(cobP16n4.getSelectedItem().toString())) {
 					vt = ValueType.LowerBound;
 				}
-				if (cobP16n1.getSelectedItem().toString().equals(GuiStrings.getGS("mp12", l))) {
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp12"))) {
 					ProcessModule akObj = ProcessModule.getInstance(cobP16n2.getSelectedItem().toString());
 					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
 					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {
@@ -148,7 +153,7 @@ public class LciaCalcPanel extends MCAPanel {
 								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});
 					}
 				}
-				if (cobP16n1.getSelectedItem().toString().equals(GuiStrings.getGS("mp13", l))) {
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp13"))) {
 					ProductSystem akObj = ProductSystem.getInstance(cobP16n2.getSelectedItem().toString());
 					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
 					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {					
@@ -157,7 +162,7 @@ public class LciaCalcPanel extends MCAPanel {
 								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});							
 					}
 				}
-				if (cobP16n1.getSelectedItem().toString().equals(GuiStrings.getGS("mp17", l))) {
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp17"))) {
 					ProductDeclaration akObj = ProductDeclaration.getInstance(cobP16n2.getSelectedItem().toString());
 					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
 					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {					
@@ -176,18 +181,21 @@ public class LciaCalcPanel extends MCAPanel {
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP16n1.setText(GuiStrings.getGS("p16n1", l));
-		lblP16n2.setText(GuiStrings.getGS("p16n2", l));
-		lblP16n3.setText(GuiStrings.getGS("p16n3", l));
-		lblP16n4.setText(GuiStrings.getGS("mp16", l));
-		lblP16n5.setText(GuiStrings.getGS("p16n4", l));
-		btnP16n1.setText(GuiStrings.getGS("bt12", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP16n1.setText(bundle.getString("p16n1"));
+		lblP16n2.setText(bundle.getString("p16n2"));
+		lblP16n3.setText(bundle.getString("p16n3"));
+		lblP16n4.setText(bundle.getString("mp16"));
+		lblP16n5.setText(bundle.getString("p16n4"));
+		btnP16n1.setText(bundle.getString("bt12"));
 		waTableModel.setRowCount(0);
 		waTable.setModel(waTableModel);
 		TableColumnModel tcm = waTable.getColumnModel();
-		tcm.getColumn(0).setHeaderValue(GuiStrings.getGS("mp14", l));
-		tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("p11n1", l));
-		tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p16n5", l));
+		tcm.getColumn(0).setHeaderValue(bundle.getString("mp14"));
+		tcm.getColumn(1).setHeaderValue(bundle.getString("p11n1"));
+		tcm.getColumn(2).setHeaderValue(bundle.getString("p16n5"));
 		LinkedHashMap<ObjectType, String> ot = ObjectTypeStringMap.getOTS(l);
 		String[] ota = new String[ot.size()];
 		int i=0;

@@ -10,6 +10,11 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.EnumMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
@@ -22,6 +27,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
+
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
@@ -49,6 +55,24 @@ public class MultiVaLCA {
 	private JButton btn05n1 = new JButton();			// "speichern"
 	private JComboBox<Language> comboBox2 = new JComboBox<Language>();
 	//
+	 public static final Map<Language, Locale> LANGUAGES;
+	    
+	    static {
+	        LANGUAGES = new EnumMap<>(Language.class);
+	        
+	        Locale english = new Locale("en", "UK"); //Locale.UK
+	    	Locale deutsch = new Locale("de", "DE"); //Locale.DE
+	    	Locale französisch = new Locale ("fr", "FR");
+	    	//...
+	        
+	        LANGUAGES.put(Language.Deutsch, deutsch);
+	        LANGUAGES.put(Language.English, english);  
+	        LANGUAGES.put(Language.Francais, französisch);
+	    }
+	    
+	Locale locale = LANGUAGES.get(l);
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -76,7 +100,11 @@ public class MultiVaLCA {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame.setTitle(GuiStrings.getGS("head1",l)+"   "+GuiStrings.getGS("head2",l));
+		
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		frame.setTitle(bundle.getString("head1")+"   "+bundle.getString("head2"));
 		frame.setBounds(100, 100, 600, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
 		frame.getContentPane().add(panel, BorderLayout.CENTER);		
@@ -192,11 +220,11 @@ public class MultiVaLCA {
 		
 		cl.show(panel, "leer"); // zeigt Startfenster an
 		
-		InfoPanel.lblInfo1.setText(GuiStrings.getGS("head1", l));
-		InfoPanel.lblInfo2.setText(GuiStrings.getGS("info1", l));
-		InfoPanel.lblInfo3.setText(GuiStrings.getGS("info2", l));
-		InfoPanel.lblInfo4.setText(GuiStrings.getGS("info3", l));
-		InfoPanel.lblInfo5.setText(GuiStrings.getGS("head2", l)+"     "+GuiStrings.getGS("date", l));	
+		InfoPanel.lblInfo1.setText(bundle.getString("head1"));
+		InfoPanel.lblInfo2.setText(bundle.getString("info1"));
+		InfoPanel.lblInfo3.setText(bundle.getString("info2"));
+		InfoPanel.lblInfo4.setText(bundle.getString("info3"));
+		InfoPanel.lblInfo5.setText(bundle.getString("head2")+"     "+bundle.getString("date"));	
 		
 	
 		
@@ -207,7 +235,7 @@ public class MultiVaLCA {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		final JMenu mnDatei = new JMenu(GuiStrings.getGS("mp6",l)); 	//Datei
+		final JMenu mnDatei = new JMenu(bundle.getString("mp6")); 	//Datei
 		menuBar.add(mnDatei);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem();
@@ -218,11 +246,11 @@ public class MultiVaLCA {
 		mntmNewMenuItem_5.setAction(xmlImportAction); 			//xmlImport
 		mnDatei.add(mntmNewMenuItem_5);
 		
-		JMenu mnNew = new JMenu(GuiStrings.getGS("mp1",l)); 	//Neu/Bearbeiten
+		JMenu mnNew = new JMenu(bundle.getString("mp1")); 	//Neu/Bearbeiten
 		menuBar.add(mnNew);
 		
 		JMenuItem mntmFlow = new JMenuItem();
-		Action a1 = new MCAAction(GuiStrings.getGS("mp11", l), GuiStrings.getGS("mp11e", l), "neuFluss") {
+		Action a1 = new MCAAction(bundle.getString("mp11"), bundle.getString("mp11e"), "neuFluss") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -237,7 +265,7 @@ public class MultiVaLCA {
 		mnNew.add(mntmProcessModule);
 		
 		JMenuItem mntmSingleModule = new JMenuItem();
-		Action a2 = new MCAAction(GuiStrings.getGS("mp121", l), GuiStrings.getGS("mp121e", l), "neuModul") {
+		Action a2 = new MCAAction(bundle.getString("mp121"), bundle.getString("mp121e"), "neuModul") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -248,7 +276,7 @@ public class MultiVaLCA {
 		mntmProcessModule.add(mntmSingleModule);
 		
 		JMenuItem mntmGroupModule = new JMenuItem();
-		Action a3 = new MCAAction(GuiStrings.getGS("mp122", l), GuiStrings.getGS("mp122e", l), "neuModGroup") {
+		Action a3 = new MCAAction(bundle.getString("mp122"), bundle.getString("mp122e"), "neuModGroup") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -259,7 +287,7 @@ public class MultiVaLCA {
 		mntmProcessModule.add(mntmGroupModule);	
 				
 		JMenuItem mntmProductSystem = new JMenuItem();
-		Action a4 = new MCAAction(GuiStrings.getGS("mp13", l), GuiStrings.getGS("mp13e", l), "neuProdukt") {
+		Action a4 = new MCAAction(bundle.getString("mp13"), bundle.getString("mp13e"), "neuProdukt") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -270,7 +298,7 @@ public class MultiVaLCA {
 		mnNew.add(mntmProductSystem);
 		
 		JMenuItem mntmCategory = new JMenuItem();
-		Action a5 = new MCAAction(GuiStrings.getGS("mp14", l), GuiStrings.getGS("mp14e", l), "neuImCat") {
+		Action a5 = new MCAAction(bundle.getString("mp14"), bundle.getString("mp14e"), "neuImCat") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -281,7 +309,7 @@ public class MultiVaLCA {
 		mnNew.add(mntmCategory);
 		
 		JMenuItem mntmCF = new JMenuItem();
-		Action a6 = new MCAAction(GuiStrings.getGS("mp15", l), GuiStrings.getGS("mp15e", l), "neuCF") {
+		Action a6 = new MCAAction(bundle.getString("mp15"), bundle.getString("mp15e"), "neuCF") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -292,7 +320,7 @@ public class MultiVaLCA {
 		mnNew.add(mntmCF);
 		
 		JMenuItem mntmLCIAnew = new JMenuItem();
-		Action a7 = new MCAAction(GuiStrings.getGS("mp16", l), GuiStrings.getGS("mp16e", l), "neuLCIA") {
+		Action a7 = new MCAAction(bundle.getString("mp16"), bundle.getString("mp16e"), "neuLCIA") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -303,7 +331,7 @@ public class MultiVaLCA {
 		mnNew.add(mntmLCIAnew);
 				
 		JMenuItem mntmDeclaration = new JMenuItem();
-		Action a8 = new MCAAction(GuiStrings.getGS("mp17", l), GuiStrings.getGS("mp17e", l), "neuDekl") {
+		Action a8 = new MCAAction(bundle.getString("mp17"), bundle.getString("mp17e"), "neuDekl") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -314,7 +342,7 @@ public class MultiVaLCA {
 		mnNew.add(mntmDeclaration);
 		
 		JMenuItem mntmComponent = new JMenuItem();
-				Action a9 = new MCAAction(GuiStrings.getGS("mp18", l), GuiStrings.getGS("mp18e", l), "neuKente") {
+				Action a9 = new MCAAction(bundle.getString("mp18"), bundle.getString("mp18e"), "neuKente") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -325,7 +353,7 @@ public class MultiVaLCA {
 		mnNew.add(mntmComponent);
 		
 		JMenuItem mntmComposition = new JMenuItem();
-		Action a10 = new MCAAction(GuiStrings.getGS("mp19", l), GuiStrings.getGS("mp19e", l), "neuKtion") {
+		Action a10 = new MCAAction(bundle.getString("mp19"), bundle.getString("mp19e"), "neuKtion") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -335,11 +363,11 @@ public class MultiVaLCA {
 		mntmComposition.setAction(a10);							//Komposition
 		mnNew.add(mntmComposition);	
 		
-		JMenu mnListe = new JMenu(GuiStrings.getGS("mp4", l));
+		JMenu mnListe = new JMenu(bundle.getString("mp4"));
 		menuBar.add(mnListe);									//Liste
 		
 		JMenuItem mntmFlsse = new JMenuItem();
-		Action a13 = new MCAAction(GuiStrings.getGS("mp41", l), GuiStrings.getGS("mp41e", l), "listeFluss") {
+		Action a13 = new MCAAction(bundle.getString("mp41"), bundle.getString("mp41e"), "listeFluss") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -350,7 +378,7 @@ public class MultiVaLCA {
 		mnListe.add(mntmFlsse);
 		
 		JMenuItem mntmProzessmodule = new JMenuItem();
-		Action a14 = new MCAAction(GuiStrings.getGS("mp42", l), GuiStrings.getGS("mp42e", l), "listePM") {
+		Action a14 = new MCAAction(bundle.getString("mp42"), bundle.getString("mp42e"), "listePM") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -361,7 +389,7 @@ public class MultiVaLCA {
 		mnListe.add(mntmProzessmodule);
 		
 		JMenuItem mntmProduktsysteme = new JMenuItem();
-		Action a15 = new MCAAction(GuiStrings.getGS("mp43", l), GuiStrings.getGS("mp43e", l), "listePS") {
+		Action a15 = new MCAAction(bundle.getString("mp43"), bundle.getString("mp43e"), "listePS") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -372,7 +400,7 @@ public class MultiVaLCA {
 		mnListe.add(mntmProduktsysteme);
 		
 		JMenuItem mntmCategories = new JMenuItem();
-		Action a16 = new MCAAction(GuiStrings.getGS("mp44", l), GuiStrings.getGS("mp44e", l), "categories") {
+		Action a16 = new MCAAction(bundle.getString("mp44"), bundle.getString("mp44e"), "categories") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -383,7 +411,7 @@ public class MultiVaLCA {
 		mnListe.add(mntmCategories);
 		
 		JMenuItem mntmCFs = new JMenuItem();
-		Action a17 = new MCAAction(GuiStrings.getGS("mp45", l), GuiStrings.getGS("mp45e", l), "cfList") {
+		Action a17 = new MCAAction(bundle.getString("mp45"), bundle.getString("mp45e"), "cfList") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -394,7 +422,7 @@ public class MultiVaLCA {
 		mnListe.add(mntmCFs);
 		
 		JMenuItem mntmLCIAlist = new JMenuItem();
-		Action a18 = new MCAAction(GuiStrings.getGS("mp46", l), GuiStrings.getGS("mp46e", l), "bmList") {
+		Action a18 = new MCAAction(bundle.getString("mp46"), bundle.getString("mp46e"), "bmList") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -405,7 +433,7 @@ public class MultiVaLCA {
 		mnListe.add(mntmLCIAlist);
 		
 		JMenuItem mntmDeclarationlist = new JMenuItem();
-		Action a19 = new MCAAction(GuiStrings.getGS("mp47", l), GuiStrings.getGS("mp47e", l), "listDekl") {
+		Action a19 = new MCAAction(bundle.getString("mp47"), bundle.getString("mp47e"), "listDekl") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -416,7 +444,7 @@ public class MultiVaLCA {
 		mnListe.add(mntmDeclarationlist);
 		
 		JMenuItem mntmComponentlist = new JMenuItem();
-		Action a20 = new MCAAction(GuiStrings.getGS("mp48", l), GuiStrings.getGS("mp48e", l), "listKente") {
+		Action a20 = new MCAAction(bundle.getString("mp48"), bundle.getString("mp48e"), "listKente") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -427,7 +455,7 @@ public class MultiVaLCA {
 		mnListe.add(mntmComponentlist);
 		
 		JMenuItem mntmCompositionlist = new JMenuItem();
-		Action a21 = new MCAAction(GuiStrings.getGS("mp49", l), GuiStrings.getGS("mp49e", l), "listKtion") {
+		Action a21 = new MCAAction(bundle.getString("mp49"), bundle.getString("mp49e"), "listKtion") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -437,11 +465,11 @@ public class MultiVaLCA {
 		mntmCompositionlist.setAction(a21);						//Liste der Kompositionen
 		mnListe.add(mntmCompositionlist);
 		
-		JMenu mnBerechnen = new JMenu(GuiStrings.getGS("mp5", l));
+		JMenu mnBerechnen = new JMenu(bundle.getString("mp5"));
 		menuBar.add(mnBerechnen);
 		
 		JMenuItem mntmLci = new JMenuItem();
-		Action a23 = new MCAAction(GuiStrings.getGS("mp51", l), GuiStrings.getGS("mp51e", l), "berechnen") {
+		Action a23 = new MCAAction(bundle.getString("mp51"), bundle.getString("mp51e"), "berechnen") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -452,7 +480,7 @@ public class MultiVaLCA {
 		mnBerechnen.add(mntmLci);
 		
 		JMenuItem mntmLCIAcalc = new JMenuItem();
-		Action a24 = new MCAAction(GuiStrings.getGS("mp52", l), GuiStrings.getGS("mp52e", l), "berechnen2") {
+		Action a24 = new MCAAction(bundle.getString("mp52"), bundle.getString("mp52e"), "berechnen2") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -462,19 +490,19 @@ public class MultiVaLCA {
 		mntmLCIAcalc.setAction(a24);							//Wirkungsabschätzungsberechnung
 		mnBerechnen.add(mntmLCIAcalc);							
 			
-		JMenu mnPrefs = new JMenu(GuiStrings.getGS("mp3", l));
+		JMenu mnPrefs = new JMenu(bundle.getString("mp3"));
 		menuBar.add(mnPrefs);									//Einstellungen-Reiter
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem();
 		mntmNewMenuItem_3.setAction(prefsAction);
 		mnPrefs.add(mntmNewMenuItem_3);							//
 		
-		JMenu mnHilfe = new JMenu(GuiStrings.getGS("mp2", l));	//Hilfe-Reiter
+		JMenu mnHilfe = new JMenu(bundle.getString("mp2"));	//Hilfe-Reiter
 		menuBar.add(mnHilfe);
 		
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem();
-		Action a28 = new MCAAction(GuiStrings.getGS("mp21", l), GuiStrings.getGS("mp21e", l), "leer") {
+		Action a28 = new MCAAction(bundle.getString("mp21"), bundle.getString("mp21e"), "leer") {
 			@Override
 			public void performAction(ActionEvent e) {
 				cl.show(panel, getKey());
@@ -489,74 +517,77 @@ public class MultiVaLCA {
 		 * Sprachauswahl
 		 */
 		btn05n1.addActionListener(new ActionListener() {
-			@Override
+						@Override
 			public void actionPerformed(ActionEvent arg0) {
 				l = comboBox2.getItemAt(comboBox2.getSelectedIndex());
 				GUILanguage.setChosenLanguage(l);
-				frame.setTitle(GuiStrings.getGS("head1",l)+"   "+GuiStrings.getGS("head2",l));
-				mnDatei.setText(GuiStrings.getGS("mp6",l));
-				mnNew.setText(GuiStrings.getGS("mp1",l));
-				mnListe.setText(GuiStrings.getGS("mp4",l));
-				mnBerechnen.setText(GuiStrings.getGS("mp5",l));
-				mnPrefs.setText(GuiStrings.getGS("mp3",l));
-				mnHilfe.setText(GuiStrings.getGS("mp2",l));
-				mntmFlow.setText(GuiStrings.getGS("mp11",l));
-				mntmFlow.setToolTipText(GuiStrings.getGS("mp11e",l));
-				mntmProcessModule.setText(GuiStrings.getGS("mp12",l));
-				mntmProcessModule.setToolTipText(GuiStrings.getGS("mp12e",l));
-				mntmSingleModule.setText(GuiStrings.getGS("mp121",l));
-				mntmSingleModule.setToolTipText(GuiStrings.getGS("mp121e",l));
-				mntmGroupModule.setText(GuiStrings.getGS("mp122",l));
-				mntmGroupModule.setToolTipText(GuiStrings.getGS("mp122e",l));
-				mntmProductSystem.setText(GuiStrings.getGS("mp13",l));
-				mntmProductSystem.setToolTipText(GuiStrings.getGS("mp13e",l));
-				mntmNewMenuItem_3.setText(GuiStrings.getGS("mp31",l));
-				mntmNewMenuItem_3.setToolTipText(GuiStrings.getGS("mp31e",l));
-				mntmFlsse.setText(GuiStrings.getGS("mp41",l));
-				mntmFlsse.setToolTipText(GuiStrings.getGS("mp41e",l));
-				mntmProzessmodule.setText(GuiStrings.getGS("mp42",l));
-				mntmProzessmodule.setToolTipText(GuiStrings.getGS("mp42e",l));
-				mntmProduktsysteme.setText(GuiStrings.getGS("mp43",l));
-				mntmProduktsysteme.setToolTipText(GuiStrings.getGS("mp43e",l));
-				mntmLci.setText(GuiStrings.getGS("mp51",l));
-				mntmLci.setToolTipText(GuiStrings.getGS("mp51e",l));
-				mntmNewMenuItem_2.setText(GuiStrings.getGS("mp21",l));
-				mntmNewMenuItem_2.setToolTipText(GuiStrings.getGS("mp21e",l));
-				mntmNewMenuItem_4.setText(GuiStrings.getGS("mp61",l));
-				mntmNewMenuItem_4.setToolTipText(GuiStrings.getGS("mp61e",l));
-				mntmNewMenuItem_5.setText(GuiStrings.getGS("mp62",l));
-				mntmNewMenuItem_5.setToolTipText(GuiStrings.getGS("mp62e",l));
-				mntmCategory.setText(GuiStrings.getGS("mp14",l));
-				mntmCategory.setToolTipText(GuiStrings.getGS("mp14e",l));
-				mntmCategories.setText(GuiStrings.getGS("mp44",l));
-				mntmCategories.setToolTipText(GuiStrings.getGS("mp44e",l));
-				mntmCF.setText(GuiStrings.getGS("mp15",l));
-				mntmCF.setToolTipText(GuiStrings.getGS("mp15e",l));
-				mntmCFs.setText(GuiStrings.getGS("mp45",l));
-				mntmCFs.setToolTipText(GuiStrings.getGS("mp45e",l));
-				mntmLCIAnew.setText(GuiStrings.getGS("mp16",l));
-				mntmLCIAnew.setToolTipText(GuiStrings.getGS("mp16e",l));
-				mntmLCIAlist.setText(GuiStrings.getGS("mp46",l));
-				mntmLCIAlist.setToolTipText(GuiStrings.getGS("mp46e",l));
+				Locale locale = LANGUAGES.get(l); 
+				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+					
+				frame.setTitle(bundle.getString("head1")+"   "+bundle.getString("head2"));
+				mnDatei.setText(bundle.getString("mp6"));
+				mnNew.setText(bundle.getString("mp1"));
+				mnListe.setText(bundle.getString("mp4"));
+				mnBerechnen.setText(bundle.getString("mp5"));
+				mnPrefs.setText(bundle.getString("mp3"));
+				mnHilfe.setText(bundle.getString("mp2"));
+				mntmFlow.setText(bundle.getString("mp11"));
+				mntmFlow.setToolTipText(bundle.getString("mp11e"));
+				mntmProcessModule.setText(bundle.getString("mp12"));
+				mntmProcessModule.setToolTipText(bundle.getString("mp12e"));
+				mntmSingleModule.setText(bundle.getString("mp121"));
+				mntmSingleModule.setToolTipText(bundle.getString("mp121e"));
+				mntmGroupModule.setText(bundle.getString("mp122"));
+				mntmGroupModule.setToolTipText(bundle.getString("mp122e"));
+				mntmProductSystem.setText(bundle.getString("mp13"));
+				mntmProductSystem.setToolTipText(bundle.getString("mp13e"));
+				mntmNewMenuItem_3.setText(bundle.getString("mp31"));
+				mntmNewMenuItem_3.setToolTipText(bundle.getString("mp31e"));
+				mntmFlsse.setText(bundle.getString("mp41"));
+				mntmFlsse.setToolTipText(bundle.getString("mp41e"));
+				mntmProzessmodule.setText(bundle.getString("mp42"));
+				mntmProzessmodule.setToolTipText(bundle.getString("mp42e"));
+				mntmProduktsysteme.setText(bundle.getString("mp43"));
+				mntmProduktsysteme.setToolTipText(bundle.getString("mp43e"));
+				mntmLci.setText(bundle.getString("mp51"));
+				mntmLci.setToolTipText(bundle.getString("mp51e"));
+				mntmNewMenuItem_2.setText(bundle.getString("mp21"));
+				mntmNewMenuItem_2.setToolTipText(bundle.getString("mp21e"));
+				mntmNewMenuItem_4.setText(bundle.getString("mp61"));
+				mntmNewMenuItem_4.setToolTipText(bundle.getString("mp61e"));
+				mntmNewMenuItem_5.setText(bundle.getString("mp62"));
+				mntmNewMenuItem_5.setToolTipText(bundle.getString("mp62e"));
+				mntmCategory.setText(bundle.getString("mp14"));
+				mntmCategory.setToolTipText(bundle.getString("mp14e"));
+				mntmCategories.setText(bundle.getString("mp44"));
+				mntmCategories.setToolTipText(bundle.getString("mp44e"));
+				mntmCF.setText(bundle.getString("mp15"));
+				mntmCF.setToolTipText(bundle.getString("mp15e"));
+				mntmCFs.setText(bundle.getString("mp45"));
+				mntmCFs.setToolTipText(bundle.getString("mp45e"));
+				mntmLCIAnew.setText(bundle.getString("mp16"));
+				mntmLCIAnew.setToolTipText(bundle.getString("mp16e"));
+				mntmLCIAlist.setText(bundle.getString("mp46"));
+				mntmLCIAlist.setToolTipText(bundle.getString("mp46e"));
 				
-				mntmDeclaration.setText(GuiStrings.getGS("mp17",l));
-				mntmDeclaration.setToolTipText(GuiStrings.getGS("mp17e",l));
-				mntmDeclarationlist.setText(GuiStrings.getGS("mp47",l));
-				mntmDeclarationlist.setToolTipText(GuiStrings.getGS("mp47e",l));
-				mntmComponent.setText(GuiStrings.getGS("mp18",l));
-				mntmComponent.setToolTipText(GuiStrings.getGS("mp18e",l));
-				mntmComponentlist.setText(GuiStrings.getGS("mp48",l));
-				mntmComponentlist.setToolTipText(GuiStrings.getGS("mp48e",l));
-				mntmComposition.setText(GuiStrings.getGS("mp19",l));
-				mntmComposition.setToolTipText(GuiStrings.getGS("mp19e",l));
-				mntmCompositionlist.setText(GuiStrings.getGS("mp49",l));
-				mntmCompositionlist.setToolTipText(GuiStrings.getGS("mp49e",l));
+				mntmDeclaration.setText(bundle.getString("mp17"));
+				mntmDeclaration.setToolTipText(bundle.getString("mp17e"));
+				mntmDeclarationlist.setText(bundle.getString("mp47"));
+				mntmDeclarationlist.setToolTipText(bundle.getString("mp47e"));
+				mntmComponent.setText(bundle.getString("mp18"));
+				mntmComponent.setToolTipText(bundle.getString("mp18e"));
+				mntmComponentlist.setText(bundle.getString("mp48"));
+				mntmComponentlist.setToolTipText(bundle.getString("mp48e"));
+				mntmComposition.setText(bundle.getString("mp19"));
+				mntmComposition.setToolTipText(bundle.getString("mp19e"));
+				mntmCompositionlist.setText(bundle.getString("mp49"));
+				mntmCompositionlist.setToolTipText(bundle.getString("mp49e"));
 				
-				mntmLCIAcalc.setText(GuiStrings.getGS("mp52",l));
-				mntmLCIAcalc.setToolTipText(GuiStrings.getGS("mp52e",l));
-				lblP05n1.setText(GuiStrings.getGS("mp31e", l));
-				lblP05n2.setText(GuiStrings.getGS("mp31", l));
-				btn05n1.setText(GuiStrings.getGS("bt01", l));
+				mntmLCIAcalc.setText(bundle.getString("mp52"));
+				mntmLCIAcalc.setToolTipText(bundle.getString("mp52e"));
+				lblP05n1.setText(bundle.getString("mp31e"));
+				lblP05n2.setText(bundle.getString("mp31"));
+				btn05n1.setText(bundle.getString("bt01"));
 			}
 		});
 	}
@@ -564,8 +595,13 @@ public class MultiVaLCA {
 	private class newModuleAction extends AbstractAction {
 		private static final long serialVersionUID = 6190606710625748526L;
 		public newModuleAction() {
+			Locale locale = LANGUAGES.get(l);
+			String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+			
 			putValue(NAME, GuiStrings.getGS("mp12", l));
-			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp12e", l));
+			putValue(NAME, bundle.getString("mp12"));
+			putValue(SHORT_DESCRIPTION, bundle.getString("mp12e"));
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -579,14 +615,20 @@ public class MultiVaLCA {
 	private class prefsAction extends AbstractAction {
 		private static final long serialVersionUID = 8545097902306476895L;
 		public prefsAction() {
-			putValue(NAME, GuiStrings.getGS("mp31", l));
-			putValue(SHORT_DESCRIPTION, GuiStrings.getGS("mp31e", l));
+			Locale locale = LANGUAGES.get(l);
+			String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+			putValue(NAME, bundle.getString("mp31"));
+			putValue(SHORT_DESCRIPTION, bundle.getString("mp31e"));
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			lblP05n1.setText(GuiStrings.getGS("mp31e", l));
-			lblP05n2.setText(GuiStrings.getGS("mp31", l));
-			btn05n1.setText(GuiStrings.getGS("bt01", l));			
+			Locale locale = LANGUAGES.get(l);
+			String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+			lblP05n1.setText(bundle.getString("mp31e"));
+			lblP05n2.setText(bundle.getString("mp31"));
+			btn05n1.setText(bundle.getString("bt01"));			
 			cl.show(panel, "lang");
 		}
 	}

@@ -1,6 +1,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -65,15 +67,18 @@ public class ComponentPanel extends MCAPanel{
 	@Override
 	public void showSelf() {
 		Language l = GUILanguage.getChosenLanguage();
-		lblP18n1.setText(GuiStrings.getGS("p18n1", l));
-		lblP18n2.setText(GuiStrings.getGS("p18n2", l));
-		lblP18n3.setText(GuiStrings.getGS("p18n3", l));
-		lblP18n4.setText(GuiStrings.getGS("p02n4", l));
-		lblP18n5.setText(GuiStrings.getGS("p02n5", l));
-		lblP18n6.setText(GuiStrings.getGS("p02n6", l));
-		lblP18n7.setText(GuiStrings.getGS("stat01", l));
-		btnP18n1.setText(GuiStrings.getGS("bt13", l));
-		btnP18n2.setText(GuiStrings.getGS("bt04", l));
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		lblP18n1.setText(bundle.getString("p18n1"));
+		lblP18n2.setText(bundle.getString("p18n2"));
+		lblP18n3.setText(bundle.getString("p18n3"));
+		lblP18n4.setText(bundle.getString("p02n4"));
+		lblP18n5.setText(bundle.getString("p02n5"));
+		lblP18n6.setText(bundle.getString("p02n6"));
+		lblP18n7.setText(bundle.getString("stat01"));
+		btnP18n1.setText(bundle.getString("bt13"));
+		btnP18n2.setText(bundle.getString("bt04"));
 		
 	}
 
