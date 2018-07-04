@@ -63,11 +63,15 @@ public class MultiVaLCA {
 	        Locale english = new Locale("en", "UK"); //Locale.UK
 	    	Locale deutsch = new Locale("de", "DE"); //Locale.DE
 	    	Locale französisch = new Locale ("fr", "FR");
+	    	Locale russisch = new Locale ("ru", "RU");
+	    	Locale portugiesisch = new Locale ("pt", "PT");
 	    	//...
 	        
 	        LANGUAGES.put(Language.Deutsch, deutsch);
 	        LANGUAGES.put(Language.English, english);  
 	        LANGUAGES.put(Language.Francais, französisch);
+	        LANGUAGES.put(Language.Português, portugiesisch);
+	        LANGUAGES.put(Language.\u0440\u043E\u0441\u0441\u0438\u0439\u0441\u043A\u0438\u0439, russisch);
 	    }
 	    
 	Locale locale = LANGUAGES.get(l);

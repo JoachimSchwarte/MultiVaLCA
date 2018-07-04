@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.531
+ * @version 0.533
  */
 
 public class MCAObject {
@@ -63,6 +63,16 @@ public class MCAObject {
 	public static LinkedHashMap<String, MCAObject> getAllInstances(Class<?> clazz) {
 		LinkedHashMap<String, MCAObject> c = instanceMap.get(clazz);
 		return c != null ? c : new LinkedHashMap<>();	
+	}
+	
+	public static Class<?> getClass(String name) {
+		Class<? extends MCAObject> rClazz = null;
+		for(Class<? extends MCAObject> clazz : instanceMap.keySet()) {
+			if(instanceMap.get(clazz).containsKey(name)) {
+				rClazz = clazz;						
+			}
+		}
+		return rClazz;
 	}
 
 }

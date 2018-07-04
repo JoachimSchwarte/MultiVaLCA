@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -14,6 +18,11 @@ import de.unistuttgart.iwb.multivalca.CharacFactor;
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
 import net.miginfocom.swing.MigLayout;
+
+/**
+ * @author HH, JS
+ * @version 0.534
+ */
 
 public class CharacFactorPanel extends MCAPanel{
 	
@@ -102,19 +111,22 @@ public class CharacFactorPanel extends MCAPanel{
 					lblP12n8.setText(bundle.getString("stat26"));
 					inputOK = false;	
 				}
-				if (ImpactCategory.containsName(nameWK) == false) {
+
+				if (!ImpactCategory.containsName(nameWK)) {
 					lblP12n8.setText(bundle.getString("stat27"));
 					inputOK = false;
 				}
-				if (Flow.containsName(nameFl) == false) {
+
+				if (!Flow.containsName(nameFl)) {
 					lblP12n8.setText(bundle.getString("stat11"));
+
 					inputOK = false;
 				}
 				if (CharacFactor.containsName(nameCF)) {
 					lblP12n8.setText(bundle.getString("stat03"));
 					inputOK = false;
 				}
-				if (inputOK == true) {
+				if (inputOK) {
 					CharacFactor.instance(nameCF, Flow.getInstance(nameFl), ImpactCategory.getInstance(nameWK), facVal);
 					txtP12n1.setEnabled(false);
 					txtP12n2.setEnabled(false);

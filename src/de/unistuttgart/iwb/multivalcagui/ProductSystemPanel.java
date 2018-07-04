@@ -24,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.524
+ * @version 0.534
  */
 
 public class ProductSystemPanel extends MCAPanel{
@@ -116,7 +116,7 @@ public class ProductSystemPanel extends MCAPanel{
 					lblP03n7.setText(bundle.getString("stat20"));
 					txtP03n1.setText("");
 				}	
-				if (nameOk == true) {
+				if (nameOk) {
 					boolean nameVorhanden = false;
 					
 					for(String mod : ProcessModule.getAllInstances().keySet()) {
@@ -134,7 +134,8 @@ public class ProductSystemPanel extends MCAPanel{
 							nameVorhanden = true;
 						}
 					}
-					if (nameVorhanden == true) {
+
+					if (nameVorhanden) {
 						lblP03n7.setText(bundle.getString("stat03"));
 					} else {
 						ProductSystem.instance(name, new LinkedHashMap<Flow, Double>(), 
@@ -176,7 +177,7 @@ public class ProductSystemPanel extends MCAPanel{
 							typmod = true;
 						}
 					}
-					if (nameVorhanden == false) {
+					if (!nameVorhanden) {
 						for(String modn3 : ProductSystem.getAllInstances().keySet()) {
 							if (modname.equals(modn3)) {
 								nameVorhanden = true;
@@ -184,7 +185,7 @@ public class ProductSystemPanel extends MCAPanel{
 							}
 						}
 					}
-					if (nameVorhanden == false) {
+					if (!nameVorhanden) {
 						for(String modn3 : ProcessModuleGroup.getAllInstances().keySet()) {
 							if (modname.equals(modn3)) {
 								nameVorhanden = true;
@@ -193,11 +194,11 @@ public class ProductSystemPanel extends MCAPanel{
 							}
 						}
 					}
-					if (nameVorhanden == true) {
-						if (typmod == true){
+					if (nameVorhanden) {
+						if (typmod){
 							ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProcessModule.getInstance(modname));
 						} else {
-							if (typgroup == true) {
+							if (typgroup) {
 								ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProcessModuleGroup.getAllInstances().get(modname));
 							} else {
 								ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProductSystem.getAllInstances().get(modname));

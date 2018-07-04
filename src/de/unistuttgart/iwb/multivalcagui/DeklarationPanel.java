@@ -26,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.531
+ * @version 0.534
  */
 
 public class DeklarationPanel extends MCAPanel {
@@ -112,23 +112,27 @@ public class DeklarationPanel extends MCAPanel {
 				String nameLCIA = txtP17n2.getText();
 				FlowUnit einheit = comboBox_2.getItemAt(comboBox_2.getSelectedIndex());
 				boolean inputOK = true;
-				if (ProductDeclaration.containsName(nameProd) == true) {
+
+				if (ProductDeclaration.containsName(nameProd)) {
 					lblP17n9.setText(bundle.getString("stat03"));
 					inputOK = false;					
 				}
-				if (LCIAMethod.containsName(nameLCIA) == false && inputOK == true) {
+
+				if (!LCIAMethod.containsName(nameLCIA) && inputOK) {
 					lblP17n9.setText(bundle.getString("stat33"));
 					inputOK = false;					
 				}
-				if (nameProd.equals("") && inputOK == true) {
+
+				if (nameProd.equals("") && inputOK) {
 					lblP17n9.setText(bundle.getString("stat02"));
 					inputOK = false;
 				}
-				if (nameLCIA.equals("") && inputOK == true) {
+
+				if (nameLCIA.equals("") && inputOK) {
 					lblP17n9.setText(bundle.getString("stat32"));
 					inputOK = false;
 				}
-				if (inputOK == true) {
+				if (inputOK) {
 					LCIAMethod bm = LCIAMethod.instance(nameLCIA);
 					ProductDeclaration.instance(nameProd, einheit).setBM(bm);
 					btnP17n1.setEnabled(false);	
