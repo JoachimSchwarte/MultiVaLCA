@@ -5,7 +5,7 @@ package de.unistuttgart.iwb.multivalcatest;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.530
+ * @version 0.533
  */
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,17 +18,17 @@ import org.junit.jupiter.api.Test;
 import de.unistuttgart.iwb.multivalca.*;
 
 class ProductSystemTest {
-	Flow e1 = Flow.instance("E1", FlowType.Elementary, FlowUnit.kg);
-	Flow e2 = Flow.instance("E2", FlowType.Elementary, FlowUnit.kg);
-	Flow r1 = Flow.instance("R1", FlowType.Elementary, FlowUnit.kg);
-	Flow r2 = Flow.instance("R2", FlowType.Elementary, FlowUnit.kg);
-	Flow p1 = Flow.instance("P1", FlowType.Product, FlowUnit.kg);
-	Flow p2 = Flow.instance("P2", FlowType.Product, FlowUnit.Items);
-	ProcessModule Modul1 = ProcessModule.instance("M1");
-	ProcessModule Modul2 = ProcessModule.instance("M2");
-	LinkedHashMap<Flow, Double> f = new LinkedHashMap<Flow, Double>();
-	LinkedList<Flow> vkp = new LinkedList<Flow>();
-	ProductSystem ProductP2 = ProductSystem.instance("PS1", f, vkp);
+	private Flow e1 = Flow.instance("E1", FlowType.Elementary, FlowUnit.kg);
+	private Flow e2 = Flow.instance("E2", FlowType.Elementary, FlowUnit.kg);
+	private Flow r1 = Flow.instance("R1", FlowType.Elementary, FlowUnit.kg);
+	private Flow r2 = Flow.instance("R2", FlowType.Elementary, FlowUnit.kg);
+	private Flow p1 = Flow.instance("P1", FlowType.Product, FlowUnit.kg);
+	private Flow p2 = Flow.instance("P2", FlowType.Product, FlowUnit.Items);
+	private ProcessModule Modul1 = ProcessModule.instance("M1");
+	private ProcessModule Modul2 = ProcessModule.instance("M2");
+	private LinkedHashMap<Flow, Double> f = new LinkedHashMap<Flow, Double>();
+	private LinkedList<Flow> vkp = new LinkedList<Flow>();
+	private ProductSystem ProductP2 = ProductSystem.instance("PS1", f, vkp);
 	
 	private void init1() {
 		MCAObject.clear(ProductSystem.class);
@@ -72,7 +72,7 @@ class ProductSystemTest {
 	}
 
 	@Test
-	void test01() {
+	public void test01() {
 		init1();
 		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = Modul1.getElementarflussvektor();
 		LinkedHashMap<ValueType, Double> vv = efv.get(r1);
@@ -82,7 +82,7 @@ class ProductSystemTest {
 	}
 	
 	@Test
-	void test02() {
+	public void test02() {
 		init1();
 		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = ProductP2.getElementarflussvektor();
 		LinkedHashMap<ValueType, Double> vv = efv.get(r1);
@@ -105,7 +105,7 @@ class ProductSystemTest {
 	}
 	
 	@Test
-	void test03() {
+	public void test03() {
 		CategoryIndicator ci1 = CategoryIndicator.instance("CO2");
 		CategoryIndicator ci2 = CategoryIndicator.instance("SO2");
 		ImpactCategory ic1 = ImpactCategory.instance("Global Warming", ci1);
