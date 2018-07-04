@@ -1,18 +1,25 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
-
 import javax.swing.JLabel;
-
 import net.miginfocom.swing.MigLayout;
+
+/**
+ * @author HH, JS
+ * @version 0.533
+ */
 
 public class InfoPanel extends MCAPanel{
 	
-	static JLabel lblInfo1 = new JLabel(); 	
-	static JLabel lblInfo2 = new JLabel(); 	
-	static JLabel lblInfo3 = new JLabel();		
-	static JLabel lblInfo4 = new JLabel();		
-	static JLabel lblInfo5 = new JLabel();		
+	protected static JLabel lblInfo1 = new JLabel(); 	
+	protected static JLabel lblInfo2 = new JLabel(); 	
+	protected static JLabel lblInfo3 = new JLabel();		
+	protected static JLabel lblInfo4 = new JLabel();		
+	protected static JLabel lblInfo5 = new JLabel();		
 
 	protected InfoPanel(String key) {
 		super(key);
