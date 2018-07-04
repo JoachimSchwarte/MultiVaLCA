@@ -20,7 +20,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.523
+ * @version 0.534
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -88,7 +88,7 @@ public class ProModGroupPanel extends MCAPanel{
 				}
 				String flname = txt02.getText();
 				boolean flOk = true;					
-				if (Flow.getAllInstances().containsKey(flname) == false) {
+				if (!Flow.getAllInstances().containsKey(flname)) {
 					flOk = false;
 					lbl06.setText(GuiStrings.getGS("stat37", l));
 				}			
@@ -108,7 +108,7 @@ public class ProModGroupPanel extends MCAPanel{
 					lbl06.setText(GuiStrings.getGS("stat03", l));
 					txt01.setText("");
 				}	
-				if (menge != 0.0 && flOk == true && nameOk == true) {
+				if (menge != 0.0 && flOk && nameOk) {
 					ProcessModuleGroup.createInstance(name, Flow.getInstance(flname), menge);
 					txt01.setEnabled(false);
 					txt02.setEnabled(false);
@@ -130,15 +130,15 @@ public class ProModGroupPanel extends MCAPanel{
 					nameOk = false;
 					lbl06.setText(GuiStrings.getGS("stat02", l));
 				} 
-				if (nameOk == true && ProcessModule.getAllInstances().containsKey(name) == false) {
+				if (nameOk && !ProcessModule.getAllInstances().containsKey(name)) {
 					nameOk = false;
 					lbl06.setText(GuiStrings.getGS("stat38", l));
 				}
-				if (nameOk == true && ProcessModule.getAllInstances().get(name).getProduktflussvektor().containsKey(Flow.getAllInstances().get(flname)) == false) {
+				if (nameOk && !ProcessModule.getAllInstances().get(name).getProduktflussvektor().containsKey(Flow.getAllInstances().get(flname))) {
 					nameOk = false;
 					lbl06.setText(GuiStrings.getGS("stat39", l));					
 				}
-				if (nameOk == true) {
+				if (nameOk) {
 					ProcessModuleGroup.getAllInstances().get(txt01.getText()).addModule(ProcessModule.getAllInstances().get(txt04.getText()));
 					lbl06.setText(GuiStrings.getGS("stat40", l) + ProcessModuleGroup.getAllInstances().get(txt01.getText()).getModList().size()
 							+ GuiStrings.getGS("stat41", l));
