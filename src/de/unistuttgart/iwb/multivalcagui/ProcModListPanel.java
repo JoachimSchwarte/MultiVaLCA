@@ -1,6 +1,12 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -9,16 +15,23 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.FlowValueMaps;
+import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * @author HH, JS
+ * @version 0.533
+ */
+
 public class ProcModListPanel extends MCAPanel{
 	
 	private JLabel lblP07n1 = new JLabel();
-	private JTable pmTable 		= new JTable();
-	DefaultTableModel pmTableModel 		= new DefaultTableModel(0,4);
+	private JTable pmTable 	= new JTable();
+	private DefaultTableModel pmTableModel 	= new DefaultTableModel(0,4);
 
 	protected ProcModListPanel(String key) {
 		super(key);
@@ -44,8 +57,14 @@ public class ProcModListPanel extends MCAPanel{
 		tcm.getColumn(1).setHeaderValue(GuiStrings.getGS("mp11", l));
 		tcm.getColumn(2).setHeaderValue(GuiStrings.getGS("p01n3", l));
 		tcm.getColumn(3).setHeaderValue(GuiStrings.getGS("p02n4", l));
-		for(String mn : ProcessModule.getAllInstances().keySet()) {
-			ProcessModule akModul = ProcessModule.getInstance(mn);
+		HashSet<String> modulListe = new HashSet<String>();
+		LinkedHashMap<String, MCAObject> instanceListe = new LinkedHashMap<String, MCAObject>();
+		modulListe.addAll(ProcessModule.getAllInstances().keySet());
+		modulListe.addAll(ProcessModuleGroup.getAllInstances().keySet());
+		instanceListe.putAll(ProcessModule.getAllInstances());
+		instanceListe.putAll(ProcessModuleGroup.getAllInstances());
+		for(String mn : modulListe) {
+			FlowValueMaps akModul = (FlowValueMaps)instanceListe.get(mn);
 			pmTableModel.addRow(new Object[] {mn, "", "", ""});
 			for(Flow pf : akModul.getElementarflussvektor().keySet()){
 				for (ValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
@@ -61,26 +80,7 @@ public class ProcModListPanel extends MCAPanel{
 							akModul.getProduktflussvektor().get(pf).get(vt)});							
 				}							
 			}
-		}	
-		for(String mn : ProcessModuleGroup.getAllInstances().keySet()) {
-			ProcessModuleGroup akModul = ProcessModuleGroup.getInstance(mn);
-			pmTableModel.addRow(new Object[] {mn, "", "", ""});
-			for(Flow pf : akModul.getElementarflussvektor().keySet()){
-				for (ValueType vt : akModul.getElementarflussvektor().get(pf).keySet()) {
-					pmTableModel.addRow(new Object[] {"", pf.getName(), 
-							ValueTypeStringMap.getFVTS(l).get(vt),
-							akModul.getElementarflussvektor().get(pf).get(vt)});
-				}
-			}						
-			for(Flow pf : akModul.getProduktflussvektor().keySet()){
-				for (ValueType vt : akModul.getProduktflussvektor().get(pf).keySet()) {
-					pmTableModel.addRow(new Object[] {"", pf.getName(), 
-							ValueTypeStringMap.getFVTS(l).get(vt),
-							akModul.getProduktflussvektor().get(pf).get(vt)});							
-				}							
-			}
-		}
-		
+		}			
 	}
 
 }
