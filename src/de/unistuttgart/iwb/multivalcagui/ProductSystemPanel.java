@@ -24,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.534
+ * @version 0.535
  */
 
 public class ProductSystemPanel extends MCAPanel{
@@ -107,7 +107,7 @@ public class ProductSystemPanel extends MCAPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP03n1.getText();	
 				boolean nameOk = true;
-				if (name.equals("")) {
+				if ("".equals(name)) {
 					nameOk = false;
 					lblP03n7.setText(bundle.getString("stat02"));
 				} 
@@ -156,9 +156,9 @@ public class ProductSystemPanel extends MCAPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String modname = txtP03n2.getText();
-				if (modname.equals("") || modname.equals(txtP03n1.getText()) ||
+				if ("".equals(modname) || modname.equals(txtP03n1.getText()) ||
 						ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulliste().contains(ProcessModule.getInstance(modname))) {
-					if (modname.equals("")) {
+					if ("".equals(modname)) {
 						lblP03n7.setText(bundle.getString("stat07"));
 					}
 					if (modname.equals(txtP03n1.getText())) {
@@ -241,7 +241,7 @@ public class ProductSystemPanel extends MCAPanel{
 				} catch (NumberFormatException e){
 					menge = 0.0;
 				}
-				if (fname.equals("") || (menge == 0.0)) {
+				if ("".equals(fname) || (menge == 0.0)) {
 					lblP03n7.setText(bundle.getString("stat07"));
 				} else {
 					if (Flow.containsName(fname)) {
@@ -284,7 +284,7 @@ public class ProductSystemPanel extends MCAPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String vkname = txtP03n5.getText();
-				if (vkname.equals("")) {
+				if ("".equals(vkname)) {
 					lblP03n7.setText(bundle.getString("stat07"));
 				} else {					
 					if (Flow.containsName(vkname)) {
