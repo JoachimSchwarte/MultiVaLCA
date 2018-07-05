@@ -29,7 +29,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.531
+ * @version 0.535
  */
 
 class XMLImportAction extends AbstractAction {
@@ -230,67 +230,10 @@ class XMLImportAction extends AbstractAction {
 					}
 					LinkedHashMap<String, LinkedList<String>> mnls = new LinkedHashMap<String, LinkedList<String>>();
 					for (int i = 0; i < nl.getLength(); i++) {
-						NodeList nlc = nl.item(i).getChildNodes();
 						String psname = "";	
-						String bvename = "";
-						String bvemenge = "";	
-						LinkedList<String> mnl = new LinkedList<String>();
 						LinkedHashMap<Flow, Double> bv = new LinkedHashMap<Flow, Double>();
 						LinkedList<Flow> vuk = new LinkedList<Flow>();
-						for (int j = 0; j < nlc.getLength(); j++) {	
-							if (nlc.item(j).getNodeName().equals("PS-Name")) {
-								psname = nlc.item(j).getTextContent();
-							}
-							if (nlc.item(j).getNodeName().equals("PS-Modules")) {
-								NodeList nlc2 = nlc.item(j).getChildNodes();
-								for (int k = 0; k < nlc2.getLength(); k++) {
-									if (nlc2.item(k).getNodeName().equals("PS-Module")) {
-										NodeList nlc3 = nlc2.item(k).getChildNodes();
-										for (int l = 0; l < nlc3.getLength(); l++) {
-											if (nlc3.item(l).getNodeName().equals("PSM-Name")) {
-												String modname = nlc3.item(l).getTextContent();	
-												mnl.add(modname);
-											}											
-										}										
-									}
-								}
-							}
-							if (nlc.item(j).getNodeName().equals("DemandVector")) {
-								NodeList nlc2 = nlc.item(j).getChildNodes();
-								for (int k = 0; k < nlc2.getLength(); k++) {
-									if (nlc2.item(k).getNodeName().equals("DV-Entry")) {
-										NodeList nlc3 = nlc2.item(k).getChildNodes();
-										for (int l = 0; l < nlc3.getLength(); l++) {
-											if (nlc3.item(l).getNodeName().equals("DV-Name")) {
-												bvename = nlc3.item(l).getTextContent();
-											}
-											if (nlc3.item(l).getNodeName().equals("DV-Value")) {
-												bvemenge = nlc3.item(l).getTextContent();
-												Flow akFluss = Flow.getInstance(bvename);
-												bv.put(akFluss, Double.parseDouble(bvemenge));
-											}
-										}											
-									}
-								}
-							}
-							if (nlc.item(j).getNodeName().equals("PreAndCoProducts")) {
-								NodeList nlc2 = nlc.item(j).getChildNodes();
-								for (int k = 0; k < nlc2.getLength(); k++) {
-									if (nlc2.item(k).getNodeName().equals("PaCP-Entry")) {
-										NodeList nlc3 = nlc2.item(k).getChildNodes();
-										for (int l = 0; l < nlc3.getLength(); l++) {
-											if (nlc3.item(l).getNodeName().equals("PaCP-Name")) {
-												String flname = nlc3.item(l).getTextContent();
-												Flow akFluss = Flow.getInstance(flname);
-												vuk.add(akFluss);
-											}											
-										}										
-									}
-								}									
-							}							
-						}
-						ProductSystem.instance(psname, bv, vuk);
-						mnls.put(psname, mnl);																			
+						ProductSystem.instance(psname, bv, vuk);																	
 					}
 					
 					nl = docEle.getElementsByTagName("ImpactCategory");
@@ -598,7 +541,7 @@ class XMLImportAction extends AbstractAction {
 								}									
 							}							
 						}
-//						ProductSystem.instance(psname, bv, vuk);
+						ProductSystem.instance(psname, bv, vuk);
 						mnls.put(psname, mnl);																			
 					}
 					for (String psname : mnls.keySet()) {
