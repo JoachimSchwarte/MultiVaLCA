@@ -134,7 +134,7 @@ public class ProModGroupPanel extends MCAPanel{
 				String name = txt04.getText();	
 				String flname = txt02.getText();
 				boolean nameOk = true;
-				if (name.equals("")) {
+				if ("".equals(name)) {
 					nameOk = false;
 					lbl06.setText(bundle.getString("stat02"));
 				} 

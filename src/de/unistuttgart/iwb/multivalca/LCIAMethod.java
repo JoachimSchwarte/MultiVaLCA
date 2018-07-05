@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.536
  */
 
 public class LCIAMethod extends MCAObject {
@@ -54,7 +54,7 @@ public class LCIAMethod extends MCAObject {
 	 */
 	
 	public static LCIAMethod instance(String name) {
-		if (getAllInstances().containsKey(name) == false) {
+		if (!getAllInstances().containsKey(name)) {
 			new LCIAMethod(name);
 		} 
 		return getAllInstances().get(name);

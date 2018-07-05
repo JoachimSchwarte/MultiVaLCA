@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -13,11 +17,17 @@ import javax.swing.table.TableColumnModel;
 import de.unistuttgart.iwb.multivalca.LCIAMethod;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * @author HH, JS
+ * @version 0.536
+ */
+
+
 public class EvalMListPanel extends MCAPanel {
 
 	private JLabel lblP15n1 = new JLabel();
 	private JTable bmTable 		= new JTable();
-	DefaultTableModel bmTableModel 		= new DefaultTableModel(0,3);
+	private DefaultTableModel bmTableModel 		= new DefaultTableModel(0,3);
 
 	protected EvalMListPanel(String key) {
 		super(key);

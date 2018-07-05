@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -14,11 +18,16 @@ import de.unistuttgart.iwb.multivalca.CharacFactor;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * @author HH, JS
+ * @version 0.536
+ */
+
 public class CFListPanel extends MCAPanel{
 	
 	private JLabel lblP13n1 = new JLabel();
 	private JTable cfTable 		= new JTable();
-	DefaultTableModel cfTableModel 		= new DefaultTableModel(0,5);
+	private DefaultTableModel cfTableModel 		= new DefaultTableModel(0,5);
 
 	public CFListPanel(String key) {
 		super(key);

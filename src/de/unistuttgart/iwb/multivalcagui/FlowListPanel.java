@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -13,11 +17,16 @@ import javax.swing.table.TableColumnModel;
 import de.unistuttgart.iwb.multivalca.Flow;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * @author HH, JS
+ * @version 0.536
+ */
+
 public class FlowListPanel extends MCAPanel {
 	
 	private JLabel lblP06n1 = new JLabel();
 	private JTable flowsTable 		= new JTable();
-	DefaultTableModel flowsTableModel 		= new DefaultTableModel(0,3);
+	private DefaultTableModel flowsTableModel 		= new DefaultTableModel(0,3);
 
 	protected FlowListPanel(String key) {
 		super(key);

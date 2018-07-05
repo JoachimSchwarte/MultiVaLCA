@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -8,7 +12,14 @@ import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * @author HH, JS
+ * @version 0.536
+ */
+
 public class CompositionListPanel extends MCAPanel{
+	
+	private JLabel lblP22n1 = new JLabel();
 	
 	protected CompositionListPanel(String key) {
 		super(key);
@@ -22,8 +33,6 @@ public class CompositionListPanel extends MCAPanel{
 		add(lblP22n1, "cell 1 0 2 1,alignx center,aligny top");
 		
 	}
-
-	private JLabel lblP22n1 = new JLabel();
 
 	@Override
 	public void showSelf() {

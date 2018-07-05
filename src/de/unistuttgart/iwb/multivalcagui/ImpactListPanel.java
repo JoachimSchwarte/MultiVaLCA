@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -13,11 +17,16 @@ import javax.swing.table.TableColumnModel;
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * @author HH, JS
+ * @version 0.536
+ */
+
 public class ImpactListPanel extends MCAPanel{
 
 	private JLabel lblP11n1 = new JLabel();
 	private JTable catTable 		= new JTable();
-	DefaultTableModel catTableModel 		= new DefaultTableModel(0,2);
+	private DefaultTableModel catTableModel 		= new DefaultTableModel(0,2);
 
 	protected ImpactListPanel(String key) {
 		super(key);

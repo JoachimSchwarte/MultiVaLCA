@@ -29,7 +29,7 @@ public class ProductSystemListPanel extends MCAPanel {
 	
 	private JLabel lblP08n1 = new JLabel();
 	private JTable psTable 		= new JTable();
-	DefaultTableModel psTableModel 		= new DefaultTableModel(0,3);
+	private DefaultTableModel psTableModel 		= new DefaultTableModel(0,3);
 
 	protected ProductSystemListPanel(String key) {
 		super(key);
@@ -67,7 +67,7 @@ public class ProductSystemListPanel extends MCAPanel {
 						typmod = true;
 					}
 				}
-				if (typmod == true){
+				if (typmod){
 					psTableModel.addRow(new Object[] {"",bundle.getString("mp12"), mni});							
 				} else {
 					psTableModel.addRow(new Object[] {"",bundle.getString("p08n3"), mni});	

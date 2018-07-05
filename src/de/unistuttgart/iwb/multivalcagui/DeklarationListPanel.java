@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -13,11 +17,16 @@ import javax.swing.table.TableColumnModel;
 import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * @author HH, JS
+ * @version 0.536
+ */
+
 public class DeklarationListPanel extends MCAPanel{
 	
 	private JLabel lblP20n1 = new JLabel();
 	private JTable pdTable 		= new JTable();
-	DefaultTableModel pdTableModel 		= new DefaultTableModel(0,3);
+	private DefaultTableModel pdTableModel 		= new DefaultTableModel(0,3);
 
 	protected DeklarationListPanel(String key) {
 		super(key);

@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * "Komposition".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.531
+ * @version 0.536
  */
 
 public class Composition extends MCAObject implements ImpactValueMaps {
@@ -84,7 +84,7 @@ public class Composition extends MCAObject implements ImpactValueMaps {
 	 */
 
 	public static Composition instance(String name) {
-		if (allInstances.containsKey(name) == false) {
+		if (!allInstances.containsKey(name)) {
 			new Composition(name);
 		}
 		return allInstances.get(name);

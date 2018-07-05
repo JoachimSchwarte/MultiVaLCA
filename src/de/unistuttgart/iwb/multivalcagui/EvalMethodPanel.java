@@ -117,7 +117,7 @@ public class EvalMethodPanel extends MCAPanel{
 					lblP14n5.setText(bundle.getString("stat27"));
 					inputOK = false;					
 				}
-				if (inputOK == true) {
+				if (inputOK) {
 					LCIAMethod.instance(nameILCA).addCategory(ImpactCategory.getInstance(nameWK));
 					btnP14n4.setEnabled(true);
 					lblP14n5.setText(bundle.getString("stat28") + 
