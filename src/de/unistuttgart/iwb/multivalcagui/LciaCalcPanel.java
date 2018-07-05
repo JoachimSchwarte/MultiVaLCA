@@ -32,7 +32,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.530
+ * @version 0.535
  */
 
 public class LciaCalcPanel extends MCAPanel {
@@ -48,7 +48,7 @@ public class LciaCalcPanel extends MCAPanel {
 	private JComboBox<String> cobP16n3 = new JComboBox<String>();	// Methoden
 	private JComboBox<String> cobP16n4 = new JComboBox<String>();	// Werttypen
 	private JTable waTable 		= new JTable();
-	DefaultTableModel waTableModel 		= new DefaultTableModel(0,3);
+	private DefaultTableModel waTableModel 		= new DefaultTableModel(0,3);
 
 	protected LciaCalcPanel(String key) {
 		super(key);
