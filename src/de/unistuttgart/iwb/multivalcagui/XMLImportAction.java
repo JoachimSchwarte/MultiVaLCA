@@ -301,8 +301,6 @@ class XMLImportAction extends AbstractAction {
 		for (int i = 0; i < nl.getLength(); i++) {
 			NodeList nlc = nl.item(i).getChildNodes();
 			String psname = "";	
-			String bvename = "";
-			String bvemenge = "";	
 			LinkedList<String> mnl = new LinkedList<String>();
 			LinkedHashMap<Flow, Double> bv = new LinkedHashMap<Flow, Double>();
 			LinkedList<Flow> vuk = new LinkedList<Flow>();
@@ -312,50 +310,15 @@ class XMLImportAction extends AbstractAction {
 				}
 				if (nlc.item(j).getNodeName().equals("PS-Modules")) {
 					NodeList nlc2 = nlc.item(j).getChildNodes();
-					for (int k = 0; k < nlc2.getLength(); k++) {
-						if (nlc2.item(k).getNodeName().equals("PS-Module")) {
-							NodeList nlc3 = nlc2.item(k).getChildNodes();
-							for (int l = 0; l < nlc3.getLength(); l++) {
-								if (nlc3.item(l).getNodeName().equals("PSM-Name")) {
-									String modname = nlc3.item(l).getTextContent();	
-									mnl.add(modname);
-								}											
-							}										
-						}
-					}
+					fillPSwithModules(nlc2, mnl);					
 				}
 				if (nlc.item(j).getNodeName().equals("DemandVector")) {
 					NodeList nlc2 = nlc.item(j).getChildNodes();
-					for (int k = 0; k < nlc2.getLength(); k++) {
-						if (nlc2.item(k).getNodeName().equals("DV-Entry")) {
-							NodeList nlc3 = nlc2.item(k).getChildNodes();
-							for (int l = 0; l < nlc3.getLength(); l++) {
-								if (nlc3.item(l).getNodeName().equals("DV-Name")) {
-									bvename = nlc3.item(l).getTextContent();
-								}
-								if (nlc3.item(l).getNodeName().equals("DV-Value")) {
-									bvemenge = nlc3.item(l).getTextContent();
-									Flow akFluss = Flow.getInstance(bvename);
-									bv.put(akFluss, Double.parseDouble(bvemenge));
-								}
-							}											
-						}
-					}
+					fillPSwithDemandVector(nlc2, bv);					
 				}
 				if (nlc.item(j).getNodeName().equals("PreAndCoProducts")) {
 					NodeList nlc2 = nlc.item(j).getChildNodes();
-					for (int k = 0; k < nlc2.getLength(); k++) {
-						if (nlc2.item(k).getNodeName().equals("PaCP-Entry")) {
-							NodeList nlc3 = nlc2.item(k).getChildNodes();
-							for (int l = 0; l < nlc3.getLength(); l++) {
-								if (nlc3.item(l).getNodeName().equals("PaCP-Name")) {
-									String flname = nlc3.item(l).getTextContent();
-									Flow akFluss = Flow.getInstance(flname);
-									vuk.add(akFluss);
-								}											
-							}										
-						}
-					}									
+					fillPSwithPreAndCoProducts(nlc2, vuk);														
 				}							
 			}
 			ProductSystem.getInstance(psname).setBedarfsvektor(bv);
@@ -380,6 +343,54 @@ class XMLImportAction extends AbstractAction {
 		}	
 	}
 	
+	private void fillPSwithModules(NodeList nlc2, LinkedList<String> mnl) {
+		for (int k = 0; k < nlc2.getLength(); k++) {
+			if (nlc2.item(k).getNodeName().equals("PS-Module")) {
+				NodeList nlc3 = nlc2.item(k).getChildNodes();
+				for (int l = 0; l < nlc3.getLength(); l++) {
+					if (nlc3.item(l).getNodeName().equals("PSM-Name")) {
+						String modname = nlc3.item(l).getTextContent();	
+						mnl.add(modname);
+					}											
+				}										
+			}
+		}
+	}
+
+	private void fillPSwithDemandVector(NodeList nlc2, LinkedHashMap<Flow, Double> bv) {
+		for (int k = 0; k < nlc2.getLength(); k++) {
+			if (nlc2.item(k).getNodeName().equals("DV-Entry")) {
+				NodeList nlc3 = nlc2.item(k).getChildNodes();
+				String bvename = "";
+				for (int l = 0; l < nlc3.getLength(); l++) {					
+					if (nlc3.item(l).getNodeName().equals("DV-Name")) {
+						bvename = nlc3.item(l).getTextContent();
+					}
+					if (nlc3.item(l).getNodeName().equals("DV-Value")) {
+						String bvemenge = nlc3.item(l).getTextContent();
+						Flow akFluss = Flow.getInstance(bvename);
+						bv.put(akFluss, Double.parseDouble(bvemenge));
+					}
+				}											
+			}
+		}
+	}
+
+	private void fillPSwithPreAndCoProducts(NodeList nlc2, LinkedList<Flow> vuk) {
+		for (int k = 0; k < nlc2.getLength(); k++) {
+			if (nlc2.item(k).getNodeName().equals("PaCP-Entry")) {
+				NodeList nlc3 = nlc2.item(k).getChildNodes();
+				for (int l = 0; l < nlc3.getLength(); l++) {
+					if (nlc3.item(l).getNodeName().equals("PaCP-Name")) {
+						String flname = nlc3.item(l).getTextContent();
+						Flow akFluss = Flow.getInstance(flname);
+						vuk.add(akFluss);
+					}											
+				}										
+			}
+		}		
+	}
+
 	private void createImpactCategories(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ImpactCategory");
 		for (int i = 0; i < nl.getLength(); i++) {
