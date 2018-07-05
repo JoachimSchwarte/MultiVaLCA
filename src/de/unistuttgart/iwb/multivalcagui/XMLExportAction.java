@@ -30,7 +30,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.528
+ * @version 0.535
  */
 
 class XMLExportAction extends AbstractAction {
@@ -315,10 +315,7 @@ class XMLExportAction extends AbstractAction {
 	            	menge3.appendChild(document.createTextNode(akModul.getElementarflussvektor().get(pf).get(ValueType.UpperBound).toString()));
 	            } */
             }
-            
-            
-            
-            
+                       
          // JFileChooser-Objekt erstellen
 	        JFileChooser chooser = new JFileChooser();
 	        FileFilter filter = new FileNameExtensionFilter("XML-Dateien (*.xml)", "xml");
@@ -329,9 +326,7 @@ class XMLExportAction extends AbstractAction {
 	        if(rueckgabeWert == JFileChooser.APPROVE_OPTION) {	        	
 	        	DOMSource domSource = new DOMSource(document);
 	        	File fileOutput = chooser.getSelectedFile();
-	        	if (FilenameUtils.getExtension(fileOutput.getName()).equalsIgnoreCase("xml")) {
-	        	    // filename is OK as-is
-	        	} else {
+	        	if (!FilenameUtils.getExtension(fileOutput.getName()).equalsIgnoreCase("xml")) {
 	        		fileOutput = new File(fileOutput.toString() + ".xml");  // append .xml if "foo.jpg.xml" is OK
 	        	}
 	        	
@@ -348,9 +343,6 @@ class XMLExportAction extends AbstractAction {
             e.printStackTrace();
         } catch(Throwable e) {
             e.printStackTrace();
-        } 
-
-		
+        } 		
 	}
-
 }
