@@ -26,14 +26,14 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.534
+ * @version 0.535
  */
 
 public class DeklarationPanel extends MCAPanel {
-	Language l = GUILanguage.getChosenLanguage();
-	Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	protected Language l = GUILanguage.getChosenLanguage();
+	protected Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	protected String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	protected ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	private JLabel lblP17n1 = new JLabel();				// "neue Produktdeklaration"
 	private JLabel lblP17n2 = new JLabel();				// "Name des ..."
 	private JLabel lblP17n3 = new JLabel();				// "Einheit"
@@ -123,12 +123,12 @@ public class DeklarationPanel extends MCAPanel {
 					inputOK = false;					
 				}
 
-				if (nameProd.equals("") && inputOK) {
+				if ("".equals(nameProd) && inputOK) {
 					lblP17n9.setText(bundle.getString("stat02"));
 					inputOK = false;
 				}
 
-				if (nameLCIA.equals("") && inputOK) {
+				if ("".equals(nameLCIA) && inputOK) {
 					lblP17n9.setText(bundle.getString("stat32"));
 					inputOK = false;
 				}
@@ -162,7 +162,7 @@ public class DeklarationPanel extends MCAPanel {
 				} catch (NumberFormatException e){
 					menge = 0.0;
 				}
-				if (fname.equals("") || (menge == 0.0)) {
+				if ("".equals(fname) || (menge == 0.0)) {
 					lblP17n9.setText(bundle.getString("stat07"));
 				} else {
 					if (LCIAMethod.instance(nameLCIA).categoryList().containsKey(fname)) {
