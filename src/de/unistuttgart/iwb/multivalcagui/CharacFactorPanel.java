@@ -21,7 +21,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.534
+ * @version 0.536
  */
 
 public class CharacFactorPanel extends MCAPanel{
@@ -97,7 +97,7 @@ public class CharacFactorPanel extends MCAPanel{
 				String nameWK = txtP12n3.getText();
 				String facText = txtP12n4.getText();
 				boolean inputOK = true;
-				if (nameCF.equals("") || nameFl.equals("") || nameWK.equals("") || facText.equals("")) {
+				if ("".equals(nameCF) || "".equals(nameFl) || "".equals(nameWK) || "".equals(facText)) {
 					lblP12n8.setText(bundle.getString("stat07"));
 					inputOK = false;					
 				}

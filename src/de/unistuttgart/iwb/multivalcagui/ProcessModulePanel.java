@@ -22,7 +22,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.521
+ * @version 0.536
  */
 
 public class ProcessModulePanel extends MCAPanel{
@@ -96,7 +96,7 @@ public class ProcessModulePanel extends MCAPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txtP02n1.getText();	
 				boolean nameOk = true;
-				if (name.equals("")) {
+				if ("".equals(name)) {
 					nameOk = false;
 					lblP02n5.setText(bundle.getString("stat02"));
 				} 
@@ -110,7 +110,7 @@ public class ProcessModulePanel extends MCAPanel{
 					lblP02n5.setText(bundle.getString("stat03"));
 					txtP02n1.setText("");
 				}			
-				if (nameOk == true) {
+				if (nameOk) {
 					ProcessModule.instance(name);
 					lblP02n5.setText(bundle.getString("stat06") + 
 							ProcessModule.getAllInstances().size() + bundle.getString("stat05"));
@@ -134,7 +134,7 @@ public class ProcessModulePanel extends MCAPanel{
 				} catch (NumberFormatException e){
 					menge = 0.0;
 				}
-				if (fname.equals("") || (menge == 0.0)) {
+				if ("".equals(fname) || (menge == 0.0)) {
 					lblP02n5.setText(bundle.getString("stat07"));
 				} else {
 					if (Flow.containsName(fname)) {

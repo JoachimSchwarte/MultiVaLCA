@@ -1,3 +1,7 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
@@ -16,11 +20,16 @@ import de.unistuttgart.iwb.multivalca.ProductSystem;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * @author HH, JS
+ * @version 0.536
+ */
+
 public class LciCalcPanel extends MCAPanel {
 	
 	private JLabel lblP09n1 = new JLabel();
-	private JTable lciTable 		= new JTable();
-	DefaultTableModel lciTableModel 		= new DefaultTableModel(0,4);
+	private JTable lciTable = new JTable();
+	private DefaultTableModel lciTableModel = new DefaultTableModel(0,4);
 
 	protected LciCalcPanel(String key) {
 		super(key);
@@ -72,7 +81,7 @@ public class LciCalcPanel extends MCAPanel {
 							if (sysAktuell.getVorUndKoppelprodukte().contains(sysFluss)) {
 								ausgabe = true;
 							}
-							if (ausgabe == true) {
+							if (ausgabe) {
 								for (ValueType vt : sysAktuell.getProduktflussvektor().get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 											ValueTypeStringMap.getFVTS(l).get(vt),								

@@ -20,7 +20,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.521
+ * @version 0.536
  */
 
 public class ImpactCatPanel extends MCAPanel {
@@ -65,11 +65,11 @@ public class ImpactCatPanel extends MCAPanel {
 				String name = txtP10n1.getText();	
 				String wi = txtP10n2.getText();
 				boolean inputOK = true;
-				if (wi.equals("")) {
+				if ("".equals(wi)) {
 					lblP10n4.setText(bundle.getString("stat24"));
 					inputOK = false;
 				} 
-				if (name.equals("")) {
+				if ("".equals(name)) {
 					lblP10n4.setText(bundle.getString("stat22"));
 					inputOK = false;
 				} 
@@ -77,7 +77,7 @@ public class ImpactCatPanel extends MCAPanel {
 					lblP10n4.setText(bundle.getString("stat23"));
 					inputOK = false;
 				}
-				if (inputOK == true) {
+				if (inputOK) {
 					CategoryIndicator indi = CategoryIndicator.instance(wi);
 					ImpactCategory.instance(name, indi);
 					lblP10n4.setText(bundle.getString("stat25") + ImpactCategory.getAllInstances().size() + bundle.getString("stat05"));

@@ -22,7 +22,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.534
+ * @version 0.536
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -99,7 +99,7 @@ public class ProModGroupPanel extends MCAPanel{
 				}			
 				String name = txt01.getText();	
 				boolean nameOk = true;
-				if (name.equals("")) {
+				if ("".equals(name)) {
 					nameOk = false;
 					lbl06.setText(bundle.getString("stat02"));
 				} 

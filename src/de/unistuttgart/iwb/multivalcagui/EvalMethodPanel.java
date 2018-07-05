@@ -21,7 +21,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.532
+ * @version 0.536
  */
 
 public class EvalMethodPanel extends MCAPanel{
@@ -82,7 +82,7 @@ public class EvalMethodPanel extends MCAPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				String nameILCA = txtP14n1.getText();
 				boolean inputOK = true;
-				if (nameILCA.equals("")) {
+				if ("".equals(nameILCA)) {
 					lblP14n5.setText(bundle.getString("stat02"));
 					inputOK = false;					
 				}
@@ -90,7 +90,7 @@ public class EvalMethodPanel extends MCAPanel{
 					lblP14n5.setText(bundle.getString("stat03"));
 					inputOK = false;
 				}
-				if (inputOK == true) {
+				if (inputOK) {
 					LCIAMethod.instance(nameILCA);
 					txtP14n1.setEnabled(false);
 					txtP14n2.setEnabled(true);
@@ -113,7 +113,7 @@ public class EvalMethodPanel extends MCAPanel{
 				String nameILCA = txtP14n1.getText();
 				String nameWK = txtP14n2.getText();
 				boolean inputOK = true;
-				if (ImpactCategory.containsName(nameWK) == false) {
+				if (!ImpactCategory.containsName(nameWK)) {
 					lblP14n5.setText(bundle.getString("stat27"));
 					inputOK = false;					
 				}
