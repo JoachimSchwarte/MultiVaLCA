@@ -221,7 +221,6 @@ class XMLImportAction extends AbstractAction {
 			String pmgname = "";	
 			String rfname = "";
 			String rfvalue = "";
-			LinkedList<String> mnl = new LinkedList<String>();
 			for (int j = 0; j < nlc.getLength(); j++) {
 				if (nlc.item(j).getNodeName().equals("PMGroupName")) {
 					pmgname = nlc.item(j).getTextContent();
@@ -232,20 +231,7 @@ class XMLImportAction extends AbstractAction {
 				if (nlc.item(j).getNodeName().equals("RelevantFlowValue")) {
 					rfvalue = nlc.item(j).getTextContent();
 				}
-				if (nlc.item(j).getNodeName().equals("PMGroup-Modules")) {	
-					NodeList nlc2 = nlc.item(j).getChildNodes();
-					for (int k = 0; k < nlc2.getLength(); k++) {
-						if (nlc2.item(k).getNodeName().equals("PMGroup-Module")) {
-							NodeList nlc3 = nlc2.item(k).getChildNodes();
-							for (int l = 0; l < nlc3.getLength(); l++) {
-								if (nlc3.item(l).getNodeName().equals("PMGM-Name")) {
-									String modname = nlc3.item(l).getTextContent();	
-									mnl.add(modname);
-								}											
-							}										
-						}
-					}				
-				}
+				
 			}
 			ProcessModuleGroup.createInstance(pmgname, Flow.getInstance(rfname), Double.parseDouble(rfvalue));						
 		}
