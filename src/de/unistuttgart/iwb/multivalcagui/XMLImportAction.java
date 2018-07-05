@@ -29,7 +29,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.535
+ * @version 0.536
  */
 
 class XMLImportAction extends AbstractAction {
@@ -229,10 +229,17 @@ class XMLImportAction extends AbstractAction {
 						MCAObject.clear(ProductSystem.class);
 					}
 					LinkedHashMap<String, LinkedList<String>> mnls = new LinkedHashMap<String, LinkedList<String>>();
+
 					for (int i = 0; i < nl.getLength(); i++) {
+						NodeList nlc = nl.item(i).getChildNodes();
 						String psname = "";	
 						LinkedHashMap<Flow, Double> bv = new LinkedHashMap<Flow, Double>();
 						LinkedList<Flow> vuk = new LinkedList<Flow>();
+						for (int j = 0; j < nlc.getLength(); j++) {	
+							if (nlc.item(j).getNodeName().equals("PS-Name")) {
+								psname = nlc.item(j).getTextContent();
+							}
+						}
 						ProductSystem.instance(psname, bv, vuk);																	
 					}
 					
@@ -541,7 +548,8 @@ class XMLImportAction extends AbstractAction {
 								}									
 							}							
 						}
-						ProductSystem.instance(psname, bv, vuk);
+						ProductSystem.getInstance(psname).setBedarfsvektor(bv);
+						ProductSystem.getInstance(psname).setVorUndKoppelProdukte(vuk);
 						mnls.put(psname, mnl);																			
 					}
 					for (String psname : mnls.keySet()) {
@@ -550,11 +558,11 @@ class XMLImportAction extends AbstractAction {
 							if (ProcessModule.containsName(m)) {
 								ProductSystem.getInstance(psname).addProzessmodul(ProcessModule.getInstance(m));
 							} else {
-								if (ProcessModuleGroup.containsName(m)) {
-									ProductSystem.getInstance(psname).addProzessmodul(ProcessModuleGroup.getInstance(m));
+								if (ProductSystem.containsName(m)) {
+									ProductSystem.getInstance(psname).addProzessmodul(ProductSystem.getInstance(m));
 								} else {
-									if (ProductSystem.containsName(m)) {
-										ProductSystem.getInstance(psname).addProzessmodul(ProductSystem.getInstance(m));
+									if (ProcessModuleGroup.containsName(m)) {
+										ProductSystem.getInstance(psname).addProzessmodul(ProcessModuleGroup.getInstance(m));									
 									}
 								}
 							}

@@ -22,7 +22,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.524
+ * @version 0.536
  */
 
 public class ProductSystemListPanel extends MCAPanel {
