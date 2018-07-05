@@ -47,7 +47,7 @@ public class MCAObject {
 	}
 	
 	public static void clear() {
-		instanceMap.clear();;
+		instanceMap.clear();
 	}
 	
 	public static boolean containsName(String string) {
