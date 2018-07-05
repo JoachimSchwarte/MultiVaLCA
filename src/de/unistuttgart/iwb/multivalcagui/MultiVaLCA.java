@@ -30,13 +30,15 @@ import net.miginfocom.swing.MigLayout;
 
 
 /**
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.531
+ * @author JS, HH
+ * @version 0.535
  */
 
 public class MultiVaLCA {
 	
 	Language l = GUILanguage.getChosenLanguage();
+	private String versionString ="Version 0.535";
+	private String dateString ="05.07.2018";
 	
 	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();
@@ -108,7 +110,7 @@ public class MultiVaLCA {
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		
-		frame.setTitle(bundle.getString("head1")+"   "+bundle.getString("head2"));
+		frame.setTitle(bundle.getString("head1")+"   "+versionString);
 		frame.setBounds(100, 100, 600, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
 		frame.getContentPane().add(panel, BorderLayout.CENTER);		
@@ -228,7 +230,7 @@ public class MultiVaLCA {
 		InfoPanel.lblInfo2.setText(bundle.getString("info1"));
 		InfoPanel.lblInfo3.setText(bundle.getString("info2"));
 		InfoPanel.lblInfo4.setText(bundle.getString("info3"));
-		InfoPanel.lblInfo5.setText(bundle.getString("head2")+"     "+bundle.getString("date"));	
+		InfoPanel.lblInfo5.setText(versionString+"     "+dateString);	
 		
 	
 		
@@ -528,7 +530,7 @@ public class MultiVaLCA {
 				Locale locale = LANGUAGES.get(l); 
 				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 					
-				frame.setTitle(bundle.getString("head1")+"   "+bundle.getString("head2"));
+				frame.setTitle(bundle.getString("head1")+"   "+versionString);
 				mnDatei.setText(bundle.getString("mp6"));
 				mnNew.setText(bundle.getString("mp1"));
 				mnListe.setText(bundle.getString("mp4"));
@@ -603,7 +605,6 @@ public class MultiVaLCA {
 			String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 			ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 			
-			putValue(NAME, GuiStrings.getGS("mp12", l));
 			putValue(NAME, bundle.getString("mp12"));
 			putValue(SHORT_DESCRIPTION, bundle.getString("mp12e"));
 		}
