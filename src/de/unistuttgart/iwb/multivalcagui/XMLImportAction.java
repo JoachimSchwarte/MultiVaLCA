@@ -34,7 +34,6 @@ import de.unistuttgart.iwb.multivalca.*;
 
 class XMLImportAction extends AbstractAction {
 
-	private static final long serialVersionUID = -8752103520306217094L;
 	public XMLImportAction(Language l) {
 		Locale locale = MultiVaLCA.LANGUAGES.get(l);
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
@@ -65,10 +64,9 @@ class XMLImportAction extends AbstractAction {
 					// Erster Durchgang:
 					// Erzeugen der Objekte
 					
+					MCAObject.clear();
+					
 					NodeList nl = docEle.getElementsByTagName("Flow");
-					if (nl.getLength() != 0) {
-						MCAObject.clear(Flow.class);
-					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String flussname = "";
@@ -91,9 +89,6 @@ class XMLImportAction extends AbstractAction {
 					}
 									
 					nl = docEle.getElementsByTagName("ProcessModule");
-					if (nl.getLength() != 0) {
-						MCAObject.clear(ProcessModule.class);
-					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String pmname = "";	
@@ -182,9 +177,6 @@ class XMLImportAction extends AbstractAction {
 					}
 					
 					nl = docEle.getElementsByTagName("ProcessModuleGroup");
-					if (nl.getLength() != 0) {
-						MCAObject.clear(ProcessModuleGroup.class);
-					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String pmgname = "";	
@@ -225,9 +217,6 @@ class XMLImportAction extends AbstractAction {
 					}
 									
 					nl = docEle.getElementsByTagName("ProductSystem");
-					if (nl.getLength() != 0) {
-						MCAObject.clear(ProductSystem.class);
-					}
 					LinkedHashMap<String, LinkedList<String>> mnls = new LinkedHashMap<String, LinkedList<String>>();
 
 					for (int i = 0; i < nl.getLength(); i++) {
@@ -244,9 +233,6 @@ class XMLImportAction extends AbstractAction {
 					}
 					
 					nl = docEle.getElementsByTagName("ImpactCategory");
-					if (nl.getLength() != 0) {
-						MCAObject.clear(ImpactCategory.class);
-					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String catname = "";
@@ -264,9 +250,6 @@ class XMLImportAction extends AbstractAction {
 					}
 					
 					nl = docEle.getElementsByTagName("CFactor");
-					if (nl.getLength() != 0) {
-						MCAObject.clear(CharacFactor.class);
-					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String cfname = "";
@@ -307,9 +290,6 @@ class XMLImportAction extends AbstractAction {
 					}
 					
 					nl = docEle.getElementsByTagName("LCIAMethod");
-					if (nl.getLength() != 0) {
-						MCAObject.clear(LCIAMethod.class);
-					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String lciaName = "";
@@ -340,9 +320,6 @@ class XMLImportAction extends AbstractAction {
 					}
 					
 					nl = docEle.getElementsByTagName("ProductDeclaration");
-					if (nl.getLength() != 0) {
-						MCAObject.clear(ProductDeclaration.class);
-					}
 					for (int i = 0; i < nl.getLength(); i++) {
 						NodeList nlc = nl.item(i).getChildNodes();
 						String nameProd = "";

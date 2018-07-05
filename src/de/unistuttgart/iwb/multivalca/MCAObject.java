@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.533
+ * @version 0.536
  */
 
 public class MCAObject {
@@ -44,6 +44,10 @@ public class MCAObject {
 		LinkedHashMap<String, MCAObject> c = instanceMap.get(clazz);
 		if (c != null) 
 			c.clear();
+	}
+	
+	public static void clear() {
+		instanceMap.clear();;
 	}
 	
 	public static boolean containsName(String string) {
