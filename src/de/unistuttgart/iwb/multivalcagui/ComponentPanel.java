@@ -26,7 +26,10 @@ import net.miginfocom.swing.MigLayout;
  */
 
 public class ComponentPanel extends MCAPanel{
-	
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);	
 	private JLabel lblP18n1 = new JLabel();				// "neue Komponente"
 	private JLabel lblP18n2 = new JLabel();				// "Name der Komponente"
 	private JLabel lblP18n3 = new JLabel();				// "Bezug"
@@ -79,10 +82,6 @@ public class ComponentPanel extends MCAPanel{
 		btnP18n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Language l = GUILanguage.getChosenLanguage();
-				Locale locale = MultiVaLCA.LANGUAGES.get(l);
-				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 				String fmenge = txtP18n3.getText();
 				Double menge;
 				try {
@@ -143,10 +142,10 @@ public class ComponentPanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP18n1.setText(bundle.getString("p18n1"));
 		lblP18n2.setText(bundle.getString("p18n2"));
 		lblP18n3.setText(bundle.getString("p18n3"));
