@@ -113,7 +113,7 @@ implements ImpactValueMaps {
 	 */
 	
 	public static Component newInstance(String name, ImpactValueMaps komponente, double menge) {
-		if (getAllInstances().containsKey(name) == false) {
+		if (!getAllInstances().containsKey(name)) {
 			new Component(name, komponente, menge);	
 		} 
 		return getAllInstances().get(name);
