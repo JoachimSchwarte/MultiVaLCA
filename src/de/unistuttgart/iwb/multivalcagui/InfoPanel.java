@@ -25,10 +25,10 @@ public class InfoPanel extends MCAPanel{
 
 	protected InfoPanel(String key, String version) {
 		super(key);
-		initUI(version);
+		initUI();
 	}
 
-	private void initUI(String version) {
+	private void initUI() {
 		setLayout(new MigLayout("", "[108px,grow][200px][108px,grow]", 
 				"[20px][20px][40px][20px][20px][20px][20px,grow][20px]"));		
 		lblInfo1.setFont(new Font("Tahoma", Font.BOLD, 26));
