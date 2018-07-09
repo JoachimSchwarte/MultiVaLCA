@@ -12,7 +12,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.533
+ * @version 0.537
  */
 
 public class InfoPanel extends MCAPanel{
@@ -23,12 +23,12 @@ public class InfoPanel extends MCAPanel{
 	protected static JLabel lblInfo4 = new JLabel();		
 	protected static JLabel lblInfo5 = new JLabel();		
 
-	protected InfoPanel(String key) {
+	protected InfoPanel(String key, String version) {
 		super(key);
-		initUI();
+		initUI(version);
 	}
 
-	private void initUI() {
+	private void initUI(String version) {
 		setLayout(new MigLayout("", "[108px,grow][200px][108px,grow]", 
 				"[20px][20px][40px][20px][20px][20px][20px,grow][20px]"));		
 		lblInfo1.setFont(new Font("Tahoma", Font.BOLD, 26));
@@ -40,8 +40,7 @@ public class InfoPanel extends MCAPanel{
 		lblInfo4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		add(lblInfo4, "cell 1 5,alignx center,aligny top");		
 		lblInfo5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(lblInfo5, "cell 1 7,alignx center,aligny top");
-				
+		add(lblInfo5, "cell 1 7,alignx center,aligny top");	
 	}
 
 	@Override
@@ -53,10 +52,6 @@ public class InfoPanel extends MCAPanel{
 		lblInfo1.setText(bundle.getString("head1"));
 		lblInfo2.setText(bundle.getString("info1"));
 		lblInfo3.setText(bundle.getString("info2"));
-		lblInfo4.setText(bundle.getString("info3"));
-		lblInfo5.setText(bundle.getString("head2")+"     "+bundle.getString("date"));		
-		
-		
+		lblInfo4.setText(bundle.getString("info3"));			
 	}
-
 }
