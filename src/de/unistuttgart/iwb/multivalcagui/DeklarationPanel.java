@@ -26,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.535
+ * @version 0.538
  */
 
 public class DeklarationPanel extends MCAPanel {
@@ -270,6 +270,10 @@ public class DeklarationPanel extends MCAPanel {
 
 	@Override
 	public void showSelf() {
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP17n1.setText(bundle.getString("p17n1"));
 		lblP17n2.setText(bundle.getString("p17n2"));
 		lblP17n3.setText(bundle.getString("p01n4"));
