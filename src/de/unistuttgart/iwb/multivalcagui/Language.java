@@ -14,5 +14,6 @@ public enum Language {
 	English,
 	Francais,
 	Português,
-	\u0440\u043E\u0441\u0441\u0438\u0439\u0441\u043A\u0438\u0439,
+	\u0440\u0443\u0441\u0441\u043A\u0438\u0439,
+	Hrvatski
 }
