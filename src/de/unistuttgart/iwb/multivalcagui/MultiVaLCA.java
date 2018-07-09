@@ -142,7 +142,7 @@ public class MultiVaLCA {
 		
 		// Panel 4; Info
 		
-		panel.add(new InfoPanel("leer", versionString), "leer");
+		panel.add(new InfoPanel("leer"), "leer");
 		
 		// Panel 5; Sprachauswahl
 		//

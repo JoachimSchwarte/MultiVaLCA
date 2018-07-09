@@ -23,7 +23,7 @@ public class InfoPanel extends MCAPanel{
 	protected static JLabel lblInfo4 = new JLabel();		
 	protected static JLabel lblInfo5 = new JLabel();		
 
-	protected InfoPanel(String key, String version) {
+	protected InfoPanel(String key) {
 		super(key);
 		initUI();
 	}
