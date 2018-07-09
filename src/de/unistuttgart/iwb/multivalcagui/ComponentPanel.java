@@ -1,6 +1,12 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -8,7 +14,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import de.unistuttgart.iwb.multivalca.Component;
+import de.unistuttgart.iwb.multivalca.MCAObject;
+import de.unistuttgart.iwb.multivalca.ProductDeclaration;
+import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
+
+/**
+ * @author HH, JS
+ * @version 0.538
+ */
 
 public class ComponentPanel extends MCAPanel{
 	
@@ -61,7 +76,69 @@ public class ComponentPanel extends MCAPanel{
 		add(btnP18n2, "cell 1 7 2 1,alignx center");
 		add(lblP18n7, "cell 0 8 4 1,alignx center");
 		
+		btnP18n1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Language l = GUILanguage.getChosenLanguage();
+				Locale locale = MultiVaLCA.LANGUAGES.get(l);
+				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+				String fmenge = txtP18n3.getText();
+				Double menge;
+				try {
+					menge = Double.parseDouble(fmenge);
+				} catch (NumberFormatException e){
+					menge = 0.0;
+				}
+				if (menge == 0.0) {
+					lblP18n7.setText(bundle.getString("stat07"));
+				}
+				String refName = txtP18n2.getText();
+				boolean refOk = true;					
+				if (!ProductSystem.getAllInstances().containsKey(refName) &&
+						!ProductDeclaration.getAllInstances().containsKey(refName)) {
+					refOk = false;
+					lblP18n7.setText(bundle.getString("stat42"));
+				}			
+				String comName = txtP18n1.getText();	
+				boolean nameOk = true;
+				if ("".equals(comName)) {
+					nameOk = false;
+					lblP18n7.setText(bundle.getString("stat02"));
+				} 
+				if (comName != comName.replaceAll(" ","")) {
+					nameOk = false;
+					lblP18n7.setText(bundle.getString("stat20"));
+					txtP18n1.setText("");
+				}
+				if (MCAObject.containsName(comName)) {
+					nameOk = false;
+					lblP18n7.setText(bundle.getString("stat03"));
+					txtP18n1.setText("");
+				}
+				if (menge != 0.0 && refOk && nameOk) {
+					Component.newInstance(comName, refName);
+					txtP18n1.setEnabled(false);
+					txtP18n2.setEnabled(false);
+					txtP18n3.setEnabled(false);
+					btnP18n1.setEnabled(false);
+					txtP18n4.setEnabled(true);
+					txtP18n5.setEnabled(true);
+					btnP18n2.setEnabled(true);
+				}	
+				
+			}
+			
+		});
 		
+		btnP18n2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 	@Override
@@ -78,8 +155,6 @@ public class ComponentPanel extends MCAPanel{
 		lblP18n6.setText(bundle.getString("p02n6"));
 		lblP18n7.setText(bundle.getString("stat01"));
 		btnP18n1.setText(bundle.getString("bt13"));
-		btnP18n2.setText(bundle.getString("bt04"));
-		
+		btnP18n2.setText(bundle.getString("bt04"));	
 	}
-
 }
