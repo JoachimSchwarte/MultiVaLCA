@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
  * von Objekten des Typs "Komponente".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.537
+ * @version 0.537 
  */
 
 public class Component extends MCAObject  
@@ -158,11 +158,4 @@ implements ImpactValueMaps {
 		}
 		return wvKomponente;
 	}
-
-/*	@Override
-	public void setName(String string) {
-		NameCheck.removeWVName(this.name);
-		NameCheck.getInstance().addWVName(string);
-		this.name = string;		
-	}*/
 }
