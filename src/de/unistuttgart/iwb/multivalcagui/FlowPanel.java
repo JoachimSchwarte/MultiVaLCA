@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.521
+ * @version 0.537
  */
 
 public class FlowPanel extends MCAPanel{
@@ -81,7 +81,7 @@ public class FlowPanel extends MCAPanel{
 
 				FlowUnit einheit = cbbP01n2.getItemAt(cbbP01n2.getSelectedIndex());
 				boolean nameOk = true;
-				if (name.equals("")) {
+				if ("".equals(name)) {
 					nameOk = false;
 					lblP01n5.setText(bundle.getString("stat02"));
 				}
@@ -90,7 +90,7 @@ public class FlowPanel extends MCAPanel{
 					lblP01n5.setText(bundle.getString("stat20"));
 					txtP01n1.setText("");
 				}								
-				if (nameOk == true) {
+				if (nameOk) {
 					if (Flow.containsName(name)) {
 						lblP01n5.setText(bundle.getString("stat03"));
 					} else {

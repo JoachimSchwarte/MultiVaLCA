@@ -21,7 +21,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.536
+ * @version 0.537
  */
 
 public class EvalMethodPanel extends MCAPanel{
@@ -139,7 +139,7 @@ public class EvalMethodPanel extends MCAPanel{
 					lblP14n5.setText(bundle.getString("stat30"));
 					inputOK = false;					
 				}
-				if (inputOK == true) {
+				if (inputOK) {
 					LCIAMethod.instance(nameILCA).addFactor(CharacFactor.getInstance(nameCF));
 					btnP14n4.setEnabled(true);				
 					lblP14n5.setText(bundle.getString("stat28") + 
