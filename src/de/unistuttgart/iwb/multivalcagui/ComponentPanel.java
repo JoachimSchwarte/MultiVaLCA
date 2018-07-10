@@ -22,7 +22,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.538
+ * @version 0.539
  */
 
 public class ComponentPanel extends MCAPanel{
@@ -91,6 +91,7 @@ public class ComponentPanel extends MCAPanel{
 				}
 				if (menge == 0.0) {
 					lblP18n7.setText(bundle.getString("stat07"));
+					return;
 				}
 				String refName = txtP18n2.getText();
 				boolean refOk = true;					
@@ -98,22 +99,26 @@ public class ComponentPanel extends MCAPanel{
 						!ProductDeclaration.getAllInstances().containsKey(refName)) {
 					refOk = false;
 					lblP18n7.setText(bundle.getString("stat42"));
+					return;
 				}			
 				String comName = txtP18n1.getText();	
 				boolean nameOk = true;
 				if ("".equals(comName)) {
 					nameOk = false;
 					lblP18n7.setText(bundle.getString("stat02"));
+					return;
 				} 
 				if (comName != comName.replaceAll(" ","")) {
 					nameOk = false;
 					lblP18n7.setText(bundle.getString("stat20"));
 					txtP18n1.setText("");
+					return;
 				}
 				if (MCAObject.containsName(comName)) {
 					nameOk = false;
 					lblP18n7.setText(bundle.getString("stat03"));
 					txtP18n1.setText("");
+					return;
 				}
 				if (menge != 0.0 && refOk && nameOk) {
 					Component.newInstance(comName, refName);

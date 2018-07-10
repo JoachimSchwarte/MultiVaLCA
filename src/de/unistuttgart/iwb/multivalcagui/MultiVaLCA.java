@@ -31,7 +31,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author JS, HH
- * @version 0.538
+ * @version 0.539
  */
 
 public class MultiVaLCA {
