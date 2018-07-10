@@ -22,11 +22,14 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.536
+ * @version 0.539
  */
 
 public class ProcessModulePanel extends MCAPanel{
-	
+	Language l = GUILanguage.getChosenLanguage();
+	Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);	
 	private JTextField txtP02n1 = new JTextField();		// Eingabefeld Modulname
 	private JTextField txtP02n2 = new JTextField();		// Eingabefeld Flussname  
 	private JTextField txtP02n3 = new JTextField();		// Eingabefeld Menge
@@ -50,10 +53,7 @@ public class ProcessModulePanel extends MCAPanel{
 	}
 	
 	private void initUI( ) {		
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -91,6 +91,13 @@ public class ProcessModulePanel extends MCAPanel{
 		add(btnP02n4, "cell 2 8,alignx center");
 		add(lblP02n5, "cell 0 9 4 1,alignx center");		
 		
+		button1();		
+		button2();		
+		button3();		
+		button4();
+	}
+	
+	private void button1() {
 		btnP02n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -122,7 +129,9 @@ public class ProcessModulePanel extends MCAPanel{
 				} 		
 			}
 		});
-		
+	}
+	
+	private void button2() {
 		btnP02n2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -165,7 +174,8 @@ public class ProcessModulePanel extends MCAPanel{
 				}
 			}
 		});
-		
+	}
+	private void button3() {
 		btnP02n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -215,7 +225,8 @@ public class ProcessModulePanel extends MCAPanel{
 				}
 			}			
 		});
-		
+	}
+	private void button4() {
 		btnP02n4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -235,15 +246,15 @@ public class ProcessModulePanel extends MCAPanel{
 				txtP02n5.setEnabled(false);
 				lblP02n5.setText(bundle.getString("stat01"));
 			}
-		});		
+		});	
 	}
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP02n1.setText(bundle.getString("p02n1"));
 		lblP02n2.setText(bundle.getString("p02n2"));
 		lblP02n3.setText(bundle.getString("p01n2"));

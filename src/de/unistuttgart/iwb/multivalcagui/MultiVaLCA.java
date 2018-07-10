@@ -37,8 +37,8 @@ import net.miginfocom.swing.MigLayout;
 public class MultiVaLCA {
 	
 	Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.538";
-	private String dateString ="09.07.2018";
+	private String versionString ="Version 0.539";
+	private String dateString ="10.07.2018";
 	
 	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();
