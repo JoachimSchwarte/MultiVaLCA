@@ -365,6 +365,10 @@ class XMLExportAction extends AbstractAction {
         	alleComponents.appendChild(com1);
         	Element name = document.createElement("Component-Name");
         	com1.appendChild(name);
+        	name.appendChild(document.createTextNode(comName));
+        	Element referenz = document.createElement("Component-Reference");
+        	com1.appendChild(referenz);
+        	referenz.appendChild(document.createTextNode(thisCom.getKomponente().getName().toString()));
         	
         }
 		
