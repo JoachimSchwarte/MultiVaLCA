@@ -39,6 +39,10 @@ public class FlowPanel extends MCAPanel{
 	private JButton btnP01n1 = new JButton();			// "speichern" 
 	private JComboBox<String> cbbP01n1 = new JComboBox<String>();
 	private JComboBox<FlowUnit> cbbP01n2 = new JComboBox<FlowUnit>();
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	
 	public FlowPanel(String key) {
 		super(key);
@@ -65,10 +69,6 @@ public class FlowPanel extends MCAPanel{
 		btnP01n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Language l = GUILanguage.getChosenLanguage();
-				Locale locale = MultiVaLCA.LANGUAGES.get(l);
-				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 				String name = txtP01n1.getText();
 				LinkedHashMap<FlowType, String> ft = FlowTypeStringMap.getFTS(l);
 				String typs = cbbP01n1.getItemAt(cbbP01n1.getSelectedIndex());
@@ -109,10 +109,10 @@ public class FlowPanel extends MCAPanel{
 	
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP01n1.setText(bundle.getString("p01n1"));
 		lblP01n2.setText(bundle.getString("p01n2"));
 		lblP01n3.setText(bundle.getString("p01n3"));

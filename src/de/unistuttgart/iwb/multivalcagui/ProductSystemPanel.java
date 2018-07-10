@@ -48,6 +48,10 @@ public class ProductSystemPanel extends MCAPanel{
 	private JButton btnP03n5 = new JButton();			// "weiter"
 	private JButton btnP03n6 = new JButton();			// "VK-Flow hinzufügen"
 	private JButton btnP03n7 = new JButton();			// "fertig"
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	protected ProductSystemPanel(String key) {
 		super(key);
@@ -55,10 +59,6 @@ public class ProductSystemPanel extends MCAPanel{
 	}
 		
 		private void initUI() {
-			Language l = GUILanguage.getChosenLanguage();
-			Locale locale = MultiVaLCA.LANGUAGES.get(l);
-			String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-			ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP03n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -332,10 +332,10 @@ public class ProductSystemPanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP03n1.setText(bundle.getString("p03n1"));
 		lblP03n2.setText(bundle.getString("p03n2"));
 		lblP03n3.setText(bundle.getString("p03n3"));

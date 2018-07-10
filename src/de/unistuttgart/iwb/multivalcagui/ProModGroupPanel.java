@@ -40,6 +40,10 @@ public class ProModGroupPanel extends MCAPanel{
 	private JButton btn02 = new JButton(); 			// "Modul zur Gruppe hinzufügen"
 	private JButton btn03 = new JButton(); 			// "fertig"
 	private JLabel lbl06 = new JLabel(); 			// Status
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	protected ProModGroupPanel(String key) {
 		super(key);
@@ -77,10 +81,6 @@ public class ProModGroupPanel extends MCAPanel{
 		
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Language l = GUILanguage.getChosenLanguage();
-				Locale locale = MultiVaLCA.LANGUAGES.get(l);
-				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 				String fmenge = txt03.getText();
 				Double menge;
 				try {
@@ -127,10 +127,6 @@ public class ProModGroupPanel extends MCAPanel{
 		
 		btn02.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Language l = GUILanguage.getChosenLanguage();
-				Locale locale = MultiVaLCA.LANGUAGES.get(l);
-				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 				String name = txt04.getText();	
 				String flname = txt02.getText();
 				boolean nameOk = true;
@@ -176,10 +172,10 @@ public class ProModGroupPanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lbl01.setText(bundle.getString("p20n1"));
 		lbl02.setText(bundle.getString("p20n2"));
 		lbl03.setText(bundle.getString("p20n3"));

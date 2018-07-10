@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class MultiVaLCA {
 	
-	Language l = GUILanguage.getChosenLanguage();
+	private Language l = GUILanguage.getChosenLanguage();
 	private String versionString ="Version 0.539";
 	private String dateString ="10.07.2018";
 	
@@ -47,6 +47,8 @@ public class MultiVaLCA {
 	private final Action prefsAction 			= new prefsAction();
 	private final Action xmlExportAction 		= new XMLExportAction(l);
 	private final Action xmlImportAction 		= new XMLImportAction(l);
+
+
 	//
 	//
 	// Panel 5; Sprachauswahl
@@ -78,7 +80,9 @@ public class MultiVaLCA {
 	        LANGUAGES.put(Language.Hrvatski, kroatisch);
 	    }
 	    
-	Locale locale = LANGUAGES.get(l);
+	private Locale locale = LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	
 	
 	/**
@@ -108,9 +112,6 @@ public class MultiVaLCA {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		
 		frame.setTitle(bundle.getString("head1")+"   "+versionString);
 		frame.setBounds(100, 100, 600, 480);
@@ -529,8 +530,8 @@ public class MultiVaLCA {
 			public void actionPerformed(ActionEvent arg0) {
 				l = comboBox2.getItemAt(comboBox2.getSelectedIndex());
 				GUILanguage.setChosenLanguage(l);
-				Locale locale = LANGUAGES.get(l); 
-				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+				locale = LANGUAGES.get(l); 
+				bundle = ResourceBundle.getBundle(baseName, locale);
 					
 				frame.setTitle(bundle.getString("head1")+"   "+versionString);
 				mnDatei.setText(bundle.getString("mp6"));
@@ -603,9 +604,9 @@ public class MultiVaLCA {
 	private class newModuleAction extends AbstractAction {
 		private static final long serialVersionUID = 6190606710625748526L;
 		public newModuleAction() {
-			Locale locale = LANGUAGES.get(l);
-			String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-			ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+			locale = LANGUAGES.get(l);
+			baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			bundle = ResourceBundle.getBundle(baseName, locale);
 			
 			putValue(NAME, bundle.getString("mp12"));
 			putValue(SHORT_DESCRIPTION, bundle.getString("mp12e"));
@@ -622,17 +623,14 @@ public class MultiVaLCA {
 	private class prefsAction extends AbstractAction {
 		private static final long serialVersionUID = 8545097902306476895L;
 		public prefsAction() {
-			Locale locale = LANGUAGES.get(l);
-			String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-			ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+			locale = LANGUAGES.get(l);
+			baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			bundle = ResourceBundle.getBundle(baseName, locale);
 			putValue(NAME, bundle.getString("mp31"));
 			putValue(SHORT_DESCRIPTION, bundle.getString("mp31e"));
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Locale locale = LANGUAGES.get(l);
-			String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-			ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 			lblP05n1.setText(bundle.getString("mp31e"));
 			lblP05n2.setText(bundle.getString("mp31"));
 			btn05n1.setText(bundle.getString("bt01"));			

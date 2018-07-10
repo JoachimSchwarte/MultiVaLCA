@@ -32,6 +32,10 @@ public class ImpactCatPanel extends MCAPanel {
 	private JLabel lblP10n3 = new JLabel();				// "Indikator"
 	private JLabel lblP10n4 = new JLabel();				// Status
 	private JButton btnP10n1 = new JButton(); 			// "speichern"
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	public ImpactCatPanel(String key) {
 		super(key);
@@ -58,10 +62,6 @@ public class ImpactCatPanel extends MCAPanel {
 		btnP10n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Language l = GUILanguage.getChosenLanguage();
-				Locale locale = MultiVaLCA.LANGUAGES.get(l);
-				String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-				ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 				String name = txtP10n1.getText();	
 				String wi = txtP10n2.getText();
 				boolean inputOK = true;
@@ -91,10 +91,10 @@ public class ImpactCatPanel extends MCAPanel {
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP10n1.setText(bundle.getString("p10n1"));
 		lblP10n2.setText(bundle.getString("p10n2"));
 		lblP10n3.setText(bundle.getString("p10n3"));

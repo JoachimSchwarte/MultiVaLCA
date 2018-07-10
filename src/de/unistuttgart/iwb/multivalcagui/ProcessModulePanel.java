@@ -26,10 +26,6 @@ import net.miginfocom.swing.MigLayout;
  */
 
 public class ProcessModulePanel extends MCAPanel{
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);	
 	private JTextField txtP02n1 = new JTextField();		// Eingabefeld Modulname
 	private JTextField txtP02n2 = new JTextField();		// Eingabefeld Flussname  
 	private JTextField txtP02n3 = new JTextField();		// Eingabefeld Menge
@@ -46,6 +42,10 @@ public class ProcessModulePanel extends MCAPanel{
 	private JButton btnP02n2 = new JButton();			// "Grenzwerte bestätigen"
 	private JButton btnP02n4 = new JButton();			// "fertig"
 	private JButton btnP02n3 = new JButton();			// "Fluss hinzufügen"
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	protected ProcessModulePanel(String key) {
 		super(key);
@@ -53,7 +53,6 @@ public class ProcessModulePanel extends MCAPanel{
 	}
 	
 	private void initUI( ) {		
-
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));

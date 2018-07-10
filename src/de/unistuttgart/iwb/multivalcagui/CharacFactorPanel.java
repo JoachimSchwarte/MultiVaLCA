@@ -42,18 +42,17 @@ public class CharacFactorPanel extends MCAPanel{
 	private JLabel lblP12n8 = new JLabel(); 			// Status
 	private JButton btnP12n1 = new JButton(); 			// "speichern"
 	private JButton btnP12n2 = new JButton(); 			// "Grenzwerte bestätigen"
-
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	
 	protected CharacFactorPanel(String key) {
 		super(key);
 		initUI();
 	}
 
-	private void initUI() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-		
+	private void initUI() {		
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP12n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -194,10 +193,10 @@ public class CharacFactorPanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		
 		lblP12n1.setText(bundle.getString("p12n1"));
 		lblP12n2.setText(bundle.getString("p12n2"));

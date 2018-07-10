@@ -19,10 +19,16 @@ import de.unistuttgart.iwb.multivalca.ObjectType;
  */
 
 public class ObjectTypeStringMap {
+	
+	private static Language l = GUILanguage.getChosenLanguage();
+	private static Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private static String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private static ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	
 	public static LinkedHashMap<ObjectType, String> getOTS(Language l) {
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		LinkedHashMap<ObjectType, String> r = new LinkedHashMap<ObjectType, String>();
 		r.put(ObjectType.ProcessModule, bundle.getString("mp12"));
 		r.put(ObjectType.ProductSystem, bundle.getString("mp13"));
