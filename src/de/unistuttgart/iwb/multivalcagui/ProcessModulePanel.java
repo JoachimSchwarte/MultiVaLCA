@@ -43,6 +43,10 @@ public class ProcessModulePanel extends MCAPanel{
 	private JButton btnP02n2 = new JButton();			// "Grenzwerte bestätigen"
 	private JButton btnP02n4 = new JButton();			// "fertig"
 	private JButton btnP02n3 = new JButton();			// "Fluss hinzufügen"
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	protected ProcessModulePanel(String key) {
 		super(key);
@@ -50,10 +54,6 @@ public class ProcessModulePanel extends MCAPanel{
 	}
 	
 	private void initUI( ) {		
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -240,10 +240,10 @@ public class ProcessModulePanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP02n1.setText(bundle.getString("p02n1"));
 		lblP02n2.setText(bundle.getString("p02n2"));
 		lblP02n3.setText(bundle.getString("p01n2"));

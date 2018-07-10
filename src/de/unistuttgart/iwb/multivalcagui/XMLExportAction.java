@@ -35,10 +35,15 @@ import de.unistuttgart.iwb.multivalca.*;
 
 class XMLExportAction extends AbstractAction {
 	
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	
 	public XMLExportAction(Language l) {
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		putValue(NAME, bundle.getString("mp61"));
 		putValue(SHORT_DESCRIPTION, bundle.getString("mp61e"));
 	}

@@ -38,6 +38,10 @@ public class EvalMethodPanel extends MCAPanel{
 	private JButton btnP14n2 = new JButton(); 			// Wirkungskategorie "hinzufügen"
 	private JButton btnP14n3 = new JButton(); 			// Charakterisierungsfaktor "hinzufügen"
 	private JButton btnP14n4 = new JButton(); 			// "fertig"
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	public EvalMethodPanel(String key) {
 		super(key);
@@ -45,10 +49,6 @@ public class EvalMethodPanel extends MCAPanel{
 	}
 
 	private void initUI() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale); //nun zweimal initiiert
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP14n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -171,10 +171,10 @@ public class EvalMethodPanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP14n1.setText(bundle.getString("p14n1"));
 		lblP14n2.setText(bundle.getString("p14n2"));
 		lblP14n3.setText(bundle.getString("mp14"));

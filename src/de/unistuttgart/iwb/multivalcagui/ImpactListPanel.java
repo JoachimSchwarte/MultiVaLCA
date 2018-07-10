@@ -27,6 +27,10 @@ public class ImpactListPanel extends MCAPanel{
 	private JLabel lblP11n1 = new JLabel();
 	private JTable catTable 		= new JTable();
 	private DefaultTableModel catTableModel 		= new DefaultTableModel(0,2);
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	protected ImpactListPanel(String key) {
 		super(key);
@@ -44,10 +48,10 @@ public class ImpactListPanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP11n1.setText(bundle.getString("mp44e"));
 		catTableModel.setRowCount(0);
 		catTable.setModel(catTableModel);

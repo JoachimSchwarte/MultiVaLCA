@@ -30,10 +30,6 @@ import net.miginfocom.swing.MigLayout;
  */
 
 public class DeklarationPanel extends MCAPanel {
-	protected Language l = GUILanguage.getChosenLanguage();
-	protected Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	protected String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	protected ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	private JLabel lblP17n1 = new JLabel();				// "neue Produktdeklaration"
 	private JLabel lblP17n2 = new JLabel();				// "Name des ..."
 	private JLabel lblP17n3 = new JLabel();				// "Einheit"
@@ -53,6 +49,10 @@ public class DeklarationPanel extends MCAPanel {
 	private JTextField txtP17n4 = new JTextField();		// Eingabefeld LCIA-Name
 	private JTextField txtP17n5 = new JTextField();		// Eingabefeld Untergrenze
 	private JTextField txtP17n6 = new JTextField();		// Eingabefeld Obergrenze
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	protected DeklarationPanel(String key) {
 		super(key);
@@ -270,6 +270,10 @@ public class DeklarationPanel extends MCAPanel {
 
 	@Override
 	public void showSelf() {
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP17n1.setText(bundle.getString("p17n1"));
 		lblP17n2.setText(bundle.getString("p17n2"));
 		lblP17n3.setText(bundle.getString("p01n4"));

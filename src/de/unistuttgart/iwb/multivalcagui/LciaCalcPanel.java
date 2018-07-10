@@ -49,6 +49,10 @@ public class LciaCalcPanel extends MCAPanel {
 	private JComboBox<String> cobP16n4 = new JComboBox<String>();	// Werttypen
 	private JTable waTable 		= new JTable();
 	private DefaultTableModel waTableModel 		= new DefaultTableModel(0,3);
+	private Language l = GUILanguage.getChosenLanguage();
+	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
+	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	protected LciaCalcPanel(String key) {
 		super(key);
@@ -56,10 +60,6 @@ public class LciaCalcPanel extends MCAPanel {
 	}
 
 	private void initUI() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
 		lblP16n1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -180,10 +180,10 @@ public class LciaCalcPanel extends MCAPanel {
 
 	@Override
 	public void showSelf() {
-		Language l = GUILanguage.getChosenLanguage();
-		Locale locale = MultiVaLCA.LANGUAGES.get(l);
-		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP16n1.setText(bundle.getString("p16n1"));
 		lblP16n2.setText(bundle.getString("p16n2"));
 		lblP16n3.setText(bundle.getString("p16n3"));
