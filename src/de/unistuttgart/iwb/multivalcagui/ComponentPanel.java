@@ -83,9 +83,7 @@ public class ComponentPanel extends MCAPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String comName = txtP18n1.getText();	
-				boolean nameOk = true;
 				String refName = txtP18n2.getText();
-				boolean refOk = true;
 				String fmenge = txtP18n3.getText();
 				Double menge;
 				try {
@@ -95,36 +93,35 @@ public class ComponentPanel extends MCAPanel{
 				}
 				if (menge == 0.0) {
 					lblP18n7.setText(bundle.getString("stat07"));
+					return;
 				}									
 				if (!ProductSystem.getAllInstances().containsKey(refName) &&
 						!ProductDeclaration.getAllInstances().containsKey(refName)) {
-					refOk = false;
 					lblP18n7.setText(bundle.getString("stat42"));
+					return;
 				}							
 				if ("".equals(comName)) {
-					nameOk = false;
 					lblP18n7.setText(bundle.getString("stat02"));
+					return;
 				} 
 				if (comName != comName.replaceAll(" ","")) {
-					nameOk = false;
 					lblP18n7.setText(bundle.getString("stat20"));
 					txtP18n1.setText("");
+					return;
 				}
 				if (MCAObject.containsName(comName)) {
-					nameOk = false;
 					lblP18n7.setText(bundle.getString("stat03"));
 					txtP18n1.setText("");
+					return;
 				}
-				if (menge != 0.0 && refOk && nameOk) {
-					Component.newInstance(comName, refName);
-					txtP18n1.setEnabled(false);
-					txtP18n2.setEnabled(false);
-					txtP18n3.setEnabled(false);
-					btnP18n1.setEnabled(false);
-					txtP18n4.setEnabled(true);
-					txtP18n5.setEnabled(true);
-					btnP18n2.setEnabled(true);
-				}				
+				Component.newInstance(comName, refName);
+				txtP18n1.setEnabled(false);
+				txtP18n2.setEnabled(false);
+				txtP18n3.setEnabled(false);
+				btnP18n1.setEnabled(false);
+				txtP18n4.setEnabled(true);
+				txtP18n5.setEnabled(true);
+				btnP18n2.setEnabled(true);			
 			}		
 		});
 		
