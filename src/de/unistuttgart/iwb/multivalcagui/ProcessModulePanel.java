@@ -22,11 +22,10 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.536
+ * @version 0.539
  */
 
 public class ProcessModulePanel extends MCAPanel{
-	
 	private JTextField txtP02n1 = new JTextField();		// Eingabefeld Modulname
 	private JTextField txtP02n2 = new JTextField();		// Eingabefeld Flussname  
 	private JTextField txtP02n3 = new JTextField();		// Eingabefeld Menge
@@ -91,6 +90,13 @@ public class ProcessModulePanel extends MCAPanel{
 		add(btnP02n4, "cell 2 8,alignx center");
 		add(lblP02n5, "cell 0 9 4 1,alignx center");		
 		
+		button1();		
+		button2();		
+		button3();		
+		button4();
+	}
+	
+	private void button1() {
 		btnP02n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -122,7 +128,9 @@ public class ProcessModulePanel extends MCAPanel{
 				} 		
 			}
 		});
-		
+	}
+	
+	private void button2() {
 		btnP02n2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -165,7 +173,8 @@ public class ProcessModulePanel extends MCAPanel{
 				}
 			}
 		});
-		
+	}
+	private void button3() {
 		btnP02n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -215,7 +224,8 @@ public class ProcessModulePanel extends MCAPanel{
 				}
 			}			
 		});
-		
+	}
+	private void button4() {
 		btnP02n4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -235,7 +245,7 @@ public class ProcessModulePanel extends MCAPanel{
 				txtP02n5.setEnabled(false);
 				lblP02n5.setText(bundle.getString("stat01"));
 			}
-		});		
+		});	
 	}
 
 	@Override
