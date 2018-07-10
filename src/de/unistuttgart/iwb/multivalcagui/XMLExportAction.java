@@ -66,6 +66,7 @@ class XMLExportAction extends AbstractAction {
             writeCFactors(document, root);
             writeLCIAMethods(document, root);
             writeProductDeclarations(document, root);
+            writeComponents(document, root);
             
             JFileChooser chooser = new JFileChooser();
 	        FileFilter filter = new FileNameExtensionFilter("XML-Dateien (*.xml)", "xml");
@@ -352,6 +353,25 @@ class XMLExportAction extends AbstractAction {
             	menge3.appendChild(document.createTextNode(thisPD.getImpactValueMap(thisPD.getBM()).get(ic).get(ValueType.UpperBound).toString()));
             }
         }		
+	}
+	
+	private void writeComponents(Document document, Element root) {
+        Element alleComponents = document.createElement("Components");
+        root.appendChild(alleComponents);
+        
+        for (String comName : Component.getAllInstances().keySet()) {
+        	Component thisCom = Component.getAllInstances().get(comName);
+        	Element com1 = document.createElement("Component");
+        	alleComponents.appendChild(com1);
+        	Element name = document.createElement("Component-Name");
+        	com1.appendChild(name);
+        	name.appendChild(document.createTextNode(comName));
+        	Element referenz = document.createElement("Component-Reference");
+        	com1.appendChild(referenz);
+        	referenz.appendChild(document.createTextNode(thisCom.getKomponente().getName().toString()));
+        	
+        }
+		
 	}
 	
 }
