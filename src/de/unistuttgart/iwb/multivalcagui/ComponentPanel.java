@@ -46,10 +46,7 @@ public class ComponentPanel extends MCAPanel{
 	private JTextField txtP18n5 = new JTextField();		// Eingabefeld Obergrenze
 	private JButton btnP18n1 = new JButton(); 			// "neue Komponente anlegen"
 	private JButton btnP18n2 = new JButton(); 			// "fertig"
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+
 
 	protected ComponentPanel(String key) {
 		super(key);
