@@ -1,7 +1,16 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+/**
+ * @author Dr.-Ing. Joachim Schwarte
+ * @version 0.540
+ */
 
 public class LowerUpperDialog {
 
