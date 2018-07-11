@@ -31,6 +31,4 @@ public class LowerUpperDialog {
 		txtUpper.setColumns(10);
 		txtUpper.setEnabled(false);
 	}
-	
-
 }
