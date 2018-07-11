@@ -30,7 +30,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.539
+ * @version 0.540
  */
 
 class XMLExportAction extends AbstractAction {
@@ -364,7 +364,15 @@ class XMLExportAction extends AbstractAction {
         	Element referenz = document.createElement("Component-Reference");
         	com1.appendChild(referenz);
         	referenz.appendChild(document.createTextNode(thisCom.getKomponente().getName().toString()));
-        	
+        	Element mv = document.createElement("ComRef-MainValue");
+        	com1.appendChild(mv);
+        	mv.appendChild(document.createTextNode(thisCom.getValues().get(ValueType.MeanValue).toString()));
+        	Element lv = document.createElement("ComRef-LowerBound");
+        	com1.appendChild(lv);
+        	lv.appendChild(document.createTextNode(thisCom.getValues().get(ValueType.LowerBound).toString()));
+        	Element uv = document.createElement("ComRef-UpperBound");
+        	com1.appendChild(uv);
+        	uv.appendChild(document.createTextNode(thisCom.getValues().get(ValueType.UpperBound).toString()));
         }
 		
 	}

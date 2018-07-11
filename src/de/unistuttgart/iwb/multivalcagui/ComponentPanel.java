@@ -24,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.539
+ * @version 0.540
  */
 
 public class ComponentPanel extends MCAPanel{
@@ -129,6 +129,8 @@ public class ComponentPanel extends MCAPanel{
 				btnP18n1.setEnabled(false);
 				txtP18n4.setEnabled(true);
 				txtP18n5.setEnabled(true);
+				txtP18n4.setText(fmenge);
+				txtP18n5.setText(fmenge);
 				btnP18n2.setEnabled(true);			
 			}		
 		});
