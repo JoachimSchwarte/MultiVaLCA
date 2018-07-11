@@ -47,7 +47,6 @@ public class ComponentPanel extends MCAPanel{
 	private JButton btnP18n1 = new JButton(); 			// "neue Komponente anlegen"
 	private JButton btnP18n2 = new JButton(); 			// "fertig"
 
-
 	protected ComponentPanel(String key) {
 		super(key);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
@@ -68,7 +67,9 @@ public class ComponentPanel extends MCAPanel{
 		txtP18n3.setColumns(10);
 		btnP18n1.setEnabled(true);
 		add(btnP18n1, "cell 1 4 2 1,alignx center");
-		add(lblP18n5, "cell 1 5,grow");		
+		LowerUpperDialog lud = new LowerUpperDialog(lblP18n5, lblP18n6, txtP18n4, txtP18n5);
+		lud.drawLowUpDialog(5, this);
+/*		add(lblP18n5, "cell 1 5,grow");		
 		txtP18n4.setText("");
 		txtP18n4.setEnabled(false);
 		add(txtP18n4, "cell 2 5,grow");
@@ -77,8 +78,8 @@ public class ComponentPanel extends MCAPanel{
 		txtP18n5.setText("");
 		add(txtP18n5, "cell 2 6,grow");
 		txtP18n5.setColumns(10);
-		txtP18n5.setEnabled(false);
-		btnP18n2.setEnabled(false);
+		txtP18n5.setEnabled(false); */
+		btnP18n2.setEnabled(false); 
 		add(btnP18n2, "cell 1 7 2 1,alignx center");
 		add(lblP18n7, "cell 0 8 4 1,alignx center");
 		
