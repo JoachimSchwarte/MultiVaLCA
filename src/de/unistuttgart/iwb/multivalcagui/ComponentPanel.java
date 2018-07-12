@@ -24,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.540
+ * @version 0.541
  */
 
 public class ComponentPanel extends MCAPanel{
@@ -46,29 +46,30 @@ public class ComponentPanel extends MCAPanel{
 	private JTextField txtP18n5 = new JTextField();		// Eingabefeld Obergrenze
 	private JButton btnP18n1 = new JButton(); 			// "neue Komponente anlegen"
 	private JButton btnP18n2 = new JButton(); 			// "fertig"
+	private LowerUpperDialog lud = new LowerUpperDialog(lblP18n5, lblP18n6, txtP18n4, txtP18n5);
 
 	protected ComponentPanel(String key) {
 		super(key);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));	
 		lblP18n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP18n1, "cell 1 0 2 1,alignx center,aligny top");
-		add(lblP18n2, "cell 1 1,grow");		
+		Integer pos=0;
+		add(lblP18n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");
+		add(lblP18n2, "cell 1 "+(++pos).toString()+",grow");		
 		txtP18n1.setText("");
-		add(txtP18n1, "cell 2 1,grow");
+		add(txtP18n1, "cell 2 "+pos.toString()+",grow");
 		txtP18n1.setColumns(10);
-		add(lblP18n3, "cell 1 2,grow");		
+		add(lblP18n3, "cell 1 "+(++pos).toString()+",grow");		
 		txtP18n2.setText("");
-		add(txtP18n2, "cell 2 2,grow");
+		add(txtP18n2, "cell 2 "+pos.toString()+",grow");
 		txtP18n2.setColumns(10);
-		add(lblP18n4, "cell 1 3,grow");		
+		add(lblP18n4, "cell 1 "+(++pos).toString()+",grow");		
 		txtP18n3.setText("");
-		add(txtP18n3, "cell 2 3,grow");
+		add(txtP18n3, "cell 2 "+pos.toString()+",grow");
 		txtP18n3.setColumns(10);
 		btnP18n1.setEnabled(true);
-		add(btnP18n1, "cell 1 4 2 1,alignx center");
-		LowerUpperDialog lud = new LowerUpperDialog(lblP18n5, lblP18n6, txtP18n4, txtP18n5);
-		lud.drawLowUpDialog(5, this);
+		add(btnP18n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");		
+		pos = lud.draw(pos, this);
 /*		add(lblP18n5, "cell 1 5,grow");		
 		txtP18n4.setText("");
 		txtP18n4.setEnabled(false);
@@ -80,8 +81,8 @@ public class ComponentPanel extends MCAPanel{
 		txtP18n5.setColumns(10);
 		txtP18n5.setEnabled(false); */
 		btnP18n2.setEnabled(false); 
-		add(btnP18n2, "cell 1 7 2 1,alignx center");
-		add(lblP18n7, "cell 0 8 4 1,alignx center");
+		add(btnP18n2, "cell 1 "+(++pos).toString()+" 2 1,alignx center");
+		add(lblP18n7, "cell 0 "+(++pos).toString()+" 4 1,alignx center");
 		
 		button1();		
 		button2();	
@@ -141,37 +142,9 @@ public class ComponentPanel extends MCAPanel{
 		btnP18n2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String fug = txtP18n4.getText();
-				String fog = txtP18n5.getText();
-				Double fugv;
-				Double fogv;
-				try {
-					fugv = Double.parseDouble(fug);
-				} catch (NumberFormatException e){
-					fugv = 0.0;
-				}
-				try {
-					fogv = Double.parseDouble(fog);
-				} catch (NumberFormatException e){
-					fogv = 0.0;
-				}
-				String fmenge = txtP18n3.getText();
-				Double menge;
-				try {
-					menge = Double.parseDouble(fmenge);
-				} catch (NumberFormatException e){
-					menge = 0.0;
-				}
-				if ((fugv > menge) || (fogv < menge)) {
-					txtP18n4.setText(txtP18n3.getText());
-					txtP18n5.setText(txtP18n3.getText());
-					lblP18n7.setText(bundle.getString("stat21"));
-				} else {
+				LinkedHashMap<ValueType, Double> mengen = lud.getValues(txtP18n3, lblP18n7);
+				if (mengen.size() == 3) {
 					String comName = txtP18n1.getText();
-					LinkedHashMap<ValueType, Double> mengen = new LinkedHashMap<ValueType, Double>();
-					mengen.put(ValueType.MeanValue, menge);
-					mengen.put(ValueType.LowerBound, fugv);
-					mengen.put(ValueType.UpperBound, fogv);
 					Component.getInstance(comName).setValues(mengen);
 					txtP18n1.setEnabled(true);
 					txtP18n2.setEnabled(true);
@@ -185,10 +158,8 @@ public class ComponentPanel extends MCAPanel{
 					txtP18n3.setText("");
 					txtP18n4.setText("");
 					txtP18n5.setText("");
-					lblP18n7.setText(bundle.getString("stat01"));
-
-			
-				}			
+					lblP18n7.setText(bundle.getString("stat01"));	
+				}					
 			}			
 		});
 	}

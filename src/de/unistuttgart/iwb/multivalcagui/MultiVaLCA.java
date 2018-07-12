@@ -31,14 +31,14 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author JS, HH
- * @version 0.540
+ * @version 0.541
  */
 
 public class MultiVaLCA {
 	
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.540";
-	private String dateString ="11.07.2018";
+	private String versionString ="Version 0.541";
+	private String dateString ="12.07.2018";
 	
 	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();

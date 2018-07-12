@@ -4,12 +4,18 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import de.unistuttgart.iwb.multivalca.ValueType;
+
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.540
+ * @version 0.541
  */
 
 public class LowerUpperDialog {
@@ -27,17 +33,50 @@ public class LowerUpperDialog {
 		this.txtUpper = txtUpper;
 	}
 	
-	public void drawLowUpDialog(Integer pos, ComponentPanel panel) {
-		Integer pos1 = pos+1;
-		panel.add(lblLower, "cell 1 "+pos.toString()+",grow");		
-		txtLower.setText("");		
-		panel.add(txtLower, "cell 2 "+pos.toString()+",grow");
-		txtLower.setColumns(10);
-		txtLower.setEnabled(false);
-		panel.add(lblUpper, "cell 1 "+pos1.toString()+",grow");		
-		txtUpper.setText("");
-		panel.add(txtUpper, "cell 2 "+pos1.toString()+",grow");
-		txtUpper.setColumns(10);
-		txtUpper.setEnabled(false);
+	public Integer draw(Integer pos, ComponentPanel panel) {
+		LabeledInputDialog lowerDi = new LabeledInputDialog(lblLower, txtLower);
+		LabeledInputDialog upperDi = new LabeledInputDialog(lblUpper, txtUpper);
+		pos = lowerDi.draw(pos, panel);
+		pos = upperDi.draw(pos, panel);
+		return pos;
+	}
+	
+	public LinkedHashMap<ValueType, Double> getValues(JTextField mainValue, JLabel statusline) {
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);	
+		LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+		String fug = txtLower.getText();
+		String fog = txtUpper.getText();
+		Double fugv;
+		Double fogv;
+		try {
+			fugv = Double.parseDouble(fug);
+		} catch (NumberFormatException e){
+			fugv = 0.0;
+		}
+		try {
+			fogv = Double.parseDouble(fog);
+		} catch (NumberFormatException e){
+			fogv = 0.0;
+		}
+		String fmenge = mainValue.getText();
+		Double menge;
+		try {
+			menge = Double.parseDouble(fmenge);
+		} catch (NumberFormatException e){
+			menge = 0.0;
+		}
+		if ((fugv > menge) || (fogv < menge)) {
+			txtLower.setText(mainValue.getText());
+			txtUpper.setText(mainValue.getText());
+			statusline.setText(bundle.getString("stat21"));
+		} else {	
+			values.put(ValueType.MeanValue, menge);
+			values.put(ValueType.LowerBound, fugv);
+			values.put(ValueType.UpperBound, fogv);
+		}
+		return values;
 	}
 }
