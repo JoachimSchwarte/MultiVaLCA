@@ -43,7 +43,7 @@ public class LowerUpperDialog {
 		this.txtUpper = txtUpper;
 	}
 	
-	public Integer draw(Integer pos0, ComponentPanel panel) {
+	public Integer draw(Integer pos0, MCAPanel panel) {
 		l = GUILanguage.getChosenLanguage();
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		bundle = ResourceBundle.getBundle(baseName, locale);	
@@ -144,8 +144,8 @@ public class LowerUpperDialog {
 				} catch (NumberFormatException e){
 					fogv = 0.0;
 				}
-				txtLower.setText(Double.toString(fugv*(1+pronum/100))); 
-				txtUpper.setText(Double.toString(fogv*(1-pronum/100))); 
+				txtLower.setText(Double.toString(fugv*(1-pronum/100))); 
+				txtUpper.setText(Double.toString(fogv*(1+pronum/100))); 
 			}		
 		});
 	}

@@ -1,7 +1,16 @@
+/*	
+ * MultiVaLCA
+ */
+
 package de.unistuttgart.iwb.multivalcagui;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+/**
+ * @author Dr.-Ing. Joachim Schwarte
+ * @version 0.541
+ */
 
 public class LabeledInputDialog {
 	
@@ -14,7 +23,7 @@ public class LabeledInputDialog {
 		this.input = input;
 	}
 	
-	public Integer draw(Integer pos0, ComponentPanel panel) {
+	public Integer draw(Integer pos0, MCAPanel panel) {
 		Integer pos = pos0;
 		panel.add(label, "cell 1 "+(++pos).toString()+",grow");		
 		input.setText("");		

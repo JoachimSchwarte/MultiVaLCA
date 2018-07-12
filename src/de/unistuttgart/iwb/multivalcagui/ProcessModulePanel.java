@@ -7,6 +7,7 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -22,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.539
+ * @version 0.541
  */
 
 public class ProcessModulePanel extends MCAPanel{
@@ -46,6 +47,7 @@ public class ProcessModulePanel extends MCAPanel{
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private LowerUpperDialog lud = new LowerUpperDialog(lblP02n6, lblP02n7, txtP02n4, txtP02n5);
 
 	protected ProcessModulePanel(String key) {
 		super(key);
@@ -54,41 +56,33 @@ public class ProcessModulePanel extends MCAPanel{
 	
 	private void initUI( ) {		
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP02n1, "flowy,cell 1 0 2 1,alignx center,growy");	
-		add(lblP02n2, "cell 1 1,grow");		
+		Integer pos=0;
+		add(lblP02n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		add(lblP02n2, "cell 1 "+(++pos).toString()+",grow");		
 		txtP02n1.setText("");
-		add(txtP02n1, "cell 2 1,grow");
+		add(txtP02n1, "cell 2 "+pos.toString()+",grow");
 		txtP02n1.setColumns(10);		
-		add(btnP02n1, "cell 1 2 2 1,alignx center");		
-		add(lblP02n3, "cell 1 3,grow");	
+		add(btnP02n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");		
+		add(lblP02n3, "cell 1 "+(++pos).toString()+",grow");	
 		txtP02n2.setText("");
-		add(txtP02n2, "cell 2 3,grow");
+		add(txtP02n2, "cell 2 "+pos.toString()+",grow");
 		txtP02n2.setColumns(10);
 		txtP02n2.setEnabled(false);	
-		add(lblP02n4, "cell 1 4,grow");
+		add(lblP02n4, "cell 1 "+(++pos).toString()+",grow");
 		txtP02n3.setText("");
-		add(txtP02n3, "cell 2 4,grow");
+		add(txtP02n3, "cell 2 "+pos.toString()+",grow");
 		txtP02n3.setColumns(10);
 		txtP02n3.setEnabled(false);		
 		btnP02n2.setEnabled(false);
-		add(btnP02n2, "cell 1 5 2 1,alignx center");	
-		add(lblP02n6, "cell 1 6,grow");	
-		txtP02n4.setText("");
-		add(txtP02n4, "cell 2 6,grow");
-		txtP02n4.setColumns(10);
-		txtP02n4.setEnabled(false);	
-		add(lblP02n7, "cell 1 7,grow");
-		txtP02n5.setText("");
-		add(txtP02n5, "cell 2 7,grow");
-		txtP02n5.setColumns(10);
-		txtP02n5.setEnabled(false);		
+		add(btnP02n2, "cell 1 "+(++pos).toString()+" 2 1,alignx center");
+		pos = lud.draw(pos, this);
 		btnP02n3.setEnabled(false);
-		add(btnP02n3, "cell 1 8,alignx center");
+		add(btnP02n3, "cell 1 "+(++pos).toString()+",alignx center");
 		btnP02n4.setEnabled(false);
-		add(btnP02n4, "cell 2 8,alignx center");
-		add(lblP02n5, "cell 0 9 4 1,alignx center");		
+		add(btnP02n4, "cell 2 "+pos.toString()+",alignx center");
+		add(lblP02n5, "cell 0 "+(++pos).toString()+" 4 1,alignx center");		
 		
 		button1();		
 		button2();		
@@ -154,13 +148,9 @@ public class ProcessModulePanel extends MCAPanel{
 						txtP02n2.setEnabled(false);
 						txtP02n3.setEnabled(false);
 						btnP02n2.setEnabled(false);
-						txtP02n4.setText(txtP02n3.getText());
-						txtP02n4.setEnabled(true);
-						txtP02n5.setText(txtP02n3.getText());
-						txtP02n5.setEnabled(true);
+						lud.start(txtP02n3.getText());
 						btnP02n3.setEnabled(true);
 						btnP02n4.setEnabled(false);
-						txtP02n4.setEnabled(true);
 						int anzPFlow = ProcessModule.getInstance(mname).getProduktflussvektor().size();
 						int anzEFlow = ProcessModule.getInstance(mname).getElementarflussvektor().size();
 						int anzGesamt = anzPFlow + anzEFlow;
@@ -178,49 +168,22 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String fug = txtP02n4.getText();
-				String fog = txtP02n5.getText();
-				Double fugv;
-				Double fogv;
-				try {
-					fugv = Double.parseDouble(fug);
-				} catch (NumberFormatException e){
-					fugv = 0.0;
-				}
-				try {
-					fogv = Double.parseDouble(fog);
-				} catch (NumberFormatException e){
-					fogv = 0.0;
-				}
-				String fmenge = txtP02n3.getText();
-				Double menge;
-				try {
-					menge = Double.parseDouble(fmenge);
-				} catch (NumberFormatException e){
-					menge = 0.0;
-				}
-				if ((fugv > menge) || (fogv < menge)) {
-					txtP02n4.setText(txtP02n3.getText());
-					txtP02n5.setText(txtP02n3.getText());
-					lblP02n5.setText(bundle.getString("stat21"));
-				} else {
+				LinkedHashMap<ValueType, Double> mengen = lud.getValues(txtP02n3, lblP02n5);
+				if (mengen.size() == 3) {
 					String mname = txtP02n1.getText();
 					String fname = txtP02n2.getText();
 					Flow akFlow = Flow.getInstance(fname);
-					ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, fugv);
-					ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, fogv);
+					ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, mengen.get(ValueType.LowerBound));
+					ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, mengen.get(ValueType.UpperBound));
 					txtP02n2.setText("");
 					txtP02n3.setText("");
-					txtP02n4.setText("");
-					txtP02n5.setText("");
 					txtP02n2.setEnabled(true);
 					txtP02n3.setEnabled(true);
-					txtP02n4.setEnabled(false);
-					txtP02n5.setEnabled(false);
+					lud.stop();
 					btnP02n2.setEnabled(true);
 					btnP02n4.setEnabled(true);
 					btnP02n3.setEnabled(false);
-					lblP02n5.setText(bundle.getString("stat01"));				
+					lblP02n5.setText(bundle.getString("stat01"));	
 				}
 			}			
 		});
@@ -233,16 +196,13 @@ public class ProcessModulePanel extends MCAPanel{
 				txtP02n2.setText("");
 				txtP02n3.setText("");
 				txtP02n1.setText("");
-				txtP02n4.setText("");
-				txtP02n5.setText("");
 				btnP02n2.setEnabled(false);
 				btnP02n4.setEnabled(false);
 				btnP02n3.setEnabled(false);
 				txtP02n1.setEnabled(true);
 				txtP02n2.setEnabled(false);
 				txtP02n3.setEnabled(false);
-				txtP02n4.setEnabled(false);
-				txtP02n5.setEnabled(false);
+				lud.stop();
 				lblP02n5.setText(bundle.getString("stat01"));
 			}
 		});	
