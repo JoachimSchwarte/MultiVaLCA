@@ -51,7 +51,8 @@ public class ComponentPanel extends MCAPanel{
 	protected ComponentPanel(String key) {
 		super(key);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));	
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px]"
+				+ "[20px][20px][20px,grow]"));	
 		lblP18n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Integer pos=0;
 		add(lblP18n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");
