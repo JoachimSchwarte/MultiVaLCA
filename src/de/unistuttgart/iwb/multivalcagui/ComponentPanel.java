@@ -130,10 +130,11 @@ public class ComponentPanel extends MCAPanel{
 				txtP18n2.setEnabled(false);
 				txtP18n3.setEnabled(false);
 				btnP18n1.setEnabled(false);
-				txtP18n4.setEnabled(true);
+				lud.start(fmenge);
+/*				txtP18n4.setEnabled(true);
 				txtP18n5.setEnabled(true);
 				txtP18n4.setText(fmenge);
-				txtP18n5.setText(fmenge);
+				txtP18n5.setText(fmenge); */
 				btnP18n2.setEnabled(true);			
 			}		
 		});
@@ -151,14 +152,11 @@ public class ComponentPanel extends MCAPanel{
 					txtP18n2.setEnabled(true);
 					txtP18n3.setEnabled(true);
 					btnP18n1.setEnabled(true);
-					txtP18n4.setEnabled(false);
-					txtP18n5.setEnabled(false);
 					btnP18n2.setEnabled(false);	
 					txtP18n1.setText("");
 					txtP18n2.setText("");
 					txtP18n3.setText("");
-					txtP18n4.setText("");
-					txtP18n5.setText("");
+					lud.stop();
 					lblP18n7.setText(bundle.getString("stat01"));	
 				}					
 			}			

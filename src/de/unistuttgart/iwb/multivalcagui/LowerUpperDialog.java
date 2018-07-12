@@ -4,6 +4,8 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -47,10 +49,6 @@ public class LowerUpperDialog {
 		bundle = ResourceBundle.getBundle(baseName, locale);	
 		reldifText.setText(bundle.getString("lbl01"));
 		reldifButton.setText(bundle.getString("btn18"));
-		reldifValue.setEnabled(false);
-		reldifButton.setEnabled(false);
-		txtLower.setEnabled(false);
-		txtUpper.setEnabled(false);
 		Integer pos = pos0;
 		LabeledInputDialog reldifDi = new LabeledInputDialog(reldifText, reldifValue);	
 		LabeledInputDialog lowerDi = new LabeledInputDialog(lblLower, txtLower);
@@ -59,7 +57,8 @@ public class LowerUpperDialog {
 		panel.add(reldifButton, "cell 1 "+(++pos).toString()+" 2 1,alignx center");	
 		pos = lowerDi.draw(pos, panel);
 		pos = upperDi.draw(pos, panel);
-		reldifValue.setText("0.0");
+		this.stop();
+		buttonClick();
 		return pos;
 	}
 	
@@ -99,5 +98,55 @@ public class LowerUpperDialog {
 			values.put(ValueType.UpperBound, fogv);
 		}
 		return values;
+	}
+
+	public void start(String fmenge) {
+		reldifValue.setEnabled(true);
+		reldifButton.setEnabled(true);
+		txtLower.setEnabled(true);
+		txtUpper.setEnabled(true);
+		txtLower.setText(fmenge);
+		txtUpper.setText(fmenge);	
+	}
+	
+	public void stop() {
+		reldifValue.setEnabled(false);
+		reldifButton.setEnabled(false);
+		txtLower.setEnabled(false);
+		txtUpper.setEnabled(false);
+		txtLower.setText("");
+		txtUpper.setText("");	
+		reldifValue.setText("0.0");
+	}
+	
+	private void buttonClick() {
+		reldifButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String protex = reldifValue.getText();
+				Double pronum;
+				try {
+					pronum = Double.parseDouble(protex);
+				} catch (NumberFormatException e){
+					pronum = 0.0;
+				}
+				String fug = txtLower.getText();
+				String fog = txtUpper.getText();
+				Double fugv;
+				Double fogv;
+				try {
+					fugv = Double.parseDouble(fug);
+				} catch (NumberFormatException e){
+					fugv = 0.0;
+				}
+				try {
+					fogv = Double.parseDouble(fog);
+				} catch (NumberFormatException e){
+					fogv = 0.0;
+				}
+				txtLower.setText(Double.toString(fugv*(1+pronum/100))); 
+				txtUpper.setText(Double.toString(fogv*(1-pronum/100))); 
+			}		
+		});
 	}
 }
