@@ -22,10 +22,7 @@ public class InfoPanel extends MCAPanel{
 	protected static JLabel lblInfo3 = new JLabel();		
 	protected static JLabel lblInfo4 = new JLabel();		
 	protected static JLabel lblInfo5 = new JLabel();	
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	
 
 	protected InfoPanel(String key) {
 		super(key);
@@ -46,12 +43,14 @@ public class InfoPanel extends MCAPanel{
 		lblInfo5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(lblInfo5, "cell 1 7,alignx center,aligny top");	
 	}
+	
 
 	@Override
 	public void showSelf() {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		lblInfo1.setText(bundle.getString("head1"));
 		lblInfo2.setText(bundle.getString("info1"));
 		lblInfo3.setText(bundle.getString("info2"));

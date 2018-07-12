@@ -27,10 +27,6 @@ public class FlowListPanel extends MCAPanel {
 	private JLabel lblP06n1 = new JLabel();
 	private JTable flowsTable 		= new JTable();
 	private DefaultTableModel flowsTableModel 		= new DefaultTableModel(0,3);
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	
 	protected FlowListPanel(String key) {
 		super(key);
@@ -46,10 +42,10 @@ public class FlowListPanel extends MCAPanel {
 
 	@Override
 	public void showSelf() {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP06n1.setText(bundle.getString("mp41e"));
 		flowsTableModel.setRowCount(0);
 		flowsTable.setModel(flowsTableModel);

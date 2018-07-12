@@ -30,10 +30,7 @@ public class ProductSystemListPanel extends MCAPanel {
 	private JLabel lblP08n1 = new JLabel();
 	private JTable psTable 		= new JTable();
 	private DefaultTableModel psTableModel 		= new DefaultTableModel(0,3);
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+
 
 	protected ProductSystemListPanel(String key) {
 		super(key);
@@ -50,10 +47,10 @@ public class ProductSystemListPanel extends MCAPanel {
 
 	@Override
 	public void showSelf() {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP08n1.setText(bundle.getString("mp43e"));
 		psTableModel.setRowCount(0);
 		psTable.setModel(psTableModel);

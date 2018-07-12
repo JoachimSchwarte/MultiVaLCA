@@ -30,10 +30,7 @@ public class LciCalcPanel extends MCAPanel {
 	private JLabel lblP09n1 = new JLabel();
 	private JTable lciTable = new JTable();
 	private DefaultTableModel lciTableModel = new DefaultTableModel(0,4);
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+
 
 	protected LciCalcPanel(String key) {
 		super(key);
@@ -50,10 +47,10 @@ public class LciCalcPanel extends MCAPanel {
 
 	@Override
 	public void showSelf() {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP09n1.setText(bundle.getString("mp51e"));
 		lciTableModel.setRowCount(0);
 		lciTable.setModel(lciTableModel);

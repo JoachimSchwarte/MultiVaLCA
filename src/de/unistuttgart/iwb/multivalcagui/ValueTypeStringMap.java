@@ -19,15 +19,10 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 public class ValueTypeStringMap {
 	
-	private static Language l = GUILanguage.getChosenLanguage();
-	private static Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private static String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private static ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-	
 	public static LinkedHashMap<ValueType, String> getFVTS(Language l) {
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		LinkedHashMap<ValueType, String> r = new LinkedHashMap<ValueType, String>();
 		r.put(ValueType.MeanValue, bundle.getString("cob03"));
 		r.put(ValueType.LowerBound, bundle.getString("p02n5"));

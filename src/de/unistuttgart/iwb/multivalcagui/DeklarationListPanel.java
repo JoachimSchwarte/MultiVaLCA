@@ -27,10 +27,6 @@ public class DeklarationListPanel extends MCAPanel{
 	private JLabel lblP20n1 = new JLabel();
 	private JTable pdTable 		= new JTable();
 	private DefaultTableModel pdTableModel 		= new DefaultTableModel(0,3);
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 
 	protected DeklarationListPanel(String key) {
 		super(key);
@@ -49,10 +45,10 @@ public class DeklarationListPanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP20n1.setText(bundle.getString("mp47e"));
 		pdTableModel.setRowCount(0);
 		pdTable.setModel(pdTableModel);

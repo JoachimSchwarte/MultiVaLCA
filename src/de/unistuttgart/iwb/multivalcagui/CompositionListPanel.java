@@ -20,10 +20,6 @@ import net.miginfocom.swing.MigLayout;
 public class CompositionListPanel extends MCAPanel{
 	
 	private JLabel lblP22n1 = new JLabel();
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	
 	protected CompositionListPanel(String key) {
 		super(key);
@@ -40,10 +36,10 @@ public class CompositionListPanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP22n1.setText(bundle.getString("mp49e"));
 		
 	}

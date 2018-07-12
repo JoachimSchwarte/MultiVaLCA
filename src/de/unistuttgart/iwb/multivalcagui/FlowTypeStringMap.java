@@ -20,15 +20,11 @@ import de.unistuttgart.iwb.multivalca.FlowType;
 
 public class FlowTypeStringMap {
 	
-	private static Language l = GUILanguage.getChosenLanguage();
-	private static Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private static String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private static ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	
 	public static LinkedHashMap<FlowType, String> getFTS(Language l) {
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		LinkedHashMap<FlowType, String> r = new LinkedHashMap<FlowType, String>();
 		r.put(FlowType.Elementary, bundle.getString("cob01"));
 		r.put(FlowType.Product, bundle.getString("cob02"));	

@@ -21,10 +21,6 @@ public class CompositionPanel extends MCAPanel{
 	private JButton btnP19n1 = new JButton(); 			// "neue Komposition anlegen"
 	private JButton btnP19n2 = new JButton(); 			// "Grenzwerte bestätigen"
 	private JButton btnP19n3 = new JButton(); 			// "fertig"
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	
 	public CompositionPanel(String key) {
 		super(key);
@@ -57,10 +53,10 @@ public class CompositionPanel extends MCAPanel{
 
 	@Override
 	public void showSelf() {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP19n1.setText(bundle.getString("p19n1"));
 		lblP19n2.setText(bundle.getString("p19n2"));
 		lblP19n3.setText(bundle.getString("p19n3"));
