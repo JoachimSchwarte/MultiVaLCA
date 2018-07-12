@@ -14,7 +14,8 @@ public class LabeledInputDialog {
 		this.input = input;
 	}
 	
-	public Integer draw(Integer pos, ComponentPanel panel) {
+	public Integer draw(Integer pos0, ComponentPanel panel) {
+		Integer pos = pos0;
 		panel.add(label, "cell 1 "+(++pos).toString()+",grow");		
 		input.setText("");		
 		panel.add(input, "cell 2 "+pos.toString()+",grow");

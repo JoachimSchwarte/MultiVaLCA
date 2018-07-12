@@ -33,7 +33,8 @@ public class LowerUpperDialog {
 		this.txtUpper = txtUpper;
 	}
 	
-	public Integer draw(Integer pos, ComponentPanel panel) {
+	public Integer draw(Integer pos0, ComponentPanel panel) {
+		Integer pos = pos0;
 		LabeledInputDialog lowerDi = new LabeledInputDialog(lblLower, txtLower);
 		LabeledInputDialog upperDi = new LabeledInputDialog(lblUpper, txtUpper);
 		pos = lowerDi.draw(pos, panel);
