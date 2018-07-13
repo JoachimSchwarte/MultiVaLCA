@@ -48,10 +48,10 @@ public class CharacFactorPanel extends MCAPanel{
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-	LabeledInputDialog nameCFdi = new LabeledInputDialog(lblP12n2, txtP12n1);
-	LabeledInputDialog nameFLdi = new LabeledInputDialog(lblP12n3, txtP12n2);
-	LabeledInputDialog nameWKdi = new LabeledInputDialog(lblP12n4, txtP12n3);
-	LabeledInputDialog wertCFdi = new LabeledInputDialog(lblP12n5, txtP12n4);
+	private LabeledInputDialog nameCFdi = new LabeledInputDialog(lblP12n2, txtP12n1);
+	private LabeledInputDialog nameFLdi = new LabeledInputDialog(lblP12n3, txtP12n2);
+	private LabeledInputDialog nameWKdi = new LabeledInputDialog(lblP12n4, txtP12n3);
+	private LabeledInputDialog wertCFdi = new LabeledInputDialog(lblP12n5, txtP12n4);
 	private LowerUpperDialog lud = new LowerUpperDialog(lblP12n6, lblP12n7, txtP12n5, txtP12n6);
 	
 	protected CharacFactorPanel(String key) {
