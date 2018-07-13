@@ -7,6 +7,7 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -17,11 +18,12 @@ import javax.swing.JTextField;
 import de.unistuttgart.iwb.multivalca.CharacFactor;
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
+import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.536
+ * @version 0.542
  */
 
 public class CharacFactorPanel extends MCAPanel{
@@ -46,6 +48,7 @@ public class CharacFactorPanel extends MCAPanel{
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private LowerUpperDialog lud = new LowerUpperDialog(lblP12n6, lblP12n7, txtP12n5, txtP12n6);
 	
 	protected CharacFactorPanel(String key) {
 		super(key);
@@ -54,40 +57,37 @@ public class CharacFactorPanel extends MCAPanel{
 
 	private void initUI() {		
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP12n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP12n1, "flowy,cell 1 0 2 1,alignx center,growy");	
-		add(lblP12n2, "cell 1 1,grow");		
+		Integer pos=0;
+		add(lblP12n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		add(lblP12n2, "cell 1 "+(++pos).toString()+",grow");		
 		txtP12n1.setText("");
-		add(txtP12n1, "cell 2 1,grow");
+		add(txtP12n1, "cell 2 "+pos.toString()+",grow");
 		txtP12n1.setColumns(10);					
-		add(lblP12n3, "cell 1 2,grow");	
+		add(lblP12n3, "cell 1 "+(++pos).toString()+",grow");	
 		txtP12n2.setText("");
-		add(txtP12n2, "cell 2 2,grow");
+		add(txtP12n2, "cell 2 "+pos.toString()+",grow");
 		txtP12n2.setColumns(10);		
-		add(lblP12n4, "cell 1 3,grow");
+		add(lblP12n4, "cell 1 "+(++pos).toString()+",grow");
 		txtP12n3.setText("");
-		add(txtP12n3, "cell 2 3,grow");
+		add(txtP12n3, "cell 2 "+pos.toString()+",grow");
 		txtP12n3.setColumns(10);		
-		add(lblP12n5, "cell 1 4,grow");
+		add(lblP12n5, "cell 1 "+(++pos).toString()+",grow");
 		txtP12n4.setText("");
-		add(txtP12n4, "cell 2 4,grow");
+		add(txtP12n4, "cell 2 "+pos.toString()+",grow");
 		txtP12n4.setColumns(10);	
-		add(btnP12n1, "cell 1 5 2 1,alignx center");		
-		add(lblP12n6, "cell 1 6,grow");	
-		txtP12n5.setText("");
-		add(txtP12n5, "cell 2 6,grow");
-		txtP12n5.setColumns(10);
-		txtP12n5.setEnabled(false);			
-		add(lblP12n7, "cell 1 7,grow");
-		txtP12n6.setText("");
-		add(txtP12n6, "cell 2 7,grow");
-		txtP12n6.setColumns(10);		
-		txtP12n6.setEnabled(false);			
+		add(btnP12n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");		
+		pos = lud.draw(pos, this);	
 		btnP12n2.setEnabled(false);
-		add(btnP12n2, "cell 1 8 2 1,alignx center");
-		add(lblP12n8, "cell 0 9 4 1,alignx center");	
+		add(btnP12n2, "cell 1 "+(++pos).toString()+" 2 1,alignx center");
+		add(lblP12n8, "cell 0 "+(++pos).toString()+" 4 1,alignx center");	
 		
+		button1();		
+		button2();	
+	}
+
+	private void button1() {
 		btnP12n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -131,64 +131,38 @@ public class CharacFactorPanel extends MCAPanel{
 					txtP12n2.setEnabled(false);
 					txtP12n3.setEnabled(false);
 					txtP12n4.setEnabled(false);
-					txtP12n5.setText(facText);
-					txtP12n5.setEnabled(true);
-					txtP12n6.setText(facText);
-					txtP12n6.setEnabled(true);
+					lud.start(facText);
 					btnP12n1.setEnabled(false);
 					btnP12n2.setEnabled(true);
 				}				
 			}			
 		});
-		
+	}
+
+	private void button2() {
 		btnP12n2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String lbText = txtP12n5.getText();
-				String obText = txtP12n6.getText();
-				Double lbv;
-				Double obv;
-				try {
-					lbv = Double.parseDouble(lbText);
-				} catch (NumberFormatException e){
-					lbv = 0.0;
-				}
-				try {
-					obv = Double.parseDouble(obText);
-				} catch (NumberFormatException e){
-					obv = 0.0;
-				}
-				String facText = txtP12n4.getText();
-				Double facVal = Double.parseDouble(facText);
-				if ((lbv > facVal) || (obv < facVal) || (lbv < 0)) {
-					txtP12n5.setText(txtP12n4.getText());
-					txtP12n6.setText(txtP12n4.getText());
-					lblP12n8.setText(bundle.getString("stat21"));
-				} else {
+				LinkedHashMap<ValueType, Double> mengen = lud.getValues(txtP12n4, lblP12n8);
+				if (mengen.size() == 3) {
 					String nameCF = txtP12n1.getText();
-					CharacFactor.setLowerBound(nameCF, lbv);
-					CharacFactor.setUpperBound(nameCF, obv);
+					CharacFactor.setLowerBound(nameCF, mengen.get(ValueType.LowerBound));
+					CharacFactor.setUpperBound(nameCF, mengen.get(ValueType.UpperBound));
 					txtP12n1.setText("");
 					txtP12n2.setText("");
 					txtP12n3.setText("");
 					txtP12n4.setText("");
-					txtP12n5.setText("");
-					txtP12n6.setText("");
 					txtP12n1.setEnabled(true);
 					txtP12n2.setEnabled(true);
 					txtP12n3.setEnabled(true);
 					txtP12n4.setEnabled(true);
-					txtP12n5.setEnabled(false);
-					txtP12n6.setEnabled(false);
 					btnP12n1.setEnabled(true);
-					btnP12n2.setEnabled(false);		
+					btnP12n2.setEnabled(false);	
+					lud.stop();
 					lblP12n8.setText(bundle.getString("stat01"));
-				}
-				
-			}
-			
-		});		
-		
+				}		
+			}		
+		});				
 	}
 
 	@Override
