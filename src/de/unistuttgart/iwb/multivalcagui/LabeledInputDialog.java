@@ -6,10 +6,12 @@ package de.unistuttgart.iwb.multivalcagui;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.util.LinkedHashMap;
+import java.util.HashSet;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.541
+ * @version 0.542
  */
 
 public class LabeledInputDialog {
@@ -30,5 +32,10 @@ public class LabeledInputDialog {
 		panel.add(input, "cell 2 "+pos.toString()+",grow");
 		input.setColumns(10);
 		return pos;
+	}
+	
+	public String getText(LinkedHashMap<String, HashSet<String>> nameLists) {
+		String r = input.getText();
+		return r;
 	}
 }

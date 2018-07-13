@@ -48,6 +48,10 @@ public class CharacFactorPanel extends MCAPanel{
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	LabeledInputDialog nameCFdi = new LabeledInputDialog(lblP12n2, txtP12n1);
+	LabeledInputDialog nameFLdi = new LabeledInputDialog(lblP12n3, txtP12n2);
+	LabeledInputDialog nameWKdi = new LabeledInputDialog(lblP12n4, txtP12n3);
+	LabeledInputDialog wertCFdi = new LabeledInputDialog(lblP12n5, txtP12n4);
 	private LowerUpperDialog lud = new LowerUpperDialog(lblP12n6, lblP12n7, txtP12n5, txtP12n6);
 	
 	protected CharacFactorPanel(String key) {
@@ -61,22 +65,10 @@ public class CharacFactorPanel extends MCAPanel{
 		lblP12n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Integer pos=0;
 		add(lblP12n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
-		add(lblP12n2, "cell 1 "+(++pos).toString()+",grow");		
-		txtP12n1.setText("");
-		add(txtP12n1, "cell 2 "+pos.toString()+",grow");
-		txtP12n1.setColumns(10);					
-		add(lblP12n3, "cell 1 "+(++pos).toString()+",grow");	
-		txtP12n2.setText("");
-		add(txtP12n2, "cell 2 "+pos.toString()+",grow");
-		txtP12n2.setColumns(10);		
-		add(lblP12n4, "cell 1 "+(++pos).toString()+",grow");
-		txtP12n3.setText("");
-		add(txtP12n3, "cell 2 "+pos.toString()+",grow");
-		txtP12n3.setColumns(10);		
-		add(lblP12n5, "cell 1 "+(++pos).toString()+",grow");
-		txtP12n4.setText("");
-		add(txtP12n4, "cell 2 "+pos.toString()+",grow");
-		txtP12n4.setColumns(10);	
+		pos = nameCFdi.draw(pos, this);				
+		pos = nameFLdi.draw(pos, this);			
+		pos = nameWKdi.draw(pos, this);			
+		pos = wertCFdi.draw(pos, this);		
 		add(btnP12n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");		
 		pos = lud.draw(pos, this);	
 		btnP12n2.setEnabled(false);
@@ -118,7 +110,6 @@ public class CharacFactorPanel extends MCAPanel{
 
 				if (!Flow.containsName(nameFl)) {
 					lblP12n8.setText(bundle.getString("stat11"));
-
 					inputOK = false;
 				}
 				if (CharacFactor.containsName(nameCF)) {
