@@ -79,57 +79,7 @@ public class LciaCalcPanel extends MCAPanel {
 		add(btnP16n1, "cell 1 5 2 0,alignx center");
 		add(new JScrollPane(waTable), "cell 1 6 2 0,alignx center,aligny top");
 		
-		cobP16n1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cobP16n2.setEnabled(true);
-				cobP16n3.setEnabled(false);
-				waTableModel.setRowCount(0);
-				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp12"))) {
-					Vector<String> nameVektor = new Vector<String>();
-					for (String obName : ProcessModule.getAllInstances().keySet()) {
-						nameVektor.addElement(obName);
-					}
-					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
-				}
-				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp13"))) {
-					Vector<String> nameVektor = new Vector<String>();
-					for (String obName : ProductSystem.getAllInstances().keySet()) {
-						nameVektor.addElement(obName);
-					}
-					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
-				}
-				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp17"))) {
-					Vector<String> nameVektor = new Vector<String>();
-					for (String obName : ProductDeclaration.getAllInstances().keySet()) {
-						nameVektor.addElement(obName);
-					}
-					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
-				}
-			}		
-		});
-		cobP16n2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Vector<String> methVektor = new Vector<String>();
-				for (String methName : LCIAMethod.getAllInstances().keySet()) {
-					methVektor.addElement(methName);
-				}
-				cobP16n3.setModel(new DefaultComboBoxModel<String>(methVektor));
-				cobP16n3.setEnabled(true);
-			}
-		});
-		cobP16n3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cobP16n4.setEnabled(true);
-			}
-		});
-		cobP16n4.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				btnP16n1.setEnabled(true);
-			}
-		});
+		
 		btnP16n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -174,8 +124,74 @@ public class LciaCalcPanel extends MCAPanel {
 
 			}
 		});	
-		
-		
+	
+		combobox1();
+		combobox2();
+		combobox3();
+		combobox4();
+	}
+
+	private void combobox1() {
+		cobP16n1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cobP16n2.setEnabled(true);
+				cobP16n3.setEnabled(false);
+				waTableModel.setRowCount(0);
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp12"))) {
+					Vector<String> nameVektor = new Vector<String>();
+					for (String obName : ProcessModule.getAllInstances().keySet()) {
+						nameVektor.addElement(obName);
+					}
+					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
+				}
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp13"))) {
+					Vector<String> nameVektor = new Vector<String>();
+					for (String obName : ProductSystem.getAllInstances().keySet()) {
+						nameVektor.addElement(obName);
+					}
+					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
+				}
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp17"))) {
+					Vector<String> nameVektor = new Vector<String>();
+					for (String obName : ProductDeclaration.getAllInstances().keySet()) {
+						nameVektor.addElement(obName);
+					}
+					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
+				}
+			}		
+		});
+	}
+
+	private void combobox2() {
+		cobP16n2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Vector<String> methVektor = new Vector<String>();
+				for (String methName : LCIAMethod.getAllInstances().keySet()) {
+					methVektor.addElement(methName);
+				}
+				cobP16n3.setModel(new DefaultComboBoxModel<String>(methVektor));
+				cobP16n3.setEnabled(true);
+			}
+		});
+	}
+
+	private void combobox3() {
+		cobP16n3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cobP16n4.setEnabled(true);
+			}
+		});	
+	}
+
+	private void combobox4() {
+		cobP16n4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnP16n1.setEnabled(true);
+			}
+		});
 	}
 
 	@Override
@@ -214,9 +230,6 @@ public class LciaCalcPanel extends MCAPanel {
 			vta[i] = vtl;
 			i++;
 		}
-		cobP16n4.setModel(new DefaultComboBoxModel<String>(vta));
-		
-		
+		cobP16n4.setModel(new DefaultComboBoxModel<String>(vta));	
 	}
-
 }

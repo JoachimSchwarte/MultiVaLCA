@@ -119,7 +119,7 @@ public class MultiVaLCA {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);		
 		
 		panel.setLayout(cl);
-				
+	
 		/*
 		 * Gestaltung der Panels
 		 */
@@ -140,11 +140,9 @@ public class MultiVaLCA {
 		//		
 		panel.add(new ProductSystemPanel("neuProdukt"), "neuProdukt");	
 		//
-		
 		// Panel 4; Info
-		
 		panel.add(new InfoPanel("leer"), "leer");
-		
+		//
 		// Panel 5; Sprachauswahl
 		//
 		panel.add(panel_5, "lang");
@@ -156,8 +154,6 @@ public class MultiVaLCA {
 		comboBox2.setModel(new DefaultComboBoxModel<Language>(Language.values()));
 		panel_5.add(comboBox2, "cell 2 1,grow");	
 		panel_5.add(btn05n1, "cell 1 2 2 1,alignx center");		
-		// Zeile 94 bis 98 nach oben verschoben
-
 		//
 		// Panel 6; Flussliste
 		//
@@ -234,8 +230,6 @@ public class MultiVaLCA {
 		InfoPanel.lblInfo3.setText(bundle.getString("info2"));
 		InfoPanel.lblInfo4.setText(bundle.getString("info3"));
 		InfoPanel.lblInfo5.setText(versionString+"     "+dateString);	
-		
-	
 		
 		/*
 		 * Organisation der Menuleiste
@@ -614,7 +608,6 @@ public class MultiVaLCA {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
 		}
 	}
 

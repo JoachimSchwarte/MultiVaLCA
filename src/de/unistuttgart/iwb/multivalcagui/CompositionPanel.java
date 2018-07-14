@@ -47,8 +47,7 @@ public class CompositionPanel extends MCAPanel{
 		add(btnP19n2, "cell 1 4,alignx center");
 		btnP19n3.setEnabled(false);
 		add(btnP19n3, "cell 2 4,alignx center");
-		add(lblP19n4, "cell 0 5 4 1,alignx center");
-		
+		add(lblP19n4, "cell 0 5 4 1,alignx center");	
 	}
 
 	@Override
@@ -63,8 +62,6 @@ public class CompositionPanel extends MCAPanel{
 		lblP19n4.setText(bundle.getString("stat01"));
 		btnP19n1.setText(bundle.getString("bt14"));
 		btnP19n2.setText(bundle.getString("bt15"));
-		btnP19n3.setText(bundle.getString("bt04"));
-		
+		btnP19n3.setText(bundle.getString("bt04"));	
 	}
-
 }

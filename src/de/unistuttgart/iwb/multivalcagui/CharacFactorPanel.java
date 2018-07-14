@@ -161,8 +161,7 @@ public class CharacFactorPanel extends MCAPanel{
 		l = GUILanguage.getChosenLanguage();
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
-		
+		bundle = ResourceBundle.getBundle(baseName, locale);	
 		lblP12n1.setText(bundle.getString("p12n1"));
 		lblP12n2.setText(bundle.getString("p12n2"));
 		lblP12n3.setText(bundle.getString("p01n2"));
@@ -172,8 +171,6 @@ public class CharacFactorPanel extends MCAPanel{
 		lblP12n7.setText(bundle.getString("p02n6"));
 		lblP12n8.setText(bundle.getString("stat01"));
 		btnP12n1.setText(bundle.getString("bt01"));
-		btnP12n2.setText(bundle.getString("bt10"));
-		
+		btnP12n2.setText(bundle.getString("bt10"));	
 	}
-
 }

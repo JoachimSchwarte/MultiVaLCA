@@ -77,6 +77,13 @@ public class EvalMethodPanel extends MCAPanel{
 		add(btnP14n4, "cell 2 6,alignx center");			
 		add(lblP14n5, "cell 0 7 4 1,alignx center");	
 		
+		button1();
+		button2();
+		button3();
+		button4();
+	}
+	
+	private void button1() {
 		btnP14n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -106,7 +113,9 @@ public class EvalMethodPanel extends MCAPanel{
 				}			
 			}			
 		});
-
+	}
+	
+	private void button2() {
 		btnP14n2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -127,8 +136,10 @@ public class EvalMethodPanel extends MCAPanel{
 							bundle.getString("stat05"));
 				}			
 			}
-			
 		});
+	}
+	
+	private void button3() {
 		btnP14n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -150,7 +161,9 @@ public class EvalMethodPanel extends MCAPanel{
 				}
 			}
 		});
-		
+	}
+	
+	private void button4() {
 		btnP14n4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -167,7 +180,7 @@ public class EvalMethodPanel extends MCAPanel{
 				lblP14n5.setText(bundle.getString("stat01"));
 			}
 		});	
-	}
+	}		
 
 	@Override
 	public void showSelf() {
@@ -183,9 +196,7 @@ public class EvalMethodPanel extends MCAPanel{
 		btnP14n1.setText(bundle.getString("bt01"));
 		btnP14n2.setText(bundle.getString("bt11"));	
 		btnP14n3.setText(bundle.getString("bt11"));	
-		btnP14n4.setText(bundle.getString("bt04"));	
-		
+		btnP14n4.setText(bundle.getString("bt04"));		
 	}
-
 }
 

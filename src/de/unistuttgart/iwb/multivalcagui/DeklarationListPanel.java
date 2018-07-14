@@ -59,8 +59,6 @@ public class DeklarationListPanel extends MCAPanel{
 		for(String pdName : ProductDeclaration.getAllInstances().keySet()) {
 			ProductDeclaration pd = ProductDeclaration.getInstance(pdName);			
 			pdTableModel.addRow(new Object[] {pd.getName(), pd.getEinheit(), pd.getBM().getName()});			
-		}
-		
+		}	
 	}
-
 }

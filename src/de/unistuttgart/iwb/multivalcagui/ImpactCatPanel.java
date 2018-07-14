@@ -85,8 +85,7 @@ public class ImpactCatPanel extends MCAPanel {
 					txtP10n2.setText("");
 				}		
 			}
-		});
-		
+		});	
 	}
 
 	@Override
@@ -100,9 +99,5 @@ public class ImpactCatPanel extends MCAPanel {
 		lblP10n3.setText(bundle.getString("p10n3"));
 		btnP10n1.setText(bundle.getString("bt01"));	
 		lblP10n4.setText(bundle.getString("stat01"));
-		
-		
 	}
-	
-
 }

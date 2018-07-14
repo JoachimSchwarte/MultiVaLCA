@@ -38,9 +38,7 @@ public class EvalMListPanel extends MCAPanel {
 		setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
 		lblP15n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		add(lblP15n1, "cell 0 0,alignx center,aligny top");		
-		add(new JScrollPane(bmTable), "cell 0 1,alignx center,aligny top");
-		
-			
+		add(new JScrollPane(bmTable), "cell 0 1,alignx center,aligny top");		
 	}
 
 	@Override
@@ -65,8 +63,6 @@ public class EvalMListPanel extends MCAPanel {
 			for(String cfName : bm.getFactorSet().keySet()) {
 				bmTableModel.addRow(new Object[] {"",bundle.getString("mp15"),cfName});
 			}				
-		}		
-		
+		}			
 	}
-
 }

@@ -39,8 +39,6 @@ public class ImpactListPanel extends MCAPanel{
 		lblP11n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		add(lblP11n1, "cell 0 0,alignx center,aligny top");		
 		add(new JScrollPane(catTable), "cell 0 1,alignx center,aligny top");
-		
-
 	}
 
 	@Override
@@ -59,8 +57,6 @@ public class ImpactListPanel extends MCAPanel{
 			ImpactCategory ic = ImpactCategory.getInstance(catName);			
 			catTableModel.addRow(new Object[] {ic.getName(), 
 					ic.getEinheit().getName()});			
-		}	
-		
+		}		
 	}
-
 }

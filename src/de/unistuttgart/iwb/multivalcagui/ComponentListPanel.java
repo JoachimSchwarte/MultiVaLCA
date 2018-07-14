@@ -22,9 +22,7 @@ public class ComponentListPanel extends MCAPanel{
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
 		lblP21n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP21n1, "cell 1 0 2 1,alignx center,aligny top");
-		
-		
+		add(lblP21n1, "cell 1 0 2 1,alignx center,aligny top");	
 	}
 
 	@Override
@@ -33,8 +31,6 @@ public class ComponentListPanel extends MCAPanel{
 		Locale locale = MultiVaLCA.LANGUAGES.get(l);
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-		lblP21n1.setText(bundle.getString("mp48e"));
-		
+		lblP21n1.setText(bundle.getString("mp48e"));		
 	}
-
 }

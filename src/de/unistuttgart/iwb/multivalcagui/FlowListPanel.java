@@ -57,8 +57,6 @@ public class FlowListPanel extends MCAPanel {
 			Flow fluss = Flow.getInstance(flussname);			
 			flowsTableModel.addRow(new Object[] {fluss.getName(), 
 					FlowTypeStringMap.getFTS(l).get(fluss.getType()), fluss.getEinheit()});			
-		}
-		
+		}		
 	}
-
 }

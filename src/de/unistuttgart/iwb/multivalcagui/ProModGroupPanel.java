@@ -79,6 +79,12 @@ public class ProModGroupPanel extends MCAPanel{
 		btn03.setEnabled(false);
 		add(lbl06, "cell 0 7 4 1,alignx center");
 		
+		button1();
+		button2();
+		button3();
+	}
+
+	private void button1() {
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String fmenge = txt03.getText();
@@ -124,7 +130,9 @@ public class ProModGroupPanel extends MCAPanel{
 				}				
 			}			
 		});
-		
+	}
+
+	private void button2() {
 		btn02.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String name = txt04.getText();	
@@ -151,7 +159,9 @@ public class ProModGroupPanel extends MCAPanel{
 				}			
 			}
 		});
-		
+	}
+	
+	private void button3() {
 		btn03.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				txt01.setText("");

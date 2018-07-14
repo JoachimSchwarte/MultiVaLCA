@@ -102,6 +102,16 @@ public class ProductSystemPanel extends MCAPanel{
 		add(btnP03n7, "cell 2 9,alignx center");		
 		add(lblP03n7, "cell 0 10 4 1,alignx center");
 		
+		button1();
+		button2();
+		button3();
+		button4();
+		button5();
+		button6();
+		button7();	
+	}
+
+	private void button1() {
 		btnP03n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -150,8 +160,10 @@ public class ProductSystemPanel extends MCAPanel{
 					}	
 				} 		
 			}
-		});
-		
+		});		
+	}
+	
+	private void button2() {
 		btnP03n2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -214,8 +226,10 @@ public class ProductSystemPanel extends MCAPanel{
 					}					
 				}
 			}
-		});
-		
+		});		
+	}
+	
+	private void button3() {
 		btnP03n3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -228,8 +242,10 @@ public class ProductSystemPanel extends MCAPanel{
 				btnP03n4.setEnabled(true);
 				lblP03n7.setText(bundle.getString("stat01"));
 			}
-		});
-		
+		});		
+	}
+
+	private void button4() {
 		btnP03n4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -257,8 +273,10 @@ public class ProductSystemPanel extends MCAPanel{
 					}					
 				}
 			}
-		});
-		
+		});		
+	}
+	
+	private void button5() {
 		btnP03n5.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -278,8 +296,10 @@ public class ProductSystemPanel extends MCAPanel{
 				
 				lblP03n7.setText(bundle.getString("stat01"));
 			}
-		});
-		
+		});		
+	}
+	
+	private void button6() {
 		btnP03n6.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -298,8 +318,10 @@ public class ProductSystemPanel extends MCAPanel{
 					}					
 				}
 			}
-		});
-
+		});		
+	}
+	
+	private void button7() {
 		btnP03n7.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -323,13 +345,9 @@ public class ProductSystemPanel extends MCAPanel{
 				
 				lblP03n7.setText(bundle.getString("stat01"));
 			}
-			
-		});
-		
+		});	
 	}
-
-
-
+	
 	@Override
 	public void showSelf() {
 		l = GUILanguage.getChosenLanguage();
@@ -350,7 +368,5 @@ public class ProductSystemPanel extends MCAPanel{
 		btnP03n5.setText(bundle.getString("bt07"));
 		btnP03n6.setText(bundle.getString("bt09"));
 		btnP03n7.setText(bundle.getString("bt04"));
-		}
-		
+		}	
 	}
-

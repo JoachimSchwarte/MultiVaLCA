@@ -96,8 +96,6 @@ public class LciCalcPanel extends MCAPanel {
 								{"",vz.getMessage(),"",""});					
 				}					 
 			}
-		}
-		
+		}	
 	}
-
 }

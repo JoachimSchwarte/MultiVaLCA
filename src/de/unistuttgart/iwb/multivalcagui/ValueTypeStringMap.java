@@ -29,5 +29,4 @@ public class ValueTypeStringMap {
 		r.put(ValueType.UpperBound, bundle.getString("p02n6"));
 		return r;
 	}
-
 }

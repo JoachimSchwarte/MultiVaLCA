@@ -104,7 +104,6 @@ public class FlowPanel extends MCAPanel{
 				} 		
 			}
 		});
-
 	}
 	
 	@Override

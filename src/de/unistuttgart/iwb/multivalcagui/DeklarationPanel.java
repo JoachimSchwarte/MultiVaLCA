@@ -49,6 +49,7 @@ public class DeklarationPanel extends MCAPanel {
 	private JTextField txtP17n4 = new JTextField();		// Eingabefeld LCIA-Name
 	private JTextField txtP17n5 = new JTextField();		// Eingabefeld Untergrenze
 	private JTextField txtP17n6 = new JTextField();		// Eingabefeld Obergrenze
+	private JComboBox<FlowUnit> comboBox_2 = new JComboBox<FlowUnit>();
 	private Language l = GUILanguage.getChosenLanguage();
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
@@ -69,7 +70,6 @@ public class DeklarationPanel extends MCAPanel {
 		add(txtP17n1, "cell 2 1,grow");
 		txtP17n1.setColumns(10);
 		add(lblP17n3, "cell 1 2,grow");	
-		JComboBox<FlowUnit> comboBox_2 = new JComboBox<FlowUnit>();
 		comboBox_2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
 		add(comboBox_2, "cell 2 2,grow");	
 		add(lblP17n4, "cell 1 3,grow");		
@@ -105,143 +105,156 @@ public class DeklarationPanel extends MCAPanel {
 		add(btnP17n4, "cell 2 10,alignx center");
 		add(lblP17n9, "cell 0 11 4 1,alignx center");	
 		
-		btnP17n1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String nameProd = txtP17n1.getText();
-				String nameLCIA = txtP17n2.getText();
-				FlowUnit einheit = comboBox_2.getItemAt(comboBox_2.getSelectedIndex());
-				boolean inputOK = true;
+		button1();
+		button2();
+		button3();
+		button4();	
+	}
+			
+		private void button1() {
+			btnP17n1.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					String nameProd = txtP17n1.getText();
+					String nameLCIA = txtP17n2.getText();
+					FlowUnit einheit = comboBox_2.getItemAt(comboBox_2.getSelectedIndex());
+					boolean inputOK = true;
 
-				if (ProductDeclaration.containsName(nameProd)) {
-					lblP17n9.setText(bundle.getString("stat03"));
-					inputOK = false;					
-				}
+					if (ProductDeclaration.containsName(nameProd)) {
+						lblP17n9.setText(bundle.getString("stat03"));
+						inputOK = false;					
+					}
 
-				if (!LCIAMethod.containsName(nameLCIA) && inputOK) {
-					lblP17n9.setText(bundle.getString("stat33"));
-					inputOK = false;					
-				}
+					if (!LCIAMethod.containsName(nameLCIA) && inputOK) {
+						lblP17n9.setText(bundle.getString("stat33"));
+						inputOK = false;					
+					}
 
-				if ("".equals(nameProd) && inputOK) {
-					lblP17n9.setText(bundle.getString("stat02"));
-					inputOK = false;
-				}
+					if ("".equals(nameProd) && inputOK) {
+						lblP17n9.setText(bundle.getString("stat02"));
+						inputOK = false;
+					}
 
-				if ("".equals(nameLCIA) && inputOK) {
-					lblP17n9.setText(bundle.getString("stat32"));
-					inputOK = false;
-				}
-				if (inputOK) {
-					LCIAMethod bm = LCIAMethod.instance(nameLCIA);
-					ProductDeclaration.instance(nameProd, einheit).setBM(bm);
-					btnP17n1.setEnabled(false);	
-					txtP17n1.setEnabled(false);
-					comboBox_2.setEnabled(false);
-					txtP17n2.setEnabled(false);
-					btnP17n2.setEnabled(true);
-					txtP17n3.setEnabled(true);
-					txtP17n4.setEnabled(true);
-					lblP17n9.setText(bundle.getString("stat34") + 
-							ProductDeclaration.getAllInstances().size() +
-							bundle.getString("stat05"));
-				}			
-			}		
-		});
+					if ("".equals(nameLCIA) && inputOK) {
+						lblP17n9.setText(bundle.getString("stat32"));
+						inputOK = false;
+					}
+					if (inputOK) {
+						LCIAMethod bm = LCIAMethod.instance(nameLCIA);
+						ProductDeclaration.instance(nameProd, einheit).setBM(bm);
+						btnP17n1.setEnabled(false);	
+						txtP17n1.setEnabled(false);
+						comboBox_2.setEnabled(false);
+						txtP17n2.setEnabled(false);
+						btnP17n2.setEnabled(true);
+						txtP17n3.setEnabled(true);
+						txtP17n4.setEnabled(true);
+						lblP17n9.setText(bundle.getString("stat34") + 
+								ProductDeclaration.getAllInstances().size() +
+								bundle.getString("stat05"));
+					}			
+				}		
+			});
+		}
 		
-		btnP17n2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String nameProd = txtP17n1.getText();
-				String nameLCIA = txtP17n2.getText();
-				String fname = txtP17n3.getText();
-				String fmenge = txtP17n4.getText();
-				Double menge;
-				try {
-					menge = Double.parseDouble(fmenge);
-				} catch (NumberFormatException e){
-					menge = 0.0;
+		private void button2() {
+			btnP17n2.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					String nameProd = txtP17n1.getText();
+					String nameLCIA = txtP17n2.getText();
+					String fname = txtP17n3.getText();
+					String fmenge = txtP17n4.getText();
+					Double menge;
+					try {
+						menge = Double.parseDouble(fmenge);
+					} catch (NumberFormatException e){
+						menge = 0.0;
+					}
+					if ("".equals(fname) || (menge == 0.0)) {
+						lblP17n9.setText(bundle.getString("stat07"));
+					} else {
+						if (LCIAMethod.instance(nameLCIA).categoryList().containsKey(fname)) {
+							ImpactCategory ic = ImpactCategory.getInstance(fname);
+							LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+							values.put(ValueType.MeanValue, menge);
+							values.put(ValueType.LowerBound, menge);
+							values.put(ValueType.UpperBound, menge);
+							ProductDeclaration.getInstance(nameProd).addWirkung(ic, values);
+							txtP17n3.setEnabled(false);
+							txtP17n4.setEnabled(false);
+							btnP17n2.setEnabled(false);
+							txtP17n5.setText(txtP17n4.getText());
+							txtP17n5.setEnabled(true);
+							txtP17n6.setText(txtP17n4.getText());
+							txtP17n6.setEnabled(true);
+							btnP17n3.setEnabled(true);
+							lblP17n9.setText(bundle.getString("stat01"));
+							
+						} else {
+							lblP17n9.setText(bundle.getString("stat35"));
+						}					
+					}
 				}
-				if ("".equals(fname) || (menge == 0.0)) {
-					lblP17n9.setText(bundle.getString("stat07"));
-				} else {
-					if (LCIAMethod.instance(nameLCIA).categoryList().containsKey(fname)) {
+			});
+		}
+		
+		private void button3() {
+			btnP17n3.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					String fug = txtP17n5.getText();
+					String fog = txtP17n6.getText();
+					Double fugv;
+					Double fogv;
+					try {
+						fugv = Double.parseDouble(fug);
+					} catch (NumberFormatException e){
+						fugv = 0.0;
+					}
+					try {
+						fogv = Double.parseDouble(fog);
+					} catch (NumberFormatException e){
+						fogv = 0.0;
+					}
+					String fmenge = txtP17n4.getText();
+					Double menge;
+					try {
+						menge = Double.parseDouble(fmenge);
+					} catch (NumberFormatException e){
+						menge = 0.0;
+					}
+					if ((fugv > menge) || (fogv < menge)) {
+						txtP17n5.setText(txtP17n4.getText());
+						txtP17n6.setText(txtP17n4.getText());
+						lblP17n9.setText(bundle.getString("stat21"));
+					} else {
+						String nameProd = txtP17n1.getText();
+						String fname = txtP17n3.getText();
 						ImpactCategory ic = ImpactCategory.getInstance(fname);
 						LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
 						values.put(ValueType.MeanValue, menge);
-						values.put(ValueType.LowerBound, menge);
-						values.put(ValueType.UpperBound, menge);
+						values.put(ValueType.LowerBound, fugv);
+						values.put(ValueType.UpperBound, fogv);
 						ProductDeclaration.getInstance(nameProd).addWirkung(ic, values);
-						txtP17n3.setEnabled(false);
-						txtP17n4.setEnabled(false);
-						btnP17n2.setEnabled(false);
-						txtP17n5.setText(txtP17n4.getText());
-						txtP17n5.setEnabled(true);
-						txtP17n6.setText(txtP17n4.getText());
-						txtP17n6.setEnabled(true);
-						btnP17n3.setEnabled(true);
-						lblP17n9.setText(bundle.getString("stat01"));
-						
-					} else {
-						lblP17n9.setText(bundle.getString("stat35"));
-					}					
-				}
-			}
-		});
+						txtP17n3.setText("");
+						txtP17n4.setText("");
+						txtP17n5.setText("");
+						txtP17n6.setText("");
+						txtP17n3.setEnabled(true);
+						txtP17n4.setEnabled(true);
+						txtP17n5.setEnabled(false);
+						txtP17n6.setEnabled(false);
+						btnP17n2.setEnabled(true);				
+						btnP17n3.setEnabled(false);
+						btnP17n4.setEnabled(true);
+						lblP17n9.setText(bundle.getString("stat01"));				
+					}
+				}			
+			});	
+		}
 		
-		btnP17n3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String fug = txtP17n5.getText();
-				String fog = txtP17n6.getText();
-				Double fugv;
-				Double fogv;
-				try {
-					fugv = Double.parseDouble(fug);
-				} catch (NumberFormatException e){
-					fugv = 0.0;
-				}
-				try {
-					fogv = Double.parseDouble(fog);
-				} catch (NumberFormatException e){
-					fogv = 0.0;
-				}
-				String fmenge = txtP17n4.getText();
-				Double menge;
-				try {
-					menge = Double.parseDouble(fmenge);
-				} catch (NumberFormatException e){
-					menge = 0.0;
-				}
-				if ((fugv > menge) || (fogv < menge)) {
-					txtP17n5.setText(txtP17n4.getText());
-					txtP17n6.setText(txtP17n4.getText());
-					lblP17n9.setText(bundle.getString("stat21"));
-				} else {
-					String nameProd = txtP17n1.getText();
-					String fname = txtP17n3.getText();
-					ImpactCategory ic = ImpactCategory.getInstance(fname);
-					LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
-					values.put(ValueType.MeanValue, menge);
-					values.put(ValueType.LowerBound, fugv);
-					values.put(ValueType.UpperBound, fogv);
-					ProductDeclaration.getInstance(nameProd).addWirkung(ic, values);
-					txtP17n3.setText("");
-					txtP17n4.setText("");
-					txtP17n5.setText("");
-					txtP17n6.setText("");
-					txtP17n3.setEnabled(true);
-					txtP17n4.setEnabled(true);
-					txtP17n5.setEnabled(false);
-					txtP17n6.setEnabled(false);
-					btnP17n2.setEnabled(true);				
-					btnP17n3.setEnabled(false);
-					btnP17n4.setEnabled(true);
-					lblP17n9.setText(bundle.getString("stat01"));				
-				}
-			}			
-		});
-		
+	private void button4() {
 		btnP17n4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -266,7 +279,7 @@ public class DeklarationPanel extends MCAPanel {
 				lblP17n9.setText(bundle.getString("stat01"));
 			}
 		});	
-	}
+	}		
 
 	@Override
 	public void showSelf() {
@@ -275,7 +288,6 @@ public class DeklarationPanel extends MCAPanel {
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
-
 		lblP17n1.setText(bundle.getString("p17n1"));
 		lblP17n2.setText(bundle.getString("p17n2"));
 		lblP17n3.setText(bundle.getString("p01n4"));
