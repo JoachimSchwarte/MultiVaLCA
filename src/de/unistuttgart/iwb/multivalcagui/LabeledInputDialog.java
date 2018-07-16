@@ -6,12 +6,15 @@ package de.unistuttgart.iwb.multivalcagui;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import de.unistuttgart.iwb.multivalca.MCAObject;
+
 import java.util.LinkedHashMap;
-import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.542
+ * @version 0.543
  */
 
 public class LabeledInputDialog {
@@ -34,8 +37,31 @@ public class LabeledInputDialog {
 		return pos;
 	}
 	
-	public String getText(LinkedHashMap<String, HashSet<String>> nameLists) {
+	public String getTextOld(LinkedHashMap<String, Set<String>> nameLists, JLabel status) {
 		String r = input.getText();
+		for (String message : nameLists.keySet()) {
+			if (!nameLists.get(message).contains(r)) {
+				status.setText(message);
+				r="";
+			}
+		}
+		return r;
+	}
+	
+	public String getTextNew(LinkedHashMap<String, Set<String>> nameLists, JLabel status, String stat07, String stat03) {
+		String r = input.getText();
+		if ("".equals(r)) {
+			status.setText(stat07);
+		}
+		if (MCAObject.containsName(r)) {
+			status.setText(stat03);
+		}
+		for (String message : nameLists.keySet()) {
+			if (nameLists.get(message).contains(r) && !"".equals(r)) {
+				status.setText(message);
+				r="";
+			}
+		}
 		return r;
 	}
 }

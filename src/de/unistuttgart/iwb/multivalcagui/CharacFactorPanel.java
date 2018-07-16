@@ -7,6 +7,7 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -23,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.542
+ * @version 0.543
  */
 
 public class CharacFactorPanel extends MCAPanel{
@@ -82,14 +83,11 @@ public class CharacFactorPanel extends MCAPanel{
 	private void button1() {
 		btnP12n1.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String nameCF = txtP12n1.getText();
-				String nameFl = txtP12n2.getText();
-				String nameWK = txtP12n3.getText();
-				String facText = txtP12n4.getText();
+			public void actionPerformed(ActionEvent arg0) {	
 				boolean inputOK = true;
-				if ("".equals(nameCF) || "".equals(nameFl) || "".equals(nameWK) || "".equals(facText)) {
-					lblP12n8.setText(bundle.getString("stat07"));
+				String facText = txtP12n4.getText();				
+				if ("".equals(facText) || lblP12n8.getText().length()<15 ) {
+					lblP12n8.setText(bundle.getString("stat07")); // >>> unvollständige Eingabe <<<
 					inputOK = false;					
 				}
 				Double facVal = 0.0;
@@ -99,22 +97,20 @@ public class CharacFactorPanel extends MCAPanel{
 					facVal = 0.0;
 				}
 				if (facVal <= 0.0) {
-					lblP12n8.setText(bundle.getString("stat26"));
+					lblP12n8.setText(bundle.getString("stat26")); // >>> unzulässiger Faktor <<<
 					inputOK = false;	
 				}
-
-				if (!ImpactCategory.containsName(nameWK)) {
-					lblP12n8.setText(bundle.getString("stat27"));
-					inputOK = false;
-				}
-
-				if (!Flow.containsName(nameFl)) {
-					lblP12n8.setText(bundle.getString("stat11"));
-					inputOK = false;
-				}
-				if (CharacFactor.containsName(nameCF)) {
-					lblP12n8.setText(bundle.getString("stat03"));
-					inputOK = false;
+				LinkedHashMap<String, Set<String>> testMap3 = new LinkedHashMap<String, Set<String>>();
+				testMap3.put(bundle.getString("stat27"), ImpactCategory.getAllInstances().keySet());
+				String nameWK = nameWKdi.getTextOld(testMap3, lblP12n8);
+				LinkedHashMap<String, Set<String>> testMap2 = new LinkedHashMap<String, Set<String>>();
+				testMap2.put(bundle.getString("stat11"), Flow.getAllInstances().keySet());
+				String nameFl = nameFLdi.getTextOld(testMap2, lblP12n8);					
+				LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
+				testMap1.put(bundle.getString("stat03"), CharacFactor.getAllInstances().keySet());
+				String nameCF = nameCFdi.getTextNew(testMap1, lblP12n8, bundle.getString("stat07"), bundle.getString("stat03"));								
+				if ("".equals(nameCF) || "".equals(nameFl) || "".equals(nameWK) ) {
+					inputOK = false;				
 				}
 				if (inputOK) {
 					CharacFactor.instance(nameCF, Flow.getInstance(nameFl), ImpactCategory.getInstance(nameWK), facVal);
