@@ -89,10 +89,8 @@ public class LabeledInputDialog {
 	
 	public boolean isPosNum(JLabel status, String emptyString, String wrongString) {
 		boolean r = false;
-		if (getNum(status, emptyString, wrongString) != null) {
-			if (getNum(status, emptyString, wrongString)>0.0) {
-				r = true;
-			}
+		if (getNum(status, emptyString, wrongString) != null && getNum(status, emptyString, wrongString)>0.0) {
+			r = true;
 		}
 		return r;
 	}	
