@@ -26,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.538
+ * @version 0.544
  */
 
 public class DeklarationPanel extends MCAPanel {
@@ -46,7 +46,7 @@ public class DeklarationPanel extends MCAPanel {
 	private JTextField txtP17n1 = new JTextField();		// Eingabefeld Produkt-Name
 	private JTextField txtP17n2 = new JTextField();		// Eingabefeld LCIA-Method
 	private JTextField txtP17n3 = new JTextField();		// Eingabefeld Wirkungskategorie
-	private JTextField txtP17n4 = new JTextField();		// Eingabefeld LCIA-Name
+	private JTextField txtP17n4 = new JTextField();		// Eingabefeld Menge
 	private JTextField txtP17n5 = new JTextField();		// Eingabefeld Untergrenze
 	private JTextField txtP17n6 = new JTextField();		// Eingabefeld Obergrenze
 	private JComboBox<FlowUnit> comboBox_2 = new JComboBox<FlowUnit>();
@@ -54,6 +54,11 @@ public class DeklarationPanel extends MCAPanel {
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private LabeledInputDialog namePNdi = new LabeledInputDialog(lblP17n2, txtP17n1);
+	private LabeledInputDialog nameBMdi = new LabeledInputDialog(lblP17n4, txtP17n2);
+	private LabeledInputDialog nameWKdi = new LabeledInputDialog(lblP17n5, txtP17n3);
+	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lblP17n6, txtP17n4);
+	private LowerUpperDialog lud = new LowerUpperDialog(lblP17n7, lblP17n8, txtP17n5, txtP17n6);
 
 	protected DeklarationPanel(String key) {
 		super(key);
@@ -62,48 +67,26 @@ public class DeklarationPanel extends MCAPanel {
 
 	private void initUI() {
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));
+				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));
 		lblP17n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP17n1, "flowy,cell 1 0 2 1,alignx center,growy");			
-		add(lblP17n2, "cell 1 1,grow");		
-		txtP17n1.setText("");
-		add(txtP17n1, "cell 2 1,grow");
-		txtP17n1.setColumns(10);
-		add(lblP17n3, "cell 1 2,grow");	
+		Integer pos=0;
+		add(lblP17n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		pos = namePNdi.draw(pos, this);	
+		add(lblP17n3, "cell 1 "+(++pos).toString()+",grow");	
 		comboBox_2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
-		add(comboBox_2, "cell 2 2,grow");	
-		add(lblP17n4, "cell 1 3,grow");		
-		txtP17n2.setText("");
-		add(txtP17n2, "cell 2 3,grow");
-		txtP17n2.setColumns(10);		
-		add(btnP17n1, "cell 1 4 2 1,alignx center");		
-		add(lblP17n5, "cell 1 5,grow");	
-		txtP17n3.setText("");
-		add(txtP17n3, "cell 2 5,grow");
-		txtP17n3.setColumns(10);
-		txtP17n3.setEnabled(false);	
-		add(lblP17n6, "cell 1 6,grow");
-		txtP17n4.setText("");
-		add(txtP17n4, "cell 2 6,grow");
-		txtP17n4.setColumns(10);
-		txtP17n4.setEnabled(false);				
+		add(comboBox_2, "cell 2 "+(pos).toString()+",grow");	
+		pos = nameBMdi.draw(pos, this);	
+		add(btnP17n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");		
+		pos = nameWKdi.draw(pos, this);	
+		pos = wertMEdi.draw(pos, this);					
 		btnP17n2.setEnabled(false);
-		add(btnP17n2, "cell 1 7 2 1,alignx center");		
-		add(lblP17n7, "cell 1 8,grow");	
-		txtP17n5.setText("");
-		add(txtP17n5, "cell 2 8,grow");
-		txtP17n5.setColumns(10);
-		txtP17n5.setEnabled(false);	
-		add(lblP17n8, "cell 1 9,grow");
-		txtP17n6.setText("");
-		add(txtP17n6, "cell 2 9,grow");
-		txtP17n6.setColumns(10);
-		txtP17n6.setEnabled(false);		
+		add(btnP17n2, "cell 1 "+(++pos).toString()+" 2 1,alignx center");	
+		pos = lud.draw(pos, this);	
 		btnP17n3.setEnabled(false);
-		add(btnP17n3, "cell 1 10,alignx center");
+		add(btnP17n3, "cell 1 "+(++pos).toString()+",alignx center");
 		btnP17n4.setEnabled(false);
-		add(btnP17n4, "cell 2 10,alignx center");
-		add(lblP17n9, "cell 0 11 4 1,alignx center");	
+		add(btnP17n4, "cell 2 "+(pos).toString()+",alignx center");
+		add(lblP17n9, "cell 0 "+(++pos).toString()+" 4 1,alignx center");	
 		
 		button1();
 		button2();
@@ -184,10 +167,7 @@ public class DeklarationPanel extends MCAPanel {
 							txtP17n3.setEnabled(false);
 							txtP17n4.setEnabled(false);
 							btnP17n2.setEnabled(false);
-							txtP17n5.setText(txtP17n4.getText());
-							txtP17n5.setEnabled(true);
-							txtP17n6.setText(txtP17n4.getText());
-							txtP17n6.setEnabled(true);
+							lud.start(txtP17n4.getText());
 							btnP17n3.setEnabled(true);
 							lblP17n9.setText(bundle.getString("stat01"));
 							
@@ -203,52 +183,25 @@ public class DeklarationPanel extends MCAPanel {
 			btnP17n3.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					String fug = txtP17n5.getText();
-					String fog = txtP17n6.getText();
-					Double fugv;
-					Double fogv;
-					try {
-						fugv = Double.parseDouble(fug);
-					} catch (NumberFormatException e){
-						fugv = 0.0;
-					}
-					try {
-						fogv = Double.parseDouble(fog);
-					} catch (NumberFormatException e){
-						fogv = 0.0;
-					}
-					String fmenge = txtP17n4.getText();
-					Double menge;
-					try {
-						menge = Double.parseDouble(fmenge);
-					} catch (NumberFormatException e){
-						menge = 0.0;
-					}
-					if ((fugv > menge) || (fogv < menge)) {
-						txtP17n5.setText(txtP17n4.getText());
-						txtP17n6.setText(txtP17n4.getText());
-						lblP17n9.setText(bundle.getString("stat21"));
-					} else {
+					LinkedHashMap<ValueType, Double> mengen = lud.getValues(txtP17n4, lblP17n9);
+					if (mengen.size() == 3) {
 						String nameProd = txtP17n1.getText();
 						String fname = txtP17n3.getText();
 						ImpactCategory ic = ImpactCategory.getInstance(fname);
 						LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
-						values.put(ValueType.MeanValue, menge);
-						values.put(ValueType.LowerBound, fugv);
-						values.put(ValueType.UpperBound, fogv);
+						values.put(ValueType.MeanValue, mengen.get(ValueType.MeanValue));
+						values.put(ValueType.LowerBound, mengen.get(ValueType.LowerBound));
+						values.put(ValueType.UpperBound, mengen.get(ValueType.UpperBound));
 						ProductDeclaration.getInstance(nameProd).addWirkung(ic, values);
 						txtP17n3.setText("");
 						txtP17n4.setText("");
-						txtP17n5.setText("");
-						txtP17n6.setText("");
 						txtP17n3.setEnabled(true);
 						txtP17n4.setEnabled(true);
-						txtP17n5.setEnabled(false);
-						txtP17n6.setEnabled(false);
+						lud.stop();
 						btnP17n2.setEnabled(true);				
 						btnP17n3.setEnabled(false);
 						btnP17n4.setEnabled(true);
-						lblP17n9.setText(bundle.getString("stat01"));				
+						lblP17n9.setText(bundle.getString("stat01"));
 					}
 				}			
 			});	
@@ -263,8 +216,6 @@ public class DeklarationPanel extends MCAPanel {
 				txtP17n2.setText("");
 				txtP17n3.setText("");
 				txtP17n4.setText("");
-				txtP17n5.setText("");
-				txtP17n5.setText("");
 				btnP17n2.setEnabled(false);
 				btnP17n4.setEnabled(false);
 				btnP17n3.setEnabled(false);
@@ -274,8 +225,7 @@ public class DeklarationPanel extends MCAPanel {
 				txtP17n2.setEnabled(true);
 				txtP17n3.setEnabled(false);
 				txtP17n4.setEnabled(false);
-				txtP17n5.setEnabled(false);
-				txtP17n6.setEnabled(false);
+				lud.stop();
 				lblP17n9.setText(bundle.getString("stat01"));
 			}
 		});	
