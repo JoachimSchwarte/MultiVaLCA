@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.543
+ * @version 0.544
  */
 
 public class LabeledInputDialog {
@@ -37,24 +37,27 @@ public class LabeledInputDialog {
 		return pos;
 	}
 	
-	public String getTextOld(LinkedHashMap<String, Set<String>> nameLists, JLabel status) {
+	public String getTextOld(String message, Set<String> nameList, JLabel status, String emptyString) {
 		String r = input.getText();
-		for (String message : nameLists.keySet()) {
-			if (!nameLists.get(message).contains(r)) {
-				status.setText(message);
-				r="";
-			}
+		if ("".equals(r)) {
+			status.setText(emptyString);
 		}
+		else {
+			if (!nameList.contains(r)) {
+				status.setText(message);
+				r="";				
+			}			
+		}		
 		return r;
 	}
 	
-	public String getTextNew(LinkedHashMap<String, Set<String>> nameLists, JLabel status, String stat07, String stat03) {
+	public String getTextNew(LinkedHashMap<String, Set<String>> nameLists, JLabel status, String emptyString, String existsString) {
 		String r = input.getText();
 		if ("".equals(r)) {
-			status.setText(stat07);
+			status.setText(emptyString);
 		}
 		if (MCAObject.containsName(r)) {
-			status.setText(stat03);
+			status.setText(existsString);
 		}
 		for (String message : nameLists.keySet()) {
 			if (nameLists.get(message).contains(r) && !"".equals(r)) {
@@ -64,4 +67,33 @@ public class LabeledInputDialog {
 		}
 		return r;
 	}
+	
+	public Double getNum(JLabel status, String emptyString, String wrongString) {
+		Double r = null;
+		String inputString = input.getText();
+		if ("".equals(inputString)) {
+			status.setText(emptyString); 				
+		}
+		else {				
+			try {
+				r = Double.parseDouble(inputString);
+			} catch (NumberFormatException e){
+				r = 0.0;
+			}
+			if (r <= 0.0) {
+				status.setText(wrongString); // >>> unzulässiger Faktor <<<
+			}
+		}
+		return r;
+	}
+	
+	public boolean isPosNum(JLabel status, String emptyString, String wrongString) {
+		boolean r = false;
+		if (getNum(status, emptyString, wrongString) != null) {
+			if (getNum(status, emptyString, wrongString)>0.0) {
+				r = true;
+			}
+		}
+		return r;
+	}	
 }

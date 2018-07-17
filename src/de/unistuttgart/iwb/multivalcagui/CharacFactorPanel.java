@@ -24,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.543
+ * @version 0.544
  */
 
 public class CharacFactorPanel extends MCAPanel{
@@ -85,27 +85,17 @@ public class CharacFactorPanel extends MCAPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {	
 				boolean inputOK = true;
-				String facText = txtP12n4.getText();				
-				if ("".equals(facText) || lblP12n8.getText().length()<15 ) {
-					lblP12n8.setText(bundle.getString("stat07")); // >>> unvollständige Eingabe <<<
-					inputOK = false;					
-				}
 				Double facVal = 0.0;
-				try {
-					facVal = Double.parseDouble(facText);
-				} catch (NumberFormatException e){
-					facVal = 0.0;
+				if (wertCFdi.isPosNum(lblP12n8, bundle.getString("stat07"), bundle.getString("stat26"))) {
+					facVal = wertCFdi.getNum(lblP12n8, bundle.getString("stat07"), bundle.getString("stat26"));
 				}
-				if (facVal <= 0.0) {
-					lblP12n8.setText(bundle.getString("stat26")); // >>> unzulässiger Faktor <<<
-					inputOK = false;	
+				else {
+					inputOK = false;
 				}
-				LinkedHashMap<String, Set<String>> testMap3 = new LinkedHashMap<String, Set<String>>();
-				testMap3.put(bundle.getString("stat27"), ImpactCategory.getAllInstances().keySet());
-				String nameWK = nameWKdi.getTextOld(testMap3, lblP12n8);
-				LinkedHashMap<String, Set<String>> testMap2 = new LinkedHashMap<String, Set<String>>();
-				testMap2.put(bundle.getString("stat11"), Flow.getAllInstances().keySet());
-				String nameFl = nameFLdi.getTextOld(testMap2, lblP12n8);					
+				Set<String> testSet1 = ImpactCategory.getAllInstances().keySet();				
+				String nameWK = nameWKdi.getTextOld(bundle.getString("stat27"), testSet1, lblP12n8, bundle.getString("stat07")) ;
+				Set<String> testSet2 = Flow.getAllInstances().keySet();
+				String nameFl = nameFLdi.getTextOld(bundle.getString("stat11"), testSet2, lblP12n8, bundle.getString("stat07")) ;
 				LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
 				testMap1.put(bundle.getString("stat03"), CharacFactor.getAllInstances().keySet());
 				String nameCF = nameCFdi.getTextNew(testMap1, lblP12n8, bundle.getString("stat07"), bundle.getString("stat03"));								
@@ -118,7 +108,7 @@ public class CharacFactorPanel extends MCAPanel{
 					txtP12n2.setEnabled(false);
 					txtP12n3.setEnabled(false);
 					txtP12n4.setEnabled(false);
-					lud.start(facText);
+					lud.start(txtP12n4.getText());
 					btnP12n1.setEnabled(false);
 					btnP12n2.setEnabled(true);
 				}				
