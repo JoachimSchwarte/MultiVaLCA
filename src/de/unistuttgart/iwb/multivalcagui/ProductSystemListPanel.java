@@ -17,12 +17,13 @@ import javax.swing.table.TableColumnModel;
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.536
+ * @version 0.545
  */
 
 public class ProductSystemListPanel extends MCAPanel {
@@ -30,7 +31,6 @@ public class ProductSystemListPanel extends MCAPanel {
 	private JLabel lblP08n1 = new JLabel();
 	private JTable psTable 		= new JTable();
 	private DefaultTableModel psTableModel 		= new DefaultTableModel(0,3);
-
 
 	protected ProductSystemListPanel(String key) {
 		super(key);
@@ -41,8 +41,7 @@ public class ProductSystemListPanel extends MCAPanel {
 		setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
 		lblP08n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		add(lblP08n1, "cell 0 0,alignx center,aligny top");		
-		add(new JScrollPane(psTable), "cell 0 1,alignx center,aligny top");	
-		
+		add(new JScrollPane(psTable), "cell 0 1,alignx center,aligny top");		
 	}
 
 	@Override
@@ -62,17 +61,15 @@ public class ProductSystemListPanel extends MCAPanel {
 			psTableModel.addRow(new Object[] {psn, "", ""});
 			for (FlowValueMaps mnif : ProductSystem.getInstance(psn).getModulliste()){
 				String mni = mnif.getName();
-				boolean typmod = false;
-				for(String modn2 : ProcessModule.getAllInstances().keySet()) {
-					if (mni.equals(modn2)) {
-						typmod = true;
-					}
+				if (mnif.getClass().equals(ProcessModule.class)) {
+					psTableModel.addRow(new Object[] {"",bundle.getString("mp12"), mni});
 				}
-				if (typmod){
-					psTableModel.addRow(new Object[] {"",bundle.getString("mp12"), mni});							
-				} else {
-					psTableModel.addRow(new Object[] {"",bundle.getString("p08n3"), mni});	
-				}					
+				if (mnif.getClass().equals(ProductSystem.class)) {
+					psTableModel.addRow(new Object[] {"",bundle.getString("p08n3"), mni});
+				}
+				if (mnif.getClass().equals(ProcessModuleGroup.class)) {
+					psTableModel.addRow(new Object[] {"",bundle.getString("mp122"), mni});
+				}				
 			}
 			for (Flow bvf : ProductSystem.getInstance(psn).getBedarfsvektor().keySet()) {
 				psTableModel.addRow(new Object[] {"" ,bundle.getString("p08n4") 
@@ -84,8 +81,6 @@ public class ProductSystemListPanel extends MCAPanel {
 				psTableModel.addRow(new Object[] {"" ,bundle.getString("p03n6") 
 						,vk.getName() });		
 			}
-		}
-		
+		}		
 	}
-
 }
