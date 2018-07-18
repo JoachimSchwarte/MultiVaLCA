@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.535
+ * @version 0.545
  */
 
 public class ProductSystemPanel extends MCAPanel{
@@ -52,6 +53,11 @@ public class ProductSystemPanel extends MCAPanel{
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private LabeledInputDialog namePSdi = new LabeledInputDialog(lblP03n2, txtP03n1);
+	private LabeledInputDialog nameMOdi = new LabeledInputDialog(lblP03n3, txtP03n2);
+	private LabeledInputDialog nameBVdi = new LabeledInputDialog(lblP03n4, txtP03n3);
+	private LabeledInputDialog wertBVdi = new LabeledInputDialog(lblP03n5, txtP03n4);
+	private LabeledInputDialog nameVKdi = new LabeledInputDialog(lblP03n6, txtP03n5);
 
 	protected ProductSystemPanel(String key) {
 		super(key);
@@ -62,45 +68,31 @@ public class ProductSystemPanel extends MCAPanel{
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lblP03n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP03n1, "flowy,cell 1 0 2 1,alignx center,growy");	
-		add(lblP03n2, "cell 1 1,grow");		
-		txtP03n1.setText("");
-		add(txtP03n1, "cell 2 1,grow");
-		txtP03n1.setColumns(10);		
-		add(btnP03n1, "cell 1 2 2 1,alignx center");
-		add(lblP03n3, "cell 1 3,grow");
-		txtP03n2.setText("");
-		add(txtP03n2, "cell 2 3,grow");
-		txtP03n2.setColumns(10);
+		Integer pos=0;
+		add(lblP03n1, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		pos = namePSdi.draw(pos, this);			
+		add(btnP03n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");
+		pos = nameMOdi.draw(pos, this);	
 		txtP03n2.setEnabled(false);		
 		btnP03n2.setEnabled(false);
-		add(btnP03n2, "cell 1 4,alignx center");		
+		add(btnP03n2, "cell 1 "+(++pos).toString()+",alignx center");		
 		btnP03n3.setEnabled(false);
-		add(btnP03n3, "cell 2 4,alignx center");	
-		add(lblP03n4, "cell 1 5,grow");
-		txtP03n3.setText("");
-		add(txtP03n3, "cell 2 5,grow");
-		txtP03n3.setColumns(10);
+		add(btnP03n3, "cell 2 "+pos.toString()+",alignx center");	
+		pos = nameBVdi.draw(pos, this);
+		pos = wertBVdi.draw(pos, this);		
 		txtP03n3.setEnabled(false);		
-		add(lblP03n5, "cell 1 6,grow");
-		txtP03n4.setText("");
-		add(txtP03n4, "cell 2 6,grow");
-		txtP03n4.setColumns(10);
 		txtP03n4.setEnabled(false);		
 		btnP03n4.setEnabled(false);
-		add(btnP03n4, "cell 1 7,alignx center");		
+		add(btnP03n4, "cell 1 "+(++pos).toString()+",alignx center");		
 		btnP03n5.setEnabled(false);
-		add(btnP03n5, "cell 2 7,alignx center");		
-		add(lblP03n6, "cell 1 8,grow");
-		txtP03n5.setText("");
-		add(txtP03n5, "cell 2 8,grow");
-		txtP03n5.setColumns(10);
+		add(btnP03n5, "cell 2 "+pos.toString()+",alignx center");	
+		pos = nameVKdi.draw(pos, this);
 		txtP03n5.setEnabled(false);		
 		btnP03n6.setEnabled(false);
-		add(btnP03n6, "cell 1 9,alignx center");	
+		add(btnP03n6, "cell 1 "+(++pos).toString()+",alignx center");	
 		btnP03n7.setEnabled(false);
-		add(btnP03n7, "cell 2 9,alignx center");		
-		add(lblP03n7, "cell 0 10 4 1,alignx center");
+		add(btnP03n7, "cell 2 "+pos.toString()+",alignx center");		
+		add(lblP03n7, "cell 0 "+(++pos).toString()+" 4 1,alignx center");
 		
 		button1();
 		button2();
@@ -115,50 +107,22 @@ public class ProductSystemPanel extends MCAPanel{
 		btnP03n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String name = txtP03n1.getText();	
-				boolean nameOk = true;
-				if ("".equals(name)) {
-					nameOk = false;
-					lblP03n7.setText(bundle.getString("stat02"));
-				} 
-				if (name != name.replaceAll(" ","")) {
-					nameOk = false;
-					lblP03n7.setText(bundle.getString("stat20"));
-					txtP03n1.setText("");
-				}	
-				if (nameOk) {
-					boolean nameVorhanden = false;
-					
-					for(String mod : ProcessModule.getAllInstances().keySet()) {
-						if (name.equals(mod)) {
-							nameVorhanden = true;
-						}
-					}
-					for(String mod : ProcessModuleGroup.getAllInstances().keySet()) {
-						if (name.equals(mod)) {
-							nameVorhanden = true;
-						}
-					}
-					for(String mod : ProductSystem.getAllInstances().keySet()) {
-						if (name.equals(mod)) {
-							nameVorhanden = true;
-						}
-					}
+				LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
+				testMap1.put(bundle.getString("stat43"), ProcessModule.getAllInstances().keySet());
+				testMap1.put(bundle.getString("stat44"), ProcessModuleGroup.getAllInstances().keySet());
+				testMap1.put(bundle.getString("stat45"), ProductSystem.getAllInstances().keySet());
+				String name = namePSdi.getTextNew(testMap1, lblP03n7, bundle.getString("stat02"), bundle.getString("stat03"));
+				if (!"".equals(name)) {
+					ProductSystem.instance(name, new LinkedHashMap<Flow, Double>(), 
+							new LinkedList<Flow>());
+					lblP03n7.setText(bundle.getString("stat12") + 
+							ProductSystem.getAllInstances().size() + bundle.getString("stat05"));
 
-					if (nameVorhanden) {
-						lblP03n7.setText(bundle.getString("stat03"));
-					} else {
-						ProductSystem.instance(name, new LinkedHashMap<Flow, Double>(), 
-								new LinkedList<Flow>());
-						lblP03n7.setText(bundle.getString("stat12") + 
-								ProductSystem.getAllInstances().size() + bundle.getString("stat05"));
-
-						btnP03n1.setEnabled(false);
-						txtP03n1.setEnabled(false);
-						btnP03n2.setEnabled(true);
-						txtP03n2.setEnabled(true);
-					}	
-				} 		
+					btnP03n1.setEnabled(false);
+					txtP03n1.setEnabled(false);
+					btnP03n2.setEnabled(true);
+					txtP03n2.setEnabled(true);
+				}				
 			}
 		});		
 	}

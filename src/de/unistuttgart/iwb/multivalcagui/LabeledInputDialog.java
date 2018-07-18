@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.544
+ * @version 0.545
  */
 
 public class LabeledInputDialog {
@@ -56,14 +56,15 @@ public class LabeledInputDialog {
 		if ("".equals(r)) {
 			status.setText(emptyString);
 		}
-		if (MCAObject.containsName(r)) {
-			status.setText(existsString);
-		}
 		for (String message : nameLists.keySet()) {
 			if (nameLists.get(message).contains(r) && !"".equals(r)) {
 				status.setText(message);
 				r="";
 			}
+		}
+		if (MCAObject.containsName(r)) {
+			status.setText(existsString);
+			r="";
 		}
 		return r;
 	}
