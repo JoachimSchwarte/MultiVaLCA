@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.FlowValueMaps;
+import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
@@ -145,19 +147,15 @@ public class ProductSystemPanel extends MCAPanel{
 					}
 				} else {
 					boolean nameVorhanden = false;
-					boolean typmod = false;
-					boolean typgroup = false;
 					for(String modn2 : ProcessModule.getAllInstances().keySet()) {
 						if (modname.equals(modn2)) {
 							nameVorhanden = true;
-							typmod = true;
 						}
 					}
 					if (!nameVorhanden) {
 						for(String modn3 : ProductSystem.getAllInstances().keySet()) {
 							if (modname.equals(modn3)) {
 								nameVorhanden = true;
-								typmod = false;
 							}
 						}
 					}
@@ -165,21 +163,11 @@ public class ProductSystemPanel extends MCAPanel{
 						for(String modn3 : ProcessModuleGroup.getAllInstances().keySet()) {
 							if (modname.equals(modn3)) {
 								nameVorhanden = true;
-								typmod = false;
-								typgroup = true;
 							}
 						}
 					}
 					if (nameVorhanden) {
-						if (typmod){
-							ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProcessModule.getInstance(modname));
-						} else {
-							if (typgroup) {
-								ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProcessModuleGroup.getAllInstances().get(modname));
-							} else {
-								ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul(ProductSystem.getAllInstances().get(modname));
-							}
-						}
+						ProductSystem.getAllInstances().get(txtP03n1.getText()).addProzessmodul((FlowValueMaps) MCAObject.getAllInstances(MCAObject.getClass(modname)).get(modname));
 						lblP03n7.setText(bundle.getString("stat14") + txtP03n1.getText() +
 								bundle.getString("stat15") + ProductSystem.getAllInstances().get(txtP03n1.getText()).getModulAnzahl() 
 								+ bundle.getString("stat16"));
