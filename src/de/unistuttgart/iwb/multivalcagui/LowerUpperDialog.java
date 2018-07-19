@@ -18,7 +18,7 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.541
+ * @version 0.546
  */
 
 public class LowerUpperDialog {
@@ -137,15 +137,22 @@ public class LowerUpperDialog {
 				try {
 					fugv = Double.parseDouble(fug);
 				} catch (NumberFormatException e){
-					fugv = 0.0;
+ 					fugv = 0.0;
 				}
 				try {
 					fogv = Double.parseDouble(fog);
 				} catch (NumberFormatException e){
 					fogv = 0.0;
 				}
-				txtLower.setText(Double.toString(fugv*(1-pronum/100))); 
-				txtUpper.setText(Double.toString(fogv*(1+pronum/100))); 
+				if (fugv >0.0) {
+					txtLower.setText(Double.toString(fugv*(1-pronum/100))); 
+					txtUpper.setText(Double.toString(fogv*(1+pronum/100))); 
+				}
+				else {
+					txtLower.setText(Double.toString(fugv*(1+pronum/100))); 
+					txtUpper.setText(Double.toString(fogv*(1-pronum/100))); 
+				}
+				
 			}		
 		});
 	}
