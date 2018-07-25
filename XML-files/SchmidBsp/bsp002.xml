@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<XML>
+<Flows>
+<Flow>
+<FlowName>A</FlowName>
+<FlowType>Elementary</FlowType>
+<FlowUnit>kg</FlowUnit>
+</Flow>
+</Flows>
+<ProcessModules/>
+<ProcessModuleGroups/>
+<ProductSystems/>
+<ImpactCategories/>
+<CFactors/>
+<LCIAMethods/>
+<ProductDeclarations/>
+<Components/>
+</XML>

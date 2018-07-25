@@ -12,7 +12,7 @@ import de.unistuttgart.iwb.ivari.*;
  * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.534
+ * @version 0.547
  */
 
 public class ProductSystem extends MCAObject 
@@ -215,7 +215,16 @@ implements FlowValueMaps, ImpactValueMaps {
 		Matrix matrixS = matrixA.solve(matrixF);
 		IvariVector ivS = new IvariVector(arrayA.length);
 		try {
+			System.out.println();
+			System.out.println("A[1,1] = "+imA.getValue(0, 0).getLowerBound()+" , "+imA.getValue(0, 0).getUpperBound());
+			System.out.println("A[1,2] = "+imA.getValue(0, 1).getLowerBound()+" , "+imA.getValue(0, 1).getUpperBound());
+			System.out.println("A[2,1] = "+imA.getValue(1, 0).getLowerBound()+" , "+imA.getValue(1, 0).getUpperBound());
+			System.out.println("A[2,2] = "+imA.getValue(1, 1).getLowerBound()+" , "+imA.getValue(1, 1).getUpperBound());
+			System.out.println("B[1]   = "+ivF.getValue(0).getLowerBound()+" , "+ivF.getValue(0).getUpperBound());
+			System.out.println("B[2]   = "+ivF.getValue(1).getLowerBound()+" , "+ivF.getValue(1).getUpperBound());
 			ivS = imA.gauss(ivF);
+			System.out.println("S[1]   = "+ivS.getValue(0).getLowerBound()+" , "+ivS.getValue(0).getUpperBound());
+			System.out.println("S[2]   = "+ivS.getValue(1).getLowerBound()+" , "+ivS.getValue(1).getUpperBound());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

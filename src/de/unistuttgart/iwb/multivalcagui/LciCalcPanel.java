@@ -22,7 +22,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.536
+ * @version 0.547
  */
 
 public class LciCalcPanel extends MCAPanel {
@@ -59,34 +59,33 @@ public class LciCalcPanel extends MCAPanel {
 		tcm.getColumn(1).setHeaderValue(bundle.getString("mp11"));
 		tcm.getColumn(2).setHeaderValue(bundle.getString("p01n3"));
 		tcm.getColumn(3).setHeaderValue(bundle.getString("p02n4"));
-		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> sysErgebnis = new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 		if (ProductSystem.getAllInstances().size() > 0) {
-			for(String sysName : ProductSystem.getAllInstances().keySet()) {
+			for(String sysName : ProductSystem.getAllInstances().keySet()) {			
 				lciTableModel.addRow(new Object[] {sysName,"","",""});
 				ProductSystem sysAktuell = ProductSystem.getAllInstances().get(sysName);
+				LinkedHashMap<Flow,LinkedHashMap<ValueType,Double>> efvAktuell = sysAktuell.getElementarflussvektor();
+				LinkedHashMap<Flow,LinkedHashMap<ValueType,Double>> pfvAktuell = sysAktuell.getProduktflussvektor();
 				try {
-					if (sysAktuell.getElementarflussvektor().size() > 0) {
-						sysErgebnis = sysAktuell.getElementarflussvektor();
-						for(Flow sysFluss : sysErgebnis.keySet()){
-							for (ValueType vt : sysAktuell.getElementarflussvektor().get(sysFluss).keySet()) {
+					if (efvAktuell.size() > 0) {
+						for(Flow sysFluss : efvAktuell.keySet()){
+							for (ValueType vt : efvAktuell.get(sysFluss).keySet()) {
 								lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 										ValueTypeStringMap.getFVTS(l).get(vt),								
-										sysErgebnis.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
+										efvAktuell.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
 							}
 						}
 					}
-					if (sysAktuell.getProduktflussvektor().size() > 0) {
-						sysErgebnis = sysAktuell.getProduktflussvektor();
-						for(Flow sysFluss : sysErgebnis.keySet()){
+					if (pfvAktuell.size() > 0) {
+						for(Flow sysFluss : pfvAktuell.keySet()){
 							boolean ausgabe = false;
 							if (sysAktuell.getVorUndKoppelprodukte().contains(sysFluss)) {
 								ausgabe = true;
 							}
 							if (ausgabe) {
-								for (ValueType vt : sysAktuell.getProduktflussvektor().get(sysFluss).keySet()) {
+								for (ValueType vt : pfvAktuell.get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 											ValueTypeStringMap.getFVTS(l).get(vt),								
-											sysErgebnis.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
+											pfvAktuell.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
 								}
 							}
 						}
