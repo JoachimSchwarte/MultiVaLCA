@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 /**
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.532
+ * test Johannes
  */
 
 public class CategoryIndicator extends MCAObject {
