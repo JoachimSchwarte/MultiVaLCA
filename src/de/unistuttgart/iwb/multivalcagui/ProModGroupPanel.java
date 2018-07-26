@@ -22,7 +22,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.536
+ * @version 0.551
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -44,6 +44,10 @@ public class ProModGroupPanel extends MCAPanel{
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private LabeledInputDialog nameNGdi = new LabeledInputDialog(lbl02, txt01);
+	private LabeledInputDialog nameRPdi = new LabeledInputDialog(lbl03, txt02);
+	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lbl04, txt03);
+	private LabeledInputDialog nameHMdi = new LabeledInputDialog(lbl05, txt04);
 
 	protected ProModGroupPanel(String key) {
 		super(key);
@@ -54,30 +58,19 @@ public class ProModGroupPanel extends MCAPanel{
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
 		lbl01.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lbl01, "flowy,cell 1 0 2 1,alignx center,growy");	
-		add(lbl02, "cell 1 1,grow");		
-		txt01.setText("");
-		add(txt01, "cell 2 1,grow");
-		txt01.setColumns(10);			
-		add(lbl03, "cell 1 2,grow");		
-		txt02.setText("");
-		add(txt02, "cell 2 2,grow");
-		txt02.setColumns(10);		
-		add(lbl04, "cell 1 3,grow");		
-		txt03.setText("");
-		add(txt03, "cell 2 3,grow");
-		txt03.setColumns(10);
-		add(btn01, "cell 1 4 2 1,alignx center");	
-		add(lbl05, "cell 1 5,grow");		
-		txt04.setText("");
-		add(txt04, "cell 2 5,grow");
-		txt04.setColumns(10);
-		add(btn02, "cell 1 6,alignx center");
-		add(btn03, "cell 2 6,alignx center");
+		Integer pos=0;
+		add(lbl01, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		pos = nameNGdi.draw(pos, this);			
+		pos = nameRPdi.draw(pos, this);		
+		pos = wertMEdi.draw(pos, this);	
+		add(btn01, "cell 1 "+(++pos).toString()+" 2 1,alignx center");	
+		pos = nameHMdi.draw(pos, this);	
+		add(btn02, "cell 1 "+(++pos).toString()+",alignx center");
+		add(btn03, "cell 2 "+pos.toString()+",alignx center");
 		txt04.setEnabled(false);	
 		btn02.setEnabled(false);	
 		btn03.setEnabled(false);
-		add(lbl06, "cell 0 7 4 1,alignx center");
+		add(lbl06, "cell 0 "+(++pos).toString()+" 4 1,alignx center");
 		
 		button1();
 		button2();
