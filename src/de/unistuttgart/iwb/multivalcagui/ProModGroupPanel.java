@@ -7,22 +7,23 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.Flow;
-import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.551
+ * @version 0.552
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -80,39 +81,22 @@ public class ProModGroupPanel extends MCAPanel{
 	private void button1() {
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String fmenge = txt03.getText();
-				Double menge;
-				try {
-					menge = Double.parseDouble(fmenge);
-				} catch (NumberFormatException e){
-					menge = 0.0;
+				boolean inputOK = true;
+				Double menge = 0.0;
+				if (wertMEdi.isPosNum(lbl06, bundle.getString("stat07"), bundle.getString("stat26"))) {
+					menge = wertMEdi.getNum(lbl06, bundle.getString("stat07"), bundle.getString("stat26"));
 				}
-				if (menge == 0.0) {
-					lbl06.setText(bundle.getString("stat07"));
+				else {
+					inputOK = false;
 				}
-				String flname = txt02.getText();
-				boolean flOk = true;					
-				if (!Flow.getAllInstances().containsKey(flname)) {
-					flOk = false;
-					lbl06.setText(bundle.getString("stat37"));
-				}			
-				String name = txt01.getText();	
-				boolean nameOk = true;
-				if ("".equals(name)) {
-					nameOk = false;
-					lbl06.setText(bundle.getString("stat02"));
-				} 
-				if (name != name.replaceAll(" ","")) {
-					nameOk = false;
-					lbl06.setText(bundle.getString("stat20"));
-					txt01.setText("");
-				}
-				if (MCAObject.containsName(name)) {
-					nameOk = false;
-					lbl06.setText(bundle.getString("stat03"));
-					txt01.setText("");
-				}	
-				if (menge != 0.0 && flOk && nameOk) {
+				Set<String> testSet1 = Flow.getAllInstances().keySet();
+				String flname = nameRPdi.getTextOld(bundle.getString("stat37"), testSet1, lbl06, bundle.getString("stat07"));
+	
+				LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
+				testMap1.put(bundle.getString("stat03"), ProcessModuleGroup.getAllInstances().keySet());
+				String name = nameNGdi.getTextNew(testMap1, lbl06, bundle.getString("stat02"), bundle.getString("stat03"));	
+	
+				if (inputOK && !"".equals(flname) && !"".equals(name)) {
 					ProcessModuleGroup.createInstance(name, Flow.getInstance(flname), menge);
 					txt01.setEnabled(false);
 					txt02.setEnabled(false);
