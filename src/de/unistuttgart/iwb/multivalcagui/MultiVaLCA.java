@@ -31,14 +31,14 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author JS, HH
- * @version 0.546
+ * @version 0.548
  */
 
 public class MultiVaLCA {
 	
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.546";
-	private String dateString ="19.07.2018";
+	private String versionString ="Version 0.548";
+	private String dateString ="26.07.2018";
 	
 	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();
@@ -201,27 +201,27 @@ public class MultiVaLCA {
 		//
 		// Panel 17; Neue Produktdeklaration
 		//
-		panel.add(new DeklarationPanel("neuDekl"), "neuDekl");
+//		panel.add(new DeklarationPanel("neuDekl"), "neuDekl");
 		//
 		// Panel 18; Neue Komponente
 		//
-		panel.add(new ComponentPanel("neuKente"), "neuKente");			
+//		panel.add(new ComponentPanel("neuKente"), "neuKente");			
 		//
 		// Panel 19; Neue Komposition
 		//
-		panel.add(new CompositionPanel("neuKtion"), "neuKtion");
+//		panel.add(new CompositionPanel("neuKtion"), "neuKtion");
 		//
 		// Panel 20; Liste der Deklarationen
 		//
-		panel.add(new DeklarationListPanel("listDekl"), "listDekl");
+//		panel.add(new DeklarationListPanel("listDekl"), "listDekl");
 		//
 		// Panel 21; Liste der Komponenten
 		//
-		panel.add(new ComponentListPanel("listKente"), "listKente");
+//		panel.add(new ComponentListPanel("listKente"), "listKente");
 		//
 		// Panel 22; Liste der Kompositionen
 		//
-		panel.add(new CompositionListPanel("listKtion"), "listKtion");
+//		panel.add(new CompositionListPanel("listKtion"), "listKtion");
 		
 		cl.show(panel, "leer"); // zeigt Startfenster an
 		
@@ -333,7 +333,7 @@ public class MultiVaLCA {
 		mntmLCIAnew.setAction(a7);								//Wirkungsabschätzung
 		mnNew.add(mntmLCIAnew);
 				
-		JMenuItem mntmDeclaration = new JMenuItem();
+/*		JMenuItem mntmDeclaration = new JMenuItem();
 		Action a8 = new MCAAction(bundle.getString("mp17"), bundle.getString("mp17e"), "neuDekl") {
 			@Override
 			public void performAction(ActionEvent e) {
@@ -365,7 +365,7 @@ public class MultiVaLCA {
 		};
 		mntmComposition.setAction(a10);							//Komposition
 		mnNew.add(mntmComposition);	
-		
+*/		
 		JMenu mnListe = new JMenu(bundle.getString("mp4"));
 		menuBar.add(mnListe);									//Liste
 		
@@ -376,7 +376,8 @@ public class MultiVaLCA {
 				cl.show(panel, getKey());
 				MCAPanel.get(getKey()).showMe();
 			}			
-		};		
+		};	
+	
 		mntmFlsse.setAction(a13);								//Liste aller Flüsse
 		mnListe.add(mntmFlsse);
 		
@@ -435,7 +436,7 @@ public class MultiVaLCA {
 		mntmLCIAlist.setAction(a18);							//Liste der Bewertungsmethoden
 		mnListe.add(mntmLCIAlist);
 		
-		JMenuItem mntmDeclarationlist = new JMenuItem();
+/*		JMenuItem mntmDeclarationlist = new JMenuItem();
 		Action a19 = new MCAAction(bundle.getString("mp47"), bundle.getString("mp47e"), "listDekl") {
 			@Override
 			public void performAction(ActionEvent e) {
@@ -467,7 +468,7 @@ public class MultiVaLCA {
 		};	
 		mntmCompositionlist.setAction(a21);						//Liste der Kompositionen
 		mnListe.add(mntmCompositionlist);
-		
+*/		
 		JMenu mnBerechnen = new JMenu(bundle.getString("mp5"));
 		menuBar.add(mnBerechnen);
 		
@@ -573,18 +574,18 @@ public class MultiVaLCA {
 				mntmLCIAlist.setText(bundle.getString("mp46"));
 				mntmLCIAlist.setToolTipText(bundle.getString("mp46e"));
 				
-				mntmDeclaration.setText(bundle.getString("mp17"));
-				mntmDeclaration.setToolTipText(bundle.getString("mp17e"));
-				mntmDeclarationlist.setText(bundle.getString("mp47"));
-				mntmDeclarationlist.setToolTipText(bundle.getString("mp47e"));
-				mntmComponent.setText(bundle.getString("mp18"));
-				mntmComponent.setToolTipText(bundle.getString("mp18e"));
-				mntmComponentlist.setText(bundle.getString("mp48"));
-				mntmComponentlist.setToolTipText(bundle.getString("mp48e"));
-				mntmComposition.setText(bundle.getString("mp19"));
-				mntmComposition.setToolTipText(bundle.getString("mp19e"));
-				mntmCompositionlist.setText(bundle.getString("mp49"));
-				mntmCompositionlist.setToolTipText(bundle.getString("mp49e"));
+//				mntmDeclaration.setText(bundle.getString("mp17"));
+//				mntmDeclaration.setToolTipText(bundle.getString("mp17e"));
+//				mntmDeclarationlist.setText(bundle.getString("mp47"));
+//				mntmDeclarationlist.setToolTipText(bundle.getString("mp47e"));
+//				mntmComponent.setText(bundle.getString("mp18"));
+//				mntmComponent.setToolTipText(bundle.getString("mp18e"));
+//				mntmComponentlist.setText(bundle.getString("mp48"));
+//				mntmComponentlist.setToolTipText(bundle.getString("mp48e"));
+//				mntmComposition.setText(bundle.getString("mp19"));
+//				mntmComposition.setToolTipText(bundle.getString("mp19e"));
+//				mntmCompositionlist.setText(bundle.getString("mp49"));
+//				mntmCompositionlist.setToolTipText(bundle.getString("mp49e"));
 				
 				mntmLCIAcalc.setText(bundle.getString("mp52"));
 				mntmLCIAcalc.setToolTipText(bundle.getString("mp52e"));
