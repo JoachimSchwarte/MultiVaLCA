@@ -27,6 +27,7 @@ public class GenPM extends MCAObject implements ImpactValueMaps {
 		super(name);
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
 		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wv =
