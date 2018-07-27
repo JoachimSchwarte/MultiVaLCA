@@ -7,6 +7,7 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -17,13 +18,14 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.FlowType;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.552
+ * @version 0.553
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -90,10 +92,16 @@ public class ProModGroupPanel extends MCAPanel{
 					inputOK = false;
 				}
 				Set<String> testSet1 = Flow.getAllInstances().keySet();
-				String flname = nameRPdi.getTextOld(bundle.getString("stat37"), testSet1, lbl06, bundle.getString("stat07"));
+				HashSet<String> testSet2 = new HashSet<String>();
+				for (String flowname : testSet1) {
+					if (Flow.getInstance(flowname).getType()==FlowType.Product) {
+						testSet2.add(flowname);
+					}							
+				}
+				String flname = nameRPdi.getTextOld(bundle.getString("stat37"), testSet2, lbl06, bundle.getString("stat07"));
 	
 				LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
-				testMap1.put(bundle.getString("stat03"), ProcessModuleGroup.getAllInstances().keySet());
+				testMap1.put(bundle.getString("stat44"), ProcessModuleGroup.getAllInstances().keySet());
 				String name = nameNGdi.getTextNew(testMap1, lbl06, bundle.getString("stat02"), bundle.getString("stat03"));	
 	
 				if (inputOK && !"".equals(flname) && !"".equals(name)) {
@@ -104,6 +112,8 @@ public class ProModGroupPanel extends MCAPanel{
 					btn01.setEnabled(false);
 					txt04.setEnabled(true);
 					btn02.setEnabled(true);
+					lbl06.setText(bundle.getString("stat40") + ProcessModuleGroup.getAllInstances().get(txt01.getText()).getModList().size()
+							+ bundle.getString("stat41"));
 				}				
 			}			
 		});
@@ -152,6 +162,7 @@ public class ProModGroupPanel extends MCAPanel{
 				btn01.setEnabled(true);
 				btn02.setEnabled(false);
 				btn03.setEnabled(false);
+				lbl06.setText(bundle.getString("stat01"));
 				
 			}
 		});
