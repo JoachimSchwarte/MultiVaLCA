@@ -48,7 +48,6 @@ public class MultiVaLCA {
 	private final Action xmlExportAction 		= new XMLExportAction(l);
 	private final Action xmlImportAction 		= new XMLImportAction(l);
 
-
 	//
 	//
 	// Panel 5; Sprachauswahl
@@ -66,7 +65,7 @@ public class MultiVaLCA {
 	        
 	        Locale english = new Locale("en", "UK"); //Locale.UK
 	    	Locale deutsch = new Locale("de", "DE"); //Locale.DE
-	    	Locale franzÃ¶sisch = new Locale ("fr", "FR");
+	    	Locale französisch = new Locale ("fr", "FR");
 	    	Locale russisch = new Locale ("ru", "RU");
 	    	Locale portugiesisch = new Locale ("pt", "PT");
 	    	Locale kroatisch = new Locale ("hr", "HR");
@@ -74,8 +73,8 @@ public class MultiVaLCA {
 	        
 	        LANGUAGES.put(Language.Deutsch, deutsch);
 	        LANGUAGES.put(Language.English, english);  
-	        LANGUAGES.put(Language.Francais, franzÃ¶sisch);
-	        LANGUAGES.put(Language.PortuguÃªs, portugiesisch);
+	        LANGUAGES.put(Language.Francais, französisch);
+	        LANGUAGES.put(Language.Português, portugiesisch);
 	        LANGUAGES.put(Language.\u0440\u0443\u0441\u0441\u043A\u0438\u0439, russisch);
 	        LANGUAGES.put(Language.Hrvatski, kroatisch);
 	    }
