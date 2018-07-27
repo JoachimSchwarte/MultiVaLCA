@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.545
+ * @version 0.552
  */
 
 public class LabeledInputDialog {
@@ -28,6 +28,16 @@ public class LabeledInputDialog {
 		this.input = input;
 	}
 	
+	/**
+	 * Anzeige der Dialogelemenet
+	 * @param pos0
+	 * Letzte Ausgabezeile
+	 * @param panel
+	 * Panel, in dem die Ausgabe erfolgt
+	 * @return
+	 * Aktuelle Ausgabezeile
+	 */
+	
 	public Integer draw(Integer pos0, MCAPanel panel) {
 		Integer pos = pos0;
 		panel.add(label, "cell 1 "+(++pos).toString()+",grow");		
@@ -36,6 +46,21 @@ public class LabeledInputDialog {
 		input.setColumns(10);
 		return pos;
 	}
+	
+	/**
+	 * Abrage eines Textelementes, von dem erwartet wird, dass es bereits
+	 * im System bekannt ist
+	 * @param message
+	 * (spezifische) Fehlermeldung "Name existiert nicht in ..." o. ä.
+	 * @param nameList
+	 * Liste der Textelemente, in der das neue Element vorhanden sein soll
+	 * @param status
+	 * Bezeichner der Statuszeile
+	 * @param emptyString
+	 * Fehlermeldung "Es wurde kein Text eingeben" o. ä.
+	 * @return
+	 * das ausgelesene Textelement
+	 */
 	
 	public String getTextOld(String message, Set<String> nameList, JLabel status, String emptyString) {
 		String r = input.getText();
@@ -50,6 +75,22 @@ public class LabeledInputDialog {
 		}		
 		return r;
 	}
+	
+	/**
+	 * Abrage eines Textelementes, von dem erwartet wird, dass es noch nicht
+	 * im System verwendet wird
+	 * @param nameLists
+	 * Tabelle mit Textelementlisten, in denen das neue Element nicht enthalte
+	 * sein darf, und zugehörigen Fehlermeldungen
+	 * @param status
+	 * Bezeichner der Statuszeile
+	 * @param emptyString
+	 * Fehlermeldung "Es wurde kein Text eingeben" o. ä.
+	 * @param existsString
+	 * Fehlermeldung "Textelement ist anderweitig vergeben" o. ä.
+	 * @return
+	 * das ausgelesene Textelement
+	 */
 	
 	public String getTextNew(LinkedHashMap<String, Set<String>> nameLists, JLabel status, String emptyString, String existsString) {
 		String r = input.getText();
@@ -68,6 +109,18 @@ public class LabeledInputDialog {
 		}
 		return r;
 	}
+	
+	/**
+	 * Abfrage eines Zahlenwertes
+	 * @param status
+	 * Bezeichner der Statuszeile
+	 * @param emptyString
+	 * Fehlermeldung "Es wurde nichts eingeben" o. ä.
+	 * @param wrongString
+	 * Fehlermeldung "Es wurde keine zulässige Zahl eingeben" o. ä.
+	 * @return
+	 * den ausgelesenen Zahlenwert
+	 */
 	
 	public Double getNum(JLabel status, String emptyString, String wrongString) {
 		Double r = null;

@@ -66,7 +66,7 @@ public class MultiVaLCA {
 	        
 	        Locale english = new Locale("en", "UK"); //Locale.UK
 	    	Locale deutsch = new Locale("de", "DE"); //Locale.DE
-	    	Locale französisch = new Locale ("fr", "FR");
+	    	Locale franzÃ¶sisch = new Locale ("fr", "FR");
 	    	Locale russisch = new Locale ("ru", "RU");
 	    	Locale portugiesisch = new Locale ("pt", "PT");
 	    	Locale kroatisch = new Locale ("hr", "HR");
@@ -74,8 +74,8 @@ public class MultiVaLCA {
 	        
 	        LANGUAGES.put(Language.Deutsch, deutsch);
 	        LANGUAGES.put(Language.English, english);  
-	        LANGUAGES.put(Language.Francais, französisch);
-	        LANGUAGES.put(Language.Português, portugiesisch);
+	        LANGUAGES.put(Language.Francais, franzÃ¶sisch);
+	        LANGUAGES.put(Language.PortuguÃªs, portugiesisch);
 	        LANGUAGES.put(Language.\u0440\u0443\u0441\u0441\u043A\u0438\u0439, russisch);
 	        LANGUAGES.put(Language.Hrvatski, kroatisch);
 	    }
@@ -195,7 +195,7 @@ public class MultiVaLCA {
 		//
 		panel.add(new EvalMListPanel("bmList"), "bmList");		
 		//
-		// Panel 16; Berechnung der Wirkungsabschätzung
+		// Panel 16; Berechnung der WirkungsabschÃ¤tzung
 		//
 		panel.add(new LciaCalcPanel("berechnen2"), "berechnen2");
 		//
@@ -330,7 +330,7 @@ public class MultiVaLCA {
 				MCAPanel.get(getKey()).showMe();
 			}			
 		};
-		mntmLCIAnew.setAction(a7);								//Wirkungsabschätzung
+		mntmLCIAnew.setAction(a7);								//WirkungsabschÃ¤tzung
 		mnNew.add(mntmLCIAnew);
 				
 /*		JMenuItem mntmDeclaration = new JMenuItem();
@@ -378,7 +378,7 @@ public class MultiVaLCA {
 			}			
 		};	
 	
-		mntmFlsse.setAction(a13);								//Liste aller Flüsse
+		mntmFlsse.setAction(a13);								//Liste aller FlÃ¼sse
 		mnListe.add(mntmFlsse);
 		
 		JMenuItem mntmProzessmodule = new JMenuItem();
@@ -491,7 +491,7 @@ public class MultiVaLCA {
 				MCAPanel.get(getKey()).showMe();
 			}			
 		};
-		mntmLCIAcalc.setAction(a24);							//Wirkungsabschätzungsberechnung
+		mntmLCIAcalc.setAction(a24);							//WirkungsabschÃ¤tzungsberechnung
 		mnBerechnen.add(mntmLCIAcalc);							
 			
 		JMenu mnPrefs = new JMenu(bundle.getString("mp3"));
