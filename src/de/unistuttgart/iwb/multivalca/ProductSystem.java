@@ -12,7 +12,7 @@ import de.unistuttgart.iwb.ivari.*;
  * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.554
+ * @version 0.555
  */
 
 public class ProductSystem extends GenPM 
@@ -144,22 +144,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	}
 	
 	private void aktualisiere() throws Exception {
-		LinkedList<Flow> produktFlussliste = new LinkedList<Flow>();
-		for(FlowValueMaps m : modulliste){
-			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> modulVektor = m.getProduktflussvektor();
-			for (Flow key : modulVektor.keySet()) {		
-				if (!produktFlussliste.contains(key) &&
-					(!vorUndKoppelProdukte.contains(key)) &&
-					(m.getProduktflussvektor().containsKey(key)) &&
-					(m.getProduktflussvektor().get(key).get(ValueType.MeanValue) != 0)
-					)	{
-					produktFlussliste.add(key);	
-				}				
-			}
-		}
-		if (produktFlussliste.size() != modulliste.size()) {
-			throw new ArithmeticException("Matrix nicht quadratisch");
-		}
+		LinkedList<Flow> produktFlussliste = getProduktFlussliste();
 		double[][] arrayA = new double[produktFlussliste.size()][modulliste.size()];
 		double[][] arrayAl = new double[produktFlussliste.size()][modulliste.size()];
 		double[][] arrayAu = new double[produktFlussliste.size()][modulliste.size()];
@@ -173,15 +158,7 @@ implements FlowValueMaps, ImpactValueMaps {
  				} 
 			}
 		}
-		LinkedList<Flow> elementarFlussliste = new LinkedList<Flow>();
-		for(FlowValueMaps m : modulliste){
-			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> modulVektor = m.getElementarflussvektor();
-			for (Flow key : modulVektor.keySet()) {
-				if (!elementarFlussliste.contains(key)){
-					elementarFlussliste.add(key);					
-				}				
-			}
-		}
+		LinkedList<Flow> elementarFlussliste = getElementarFlussliste();
 		double[][] arrayB = new double[elementarFlussliste.size()][modulliste.size()];
 		double[][] arrayBl = new double[elementarFlussliste.size()][modulliste.size()];
 		double[][] arrayBu = new double[elementarFlussliste.size()][modulliste.size()];
@@ -215,16 +192,7 @@ implements FlowValueMaps, ImpactValueMaps {
 		Matrix matrixS = matrixA.solve(matrixF);
 		IvariVector ivS = new IvariVector(arrayA.length);
 		try {
-/*			System.out.println();
-			System.out.println("A[1,1] = "+imA.getValue(0, 0).getLowerBound()+" , "+imA.getValue(0, 0).getUpperBound());
-			System.out.println("A[1,2] = "+imA.getValue(0, 1).getLowerBound()+" , "+imA.getValue(0, 1).getUpperBound());
-			System.out.println("A[2,1] = "+imA.getValue(1, 0).getLowerBound()+" , "+imA.getValue(1, 0).getUpperBound());
-			System.out.println("A[2,2] = "+imA.getValue(1, 1).getLowerBound()+" , "+imA.getValue(1, 1).getUpperBound());
-			System.out.println("B[1]   = "+ivF.getValue(0).getLowerBound()+" , "+ivF.getValue(0).getUpperBound());
-			System.out.println("B[2]   = "+ivF.getValue(1).getLowerBound()+" , "+ivF.getValue(1).getUpperBound());         */
 			ivS = imA.gauss(ivF);
-/*			System.out.println("S[1]   = "+ivS.getValue(0).getLowerBound()+" , "+ivS.getValue(0).getUpperBound());
-			System.out.println("S[2]   = "+ivS.getValue(1).getLowerBound()+" , "+ivS.getValue(1).getUpperBound());         */
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -384,6 +352,39 @@ implements FlowValueMaps, ImpactValueMaps {
 		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wv =
 				super.getImpactValueMap(bm);		
 		return wv;
+	}
+	
+	private LinkedList<Flow> getProduktFlussliste() {
+		LinkedList<Flow> produktFlussliste = new LinkedList<Flow>();
+		for(FlowValueMaps m : modulliste){
+			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> modulVektor = m.getProduktflussvektor();
+			for (Flow key : modulVektor.keySet()) {		
+				if (!produktFlussliste.contains(key) &&
+					(!vorUndKoppelProdukte.contains(key)) &&
+					(m.getProduktflussvektor().containsKey(key)) &&
+					(m.getProduktflussvektor().get(key).get(ValueType.MeanValue) != 0)
+					)	{
+					produktFlussliste.add(key);	
+				}				
+			}
+		}
+		if (produktFlussliste.size() != modulliste.size()) {
+			throw new ArithmeticException("Matrix nicht quadratisch");
+		}
+		return produktFlussliste;
+	}
+	
+	private LinkedList<Flow> getElementarFlussliste() {
+		LinkedList<Flow> elementarFlussliste = new LinkedList<Flow>();
+		for(FlowValueMaps m : modulliste){
+			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> modulVektor = m.getElementarflussvektor();
+			for (Flow key : modulVektor.keySet()) {
+				if (!elementarFlussliste.contains(key)){
+					elementarFlussliste.add(key);					
+				}				
+			}
+		}
+		return elementarFlussliste;
 	}
 
 }
