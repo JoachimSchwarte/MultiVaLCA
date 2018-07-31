@@ -15,7 +15,7 @@ import de.unistuttgart.iwb.multivalca.ObjectType;
  * multilinguale Realisierung der Enumeration ObjectType
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.548
+ * @version 0.557
  */
 
 public class ObjectTypeStringMap {
@@ -27,7 +27,7 @@ public class ObjectTypeStringMap {
 		LinkedHashMap<ObjectType, String> r = new LinkedHashMap<ObjectType, String>();
 		r.put(ObjectType.ProcessModule, bundle.getString("mp12"));
 		r.put(ObjectType.ProductSystem, bundle.getString("mp13"));
-//		r.put(ObjectType.ProductDeclaration, bundle.getString("mp17"));	
+		r.put(ObjectType.ProductDeclaration, bundle.getString("mp17"));	
 		return r;
 	}
 }
