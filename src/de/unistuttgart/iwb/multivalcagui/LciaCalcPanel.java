@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import de.unistuttgart.iwb.multivalca.GenPM;
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
 import de.unistuttgart.iwb.multivalca.LCIAMethod;
 import de.unistuttgart.iwb.multivalca.ObjectType;
@@ -32,7 +33,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.535
+ * @version 0.556
  */
 
 public class LciaCalcPanel extends MCAPanel {
@@ -96,21 +97,23 @@ public class LciaCalcPanel extends MCAPanel {
 				}
 				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp12"))) {
 					ProcessModule akObj = ProcessModule.getInstance(cobP16n2.getSelectedItem().toString());
-					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
+					createTableline(akObj, vt);
+/*					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
 					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {
 						waTableModel.addRow(new Object[] {wName.getName(), 
 								wName.getEinheit().getName(),
 								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});
-					}
+					} */
 				}
 				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp13"))) {
 					ProductSystem akObj = ProductSystem.getInstance(cobP16n2.getSelectedItem().toString());
-					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
+					createTableline(akObj, vt);
+/*					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
 					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {					
 						waTableModel.addRow(new Object[] {wName.getName(), 
 								wName.getEinheit().getName(),
 								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});							
-					}
+					} */
 				}
 				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp17"))) {
 					ProductDeclaration akObj = ProductDeclaration.getInstance(cobP16n2.getSelectedItem().toString());
@@ -231,5 +234,14 @@ public class LciaCalcPanel extends MCAPanel {
 			i++;
 		}
 		cobP16n4.setModel(new DefaultComboBoxModel<String>(vta));	
+	}
+	
+	private void createTableline(GenPM akObj, ValueType vt) {
+		LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
+		for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {
+			waTableModel.addRow(new Object[] {wName.getName(), 
+					wName.getEinheit().getName(),
+					akObj.getImpactValueMap(akMeth).get(wName).get(vt)});
+		}
 	}
 }

@@ -151,6 +151,9 @@ implements FlowValueMaps, ImpactValueMaps {
 		double[][] arrayAu = getTechnoMatrix(ValueType.UpperBound);;
 
 		LinkedList<Flow> elementarFlussliste = getElementarFlussliste();
+		/*
+		 * TODO: Aulagern von Methoden analog zu getTechnoMatrix(...) s. o. 
+		 */
 		double[][] arrayB = new double[elementarFlussliste.size()][modulliste.size()];
 		double[][] arrayBl = new double[elementarFlussliste.size()][modulliste.size()];
 		double[][] arrayBu = new double[elementarFlussliste.size()][modulliste.size()];
