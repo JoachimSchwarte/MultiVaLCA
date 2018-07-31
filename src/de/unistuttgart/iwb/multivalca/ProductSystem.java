@@ -154,16 +154,8 @@ implements FlowValueMaps, ImpactValueMaps {
 		double[][] arrayB = getUmweltMatrix(ValueType.MeanValue);
 		double[][] arrayBl = getUmweltMatrix(ValueType.LowerBound);
 		double[][] arrayBu = getUmweltMatrix(ValueType.UpperBound);
+		double[][] arrayF = getRechteSeite();
 
-		double[][] arrayF = new double[produktFlussliste.size()][1];
-		for(Flow pf : produktFlussliste) {
-			if (bedarfsvektor.containsKey(pf)){
-				arrayF[produktFlussliste.indexOf(pf)][0]=bedarfsvektor.get(pf);
-			} 
-			else {
-				arrayF[produktFlussliste.indexOf(pf)][0]=0;
-			}		
-		}
 		Matrix matrixA = new Matrix(arrayA);
 		IvariMatrix imA = new IvariMatrix(arrayAl, arrayAu);
 		Matrix matrixB = new Matrix(arrayB);
@@ -393,6 +385,19 @@ implements FlowValueMaps, ImpactValueMaps {
 				returnArray[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(vt);		
 			}
 		}
+		return returnArray;
+	}
+	
+	private double[][] getRechteSeite(){
+		double[][] returnArray = new double[produktFlussliste.size()][1];
+		for(Flow pf : produktFlussliste) {
+			if (bedarfsvektor.containsKey(pf)){
+				returnArray[produktFlussliste.indexOf(pf)][0]=bedarfsvektor.get(pf);
+			} 
+			else {
+				returnArray[produktFlussliste.indexOf(pf)][0]=0;
+			}		
+		}		
 		return returnArray;
 	}
 
