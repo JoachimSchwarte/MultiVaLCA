@@ -30,6 +30,7 @@ implements FlowValueMaps, ImpactValueMaps {
 //			= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pfv 
 			= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
+	private LinkedList<Flow> produktFlussliste = new LinkedList<Flow>();
 	
 	// Konstruktor:
 
@@ -144,20 +145,11 @@ implements FlowValueMaps, ImpactValueMaps {
 	}
 	
 	private void aktualisiere() throws Exception {
-		LinkedList<Flow> produktFlussliste = getProduktFlussliste();
-		double[][] arrayA = new double[produktFlussliste.size()][modulliste.size()];
-		double[][] arrayAl = new double[produktFlussliste.size()][modulliste.size()];
-		double[][] arrayAu = new double[produktFlussliste.size()][modulliste.size()];
-		for(FlowValueMaps m : modulliste){
-			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> modulVektor = m.getProduktflussvektor();
-			for (Flow key : modulVektor.keySet()) {
- 				if (produktFlussliste.contains(key)) {
-					arrayA[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.MeanValue);
-					arrayAl[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.LowerBound);
-					arrayAu[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.UpperBound);
- 				} 
-			}
-		}
+		produktFlussliste = getProduktFlussliste();
+		double[][] arrayA = getTechnoMatrix(ValueType.MeanValue);
+		double[][] arrayAl = getTechnoMatrix(ValueType.LowerBound);;
+		double[][] arrayAu = getTechnoMatrix(ValueType.UpperBound);;
+
 		LinkedList<Flow> elementarFlussliste = getElementarFlussliste();
 		double[][] arrayB = new double[elementarFlussliste.size()][modulliste.size()];
 		double[][] arrayBl = new double[elementarFlussliste.size()][modulliste.size()];
@@ -385,6 +377,19 @@ implements FlowValueMaps, ImpactValueMaps {
 			}
 		}
 		return elementarFlussliste;
+	}
+	
+	private double[][] getTechnoMatrix(ValueType vt){
+		double[][] returnArray = new double[produktFlussliste.size()][modulliste.size()];
+		for(FlowValueMaps m : modulliste){
+			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> modulVektor = m.getProduktflussvektor();
+			for (Flow key : modulVektor.keySet()) {
+ 				if (produktFlussliste.contains(key)) {
+ 					returnArray[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(vt);
+ 				} 
+			}
+		}
+		return returnArray;
 	}
 
 }
