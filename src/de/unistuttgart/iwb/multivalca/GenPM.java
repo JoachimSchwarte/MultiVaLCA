@@ -4,7 +4,6 @@
 
 package de.unistuttgart.iwb.multivalca;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import de.unistuttgart.iwb.ivari.IvariScalar;
@@ -16,18 +15,18 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * (generalisiertes Prozessmodul)
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.554
+ * @version 0.556
  */
 
 public class GenPM extends MCAObject implements ImpactValueMaps {
 
-	private HashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> efv;
+	protected LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv
+	= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 
 	protected GenPM(String name) {
 		super(name);
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
 		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wv =

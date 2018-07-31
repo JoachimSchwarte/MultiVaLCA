@@ -12,7 +12,7 @@ import de.unistuttgart.iwb.ivari.*;
  * Diese Klasse dient zur Erzeugung von Produktsystemen.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.555
+ * @version 0.556
  */
 
 public class ProductSystem extends GenPM 
@@ -26,8 +26,8 @@ implements FlowValueMaps, ImpactValueMaps {
 			= new LinkedHashMap<Flow, Double>();
 	private LinkedList<Flow> vorUndKoppelProdukte 
 			= new LinkedList<Flow>();
-	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv 
-			= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
+//	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv 
+//			= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pfv 
 			= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 	

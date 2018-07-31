@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.554
+ * @version 0.556
  */
 
 public class ProcessModule extends GenPM  
@@ -15,8 +15,8 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	// Instanzvariablen:
 	
-	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = 
-			new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); //Elementarflüsse
+//	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = 
+//			new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); //Elementarflüsse
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pfv = 
 			new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); //Produktflüsse
 	
