@@ -6,8 +6,10 @@ package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EnumMap;
@@ -26,6 +28,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+
 import net.miginfocom.swing.MigLayout;
 
 
@@ -47,6 +51,11 @@ public class MultiVaLCA {
 	private final Action prefsAction 			= new prefsAction();
 	private final Action xmlExportAction 		= new XMLExportAction(l);
 	private final Action xmlImportAction 		= new XMLImportAction(l);
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth();
+	private int height = (int) screen.getHeight();
+    private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
 
 	//
 	//
@@ -112,10 +121,12 @@ public class MultiVaLCA {
 	 */
 	private void initialize() {
 		
+		frame.setFont(generalfont);
 		frame.setTitle(bundle.getString("head1")+"   "+versionString);
-		frame.setBounds(100, 100, 600, 480);
+		frame.setSize(width *48/100, height * 60/100);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
-		frame.getContentPane().add(panel, BorderLayout.CENTER);		
+		frame.getContentPane().add(panel, BorderLayout.CENTER);	
+		UIManager.put("ToolTip.font", generalfont);
 		
 		panel.setLayout(cl);
 	
@@ -145,9 +156,9 @@ public class MultiVaLCA {
 		// Panel 5; Sprachauswahl
 		//
 		panel.add(panel_5, "lang");
-		panel_5.setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lblP05n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panel_5.setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));		
+		lblP05n1.setFont(titlefont);
 		panel_5.add(lblP05n1, "flowy,cell 1 0 2 1,alignx center,growy");		
 		panel_5.add(lblP05n2, "cell 1 1,grow");		
 		comboBox2.setModel(new DefaultComboBoxModel<Language>(Language.values()));
@@ -238,17 +249,21 @@ public class MultiVaLCA {
 		frame.setJMenuBar(menuBar);
 		
 		final JMenu mnDatei = new JMenu(bundle.getString("mp6")); 	//Datei
+		mnDatei.setFont(generalfont);
 		menuBar.add(mnDatei);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem();
 		mntmNewMenuItem_4.setAction(xmlExportAction); 			//xmlExport
+		mntmNewMenuItem_4.setFont(generalfont);
 		mnDatei.add(mntmNewMenuItem_4);	
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem();
 		mntmNewMenuItem_5.setAction(xmlImportAction); 			//xmlImport
+		mntmNewMenuItem_5.setFont(generalfont);
 		mnDatei.add(mntmNewMenuItem_5);
 		
 		JMenu mnNew = new JMenu(bundle.getString("mp1")); 	//Neu/Bearbeiten
+		mnNew.setFont(generalfont);
 		menuBar.add(mnNew);
 		
 		JMenuItem mntmFlow = new JMenuItem();
@@ -260,10 +275,12 @@ public class MultiVaLCA {
 			}		
 		};
 		mntmFlow.setAction(a1);									//Neuer Fluss
+		mntmFlow.setFont(generalfont);
 		mnNew.add(mntmFlow);
 		
 		JMenu mntmProcessModule = new JMenu();
 		mntmProcessModule.setAction(newModuleAction);			//Neues Prozessmodul
+		mntmProcessModule.setFont(generalfont);
 		mnNew.add(mntmProcessModule);
 		
 		JMenuItem mntmSingleModule = new JMenuItem();
@@ -275,6 +292,7 @@ public class MultiVaLCA {
 			}		
 		};
 		mntmSingleModule.setAction(a2);							//Einzelprozess
+		mntmSingleModule.setFont(generalfont);
 		mntmProcessModule.add(mntmSingleModule);
 		
 		JMenuItem mntmGroupModule = new JMenuItem();
@@ -286,6 +304,7 @@ public class MultiVaLCA {
 			}		
 		};
 		mntmGroupModule.setAction(a3);							//Prozessmodulgruppe
+		mntmGroupModule.setFont(generalfont);
 		mntmProcessModule.add(mntmGroupModule);	
 				
 		JMenuItem mntmProductSystem = new JMenuItem();
@@ -297,6 +316,7 @@ public class MultiVaLCA {
 			}			
 		};		
 		mntmProductSystem.setAction(a4);						//Produktsystem
+		mntmProductSystem.setFont(generalfont);
 		mnNew.add(mntmProductSystem);
 		
 		JMenuItem mntmCategory = new JMenuItem();
@@ -308,6 +328,7 @@ public class MultiVaLCA {
 			}			
 		};
 		mntmCategory.setAction(a5);								//Wirkungskategorie
+		mntmCategory.setFont(generalfont);
 		mnNew.add(mntmCategory);
 		
 		JMenuItem mntmCF = new JMenuItem();
@@ -319,6 +340,7 @@ public class MultiVaLCA {
 			}			
 		};
 		mntmCF.setAction(a6);									//Charakterisierungsfaktoren
+		mntmCF.setFont(generalfont);
 		mnNew.add(mntmCF);
 		
 		JMenuItem mntmLCIAnew = new JMenuItem();
@@ -330,6 +352,7 @@ public class MultiVaLCA {
 			}			
 		};
 		mntmLCIAnew.setAction(a7);								//Wirkungsabschätzung
+		mntmLCIAnew.setFont(generalfont);
 		mnNew.add(mntmLCIAnew);
 				
 /*		JMenuItem mntmDeclaration = new JMenuItem();
@@ -366,6 +389,7 @@ public class MultiVaLCA {
 		mnNew.add(mntmComposition);	                                                                 */
 		
 		JMenu mnListe = new JMenu(bundle.getString("mp4"));
+		mnListe.setFont(generalfont);
 		menuBar.add(mnListe);									//Liste
 		
 		JMenuItem mntmFlsse = new JMenuItem();
@@ -377,6 +401,7 @@ public class MultiVaLCA {
 			}			
 		};		
 		mntmFlsse.setAction(a13);								//Liste aller Flüsse
+		mntmFlsse.setFont(generalfont);
 		mnListe.add(mntmFlsse);
 		
 		JMenuItem mntmProzessmodule = new JMenuItem();
@@ -388,6 +413,7 @@ public class MultiVaLCA {
 			}			
 		};
 		mntmProzessmodule.setAction(a14);						//Liste der Prozessmodule
+		mntmProzessmodule.setFont(generalfont);
 		mnListe.add(mntmProzessmodule);
 		
 		JMenuItem mntmProduktsysteme = new JMenuItem();
@@ -399,6 +425,7 @@ public class MultiVaLCA {
 			}			
 		};		
 		mntmProduktsysteme.setAction(a15);						//Liste der Produktsysteme
+		mntmProduktsysteme.setFont(generalfont);
 		mnListe.add(mntmProduktsysteme);
 		
 		JMenuItem mntmCategories = new JMenuItem();
@@ -410,6 +437,7 @@ public class MultiVaLCA {
 			}			
 		};		
 		mntmCategories.setAction(a16);							//Liste der Wirkungskategorien
+		mntmCategories.setFont(generalfont);
 		mnListe.add(mntmCategories);
 		
 		JMenuItem mntmCFs = new JMenuItem();
@@ -421,6 +449,7 @@ public class MultiVaLCA {
 			}			
 		};
 		mntmCFs.setAction(a17);									//Liste der Charakterisierungsfaktoren
+		mntmCFs.setFont(generalfont);
 		mnListe.add(mntmCFs);
 		
 		JMenuItem mntmLCIAlist = new JMenuItem();
@@ -432,6 +461,7 @@ public class MultiVaLCA {
 			}			
 		};
 		mntmLCIAlist.setAction(a18);							//Liste der Bewertungsmethoden
+		mntmLCIAlist.setFont(generalfont);
 		mnListe.add(mntmLCIAlist);
 		
 /*		JMenuItem mntmDeclarationlist = new JMenuItem();
@@ -468,6 +498,7 @@ public class MultiVaLCA {
 		mnListe.add(mntmCompositionlist);                                                             */
 		
 		JMenu mnBerechnen = new JMenu(bundle.getString("mp5"));
+		mnBerechnen.setFont(generalfont);
 		menuBar.add(mnBerechnen);
 		
 		JMenuItem mntmLci = new JMenuItem();
@@ -479,6 +510,7 @@ public class MultiVaLCA {
 			}			
 		};
 		mntmLci.setAction(a23);									//Sachbilanzberechnung
+		mntmLci.setFont(generalfont);
 		mnBerechnen.add(mntmLci);
 		
 		JMenuItem mntmLCIAcalc = new JMenuItem();
@@ -490,16 +522,20 @@ public class MultiVaLCA {
 			}			
 		};
 		mntmLCIAcalc.setAction(a24);							//Wirkungsabschätzungsberechnung
+		mntmLCIAcalc.setFont(generalfont);
 		mnBerechnen.add(mntmLCIAcalc);							
 			
 		JMenu mnPrefs = new JMenu(bundle.getString("mp3"));
+		mnPrefs.setFont(generalfont);
 		menuBar.add(mnPrefs);									//Einstellungen-Reiter
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem();
 		mntmNewMenuItem_3.setAction(prefsAction);
+		mntmNewMenuItem_3.setFont(generalfont);
 		mnPrefs.add(mntmNewMenuItem_3);							//
 		
 		JMenu mnHilfe = new JMenu(bundle.getString("mp2"));	//Hilfe-Reiter
+		mnHilfe.setFont(generalfont);
 		menuBar.add(mnHilfe);
 		
 		
@@ -512,6 +548,7 @@ public class MultiVaLCA {
 			}			
 		};
 		mntmNewMenuItem_2.setAction(a28);
+		mntmNewMenuItem_2.setFont(generalfont);
 		mnHilfe.add(mntmNewMenuItem_2);	
 		//
 		
@@ -585,6 +622,7 @@ public class MultiVaLCA {
 //				mntmCompositionlist.setText(bundle.getString("mp49"));
 //				mntmCompositionlist.setToolTipText(bundle.getString("mp49e"));
 				
+				mntmLCIAcalc.setFont(generalfont);	
 				mntmLCIAcalc.setText(bundle.getString("mp52"));
 				mntmLCIAcalc.setToolTipText(bundle.getString("mp52e"));
 				lblP05n1.setText(bundle.getString("mp31e"));
@@ -623,6 +661,10 @@ public class MultiVaLCA {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			lblP05n1.setFont(titlefont);
+			lblP05n2.setFont(generalfont);
+			btn05n1.setFont(generalfont);
+			comboBox2.setFont(generalfont);
 			lblP05n1.setText(bundle.getString("mp31e"));
 			lblP05n2.setText(bundle.getString("mp31"));
 			btn05n1.setText(bundle.getString("bt01"));			

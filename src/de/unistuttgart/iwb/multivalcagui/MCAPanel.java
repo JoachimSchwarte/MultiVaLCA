@@ -6,6 +6,7 @@ package de.unistuttgart.iwb.multivalcagui;
 
 import java.util.HashMap;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -35,8 +36,4 @@ public abstract class MCAPanel extends JPanel{
 	public void showMe() {
 		showSelf();
 	}
-	
-	
-
-
 }

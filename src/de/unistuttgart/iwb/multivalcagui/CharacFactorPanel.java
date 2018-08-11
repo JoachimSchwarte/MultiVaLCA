@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
@@ -54,6 +56,10 @@ public class CharacFactorPanel extends MCAPanel{
 	private LabeledInputDialog nameWKdi = new LabeledInputDialog(lblP12n4, txtP12n3);
 	private LabeledInputDialog wertCFdi = new LabeledInputDialog(lblP12n5, txtP12n4);
 	private LowerUpperDialog lud = new LowerUpperDialog(lblP12n6, lblP12n7, txtP12n5, txtP12n6);
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 	
 	protected CharacFactorPanel(String key) {
 		super(key);
@@ -61,11 +67,12 @@ public class CharacFactorPanel extends MCAPanel{
 	}
 
 	private void initUI() {		
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lblP12n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));		
+		
 		Integer pos=0;
-		add(lblP12n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		
+		add(lblP12n1, "cell 1 "+pos.toString()+" 2 1,alignx center, aligny center");	
 		pos = nameCFdi.draw(pos, this);				
 		pos = nameFLdi.draw(pos, this);			
 		pos = nameWKdi.draw(pos, this);			
@@ -148,6 +155,24 @@ public class CharacFactorPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);	
+		
+		lblP12n1.setFont(titlefont);
+		txtP12n1.setFont(generalfont);
+		txtP12n2.setFont(generalfont);
+		txtP12n3.setFont(generalfont);
+		txtP12n4.setFont(generalfont);
+		txtP12n5.setFont(generalfont);
+		txtP12n6.setFont(generalfont);
+		lblP12n2.setFont(generalfont);
+		lblP12n3.setFont(generalfont);
+		lblP12n4.setFont(generalfont);
+		lblP12n5.setFont(generalfont);
+		lblP12n6.setFont(generalfont);
+		lblP12n7.setFont(generalfont);
+		lblP12n8.setFont(generalfont);
+		btnP12n1.setFont(generalfont);
+		btnP12n2.setFont(generalfont);
+		
 		lblP12n1.setText(bundle.getString("p12n1"));
 		lblP12n2.setText(bundle.getString("p12n2"));
 		lblP12n3.setText(bundle.getString("p01n2"));

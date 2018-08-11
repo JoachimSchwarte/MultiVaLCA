@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
@@ -36,6 +38,10 @@ public class ImpactCatPanel extends MCAPanel {
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	public ImpactCatPanel(String key) {
 		super(key);
@@ -43,9 +49,9 @@ public class ImpactCatPanel extends MCAPanel {
 	}
 
 	private void initUI() {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lblP10n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]8%[4%]2%[4%][grow]"));		
+		lblP10n1.setFont(titlefont);
 		add(lblP10n1, "flowy,cell 1 0 2 1,alignx center,growy");	
 		add(lblP10n2, "cell 1 1,grow");	
 		txtP10n1.setText("");
@@ -94,6 +100,13 @@ public class ImpactCatPanel extends MCAPanel {
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		txtP10n1.setFont(generalfont);
+		txtP10n2.setFont(generalfont);
+		lblP10n1.setFont(titlefont);
+		lblP10n2.setFont(generalfont);
+		lblP10n3.setFont(generalfont);
+		lblP10n4.setFont(generalfont);
+		btnP10n1.setFont(generalfont);
 		lblP10n1.setText(bundle.getString("p10n1"));
 		lblP10n2.setText(bundle.getString("p10n2"));
 		lblP10n3.setText(bundle.getString("p10n3"));

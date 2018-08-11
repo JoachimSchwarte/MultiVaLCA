@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
@@ -42,6 +44,10 @@ public class EvalMethodPanel extends MCAPanel{
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	public EvalMethodPanel(String key) {
 		super(key);
@@ -49,10 +55,10 @@ public class EvalMethodPanel extends MCAPanel{
 	}
 
 	private void initUI() {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lblP14n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP14n1, "flowy,cell 1 0 2 1,alignx center,growy");		
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));		
+		lblP14n1.setFont(titlefont);
+		add(lblP14n1, "flowy, cell 1 0 2 1,alignx center,growy");		
 		add(lblP14n2, "cell 1 1,grow");		
 		txtP14n1.setText("");
 		add(txtP14n1, "cell 2 1,grow");
@@ -188,6 +194,20 @@ public class EvalMethodPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		txtP14n1.setFont(generalfont);
+		txtP14n2.setFont(generalfont);
+		txtP14n3.setFont(generalfont);
+		lblP14n1.setFont(titlefont);
+		lblP14n2.setFont(generalfont);
+		lblP14n3.setFont(generalfont);
+		lblP14n4.setFont(generalfont);
+		lblP14n5.setFont(generalfont);
+		btnP14n1.setFont(generalfont);
+		btnP14n2.setFont(generalfont);
+		btnP14n3.setFont(generalfont);
+		btnP14n4.setFont(generalfont);
+		
 		lblP14n1.setText(bundle.getString("p14n1"));
 		lblP14n2.setText(bundle.getString("p14n2"));
 		lblP14n3.setText(bundle.getString("mp14"));
