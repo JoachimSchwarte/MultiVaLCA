@@ -22,7 +22,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.547
+ * @version 0.558
  */
 
 public class LciCalcPanel extends MCAPanel {
@@ -71,7 +71,7 @@ public class LciCalcPanel extends MCAPanel {
 							for (ValueType vt : efvAktuell.get(sysFluss).keySet()) {
 								lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 										ValueTypeStringMap.getFVTS(l).get(vt),								
-										efvAktuell.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
+										efvAktuell.get(sysFluss).get(vt) + " " + sysFluss.getUnit() + ""});
 							}
 						}
 					}
@@ -85,7 +85,7 @@ public class LciCalcPanel extends MCAPanel {
 								for (ValueType vt : pfvAktuell.get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 											ValueTypeStringMap.getFVTS(l).get(vt),								
-											pfvAktuell.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
+											pfvAktuell.get(sysFluss).get(vt) + " " + sysFluss.getUnit() + ""});
 								}
 							}
 						}

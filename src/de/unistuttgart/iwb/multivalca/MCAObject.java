@@ -19,21 +19,21 @@ import java.util.Set;
 public class MCAObject {
 	
 	/**
-	 * Data collection containing a tree that maps in the top level
-	 * all existing subclasses to elements of a second level in which
-	 * names are mapped to single members of the given subclass
+	 * Data collection containing a tree that maps at the top level
+	 * all existing subclasses to elements of a second level at which
+	 * names are mapped to single members of the respective subclass
 	 */
 	private static HashMap<Class<? extends MCAObject>, LinkedHashMap<String, MCAObject>> instanceMap = new HashMap<>();
 	
 	/**
-	 * the Name of a single member of the given subclass
+	 * the Name of a single member of the respective subclass
 	 */
 	private String name;
 	
 	/**
 	 * during construction every new member is stored in instanceMap
 	 * @param name
-	 * the Name of the treated member of the given subclass
+	 * the Name of the treated member of the respective subclass
 	 */
 	protected MCAObject(String name) {
 		this.name = name;		
@@ -47,8 +47,9 @@ public class MCAObject {
 	}
 
 	/**
+	 * gets the name of a specific member
 	 * @return
-	 * the Name of the treated member
+	 * the name of the member
 	 */
 	public final String getName() {
 		return name;
@@ -57,7 +58,7 @@ public class MCAObject {
 	/**
 	 * overwrites the given object name
 	 * @param name
-	 * the Name of the treated member
+	 * the name of the respective member
 	 */
 	public final void setName(String name) {
 		this.name = name;			
@@ -66,7 +67,7 @@ public class MCAObject {
 	/**
 	 * clears a branch of the data collection instanceMap
 	 * @param clazz
-	 * the class to be cleared
+	 * the subclass to be cleared
 	 */
 	public static void clear(Class<?> clazz) {
 		LinkedHashMap<String, MCAObject> c = instanceMap.get(clazz);
@@ -82,7 +83,7 @@ public class MCAObject {
 	}
 	
 	/**
-	 * checks whether a name is already in use
+	 * checks whether a name is already in use or not
 	 * @param string
 	 * the name to be checked
 	 * @return
@@ -100,7 +101,7 @@ public class MCAObject {
 	/**
 	 * gets all existing names of objects of a subclass
 	 * @param clazz
-	 * the subclass
+	 * the respective subclass
 	 * @return
 	 * the Set of all existing names
 	 */
@@ -112,7 +113,7 @@ public class MCAObject {
 	/**
 	 * returns a branch of the data collection instanceMap
 	 * @param clazz
-	 * the subclass
+	 * the respective subclass
 	 * @return
 	 * a LinkedHashMap that contains all names of objects in the
 	 * subclass and the mapped objects
@@ -126,7 +127,7 @@ public class MCAObject {
 	 * returns the subclass that an object that is identified by a given
 	 * name belongs to
 	 * @param name
-	 * the name of the object
+	 * the name of the respective object
 	 * @return
 	 * the subclass
 	 */

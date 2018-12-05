@@ -23,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.545
+ * @version 0.558
  */
 
 public class ProductSystemListPanel extends MCAPanel {
@@ -75,7 +75,7 @@ public class ProductSystemListPanel extends MCAPanel {
 				psTableModel.addRow(new Object[] {"" ,bundle.getString("p08n4") 
 						,"" + bvf.getName() + " (" + 
 								ProductSystem.getInstance(psn).getBedarfsvektor().get(bvf) + 
-						" " + bvf.getEinheit()+")"});
+						" " + bvf.getUnit()+")"});
 			}
 			for (Flow vk : ProductSystem.getInstance(psn).getVorUndKoppelprodukte()) {
 				psTableModel.addRow(new Object[] {"" ,bundle.getString("p03n6") 

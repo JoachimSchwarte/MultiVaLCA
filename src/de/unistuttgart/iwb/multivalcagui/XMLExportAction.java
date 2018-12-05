@@ -30,7 +30,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.540
+ * @version 0.558
  */
 
 class XMLExportAction extends AbstractAction {
@@ -108,7 +108,7 @@ class XMLExportAction extends AbstractAction {
             typ.appendChild(document.createTextNode(pf.getType().toString()));
             Element einheit = document.createElement("FlowUnit");
             fluss.appendChild(einheit);
-            einheit.appendChild(document.createTextNode(pf.getEinheit().toString()));
+            einheit.appendChild(document.createTextNode(pf.getUnit().toString()));
 		}
 	}
 	

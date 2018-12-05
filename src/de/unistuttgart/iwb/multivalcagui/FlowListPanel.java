@@ -19,7 +19,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.536
+ * @version 0.558
  */
 
 public class FlowListPanel extends MCAPanel {
@@ -56,7 +56,7 @@ public class FlowListPanel extends MCAPanel {
 		for(String flussname : Flow.getAllInstances().keySet()) {
 			Flow fluss = Flow.getInstance(flussname);			
 			flowsTableModel.addRow(new Object[] {fluss.getName(), 
-					FlowTypeStringMap.getFTS(l).get(fluss.getType()), fluss.getEinheit()});			
+					FlowTypeStringMap.getFTS(l).get(fluss.getType()), fluss.getUnit()});			
 		}		
 	}
 }
