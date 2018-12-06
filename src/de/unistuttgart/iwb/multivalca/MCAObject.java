@@ -12,28 +12,36 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 
 /**
+ * superclass for all subclasses within the MultiVaLCA core package
+ * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.558
+ * @version 0.559
  */
 
 public class MCAObject {
 	
+	// static fields:
+	
 	/**
-	 * Data collection containing a tree that maps at the top level
+	 * data collection containing a tree that maps at the top level
 	 * all existing subclasses to elements of a second level at which
 	 * names are mapped to single members of the respective subclass
 	 */
 	private static HashMap<Class<? extends MCAObject>, LinkedHashMap<String, MCAObject>> instanceMap = new HashMap<>();
+	
+	// non-static fields:
 	
 	/**
 	 * the Name of a single member of the respective subclass
 	 */
 	private String name;
 	
+	// constructors:
+	
 	/**
 	 * during construction every new member is stored in instanceMap
 	 * @param name
-	 * the Name of the treated member of the respective subclass
+	 * the Name of the respective member
 	 */
 	protected MCAObject(String name) {
 		this.name = name;		
@@ -45,6 +53,8 @@ public class MCAObject {
 		} 
 		result.put(name, this);
 	}
+	
+	// methods:
 
 	/**
 	 * gets the name of a specific member
@@ -140,5 +150,4 @@ public class MCAObject {
 		}
 		return rClazz;
 	}
-
 }

@@ -7,13 +7,15 @@ package de.unistuttgart.iwb.multivalca;
 import java.util.LinkedHashMap;
 
 /**
+ * Class for elementary an product flows
+ * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.558
+ * @version 0.559
  */
 
 public class Flow extends MCAObject {	
 		
-	// Instanzvariablen:	
+	// non-static fields:	
 
 	/**
 	 * the FlowType as given in the respective enumeration
@@ -25,7 +27,7 @@ public class Flow extends MCAObject {
 	 */
 	private FlowUnit unit;
 	
-	// Konstruktor:
+	// constructors:
 	
 	/**
 	 * Constructor using the superclass constructor MCAObject(...)
@@ -42,7 +44,7 @@ public class Flow extends MCAObject {
 		this.unit = unit;
 	}
 	
-	// Methoden:
+	// methods:
 	
 	/**
 	 * gets a map of flow names and the corresponding objects
@@ -50,12 +52,13 @@ public class Flow extends MCAObject {
 	 * a LinkedHashMap that contains all existing names of flows
 	 * and the mapped objects
 	 */
-	public static LinkedHashMap<String,Flow> getAllInstances() {
-		LinkedHashMap<String,Flow> a = new LinkedHashMap<String,Flow>();
-		for (String s : MCAObject.getAllNames(Flow.class)) {
-			a.put(s, (Flow)MCAObject.getAllInstances(Flow.class).get(s));			
-		}
-		return a;
+	public static LinkedHashMap<String, MCAObject> getAllInstances() {
+//		LinkedHashMap<String,Flow> a = new LinkedHashMap<String,Flow>();
+//		for (String s : MCAObject.getAllNames(Flow.class)) {
+//			a.put(s, (Flow)MCAObject.getAllInstances(Flow.class).get(s));			
+//		}
+//		return a;
+		return MCAObject.getAllInstances(Flow.class);
 	} 
 
 	/**
@@ -66,7 +69,7 @@ public class Flow extends MCAObject {
 	 * a flow object
 	 */
 	public static Flow getInstance(String name) {
-		return getAllInstances().get(name);
+		return (Flow)getAllInstances().get(name);
 	}
 
 	/**
@@ -84,7 +87,7 @@ public class Flow extends MCAObject {
 		if (!getAllInstances().containsKey(name)) {
 			new Flow(name, type, unit);
 		}
-		return getAllInstances().get(name);
+		return (Flow)getAllInstances().get(name);
 	}
 	
 	/**

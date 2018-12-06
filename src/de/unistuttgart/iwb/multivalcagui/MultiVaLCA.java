@@ -31,14 +31,14 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author JS, HH
- * @version 0.558
+ * @version 0.559
  */
 
 public class MultiVaLCA {
 	
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.558";
-	private String dateString ="05.12.2018";
+	private String versionString ="Version 0.559";
+	private String dateString ="06.12.2018";
 	
 	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();
@@ -83,9 +83,10 @@ public class MultiVaLCA {
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	
-	
 	/**
 	 * Launch the application.
+	 * @param args
+	 * no arguments necessary 
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

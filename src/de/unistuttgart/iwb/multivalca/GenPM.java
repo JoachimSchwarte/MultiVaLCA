@@ -9,23 +9,40 @@ import java.util.LinkedHashMap;
 import de.unistuttgart.iwb.ivari.IvariScalar;
 
 /**
- * Vaterklasse für
- * Prozessmodule und
- * Produktsysteme
- * (generalisiertes Prozessmodul)
+ * Superclass for ProcessModule an ProductDeclaration
+ * (generalized ProcessModule)
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.556
+ * @version 0.559
  */
 
 public class GenPM extends MCAObject implements ImpactValueMaps {
+	
+	// non-static fields:
 
+	/**
+	 * data structure containing all environmental flows and 
+	 * the respective values
+	 */
 	protected LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv
 	= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 
+	// constructors:
+	
+	/**
+	 * constructor using the superclass constructor MCAObject(...)
+	 * @param name
+	 * the name of the new generalized module
+	 */
 	protected GenPM(String name) {
 		super(name);
 	}
+	
+	// methods:
+	
+	/**
+	 * Kommentar in der Klasse GenPM
+	 */
 
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
