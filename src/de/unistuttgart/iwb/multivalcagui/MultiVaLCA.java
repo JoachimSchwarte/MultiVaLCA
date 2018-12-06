@@ -26,22 +26,26 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+
 import net.miginfocom.swing.MigLayout;
 
 
 /**
  * @author JS, HH
- * @version 0.559
+ * @version 0.600
  */
 
 public class MultiVaLCA {
 	
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.559";
-	private String dateString ="06.12.2018";
+	private String versionString ="Version 0.600";
+	private String dateString ="07.12.2018";
 	
 	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();
+	private JPanel tree = new JPanel();
+	private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 	private CardLayout cl = new CardLayout(0, 0);
 	private final Action newModuleAction 		= new newModuleAction();
 	private final Action prefsAction 			= new prefsAction();
@@ -115,8 +119,10 @@ public class MultiVaLCA {
 		
 		frame.setTitle(bundle.getString("head1")+"   "+versionString);
 		frame.setBounds(100, 100, 600, 480);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
-		frame.getContentPane().add(panel, BorderLayout.CENTER);		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		sp.setLeftComponent(tree);
+		sp.setRightComponent(panel);				
+		frame.getContentPane().add(sp, BorderLayout.CENTER);		
 		
 		panel.setLayout(cl);
 	
