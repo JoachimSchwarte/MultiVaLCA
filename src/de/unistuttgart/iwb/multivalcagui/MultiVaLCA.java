@@ -33,18 +33,18 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author JS, HH
- * @version 0.600
+ * @version 0.602
  */
 
 public class MultiVaLCA {
 	
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.600";
-	private String dateString ="07.12.2018";
+	private String versionString ="Version 0.602";
+	private String dateString ="04.02.2019";
 	
 	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();
-	private JPanel tree = new JPanel();
+	protected static JPanel tree = new TreePanel();
 	private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 	private CardLayout cl = new CardLayout(0, 0);
 	private final Action newModuleAction 		= new newModuleAction();
@@ -122,10 +122,10 @@ public class MultiVaLCA {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		sp.setLeftComponent(tree);
 		sp.setRightComponent(panel);				
-		frame.getContentPane().add(sp, BorderLayout.CENTER);		
-		
+		frame.getContentPane().add(sp, BorderLayout.CENTER);	
+
 		panel.setLayout(cl);
-	
+		
 		/*
 		 * Gestaltung der Panels
 		 */
@@ -230,6 +230,7 @@ public class MultiVaLCA {
 		panel.add(new CompositionListPanel("listKtion"), "listKtion");
 		
 		cl.show(panel, "leer"); // zeigt Startfenster an
+		tree.setVisible(true);;
 		
 		InfoPanel.lblInfo1.setText(bundle.getString("head1"));
 		InfoPanel.lblInfo2.setText(bundle.getString("info1"));
@@ -252,7 +253,7 @@ public class MultiVaLCA {
 		mnDatei.add(mntmNewMenuItem_4);	
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem();
-		mntmNewMenuItem_5.setAction(xmlImportAction); 			//xmlImport
+		mntmNewMenuItem_5.setAction(xmlImportAction); 			//xmlImport		
 		mnDatei.add(mntmNewMenuItem_5);
 		
 		JMenu mnNew = new JMenu(bundle.getString("mp1")); 	//Neu/Bearbeiten

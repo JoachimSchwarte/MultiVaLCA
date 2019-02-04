@@ -29,7 +29,7 @@ import de.unistuttgart.iwb.multivalca.*;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.536
+ * @version 0.602
  */
 
 class XMLImportAction extends AbstractAction {	
@@ -75,6 +75,8 @@ class XMLImportAction extends AbstractAction {
 					fillProcessModuleGroups(docEle);
 					fillProductSystems(docEle);
 					fillProductDeclarations(docEle);
+					MultiVaLCA.tree.removeAll();
+					MultiVaLCA.tree = new TreePanel();					
 				
 				} catch (SAXException | IOException e1) {
 					// TODO Auto-generated catch block
