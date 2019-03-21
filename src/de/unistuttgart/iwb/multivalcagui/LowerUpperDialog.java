@@ -18,7 +18,7 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.546
+ * @version 0.610
  */
 
 public class LowerUpperDialog {
@@ -46,6 +46,7 @@ public class LowerUpperDialog {
 	public Integer draw(Integer pos0, MCAPanel panel) {
 		l = GUILanguage.getChosenLanguage();
 		locale = MultiVaLCA.LANGUAGES.get(l);
+		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);	
 		reldifText.setText(bundle.getString("lbl01"));
 		reldifButton.setText(bundle.getString("btn18"));

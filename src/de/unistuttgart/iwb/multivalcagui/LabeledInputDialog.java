@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.552
+ * @version 0.610
  */
 
 public class LabeledInputDialog {
@@ -29,7 +29,7 @@ public class LabeledInputDialog {
 	}
 	
 	/**
-	 * Anzeige der Dialogelemenet
+	 * Anzeige der Dialogelemente
 	 * @param pos0
 	 * Letzte Ausgabezeile
 	 * @param panel
