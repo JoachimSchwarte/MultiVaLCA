@@ -35,8 +35,10 @@ public class LowerUpperDialog {
 	private JTextField reldifValue = new JTextField();	// Eingabefeld Untergrenze
 	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
 	
-	public LowerUpperDialog(JLabel lblLower, JLabel lblUpper, JTextField txtLower, JTextField txtUpper) {
+	public LowerUpperDialog(JLabel reldifText, JButton reldifButton, JLabel lblLower, JLabel lblUpper, JTextField txtLower, JTextField txtUpper) {
 		super();
+		this.reldifText = reldifText;
+		this.reldifButton = reldifButton;
 		this.lblLower = lblLower;
 		this.lblUpper = lblUpper;
 		this.txtLower = txtLower;
@@ -44,12 +46,6 @@ public class LowerUpperDialog {
 	}
 	
 	public Integer draw(Integer pos0, MCAPanel panel) {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);	
-		reldifText.setText(bundle.getString("lbl01"));
-		reldifButton.setText(bundle.getString("btn18"));
 		Integer pos = pos0;
 		LabeledInputDialog reldifDi = new LabeledInputDialog(reldifText, reldifValue);	
 		LabeledInputDialog lowerDi = new LabeledInputDialog(lblLower, txtLower);
@@ -63,10 +59,7 @@ public class LowerUpperDialog {
 		return pos;
 	}
 	
-	public LinkedHashMap<ValueType, Double> getValues(JTextField mainValue, JLabel statusline) {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		bundle = ResourceBundle.getBundle(baseName, locale);	
+	public LinkedHashMap<ValueType, Double> getValues(JTextField mainValue, JLabel statusline) {	
 		LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
 		String fug = txtLower.getText();
 		String fog = txtUpper.getText();
@@ -157,4 +150,5 @@ public class LowerUpperDialog {
 			}		
 		});
 	}
+
 }

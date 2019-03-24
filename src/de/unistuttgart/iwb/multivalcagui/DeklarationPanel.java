@@ -39,10 +39,12 @@ public class DeklarationPanel extends MCAPanel {
 	private JLabel lblP17n7 = new JLabel();				// "Untergrenze"
 	private JLabel lblP17n8 = new JLabel();				// "Obergrenze"
 	private JLabel lblP17n9 = new JLabel();				// Status
+	private JLabel reldifText = new JLabel();			// "Differenz in Prozent"
 	private JButton btnP17n1 = new JButton(); 			// "neue Produktdeklaration anlegen"
 	private JButton btnP17n2 = new JButton(); 			// "Wirkungsabschätzung hinzufügen"
 	private JButton btnP17n3 = new JButton(); 			// "Grenzwerte bestätigen"
 	private JButton btnP17n4 = new JButton(); 			// "fertig"
+	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
 	private JTextField txtP17n1 = new JTextField();		// Eingabefeld Produkt-Name
 	private JTextField txtP17n2 = new JTextField();		// Eingabefeld LCIA-Method
 	private JTextField txtP17n3 = new JTextField();		// Eingabefeld Wirkungskategorie
@@ -58,7 +60,7 @@ public class DeklarationPanel extends MCAPanel {
 	private LabeledInputDialog nameBMdi = new LabeledInputDialog(lblP17n4, txtP17n2);
 	private LabeledInputDialog nameWKdi = new LabeledInputDialog(lblP17n5, txtP17n3);
 	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lblP17n6, txtP17n4);
-	private LowerUpperDialog lud = new LowerUpperDialog(lblP17n7, lblP17n8, txtP17n5, txtP17n6);
+	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP17n7, lblP17n8, txtP17n5, txtP17n6);
 
 	protected DeklarationPanel(String key) {
 		super(key);
@@ -250,6 +252,8 @@ public class DeklarationPanel extends MCAPanel {
 		lblP17n8.setText(bundle.getString("p02n6"));
 		btnP17n3.setText(bundle.getString("bt10"));
 		btnP17n4.setText(bundle.getString("bt04"));
-		lblP17n9.setText(bundle.getString("stat01"));	
+		lblP17n9.setText(bundle.getString("stat01"));
+		reldifButton.setText(bundle.getString("btn18"));
+		reldifText.setText(bundle.getString("lbl01"));
 	}
 }

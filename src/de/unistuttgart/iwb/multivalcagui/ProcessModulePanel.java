@@ -39,15 +39,17 @@ public class ProcessModulePanel extends MCAPanel{
 	private JLabel lblP02n5 = new JLabel();				// Status
 	private JLabel lblP02n6 = new JLabel();				// "Untergrenze"
 	private JLabel lblP02n7 = new JLabel();				// "Obergrenze"
+	private JLabel reldifText = new JLabel();			// "Differenz in Prozent"
 	private JButton btnP02n1 = new JButton(); 			// "neues Prozessmodul anlegen"
 	private JButton btnP02n2 = new JButton();			// "Grenzwerte bestätigen"
 	private JButton btnP02n4 = new JButton();			// "fertig"
 	private JButton btnP02n3 = new JButton();			// "Fluss hinzufügen"
+	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
 	private Language l = GUILanguage.getChosenLanguage();
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-	private LowerUpperDialog lud = new LowerUpperDialog(lblP02n6, lblP02n7, txtP02n4, txtP02n5);
+	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP02n6, lblP02n7, txtP02n4, txtP02n5);
 
 	protected ProcessModulePanel(String key) {
 		super(key);
@@ -224,7 +226,9 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n1.setText(bundle.getString("bt02"));
 		btnP02n2.setText(bundle.getString("bt03"));
 		btnP02n4.setText(bundle.getString("bt04"));
-		btnP02n3.setText(bundle.getString("bt10"));		
+		btnP02n3.setText(bundle.getString("bt10"));	
+		reldifButton.setText(bundle.getString("btn18"));
+		reldifText.setText(bundle.getString("lbl01"));
 	}
 
 }

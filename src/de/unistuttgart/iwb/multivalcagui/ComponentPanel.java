@@ -39,6 +39,7 @@ public class ComponentPanel extends MCAPanel{
 	private JLabel lblP18n5 = new JLabel();				// "Untergrenze"
 	private JLabel lblP18n6 = new JLabel();				// "Obergrenze"
 	private JLabel lblP18n7 = new JLabel();				// Status
+	private JLabel reldifText = new JLabel();			// "Differenz in Prozent"
 	private JTextField txtP18n1 = new JTextField();		// Eingabefeld Name
 	private JTextField txtP18n2 = new JTextField();		// Eingabefeld Bezug
 	private JTextField txtP18n3 = new JTextField();		// Eingabefeld Menge
@@ -46,7 +47,8 @@ public class ComponentPanel extends MCAPanel{
 	private JTextField txtP18n5 = new JTextField();		// Eingabefeld Obergrenze
 	private JButton btnP18n1 = new JButton(); 			// "neue Komponente anlegen"
 	private JButton btnP18n2 = new JButton(); 			// "fertig"
-	private LowerUpperDialog lud = new LowerUpperDialog(lblP18n5, lblP18n6, txtP18n4, txtP18n5);
+	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
+	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP18n5, lblP18n6, txtP18n4, txtP18n5);
 
 	protected ComponentPanel(String key) {
 		super(key);
@@ -178,5 +180,7 @@ public class ComponentPanel extends MCAPanel{
 		lblP18n7.setText(bundle.getString("stat01"));
 		btnP18n1.setText(bundle.getString("bt13"));
 		btnP18n2.setText(bundle.getString("bt04"));	
+		reldifButton.setText(bundle.getString("btn18"));
+		reldifText.setText(bundle.getString("lbl01"));
 	}
 }

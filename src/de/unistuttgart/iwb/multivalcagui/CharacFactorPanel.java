@@ -43,8 +43,10 @@ public class CharacFactorPanel extends MCAPanel{
 	private JLabel lblP12n6 = new JLabel(); 			// "Untergrenze"
 	private JLabel lblP12n7 = new JLabel(); 			// "Obergrenze"
 	private JLabel lblP12n8 = new JLabel(); 			// Status
+	private JLabel reldifText = new JLabel();			// "Differenz in Prozent"
 	private JButton btnP12n1 = new JButton(); 			// "speichern"
 	private JButton btnP12n2 = new JButton(); 			// "Grenzwerte bestätigen"
+	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
 	private Language l = GUILanguage.getChosenLanguage();
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
@@ -53,7 +55,7 @@ public class CharacFactorPanel extends MCAPanel{
 	private LabeledInputDialog nameFLdi = new LabeledInputDialog(lblP12n3, txtP12n2);
 	private LabeledInputDialog nameWKdi = new LabeledInputDialog(lblP12n4, txtP12n3);
 	private LabeledInputDialog wertCFdi = new LabeledInputDialog(lblP12n5, txtP12n4);
-	private LowerUpperDialog lud = new LowerUpperDialog(lblP12n6, lblP12n7, txtP12n5, txtP12n6);
+	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP12n6, lblP12n7, txtP12n5, txtP12n6);
 	
 	protected CharacFactorPanel(String key) {
 		super(key);
@@ -158,5 +160,7 @@ public class CharacFactorPanel extends MCAPanel{
 		lblP12n8.setText(bundle.getString("stat01"));
 		btnP12n1.setText(bundle.getString("bt01"));
 		btnP12n2.setText(bundle.getString("bt10"));	
+		reldifButton.setText(bundle.getString("btn18"));
+		reldifText.setText(bundle.getString("lbl01"));
 	}
 }
