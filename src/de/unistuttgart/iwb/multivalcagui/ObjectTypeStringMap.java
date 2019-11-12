@@ -27,7 +27,8 @@ public class ObjectTypeStringMap {
 		LinkedHashMap<ObjectType, String> r = new LinkedHashMap<ObjectType, String>();
 		r.put(ObjectType.ProcessModule, bundle.getString("mp12"));
 		r.put(ObjectType.ProductSystem, bundle.getString("mp13"));
-//		r.put(ObjectType.ProductDeclaration, bundle.getString("mp17"));	
+		r.put(ObjectType.ProductDeclaration, bundle.getString("mp17"));	
+		r.put(ObjectType.ProductDeclarationGroup, bundle.getString("mp22"));
 		return r;
 	}
 }
