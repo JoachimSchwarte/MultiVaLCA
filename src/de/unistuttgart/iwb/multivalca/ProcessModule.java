@@ -8,6 +8,9 @@ import java.util.LinkedHashMap;
 import de.unistuttgart.iwb.ivari.IvariScalar;
 
 /**
+ * Diese Klasse dient zur Erzeugung und Nutzung
+ * von Objekten des Typs "Prozessmodul".
+ * 
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.548
  */
@@ -29,6 +32,11 @@ implements FlowValueMaps, ImpactValueMaps {
 	}
 	
 	// Methoden:
+	
+	/**
+	 * @return
+	 * ... alle vorhandenen Prozessmodule
+	 */
 
 	public static LinkedHashMap<String, ProcessModule> getAllInstances() {
 		LinkedHashMap<String,ProcessModule> a = new LinkedHashMap<String,ProcessModule>();
@@ -38,14 +46,39 @@ implements FlowValueMaps, ImpactValueMaps {
 		return a;
 	}
 	
+	/**
+	 * Überprüft, ob bereits ein Prozessmodul
+	 * des genannten Namens existiert.
+	 * @param string
+	 * ist der zu prüfende Name
+	 * @return
+	 * ... den Wahrheitswert, den die Überprüfung liefert
+	 */
+	
 	public static boolean containsName(String string) {
 		return getAllInstances().containsKey(string);
 	}
 
-	public static ProcessModule getInstance(String string) {
-		return getAllInstances().get(string);		
+	/**
+	 * Liefert ein Prozessmodul
+	 * @param name
+	 * Name des Porzessmoduls
+	 * @return
+	 * ... das gesuchte Prozessmodul
+	 */
+	
+	public static ProcessModule getInstance(String name) {
+		return getAllInstances().get(name);		
 	}
 
+	/**
+	 * Erzeugt ein benanntes Prozessmodul
+	 * @param name
+	 * ist der Name des Prozessmoduls
+	 * @return
+	 * ... das Prozessmodul
+	 */
+	
 	public static ProcessModule instance(String name) {
 		if (!getAllInstances().containsKey(name)) {
 			new ProcessModule(name);
@@ -53,9 +86,26 @@ implements FlowValueMaps, ImpactValueMaps {
 		return getAllInstances().get(name);
 	}
 
-	public static void removeInstance(String string) {
-		getAllInstances().remove(string);
+	/**
+	 * Löscht ein benanntes Prozessmodul
+	 * @param name
+	 * ist der Name des Prozessmoduls
+	 */
+	
+	public static void removeInstance(String name) {
+		getAllInstances().remove(name);
 	}
+	
+	/**
+	 * Fügt dem Prozessmodul
+	 * einen Fluss und den diesem Fluss zugeordneten Wert hinzu
+	 * @param fluss
+	 * ist der hinzuzufügende Fluss
+	 * @param fvt
+	 * ist der Werttyp
+	 * @param wert
+	 * ist der dem Werttyp zugeordnete Wert
+	 */
 	
 	public void addFluss(Flow fluss, ValueType fvt, Double wert) {	
 		if (fluss.getType() == FlowType.Elementary) {
@@ -75,15 +125,32 @@ implements FlowValueMaps, ImpactValueMaps {
 		}
 	}
 	
+	
+	/**
+	 * @return
+	 * den Elementarflussvektor des Prozessmoduls
+	 */
+	
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getElementarflussvektor() {
 		return efv; 
 	}	
 	
+	/**
+	 * @return
+	 * den Produktflussvektor des Prozessmoduls
+	 */
+		
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor() {
 		return pfv; 
 	}
+	
+	/**
+	 * Entfernt einen Fluss des Prozessmoduls
+	 * @param fluss
+	 * ist der Name des Flusses
+	 */
 	
 	public void removeFluss(Flow fluss) {
 		efv.remove(fluss);

@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 /**
+ * Diese Klasse dient zur Erzeugung und Nutzung
+ * von Objekten des Typs "Prozessmodulgruppe".
+ * 
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.530
  */
@@ -34,6 +37,11 @@ implements FlowValueMaps, ImpactValueMaps {
 		return null;
 	}
 
+	/**
+	 * @return
+	 * den Elementarflussvektor der Prozessmodulgruppe
+	 */
+	
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getElementarflussvektor() {
 		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> localEFV = new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); 
@@ -81,7 +89,12 @@ implements FlowValueMaps, ImpactValueMaps {
 		}
 		return localEFV;
 	}
-
+	
+	/**
+	 * @return
+	 * den Produktflussvektor der Prozessmodulgruppe
+	 */
+	
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor() {
 		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> localPFV = new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); 
@@ -130,11 +143,26 @@ implements FlowValueMaps, ImpactValueMaps {
 		return localPFV;
 	}
 	
+	/**
+	 * Erzeugt eine benanntes Prozessmodulgruppe
+	 * @param name
+	 * ist der Name der Prozessmodulgruppe
+	 * @param f
+	 * ist der relevante Produktfluss
+	 * @param r
+	 * ist Menge/Wert des relevanten Produktflusses
+	 */
+	
 	public static void createInstance(String name, Flow f, double r) {
 		new ProcessModuleGroup(name);
 		getAllInstances().get(name).refFlow = f;
 		getAllInstances().get(name).refValue = r;
 	}
+	
+	/**
+	 * @return
+	 * ... alle vorhandenen Prozessmodulgruppen
+	 */
 	
 	public static LinkedHashMap<String, ProcessModuleGroup> getAllInstances() {
 		LinkedHashMap<String,ProcessModuleGroup> a = new LinkedHashMap<String,ProcessModuleGroup>();
@@ -144,22 +172,54 @@ implements FlowValueMaps, ImpactValueMaps {
 		return a;
 	}
 
+	/**
+	 * Fügt der Prozessmodulgruppe
+	 * ein Prozessmodul hinzu
+	 * @param pm
+	 * ist das hinzuzufügende Prozessmodul
+	 */
+	
+	
 	public void addModule(ProcessModule pm) {
 		modList.add(pm);
 	}
+	
+	/**
+	 * @return
+	 * ... alle vorhandenen Prozessmodule 
+	 * einer Porzessmodulgruppe
+	 */
 	
 	public HashSet<ProcessModule> getModList(){
 		return modList;
 	}
 	
-	public static ProcessModuleGroup getInstance(String string) {
-		return getAllInstances().get(string);		
+	/**
+	 * Liefert eine Prozessmodulgruppe
+	 * @param name
+	 * Name der Porzessmodulgruppe
+	 * @return
+	 * ... die gesuchte Prozessmodulgruppe
+	 */
+	
+	public static ProcessModuleGroup getInstance(String name) {
+		return getAllInstances().get(name);		
 	}
+	
+	/**
+	 * @return
+	 * ... den relevanten Produktfluss
+	 */
 	
 	public Flow getRefFlow() {
 		return refFlow;
 	}
 
+	/**
+	 * @return
+	 * ... den Wert des relevanten Produktflusses
+	 */
+		
 	public Double getRefValue() {
 		return refValue;
 	}

@@ -36,14 +36,14 @@ implements ImpactValueMaps {
 	/**
 	 * Überprüft, ob bereits eine Produktdeklaration
 	 * des genannten Namens existiert.
-	 * @param string
+	 * @param name
 	 * ist der zu prüfende Name
 	 * @return
 	 * ... den Wahrheitswert, den die Überprüfung liefert
 	 */
 	
-	public static boolean containsName(String string) {
-		return getAllInstances().containsKey(string);
+	public static boolean containsName(String name) {
+		return getAllInstances().containsKey(name);
 	}
 	
 	/**
@@ -61,24 +61,26 @@ implements ImpactValueMaps {
 	
 	/**
 	 * Liefert eine Produktdeklaration
-	 * @param string
-	 * Name des bilanzierten Produkts
+	 * @param name
+	 * ist der Name der bilanzierten Produktdeklaration
 	 * @return
 	 * ... die gesuchte Produktdeklaration
 	 */
 	
-	public static ProductDeclaration getInstance(String string) {
-		return getAllInstances().get(string);		
+	public static ProductDeclaration getInstance(String name) {
+		return getAllInstances().get(name);		
 	}
 	
 	/**
-	 * Erzeugt ein benanntes 
-	 * Produktobjekt, das noch keine Daten aus einer 
+	 * Erzeugt eine benannte 
+	 * Produktdeklaration, die noch keine Daten aus einer 
 	 * Wirkungsabschätzung enthält.
 	 * @param name
-	 * ist der Name des bilanzierten Produkts.
+	 * ist der Name der bilanzierten Produktdeklaration.
+	 * @param einheit
+	 * ist die Einheit der bilanzierten Produktdeklaration.
 	 * @return
-	 * ... das Produktobjekt
+	 * ... die Produktdeklaration
 	 */
 	
 	public static ProductDeclaration instance(String name, FlowUnit einheit) {
@@ -90,7 +92,7 @@ implements ImpactValueMaps {
 	 * den dieser Kategorie zugeordneten Wert zu.
 	 * @param wk
 	 * Die hinzuzufügende ImpactCategory
-	 * @param wert
+	 * @param values
 	 * Der zur ImpactCategory gehörige Wert
 	 */
 	
@@ -108,9 +110,27 @@ implements ImpactValueMaps {
 		return bm;
 	}
 	
+	/**
+	 * @return
+	 * ... die Einheit für das vorliegende
+	 * bilanzierte Produkt (= Produktdeklaration)
+	 */
+	
 	public FlowUnit getEinheit() {
 		return einheit;
 	}
+	
+	/**
+	 * Liefert alle Wirkungskategorien und 
+	 * deren zugeordneten Wert für
+	 * die relevante Bewertungsmethode
+	 * @param bm
+	 * Die relevante Bewertungsmethode 
+	 * @return
+	 * ... die der Bewertungsmethode zugehörigen 
+	 * Wirkungskategorien und deren zugeordneten Wert 
+	 */
+	
 	
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
@@ -126,12 +146,12 @@ implements ImpactValueMaps {
 	
 	/**
 	 * Legt die (wesentliche) LCIAMethod fest.
-	 * @param bm1
+	 * @param bm
 	 * Die (wesentliche) LCIAMethod
 	 */
 	
-	public void setBM(LCIAMethod bm1) {
-		bm = bm1;
+	public void setBM(LCIAMethod bm) {
+		this.bm = bm;
 	}
 
 }
