@@ -65,16 +65,18 @@ class XMLImportAction extends AbstractAction {
 					
 					createFlows(docEle);
 					createProcessModules(docEle);
-					createProcessModuleGroups(docEle);
+					createFlowValueMapGroups(docEle);
 					createProductSystems(docEle);
 					createImpactCategories(docEle);
 					createCFactors(docEle);
 					createLCIAMethods(docEle);
 					createProductDeclarations(docEle);
+					createImpactValueMapGroups(docEle);
 					fillProcessModules(docEle);
-					fillProcessModuleGroups(docEle);
+					fillFlowValueMapGroups(docEle);
 					fillProductSystems(docEle);
 					fillProductDeclarations(docEle);
+					fillImpactValueMapGroups(docEle);
 				
 				} catch (SAXException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -224,7 +226,7 @@ class XMLImportAction extends AbstractAction {
 		}
 	}
 
-	private void createProcessModuleGroups(Element docEle) {
+	private void createFlowValueMapGroups(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProcessModuleGroup");
 		for (int i = 0; i < nl.getLength(); i++) {
 			NodeList nlc = nl.item(i).getChildNodes();
@@ -243,11 +245,36 @@ class XMLImportAction extends AbstractAction {
 				}
 				
 			}
-			ProcessModuleGroup.createInstance(pmgname, Flow.getInstance(rfname), Double.parseDouble(rfvalue));						
+			FlowValueMapGroup.createInstance(pmgname, FVMGroupType.ProcessModule, Flow.getInstance(rfname), Double.parseDouble(rfvalue));						
+		}
+		
+		NodeList nl1 = docEle.getElementsByTagName("FlowValueMapGroup");
+		for (int i = 0; i < nl1.getLength(); i++) {
+			NodeList nlc = nl1.item(i).getChildNodes();
+			String fvmgname = "";	
+			String fvmgtype = "";
+			String rfname = "";
+			String rfvalue = "";
+			for (int j = 0; j < nlc.getLength(); j++) {
+				if (nlc.item(j).getNodeName().equals("FVMGroupName")) {
+					fvmgname = nlc.item(j).getTextContent();
+				}
+				if (nlc.item(j).getNodeName().equals("FVM-Type")) {
+					fvmgtype = nlc.item(j).getTextContent();
+				}
+				if (nlc.item(j).getNodeName().equals("RelevantFlowName")) {
+					rfname = nlc.item(j).getTextContent();
+				}
+				if (nlc.item(j).getNodeName().equals("RelevantFlowValue")) {
+					rfvalue = nlc.item(j).getTextContent();
+				}
+				
+			}
+			FlowValueMapGroup.createInstance(fvmgname, FVMGroupType.valueOf(fvmgtype), Flow.getInstance(rfname), Double.parseDouble(rfvalue));						
 		}
 	}
 	
-	private void fillProcessModuleGroups(Element docEle) {
+	private void fillFlowValueMapGroups(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProcessModuleGroup");
 		for (int i = 0; i < nl.getLength(); i++) {
 			NodeList nlc = nl.item(i).getChildNodes();
@@ -274,7 +301,47 @@ class XMLImportAction extends AbstractAction {
 				}
 			}
 			for (String mi : mnl) {
-				ProcessModuleGroup.getAllInstances().get(pmgname).addModule(ProcessModule.getAllInstances().get(mi));
+				FlowValueMapGroup.getAllInstances().get(pmgname).addFlowValueMap(ProcessModule.getAllInstances().get(mi));
+			}					
+		}	
+		
+		NodeList nl1 = docEle.getElementsByTagName("FlowValueMapGroup");
+		for (int i = 0; i < nl1.getLength(); i++) {
+			NodeList nlc = nl1.item(i).getChildNodes();
+			String ssgname = "";	
+			LinkedList<String> mnl = new LinkedList<String>();
+			for (int j = 0; j < nlc.getLength(); j++) {
+				if (nlc.item(j).getNodeName().equals("FVMGroupName")) {
+					ssgname = nlc.item(j).getTextContent();
+				}
+				if (nlc.item(j).getNodeName().equals("FVMGroup-Elements")) {	
+					NodeList nlc2 = nlc.item(j).getChildNodes();
+					for (int k = 0; k < nlc2.getLength(); k++) {
+						if (nlc2.item(k).getNodeName().equals("FVMGroup-Element")) {
+							NodeList nlc3 = nlc2.item(k).getChildNodes();
+							for (int l = 0; l < nlc3.getLength(); l++) {
+								if (nlc3.item(l).getNodeName().equals("FVMGE-Name")) {
+									String modname = nlc3.item(l).getTextContent();	
+									mnl.add(modname);
+								}											
+							}										
+						}
+					}
+					
+				}
+			}
+			for (String mi : mnl) {
+				if (ProcessModule.containsName(mi)) {
+					FlowValueMapGroup.getInstance(ssgname).addFlowValueMap(ProcessModule.getInstance(mi));
+				} else {
+					if (FlowValueMapGroup.containsName(mi)) {
+						FlowValueMapGroup.getInstance(ssgname).addFlowValueMap(FlowValueMapGroup.getInstance(mi));					
+					} else {
+						if (ProductSystem.containsName(mi)) {
+							FlowValueMapGroup.getInstance(ssgname).addFlowValueMap(ProductSystem.getInstance(mi));									
+						}
+					}
+				}
 			}					
 		}	
 	}
@@ -334,8 +401,8 @@ class XMLImportAction extends AbstractAction {
 					if (ProductSystem.containsName(m)) {
 						ProductSystem.getInstance(psname).addProzessmodul(ProductSystem.getInstance(m));
 					} else {
-						if (ProcessModuleGroup.containsName(m)) {
-							ProductSystem.getInstance(psname).addProzessmodul(ProcessModuleGroup.getInstance(m));									
+						if (FlowValueMapGroup.containsName(m)) {
+							ProductSystem.getInstance(psname).addProzessmodul(FlowValueMapGroup.getInstance(m));									
 						}
 					}
 				}
@@ -490,7 +557,7 @@ class XMLImportAction extends AbstractAction {
 			NodeList nlc = nl.item(i).getChildNodes();
 			String nameProd = "";
 			String einheit = "";
-			String nameLCIA = "";
+//			String nameLCIA = "";
 			for (int j = 0; j < nlc.getLength(); j++) {
 				if (nlc.item(j).getNodeName().equals("PD-Name")) {
 					nameProd = nlc.item(j).getTextContent();
@@ -498,13 +565,14 @@ class XMLImportAction extends AbstractAction {
 				if (nlc.item(j).getNodeName().equals("PD-Unit")) {
 					einheit = nlc.item(j).getTextContent();
 				}
-				if (nlc.item(j).getNodeName().equals("PD-Method")) {
-					nameLCIA = nlc.item(j).getTextContent();
-				}						
+//				if (nlc.item(j).getNodeName().equals("PD-Method")) {
+//					nameLCIA = nlc.item(j).getTextContent();
+//				}						
 			}
 			FlowUnit einheit2 = FlowUnit.valueOf(einheit);
-			LCIAMethod bm = LCIAMethod.instance(nameLCIA);
-			ProductDeclaration.instance(nameProd, einheit2).setBM(bm);					
+//			LCIAMethod bm = LCIAMethod.instance(nameLCIA);
+//			ProductDeclaration.instance(nameProd, einheit2).setBM(bm);		
+			ProductDeclaration.instance(nameProd, einheit2);
 		}
 	}
 	
@@ -552,4 +620,68 @@ class XMLImportAction extends AbstractAction {
 			}					
 		}	
 	}
+	
+	private void createImpactValueMapGroups(Element docEle) {
+		NodeList nl = docEle.getElementsByTagName("ImpactValueMapGroup");
+		for (int i = 0; i < nl.getLength(); i++) {
+			NodeList nlc = nl.item(i).getChildNodes();
+			String ivmgname = "";
+			String ivmgtype = "";
+			for (int j = 0; j < nlc.getLength(); j++) {
+				if (nlc.item(j).getNodeName().equals("IVMGroupName")) {
+					ivmgname = nlc.item(j).getTextContent();
+				}
+				if (nlc.item(j).getNodeName().equals("IVM-Type")) {
+					ivmgtype = nlc.item(j).getTextContent();
+				}
+					
+			}
+			ImpactValueMapGroup.instance(ivmgname, IVMGroupType.valueOf(ivmgtype));						
+		}
+	}
+	
+	private void fillImpactValueMapGroups(Element docEle) {
+		NodeList nl = docEle.getElementsByTagName("ImpactValueMapGroup");
+		for (int i = 0; i < nl.getLength(); i++) {
+			NodeList nlc = nl.item(i).getChildNodes();
+			String pdgname = "";	
+			
+			LinkedList<String> dnl = new LinkedList<String>();
+			for (int j = 0; j < nlc.getLength(); j++) {
+				if (nlc.item(j).getNodeName().equals("IVMGroupName")) {
+					pdgname = nlc.item(j).getTextContent();
+				}			
+				if (nlc.item(j).getNodeName().equals("IVMGroup-Elements")) {	
+					NodeList nlc2 = nlc.item(j).getChildNodes();
+					for (int k = 0; k < nlc2.getLength(); k++) {
+						if (nlc2.item(k).getNodeName().equals("IVMGroup-Element")) {
+							NodeList nlc3 = nlc2.item(k).getChildNodes();
+							for (int l = 0; l < nlc3.getLength(); l++) {
+								if (nlc3.item(l).getNodeName().equals("IVMGE-Name")) {
+									String decname = nlc3.item(l).getTextContent();	
+									dnl.add(decname);
+								}											
+							}										
+						}
+					}
+					
+				}
+			}
+			
+			for (String di : dnl) {
+				if (ProductDeclaration.containsName(di)) {
+					ImpactValueMapGroup.getInstance(pdgname).addImpactValueMap(ProductDeclaration.getInstance(di));
+				} else {
+					if (Component.containsName(di)) {
+						ImpactValueMapGroup.getInstance(pdgname).addImpactValueMap(Component.getInstance(di));
+					} else {
+						if (Composition.containsName(di)) {
+							ImpactValueMapGroup.getInstance(pdgname).addImpactValueMap(Composition.getInstance(di));									
+						}
+					}
+				}
+			}					
+		}	
+	}
 }
+

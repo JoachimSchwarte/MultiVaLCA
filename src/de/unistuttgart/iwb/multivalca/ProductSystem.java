@@ -9,7 +9,8 @@ import Jama.Matrix;
 import de.unistuttgart.iwb.ivari.*;
 
 /**
- * Diese Klasse dient zur Erzeugung von Produktsystemen.
+ * Diese Klasse dient zur Erzeugung und Nutzung
+ * von Objekten des Typs "Produktsystem".
  * 
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.548
@@ -46,14 +47,14 @@ implements FlowValueMaps, ImpactValueMaps {
 	/**
 	 * Überprüft, ob bereits ein Produktsystem
 	 * des genannten Namens existiert.
-	 * @param string
+	 * @param name
 	 * ist der zu prüfende Name
 	 * @return
 	 * ... den Wahrheitswert, den die Überprüfung liefert
 	 */
 	
-	public static boolean containsName(String string) {
-		return getAllInstances().containsKey(string);
+	public static boolean containsName(String name) {
+		return getAllInstances().containsKey(name);
 	}
 	
 	/**
@@ -71,14 +72,14 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	/**
 	 * Liefert ein Produktsystem
-	 * @param string
+	 * @param name
 	 * Name des Produktsystems
 	 * @return
 	 * ... das gesuchte Produktsystem
 	 */
 	
-	public static ProductSystem getInstance(String string) {
-		return getAllInstances().get(string);		
+	public static ProductSystem getInstance(String name) {
+		return getAllInstances().get(name);		
 	}
 	
 	/**
@@ -306,7 +307,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	/**
 	 * @return
-	 * ... die Anzahl der Module (Prozessmodule und Subsysteme) 
+	 * ... die Anzahl der Module (Prozessmodule/-gruppen und Subsysteme/-gruppen) 
 	 * aus denen sich das Produktsystem zusammensetzt.
 	 */
 	
@@ -372,6 +373,20 @@ implements FlowValueMaps, ImpactValueMaps {
 	public void setVorUndKoppelProdukte(LinkedList<Flow> vk) {
 		vorUndKoppelProdukte = vk;
 	}
+	
+	@Override
+	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap() {
+		return null;
+	}
+	
+	/**
+	 * Liefert den Wirkungsvektor des Produktsystems für
+	 * die relevante Bewertungsmethode
+	 * @param bm
+	 * die relevante Bewertungsmethode 
+	 * @return
+	 * ... den zugehörigen Wirkungsvektor 
+	 */
 
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {

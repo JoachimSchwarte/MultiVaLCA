@@ -14,10 +14,11 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import de.unistuttgart.iwb.multivalca.FVMGroupType;
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
-import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
+import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
 
@@ -67,8 +68,13 @@ public class ProductSystemListPanel extends MCAPanel {
 				if (mnif.getClass().equals(ProductSystem.class)) {
 					psTableModel.addRow(new Object[] {"",bundle.getString("p08n3"), mni});
 				}
-				if (mnif.getClass().equals(ProcessModuleGroup.class)) {
-					psTableModel.addRow(new Object[] {"",bundle.getString("mp122"), mni});
+				if (mnif.getClass().equals(FlowValueMapGroup.class)) {
+					if (FVMGroupType.ProcessModule.equals(FlowValueMapGroup.getInstance(mni).getType())) {
+						psTableModel.addRow(new Object[] {"",bundle.getString("mp122"), mni});
+					}
+					if (FVMGroupType.Subsystem.equals(FlowValueMapGroup.getInstance(mni).getType())) {
+						psTableModel.addRow(new Object[] {"",bundle.getString("mp23"), mni});
+					}
 				}				
 			}
 			for (Flow bvf : ProductSystem.getInstance(psn).getBedarfsvektor().keySet()) {

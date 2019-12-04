@@ -5,8 +5,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
-import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
+//import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ValueType;
@@ -32,7 +32,7 @@ public class DeklarationListPanel extends MCAPanel{
 
 	private JLabel lblP20n1 = new JLabel();
 	private JTable pdTable 		= new JTable();
-	private DefaultTableModel pdTableModel 		= new DefaultTableModel(0,6);
+	private DefaultTableModel pdTableModel 		= new DefaultTableModel(0,5);
 
 	protected DeklarationListPanel(String key) {
 		super(key);
@@ -53,38 +53,44 @@ public class DeklarationListPanel extends MCAPanel{
 		Locale locale = MultiVaLCA.LANGUAGES.get(l);
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-		lblP20n1.setText(bundle.getString("mp47e"));
+		lblP20n1.setText(bundle.getString("mp471e"));
 		pdTableModel.setRowCount(0);
 		
 		pdTable.setModel(pdTableModel);
 		TableColumnModel tcm = pdTable.getColumnModel();
 		tcm.getColumn(0).setHeaderValue(bundle.getString("p06n1"));
-		tcm.getColumn(1).setHeaderValue(bundle.getString("p01n4"));
-		tcm.getColumn(2).setHeaderValue(bundle.getString("mp16"));
-		tcm.getColumn(3).setHeaderValue(bundle.getString("mp14"));
-		tcm.getColumn(4).setHeaderValue(bundle.getString("p01n3"));
-		tcm.getColumn(5).setHeaderValue(bundle.getString("p02n4"));
+		tcm.getColumn(1).setHeaderValue(bundle.getString("p01n4"));		
+		tcm.getColumn(2).setHeaderValue(bundle.getString("mp14"));
+		tcm.getColumn(3).setHeaderValue(bundle.getString("p01n3"));
+		tcm.getColumn(4).setHeaderValue(bundle.getString("p02n4"));
 
-		pdTable.getColumnModel().getColumn(2).setPreferredWidth(120);
-		pdTable.getColumnModel().getColumn(3).setPreferredWidth(110);
+		pdTable.getColumnModel().getColumn(2).setPreferredWidth(110);
 
 
-		HashSet<String> decListe = new HashSet<String>();
+		LinkedHashSet<String> decListe = new LinkedHashSet<String>();
 		LinkedHashMap<String, MCAObject> instanceListe = new LinkedHashMap<String, MCAObject>();
 		decListe.addAll(ProductDeclaration.getAllInstances().keySet());
 		instanceListe.putAll(ProductDeclaration.getAllInstances());
-
+		System.out.println(decListe);
 		for(String dec : decListe) {
-			ImpactValueMaps wvDec = (ImpactValueMaps)instanceListe.get(dec); 
+//			ImpactValueMaps wvDec = (ImpactValueMaps)instanceListe.get(dec); 
 			
 			ProductDeclaration pd = ProductDeclaration.getInstance(dec);			
-			pdTableModel.addRow(new Object[] {pd.getName(), pd.getEinheit(), pd.getBM().getName()});			
+//			pdTableModel.addRow(new Object[] {pd.getName(), pd.getEinheit(), pd.getBM().getName()});			
+//
+//			for(ImpactCategory ic : wvDec.getImpactValueMap(pd.getBM()).keySet()){
+//				for (ValueType vt : wvDec.getImpactValueMap(pd.getBM()).get(ic).keySet()) {
+//					pdTableModel.addRow(new Object[] {"","","", ic.getName(), 
+//							ValueTypeStringMap.getFVTS(l).get(vt),
+//							wvDec.getImpactValueMap(pd.getBM()).get(ic).get(vt)});
+//				}
+			pdTableModel.addRow(new Object[] {pd.getName(), pd.getEinheit()});			
 
-			for(ImpactCategory ic : wvDec.getImpactValueMap(pd.getBM()).keySet()){
-				for (ValueType vt : wvDec.getImpactValueMap(pd.getBM()).get(ic).keySet()) {
-					pdTableModel.addRow(new Object[] {"","","", ic.getName(), 
+			for(ImpactCategory ic : pd.getImpactValueMap().keySet()){
+				for (ValueType vt : pd.getImpactValueMap().get(ic).keySet()) {
+					pdTableModel.addRow(new Object[] {"","", ic.getName(), 
 							ValueTypeStringMap.getFVTS(l).get(vt),
-							wvDec.getImpactValueMap(pd.getBM()).get(ic).get(vt)});
+							pd.getImpactValueMap().get(ic).get(vt)});
 				}
 				
 			}}	

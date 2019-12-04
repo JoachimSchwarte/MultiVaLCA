@@ -7,6 +7,7 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -17,11 +18,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import de.unistuttgart.iwb.multivalca.FVMGroupType;
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
-import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
+import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
 
@@ -111,7 +113,18 @@ public class ProductSystemPanel extends MCAPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
 				testMap1.put(bundle.getString("stat43"), ProcessModule.getAllInstances().keySet());
-				testMap1.put(bundle.getString("stat44"), ProcessModuleGroup.getAllInstances().keySet());
+				HashSet<String> test1 = new HashSet<String>();
+				HashSet<String> test2 = new HashSet<String>();
+				for(String fvmname : FlowValueMapGroup.getAllInstances().keySet()) {
+					if (FVMGroupType.ProcessModule.equals(FlowValueMapGroup.getInstance(fvmname).getType())) {
+						test1.add(fvmname);
+					}
+					if (FVMGroupType.Subsystem.equals(FlowValueMapGroup.getInstance(fvmname).getType())) {
+						test2.add(fvmname);
+					}
+				}
+				testMap1.put(bundle.getString("stat44"), test1);
+				testMap1.put(bundle.getString("stat441"), test2);
 				testMap1.put(bundle.getString("stat45"), ProductSystem.getAllInstances().keySet());
 				String name = namePSdi.getTextNew(testMap1, lblP03n7, bundle.getString("stat02"), bundle.getString("stat03"));
 				if (!"".equals(name)) {
@@ -160,8 +173,8 @@ public class ProductSystemPanel extends MCAPanel{
 						}
 					}
 					if (!nameVorhanden) {
-						for(String modn3 : ProcessModuleGroup.getAllInstances().keySet()) {
-							if (modname.equals(modn3)) {
+						for(String modn4 : FlowValueMapGroup.getAllInstances().keySet()) {
+							if (modname.equals(modn4)) {
 								nameVorhanden = true;
 							}
 						}

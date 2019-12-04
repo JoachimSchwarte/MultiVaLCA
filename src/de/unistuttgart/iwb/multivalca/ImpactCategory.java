@@ -7,6 +7,9 @@ package de.unistuttgart.iwb.multivalca;
 import java.util.LinkedHashMap;
 
 /**
+ * Diese Klasse dient zur Erzeugung und Nutzung
+ * von Objekten des Typs "Wirkungskategorie".
+ * 
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.530
  */
@@ -29,15 +32,16 @@ public class ImpactCategory extends MCAObject {
 	/**
 	 * Überprüft, ob bereits eine Wirkungskategorie
 	 * des gegebenen Namens existiert.
-	 * @param string
+	 * @param name
 	 * ist der zu prüfende Name
 	 * @return
 	 * ... den Wahrheitswert, den die Überprüfung liefert
 	 */
 	
-	public static boolean containsName(String string) {
-		return getAllInstances().keySet().contains(string);
+	public static boolean containsName(String name) {
+		return getAllInstances().keySet().contains(name);
 	}
+	
 	/**
 	 * @return
 	 * ... alle vorhandenen Wirkungskategorien
@@ -76,6 +80,14 @@ public class ImpactCategory extends MCAObject {
 	public CategoryIndicator getEinheit() {
 		return einheit;
 	}
+	
+	/**
+	 * Liefert eine Wirkungskategorie
+	 * @param name
+	 * ist der Name der Wirkungskategorie
+	 * @return
+	 * ... die gesuchte Wirkungskategorie
+	 */
 	
 	public static ImpactCategory getInstance(String name) {
 		return getAllInstances().get(name);

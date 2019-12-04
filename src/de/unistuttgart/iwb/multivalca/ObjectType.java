@@ -14,6 +14,8 @@ package de.unistuttgart.iwb.multivalca;
 
 public enum ObjectType {
 	ProcessModule,
+	ProcessModuleGroup,
+	SubSystemGroup,
 	ProductSystem, 
 	ProductDeclaration,
 	ProductDeclarationGroup

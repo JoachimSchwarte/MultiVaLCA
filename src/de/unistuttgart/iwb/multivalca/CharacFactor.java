@@ -7,6 +7,9 @@ package de.unistuttgart.iwb.multivalca;
 import java.util.LinkedHashMap;
 
 /**
+ * Diese Klasse dient zur Erzeugung und Nutzung
+ * von Objekten des Typs "Charakterisierungsfaktor".
+ * 
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.532
  */
@@ -43,14 +46,14 @@ public class CharacFactor extends MCAObject {
 	/**
 	 * Überprüft, ob bereits ein Charakterisierungsfaktor
 	 * des gegebenen Namens existiert.
-	 * @param string
+	 * @param name
 	 * ist der zu prüfende Name
 	 * @return
 	 * ... den Wahrheitswert, den die Überprüfung liefert
 	 */
 	
-	public static boolean containsName(String string) {
-		return getAllInstances().containsKey(string);
+	public static boolean containsName(String name) {
+		return getAllInstances().containsKey(name);
 	}
 	
 	/**
@@ -68,14 +71,14 @@ public class CharacFactor extends MCAObject {
 	
 	/**
 	 * Liefert einen Charakterisierungsfaktor zurück
-	 * @param string
+	 * @param name
 	 * Name des gewünschten Charakterisierungsfaktors
 	 * @return
 	 * ... den gesuchten Charakterisierungsfaktor
 	 */
 	
-	public static CharacFactor getInstance(String string) {
-		return getAllInstances().get(string);
+	public static CharacFactor getInstance(String name) {
+		return getAllInstances().get(name);
 	}
 	
 	/**
@@ -111,6 +114,20 @@ public class CharacFactor extends MCAObject {
 		return wirkung;
 	}
 	
+	/**
+	 * Erzeugt einen neuen Charakterisierungsfaktor
+	 * @param name
+	 * der Name des Charakterisierungsfaktors
+	 * @param fluss
+	 * der Name des zugeordneten Flusses
+	 * @param wirkung
+	 * der Name der zugeordneten Wirkungskategorie
+	 * @param wert
+	 * der Hauptwert des Charakterisierungsfaktors
+	 * @return
+	 * ... den neuen Charakterisierungsfaktor
+	 */
+	
 	public static CharacFactor instance(String name, Flow fluss, ImpactCategory wirkung, Double wert) {
 		if (!getAllInstances().containsKey(name)) {
 			new CharacFactor(name, fluss, wirkung, wert);
@@ -118,12 +135,28 @@ public class CharacFactor extends MCAObject {
 		return getAllInstances().get(name);
 	}
 	
+	/**
+	 * Setzt den Wert für die Untergrenze des Charakterisierungsfaktors 
+	 * @param name
+	 * der Name des Charakterisierungsfaktors
+	 * @param lv
+	 * der Wert für die Untergrenze 
+	 */
+	
 	public static void setLowerBound(String name, Double lv) {
 		LinkedHashMap<ValueType, Double> values = getInstance(name).getValues();
 		values.put(ValueType.LowerBound, lv);
 		new CharacFactor(name, getInstance(name).getFlow(), 
 				getInstance(name).getWirkung(), values);	
 	}
+	
+	/**
+	 * Setzt den Wert für die Obergrenze des Charakterisierungsfaktors 
+	 * @param name
+	 * der Name des Charakterisierungsfaktors
+	 * @param lv
+	 * der Wert für die Obergrenze 
+	 */
 	
 	public static void setUpperBound(String name, Double lv) {
 		LinkedHashMap<ValueType, Double> values = getInstance(name).getValues();

@@ -20,7 +20,6 @@ import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
-import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
@@ -54,7 +53,7 @@ public class ProcModListPanel extends MCAPanel{
 		Locale locale = MultiVaLCA.LANGUAGES.get(l);
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-		lblP07n1.setText(bundle.getString("mp42e"));
+		lblP07n1.setText(bundle.getString("mp421e"));
 		pmTableModel.setRowCount(0);
 		pmTable.setModel(pmTableModel);
 		TableColumnModel tcm = pmTable.getColumnModel();
@@ -66,9 +65,7 @@ public class ProcModListPanel extends MCAPanel{
 		HashSet<String> modulListe = new HashSet<String>();
 		LinkedHashMap<String, MCAObject> instanceListe = new LinkedHashMap<String, MCAObject>();
 		modulListe.addAll(ProcessModule.getAllInstances().keySet());
-		modulListe.addAll(ProcessModuleGroup.getAllInstances().keySet());
 		instanceListe.putAll(ProcessModule.getAllInstances());
-		instanceListe.putAll(ProcessModuleGroup.getAllInstances());
 		for(String mn : modulListe) {
 			FlowValueMaps akModul = (FlowValueMaps)instanceListe.get(mn);
 

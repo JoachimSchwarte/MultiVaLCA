@@ -49,14 +49,14 @@ implements FlowValueMaps, ImpactValueMaps {
 	/**
 	 * Überprüft, ob bereits ein Prozessmodul
 	 * des genannten Namens existiert.
-	 * @param string
+	 * @param name
 	 * ist der zu prüfende Name
 	 * @return
 	 * ... den Wahrheitswert, den die Überprüfung liefert
 	 */
 	
-	public static boolean containsName(String string) {
-		return getAllInstances().containsKey(string);
+	public static boolean containsName(String name) {
+		return getAllInstances().containsKey(name);
 	}
 
 	/**
@@ -156,6 +156,20 @@ implements FlowValueMaps, ImpactValueMaps {
 		efv.remove(fluss);
 		pfv.remove(fluss);
 	}
+	
+	@Override
+	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap() {
+		return null;
+	}
+	
+	/**
+	 * Liefert den Wirkungsvektor des Prozessmoduls für
+	 * die relevante Bewertungsmethode
+	 * @param bm
+	 * die relevante Bewertungsmethode 
+	 * @return
+	 * ... den zugehörigen Wirkungsvektor 
+	 */
 	
 	@Override	
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {	

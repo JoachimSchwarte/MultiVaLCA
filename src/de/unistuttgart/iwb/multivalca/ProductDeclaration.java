@@ -120,17 +120,19 @@ implements ImpactValueMaps {
 		return einheit;
 	}
 	
+	@Override
+	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(){
+		return wvAlle;
+	}
+	
 	/**
-	 * Liefert alle Wirkungskategorien und 
-	 * deren zugeordneten Wert für
+	 * Liefert den Wirkungsvektor der Produktdeklaration für
 	 * die relevante Bewertungsmethode
 	 * @param bm
-	 * Die relevante Bewertungsmethode 
+	 * die relevante Bewertungsmethode 
 	 * @return
-	 * ... die der Bewertungsmethode zugehörigen 
-	 * Wirkungskategorien und deren zugeordneten Wert 
-	 */
-	
+	 * ... den zugehörigen Wirkungsvektor 
+	 */	
 	
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {

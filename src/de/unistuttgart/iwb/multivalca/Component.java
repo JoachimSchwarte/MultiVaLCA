@@ -44,14 +44,14 @@ implements ImpactValueMaps {
 	/**
 	 * Überprüft, ob bereits eine Component
 	 * des genannten Namens existiert.
-	 * @param string
+	 * @param name
 	 * ist der zu prüfende Name
 	 * @return
 	 * ... den Wahrheitswert, den die Überprüfung liefert
 	 */
 	
-	public static boolean containsName(String string) {
-		return getAllInstances().containsKey(string);
+	public static boolean containsName(String name) {
+		return getAllInstances().containsKey(name);
 	}
 	
 	/**
@@ -80,19 +80,14 @@ implements ImpactValueMaps {
 	}
 	
 	/**
-	 * Die dreiparametrige Methode newInstance erzeugt 
-	 * unter Verwendung des privaten Konstruktors eine vollständige
-	 * Component.
+	 * Erzeugt eine neue Komponente
 	 * @param name
-	 * übergibt der Namen der Component. 
-	 * Dieser muss eindeutig sein.
-	 * @param komponente
+	 * Name der Komponente 
+	 * @param refName
 	 * ist ein bliebiges Objekt einer Klasse, die das Interface
 	 * ImpactValueMaps implementiert.
-	 * @param menge
-	 * ist die zugehörige Mengenangabe. 
 	 * @return
-	 * ... die neue Component
+	 * ... die neue Komponente
 	 */
 	
 	public static Component newInstance(String name, String refName) {
@@ -118,6 +113,20 @@ implements ImpactValueMaps {
 	public ImpactValueMaps getKomponente() {
 		return bezugsKomponente;
 	}
+	
+	@Override
+	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap() {
+		return null;
+	}
+	
+	/**
+	 * Liefert den Wirkungsvektor der Komponente für
+	 * die relevante Bewertungsmethode
+	 * @param bm
+	 * die relevante Bewertungsmethode 
+	 * @return
+	 * ... den zugehörigen Wirkungsvektor 
+	 */
 
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {

@@ -45,13 +45,13 @@ public class Composition extends MCAObject implements ImpactValueMaps {
 	/**
 	 * Überprüft, ob bereits eine Composition des genannten Namens existiert.
 	 * 
-	 * @param string
+	 * @param name
 	 *            ist der zu prüfende Name
 	 * @return ... den Wahrheitswert, den die Überprüfung liefert
 	 */
 
-	public static boolean containsName(String string) {
-		return allInstances.containsKey(string);
+	public static boolean containsName(String name) {
+		return allInstances.containsKey(name);
 	}
 
 	/**
@@ -65,13 +65,13 @@ public class Composition extends MCAObject implements ImpactValueMaps {
 	/**
 	 * Liefert eine Composition
 	 * 
-	 * @param string
+	 * @param name
 	 *            Name der Composition
 	 * @return ... die gesuchte Composition
 	 */
 
-	public static Composition getInstance(String string) {
-		return allInstances.get(string);
+	public static Composition getInstance(String name) {
+		return allInstances.get(name);
 	}
 
 	/**
@@ -110,6 +110,20 @@ public class Composition extends MCAObject implements ImpactValueMaps {
 	public Integer getKompAnz() {
 		return zusammensetzung.size();
 	}
+	
+	@Override
+	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap() {
+		return null;
+	}
+	
+	/**
+	 * Liefert den Wirkungsvektor der Komposition für
+	 * die relevante Bewertungsmethode
+	 * @param bm
+	 * die relevante Bewertungsmethode 
+	 * @return
+	 * ... den zugehörigen Wirkungsvektor 
+	 */
 
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {

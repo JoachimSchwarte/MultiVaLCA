@@ -7,6 +7,9 @@ package de.unistuttgart.iwb.multivalca;
 import java.util.LinkedHashMap;
 
 /**
+ * Diese Klasse dient zur Erzeugung und Nutzung
+ * von Objekten des Typs "Bewertungsmethode".
+ * 
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.536
  */
@@ -31,14 +34,14 @@ public class LCIAMethod extends MCAObject {
 	/**
 	 * Überprüft, ob bereits eine Bewertungsmethode
 	 * des genannten Namens existiert.
-	 * @param string
+	 * @param name
 	 * ist der zu prüfende Name
 	 * @return
 	 * ... den Wahrheitswert, den die Überprüfung liefert
 	 */
 	
-	public static boolean containsName(String string) {
-		return getAllInstances().containsKey(string);
+	public static boolean containsName(String name) {
+		return getAllInstances().containsKey(name);
 	}
 	
 	/**
@@ -106,6 +109,11 @@ public class LCIAMethod extends MCAObject {
 	public LinkedHashMap<String, ImpactCategory> categoryList() {	
 		return wkl;
 	}
+	
+	/**
+	 * @return
+	 * ... alle vorhandenen Bewertungsmethoden
+	 */
 	
 	public static LinkedHashMap<String, LCIAMethod> getAllInstances() {
 		LinkedHashMap<String,LCIAMethod> a = new LinkedHashMap<String,LCIAMethod>();

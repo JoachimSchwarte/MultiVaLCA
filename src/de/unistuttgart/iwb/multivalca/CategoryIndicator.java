@@ -7,6 +7,9 @@ package de.unistuttgart.iwb.multivalca;
 import java.util.LinkedHashMap;
 
 /**
+ * Diese Klasse dient zur Erzeugung und Nutzung
+ * von Objekten des Typs "Wirkungsindikator".
+ * 
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.532
  */
@@ -35,6 +38,13 @@ public class CategoryIndicator extends MCAObject {
 		allInstances.clear();
 	}
 
+	/**
+	 * Erzeugt eine neue Wirkungskategorieeinheit
+	 * @param name
+	 * der Name der Einheit
+	 * @return
+	 * ... die neue Einheit
+	 */
 	
 	public static CategoryIndicator instance(String name) {
 		if (!allInstances.containsKey(name)) {

@@ -45,7 +45,9 @@ public class MultiVaLCA {
 	private JPanel panel = new JPanel();
 	private CardLayout cl = new CardLayout(0, 0);
 	private final Action newModuleAction 		= new newModuleAction();
+	private final Action processModuleListAction 		= new processModuleListAction();
 	private final Action newDeclarationAction 	= new newDeclarationAction();
+	private final Action declarationListAction 	= new declarationListAction(); 
 	private final Action prefsAction 			= new prefsAction();
 	private final Action xmlExportAction 		= new XMLExportAction(l);
 	private final Action xmlImportAction 		= new XMLImportAction(l);
@@ -134,9 +136,9 @@ public class MultiVaLCA {
 		//
 		panel.add(new ProcessModulePanel("neuModul"), "neuModul");
 		//
-		// Panel 2b; Neues Prozessmodul
+		// Panel 2b; Neue Prozessmodulgruppe
 		//
-		panel.add(new ProModGroupPanel("neuModGroup"), "neuModGroup");
+		panel.add(new ProcModGroupPanel("neuModGroup"), "neuModGroup");
 		//
 		// Panel 3; Neues Produktsystem
 		//		
@@ -161,9 +163,13 @@ public class MultiVaLCA {
 		//
 		panel.add(new FlowListPanel("listeFluss"), "listeFluss");		
 		//
-		// Panel 7; Prozessmodulliste
+		// Panel 7; Prozessmodulliste(Einzelmodule)
 		//
-		panel.add(new ProcModListPanel("listePM"), "listePM");		
+		panel.add(new ProcModListPanel("listePM"), "listePM");	
+		//
+		// Panel 7b; Prozessmodulliste(Gruppen)
+		//
+		panel.add(new ProcModGroupListPanel("listePMGroup"), "listePMGroup");
 		//
 		// Panel 8; Produktsystemliste
 		//
@@ -217,6 +223,10 @@ public class MultiVaLCA {
 		//
 		panel.add(new DeklarationListPanel("listDekl"), "listDekl");
 		//
+		// Panel 20b; Liste der Produktdeklarationsgruppen 
+		//
+		panel.add(new DeklarationGroupListPanel("listDeklGroup"), "listDeklGroup");
+		//
 		// Panel 21; Liste der Komponenten
 		//
 		panel.add(new ComponentListPanel("listKente"), "listKente");
@@ -224,10 +234,18 @@ public class MultiVaLCA {
 		// Panel 22; Liste der Kompositionen
 		//
 		panel.add(new CompositionListPanel("listKtion"), "listKtion");
-		//		
-		// Panel 22; Liste der Kompositionen
+//		
+		// Panel 23; Liste der Kompositionen
 		//
 		panel.add(new DeclarationGroupPanel("neuDeklGroup"), "neuDeklGroup");
+		//		
+		// Panel 24; Neue Subsystemgruppe
+		//
+		panel.add(new SubSystemGroupPanel("neuSubSystemGroup"), "neuSubSystemGroup");
+		//		
+		// Panel 25; Liste der Subsystemgruppen
+		//
+		panel.add(new SubSystemGroupListPanel("listSubSystemGroup"), "listSubSystemGroup");
 
 		cl.show(panel, "leer"); // zeigt Startfenster an
 
@@ -309,6 +327,22 @@ public class MultiVaLCA {
 		};
 		mntmGroupModule.setAction(a3);							//Prozessmodulgruppe
 		mntmProcessModule.add(mntmGroupModule);	
+		
+		JMenuItem mntmSubSystemGroup = new JMenuItem();
+		Action a31 = new MCAAction(bundle.getString("mp23"), bundle.getString("mp23e"), "neuSubSystemGroup") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 426405479780639787L;
+
+			@Override
+			public void performAction(ActionEvent e) {
+				cl.show(panel, getKey());
+				MCAPanel.get(getKey()).showMe();
+			}		
+		};
+		mntmSubSystemGroup.setAction(a31);							//Neue Subsystemgruppe
+		mnNew.add(mntmSubSystemGroup);
 
 		JMenuItem mntmProductSystem = new JMenuItem();
 		Action a4 = new MCAAction(bundle.getString("mp13"), bundle.getString("mp13e"), "neuProdukt") {
@@ -373,17 +407,6 @@ public class MultiVaLCA {
 		};
 		mntmLCIAnew.setAction(a7);								//Wirkungsabschätzung
 		mnNew.add(mntmLCIAnew);
-
-		//		JMenuItem mntmDeclaration = new JMenuItem();
-		//		Action a8 = new MCAAction(bundle.getString("mp17"), bundle.getString("mp17e"), "neuDekl") {
-		//			@Override
-		//			public void performAction(ActionEvent e) {
-		//				cl.show(panel, getKey());
-		//				MCAPanel.get(getKey()).showMe();
-		//			}			
-		//		};
-		//		mntmDeclaration.setAction(a8);							//Produktdeklaration
-		//		mnNew.add(mntmDeclaration);
 
 		JMenu mntmDeclaration = new JMenu();
 		mntmDeclaration.setAction(newDeclarationAction);				//Neue Produktdeklaration
@@ -473,12 +496,44 @@ public class MultiVaLCA {
 		mntmFlsse.setAction(a13);								//Liste aller Flüsse
 		mnListe.add(mntmFlsse);
 
-		JMenuItem mntmProzessmodule = new JMenuItem();
-		Action a14 = new MCAAction(bundle.getString("mp42"), bundle.getString("mp42e"), "listePM") {
+		JMenu mntmProcessModuleList = new JMenu();
+		mntmProcessModuleList.setAction(processModuleListAction);			//Liste der Prozessmodule
+		mnListe.add(mntmProcessModuleList);
+
+		JMenuItem mntmSingleModuleList = new JMenuItem();
+		Action a14 = new MCAAction(bundle.getString("mp421"), bundle.getString("mp421e"), "listePM") {
+			
+			@Override
+			public void performAction(ActionEvent e) {
+				cl.show(panel, getKey());
+				MCAPanel.get(getKey()).showMe();
+			}			
+		};
+		mntmSingleModuleList.setAction(a14);						//Liste der Einzelmodule
+		mntmProcessModuleList.add(mntmSingleModuleList);
+		
+		JMenuItem mntmGroupModuleList = new JMenuItem();
+		Action a33 = new MCAAction(bundle.getString("mp422"), bundle.getString("mp422e"), "listePMGroup") {
+			
+			@Override
+			public void performAction(ActionEvent e) {
+				cl.show(panel, getKey());
+				MCAPanel.get(getKey()).showMe();
+			}			
+		};
+		mntmGroupModuleList.setAction(a33);						//Liste der Gruppenmodule
+		mntmProcessModuleList.add(mntmGroupModuleList);
+
+		JMenuItem mntmSubSystemGroups = new JMenuItem();
+		Action a30 = new MCAAction(bundle.getString("mp50"), bundle.getString("mp50e"), "listSubSystemGroup") {
 			/**
 			 * 
 			 */
-			private static final long serialVersionUID = 2281720160378053260L;
+			private static final long serialVersionUID = -2733567351856475594L;
+
+			/**
+			 * 
+			 */
 
 			@Override
 			public void performAction(ActionEvent e) {
@@ -486,8 +541,8 @@ public class MultiVaLCA {
 				MCAPanel.get(getKey()).showMe();
 			}			
 		};
-		mntmProzessmodule.setAction(a14);						//Liste der Prozessmodule
-		mnListe.add(mntmProzessmodule);
+		mntmSubSystemGroups.setAction(a30);						//Liste der Subsystemgruppen
+		mnListe.add(mntmSubSystemGroups);
 
 		JMenuItem mntmProduktsysteme = new JMenuItem();
 		Action a15 = new MCAAction(bundle.getString("mp43"), bundle.getString("mp43e"), "listePS") {
@@ -553,8 +608,12 @@ public class MultiVaLCA {
 		mntmLCIAlist.setAction(a18);							//Liste der Bewertungsmethoden
 		mnListe.add(mntmLCIAlist);
 
-		JMenuItem mntmDeclarationlist = new JMenuItem();
-		Action a19 = new MCAAction(bundle.getString("mp47"), bundle.getString("mp47e"), "listDekl") {
+		JMenu mntmDeclarationList = new JMenu();
+		mntmDeclarationList.setAction(declarationListAction);			//Liste der Produktdeklarationen
+		mnListe.add(mntmDeclarationList);
+
+		JMenuItem mntmSingleDeclarationList = new JMenuItem();
+		Action a19 = new MCAAction(bundle.getString("mp471"), bundle.getString("mp471e"), "listDekl") {
 			/**
 			 * 
 			 */
@@ -566,8 +625,26 @@ public class MultiVaLCA {
 				MCAPanel.get(getKey()).showMe();
 			}			
 		};		
-		mntmDeclarationlist.setAction(a19);						//Liste der Produktdeklarationen
-		mnListe.add(mntmDeclarationlist);
+		mntmSingleDeclarationList.setAction(a19);						//Liste der Einzeldeklarationen
+		mntmDeclarationList.add(mntmSingleDeclarationList);
+
+		JMenuItem mntmGroupDeclarationList = new JMenuItem();
+		Action a32 = new MCAAction(bundle.getString("mp472"), bundle.getString("mp472e"), "listDeklGroup") {
+
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -605730857270753649L;
+
+			@Override
+			public void performAction(ActionEvent e) {
+				cl.show(panel, getKey());
+				MCAPanel.get(getKey()).showMe();
+			}			
+		};		
+		mntmGroupDeclarationList.setAction(a32);						//Liste der Produktdeklarationsgruppen
+		mntmDeclarationList.add(mntmGroupDeclarationList);
 
 		JMenuItem mntmComponentlist = new JMenuItem();
 		Action a20 = new MCAAction(bundle.getString("mp48"), bundle.getString("mp48e"), "listKente") {
@@ -690,14 +767,22 @@ public class MultiVaLCA {
 				mntmSingleModule.setToolTipText(bundle.getString("mp121e"));
 				mntmGroupModule.setText(bundle.getString("mp122"));
 				mntmGroupModule.setToolTipText(bundle.getString("mp122e"));
+				mntmSubSystemGroup.setText(bundle.getString("mp23"));
+				mntmSubSystemGroup.setToolTipText(bundle.getString("mp23e"));
 				mntmProductSystem.setText(bundle.getString("mp13"));
 				mntmProductSystem.setToolTipText(bundle.getString("mp13e"));
 				mntmNewMenuItem_3.setText(bundle.getString("mp31"));
 				mntmNewMenuItem_3.setToolTipText(bundle.getString("mp31e"));
 				mntmFlsse.setText(bundle.getString("mp41"));
 				mntmFlsse.setToolTipText(bundle.getString("mp41e"));
-				mntmProzessmodule.setText(bundle.getString("mp42"));
-				mntmProzessmodule.setToolTipText(bundle.getString("mp42e"));
+				mntmProcessModuleList.setText(bundle.getString("mp42"));
+				mntmProcessModuleList.setToolTipText(bundle.getString("mp42e"));
+				mntmSingleModuleList.setText(bundle.getString("mp421"));
+				mntmSingleModuleList.setToolTipText(bundle.getString("mp421e"));
+				mntmGroupModuleList.setText(bundle.getString("mp422"));
+				mntmGroupModuleList.setToolTipText(bundle.getString("mp422e"));
+				mntmSubSystemGroups.setText(bundle.getString("mp50"));
+				mntmSubSystemGroups.setToolTipText(bundle.getString("mp50e"));
 				mntmProduktsysteme.setText(bundle.getString("mp43"));
 				mntmProduktsysteme.setToolTipText(bundle.getString("mp43e"));
 				mntmLci.setText(bundle.getString("mp51"));
@@ -720,11 +805,18 @@ public class MultiVaLCA {
 				mntmLCIAnew.setToolTipText(bundle.getString("mp16e"));
 				mntmLCIAlist.setText(bundle.getString("mp46"));
 				mntmLCIAlist.setToolTipText(bundle.getString("mp46e"));
-
 				mntmDeclaration.setText(bundle.getString("mp17"));
 				mntmDeclaration.setToolTipText(bundle.getString("mp17e"));
-				mntmDeclarationlist.setText(bundle.getString("mp47"));
-				mntmDeclarationlist.setToolTipText(bundle.getString("mp47e"));
+				mntmSingleDeclaration.setText(bundle.getString("mp20"));
+				mntmSingleDeclaration.setToolTipText(bundle.getString("mp20e"));
+				mntmGroupDeclaration.setText(bundle.getString("mp22"));
+				mntmGroupDeclaration.setToolTipText(bundle.getString("mp22e"));
+				mntmDeclarationList.setText(bundle.getString("mp47"));
+				mntmDeclarationList.setToolTipText(bundle.getString("mp47e"));
+				mntmSingleDeclarationList.setText(bundle.getString("mp471"));
+				mntmSingleDeclarationList.setToolTipText(bundle.getString("mp471e"));
+				mntmGroupDeclarationList.setText(bundle.getString("mp472"));
+				mntmSingleDeclarationList.setToolTipText(bundle.getString("mp472e"));
 				mntmComponent.setText(bundle.getString("mp18"));
 				mntmComponent.setToolTipText(bundle.getString("mp18e"));
 				mntmComponentlist.setText(bundle.getString("mp48"));
@@ -752,6 +844,39 @@ public class MultiVaLCA {
 
 			putValue(NAME, bundle.getString("mp12"));
 			putValue(SHORT_DESCRIPTION, bundle.getString("mp12e"));
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+		}
+	}
+	
+	private class processModuleListAction extends AbstractAction {
+
+		public processModuleListAction() {
+			locale = LANGUAGES.get(l);
+			baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			bundle = ResourceBundle.getBundle(baseName, locale);
+
+			putValue(NAME, bundle.getString("mp42"));
+			putValue(SHORT_DESCRIPTION, bundle.getString("mp42e"));
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+		}
+	}
+
+	private class declarationListAction extends AbstractAction {
+
+		private static final long serialVersionUID = -7898869366628872139L;
+		public declarationListAction() {
+			locale = LANGUAGES.get(l);
+			baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			bundle = ResourceBundle.getBundle(baseName, locale);
+
+			putValue(NAME, bundle.getString("mp47"));
+			putValue(SHORT_DESCRIPTION, bundle.getString("mp47e"));
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {

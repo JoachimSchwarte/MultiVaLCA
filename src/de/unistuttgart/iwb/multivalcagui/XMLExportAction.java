@@ -55,12 +55,13 @@ class XMLExportAction extends AbstractAction {
             
             writeFlows(document, root);
             writeProcessModules(document, root);
-            writeProcessModuleGroups(document, root);
+            writeFlowValueMapGroups(document, root);
             writeProductSystems(document, root);
             writeImpactCategories(document, root);
             writeCFactors(document, root);
             writeLCIAMethods(document, root);
             writeProductDeclarations(document, root);
+            writeImpactValueMapGroups(document, root);
             writeComponents(document, root);
             
             JFileChooser chooser = new JFileChooser();
@@ -162,32 +163,35 @@ class XMLExportAction extends AbstractAction {
 		}	
 	}
 	
-	private void writeProcessModuleGroups(Document document, Element root) {
-		Element allemodgroups = document.createElement("ProcessModuleGroups");
-        root.appendChild(allemodgroups);
+	private void writeFlowValueMapGroups(Document document, Element root) {
+		Element alleFVMgroups = document.createElement("FlowValueMapGroups");
+        root.appendChild(alleFVMgroups);
         
-        for (String pmg : ProcessModuleGroup.getAllInstances().keySet()) {
-        	ProcessModuleGroup akModul = ProcessModuleGroup.getInstance(pmg);
-			Element prozessmodulgruppe = document.createElement("ProcessModuleGroup");
-			allemodgroups.appendChild(prozessmodulgruppe);
-			Element name = document.createElement("PMGroupName");
-			prozessmodulgruppe.appendChild(name);
-			name.appendChild(document.createTextNode(akModul.getName()));
+        for (String fvmg : FlowValueMapGroup.getAllInstances().keySet()) {
+        	FlowValueMapGroup thisFVMGroup = FlowValueMapGroup.getInstance(fvmg);
+			Element fvmGruppe = document.createElement("FlowValueMapGroup");
+			alleFVMgroups.appendChild(fvmGruppe);
+			Element name = document.createElement("FVMGroupName");			
+			fvmGruppe.appendChild(name);
+			name.appendChild(document.createTextNode(thisFVMGroup.getName()));
+			Element type = document.createElement("FVM-Type");
+			fvmGruppe.appendChild(type);
+			type.appendChild(document.createTextNode(thisFVMGroup.getType().toString()));
 			Element rfn = document.createElement("RelevantFlowName");
-			prozessmodulgruppe.appendChild(rfn);
-			rfn.appendChild(document.createTextNode(akModul.getRefFlow().getName()));
+			fvmGruppe.appendChild(rfn);
+			rfn.appendChild(document.createTextNode(thisFVMGroup.getRefFlow().getName()));
 			Element rfv = document.createElement("RelevantFlowValue");
-			prozessmodulgruppe.appendChild(rfv);
-			rfv.appendChild(document.createTextNode(akModul.getRefValue().toString()));
-			Element modullist = document.createElement("PMGroup-Modules");
-			prozessmodulgruppe.appendChild(modullist);
-			for (FlowValueMaps mod  : ProcessModuleGroup.getInstance(pmg).getModList()) {
-				String modname = mod.getName();
-				Element modul = document.createElement("PMGroup-Module");
-				modullist.appendChild(modul);
-				Element mname = document.createElement("PMGM-Name");
-				modul.appendChild(mname);
-				mname.appendChild(document.createTextNode(modname));
+			fvmGruppe.appendChild(rfv);
+			rfv.appendChild(document.createTextNode(thisFVMGroup.getRefValue().toString()));
+			Element fvmlist = document.createElement("FVMGroup-Elements");
+			fvmGruppe.appendChild(fvmlist);
+			for (FlowValueMaps fvmi  : FlowValueMapGroup.getInstance(fvmg).getFVMList()) {
+				String fvmname = fvmi.getName();
+				Element fvm = document.createElement("FVMGroup-Element");
+				fvmlist.appendChild(fvm);
+				Element dname = document.createElement("FVMGE-Name");
+				fvm.appendChild(dname); 
+				dname.appendChild(document.createTextNode(fvmname));
 			}
         }	
 	}
@@ -348,6 +352,33 @@ class XMLExportAction extends AbstractAction {
             	menge3.appendChild(document.createTextNode(thisPD.getImpactValueMap(thisPD.getBM()).get(ic).get(ValueType.UpperBound).toString()));
             }
         }		
+	}
+	
+	private void writeImpactValueMapGroups(Document document, Element root) {
+		Element alleIVMgroups = document.createElement("ImpactValueMapGroups");
+        root.appendChild(alleIVMgroups);
+        
+        for (String ivmg : ImpactValueMapGroup.getAllInstances().keySet()) {
+        	ImpactValueMapGroup thisIVMGroup = ImpactValueMapGroup.getInstance(ivmg);
+			Element ivmGruppe = document.createElement("ImpactValueMapGroup");
+			alleIVMgroups.appendChild(ivmGruppe);
+			Element name = document.createElement("IVMGroupName");			
+			ivmGruppe.appendChild(name);
+			name.appendChild(document.createTextNode(thisIVMGroup.getName()));
+			Element type = document.createElement("IVM-Type");
+			ivmGruppe.appendChild(type);
+			type.appendChild(document.createTextNode(thisIVMGroup.getType().toString()));
+			Element ivmlist = document.createElement("IVMGroup-Elements");
+			ivmGruppe.appendChild(ivmlist);
+			for (ImpactValueMaps ivmi  : ImpactValueMapGroup.getInstance(ivmg).getIVMList()) {
+				String ivmname = ivmi.getName();
+				Element ivm = document.createElement("IVMGroup-Element");
+				ivmlist.appendChild(ivm);
+				Element dname = document.createElement("IVMGE-Name");
+				ivm.appendChild(dname); 
+				dname.appendChild(document.createTextNode(ivmname));
+			}
+        }	
 	}
 	
 	private void writeComponents(Document document, Element root) {

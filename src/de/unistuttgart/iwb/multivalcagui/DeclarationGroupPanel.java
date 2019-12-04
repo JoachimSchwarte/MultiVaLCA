@@ -19,11 +19,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import de.unistuttgart.iwb.multivalca.IVMGroupType;
+import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
 import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProductDeclaration;
-import de.unistuttgart.iwb.multivalca.ProductDeclarationGroup;
-import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -88,17 +88,17 @@ public class DeclarationGroupPanel extends MCAPanel{
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {//	
 				LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
-				testMap1.put(bundle.getString("stat46"), ProductDeclarationGroup.getAllInstances().keySet());
+				testMap1.put(bundle.getString("stat46"), ImpactValueMapGroup.getAllInstances().keySet());
 				String name = nameNGdi.getTextNew(testMap1, lbl06, bundle.getString("stat02"), bundle.getString("stat03"));	
 				//	
 				if (!"".equals(name)) {
-					ProductDeclarationGroup.instance(name);
+					ImpactValueMapGroup.instance(name, IVMGroupType.ProductDeclaration);
 					txt01.setEnabled(false);
 					btn01.setEnabled(false);
 					cobP23n1.setEnabled(true);
-//					txt04.setEnabled(true);
+					//					txt04.setEnabled(true);
 					btn02.setEnabled(true);
-					lbl06.setText(bundle.getString("stat40") + ProductDeclarationGroup.getAllInstances().get(txt01.getText()).getDecList().size()
+					lbl06.setText(bundle.getString("stat40") + ImpactValueMapGroup.getAllInstances().get(txt01.getText()).getIVMList().size()
 							+ bundle.getString("stat47"));
 				}				
 			}			
@@ -108,16 +108,16 @@ public class DeclarationGroupPanel extends MCAPanel{
 	private void button2() {
 		btn02.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				String name = txt04.getText();	
+				//				String name = txt04.getText();	
 				String name = cobP23n1.getSelectedItem().toString();
 				boolean nameOk = true;
 				if ("".equals(name)) {
 					nameOk = false;
 					lbl06.setText(bundle.getString("stat02"));
 				} 
-				if (!ProductSystem.getAllInstances().containsKey(name) &&
-						!ProductDeclaration.getAllInstances().containsKey(name) &&
-						!ProductDeclarationGroup.getAllInstances().containsKey(name) 
+				if (!ProductDeclaration.getAllInstances().containsKey(name)
+						//					&& !ProductSystem.getAllInstances().containsKey(name)						 
+						//						&&	!ImpactValueMapGroup.getAllInstances().containsKey(name) 
 						//							&& !ProcessModule.getAllInstances().containsKey(name) &&
 						//									!ProcessModuleGroup.getAllInstances().containsKey(name)
 						) {
@@ -126,11 +126,15 @@ public class DeclarationGroupPanel extends MCAPanel{
 				}
 
 				if (nameOk) {
-					ProductDeclarationGroup.getAllInstances().get(txt01.getText()).addDeclaration((ImpactValueMaps) MCAObject.getAllInstances(MCAObject.getClass(name)).get(name));
-					lbl06.setText(bundle.getString("stat40") + ProductDeclarationGroup.getAllInstances().get(txt01.getText()).getDecList().size()
+					ImpactValueMapGroup ivmGroup = ImpactValueMapGroup.getAllInstances().get(txt01.getText());
+					if ("".equals(ivmGroup.getType().toString())) {
+						ivmGroup.setType(IVMGroupType.ProductDeclaration);
+					}
+					ivmGroup.addImpactValueMap((ImpactValueMaps) MCAObject.getAllInstances(MCAObject.getClass(name)).get(name));
+					lbl06.setText(bundle.getString("stat40") + ivmGroup.getIVMList().size()
 							+ bundle.getString("stat47"));
 					btn03.setEnabled(true);
-//					txt04.setText("");
+					//					txt04.setText("");
 					cobP23n1.setSelectedIndex(0);
 				}			
 			}
@@ -141,9 +145,9 @@ public class DeclarationGroupPanel extends MCAPanel{
 		btn03.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				txt01.setText("");
-//				txt04.setText("");
+				//				txt04.setText("");
 				txt01.setEnabled(true);
-//				txt04.setEnabled(false);
+				//				txt04.setEnabled(false);
 				cobP23n1.setEnabled(false);
 				btn01.setEnabled(true);
 				btn02.setEnabled(false);
@@ -173,12 +177,12 @@ public class DeclarationGroupPanel extends MCAPanel{
 		for (String obName : ProductDeclaration.getAllInstances().keySet()) {
 			nameVektor.addElement(obName);
 		}			
-		for (String obName : ProductDeclarationGroup.getAllInstances().keySet()) {
-			nameVektor.addElement(obName);
-		}			
-		for (String obName : ProductSystem.getAllInstances().keySet()) {
-			nameVektor.addElement(obName);
-		}
+//		for (String obName : ImpactValueMapGroup.getAllInstances().keySet()) {
+//			nameVektor.addElement(obName);
+//		}			
+//		for (String obName : ProductSystem.getAllInstances().keySet()) {
+//			nameVektor.addElement(obName);
+//		}
 		cobP23n1.setModel(new DefaultComboBoxModel<String>(nameVektor));
 	}
 
