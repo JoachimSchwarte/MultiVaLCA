@@ -330,12 +330,12 @@ class XMLExportAction extends AbstractAction {
         	Element einheit = document.createElement("PD-Unit");
             pd.appendChild(einheit);
             einheit.appendChild(document.createTextNode(thisPD.getEinheit().toString()));
-        	Element method = document.createElement("PD-Method");
-            pd.appendChild(method);
-            method.appendChild(document.createTextNode(thisPD.getBM().getName()));
+//        	Element method = document.createElement("PD-Method");
+//            pd.appendChild(method);
+//            method.appendChild(document.createTextNode(thisPD.getBM().getName()));
 			Element iv = document.createElement("ImpactValuesVector");
 			pd.appendChild(iv);	            
-            for(ImpactCategory ic : thisPD.getImpactValueMap(thisPD.getBM()).keySet()){
+            for(ImpactCategory ic : thisPD.getImpactValueMap().keySet()){
             	Element cat = document.createElement("IVV-Entry");
 				iv.appendChild(cat);	
             	Element fname = document.createElement("ImpactCategorie-Name");
@@ -343,13 +343,13 @@ class XMLExportAction extends AbstractAction {
             	fname.appendChild(document.createTextNode(ic.getName()));
             	Element menge = document.createElement("ICV-MainValue");
             	cat.appendChild(menge);
-            	menge.appendChild(document.createTextNode(thisPD.getImpactValueMap(thisPD.getBM()).get(ic).get(ValueType.MeanValue).toString()));
+            	menge.appendChild(document.createTextNode(thisPD.getImpactValueMap().get(ic).get(ValueType.MeanValue).toString()));
             	Element menge2 = document.createElement("ICV-LowerBound");
             	cat.appendChild(menge2);
-            	menge2.appendChild(document.createTextNode(thisPD.getImpactValueMap(thisPD.getBM()).get(ic).get(ValueType.LowerBound).toString()));
+            	menge2.appendChild(document.createTextNode(thisPD.getImpactValueMap().get(ic).get(ValueType.LowerBound).toString()));
             	Element menge3 = document.createElement("ICV-UpperBound");
             	cat.appendChild(menge3);
-            	menge3.appendChild(document.createTextNode(thisPD.getImpactValueMap(thisPD.getBM()).get(ic).get(ValueType.UpperBound).toString()));
+            	menge3.appendChild(document.createTextNode(thisPD.getImpactValueMap().get(ic).get(ValueType.UpperBound).toString()));
             }
         }		
 	}

@@ -120,6 +120,13 @@ implements ImpactValueMaps {
 		return einheit;
 	}
 	
+	/**
+	 * Liefert alle Wirkungskategorien der Produktdeklaration und 
+	 * deren zugeordneten Wert 
+	 * @return
+	 * ... alle Wirkungskategorien der Produktdeklaration und deren zugeordneten Wert 
+	 */
+	
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(){
 		return wvAlle;
