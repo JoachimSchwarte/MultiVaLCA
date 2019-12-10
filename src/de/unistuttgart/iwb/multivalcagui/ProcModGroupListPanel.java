@@ -7,8 +7,8 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -64,7 +64,7 @@ public class ProcModGroupListPanel extends MCAPanel{
 		tcm.getColumn(1).setHeaderValue(bundle.getString("mp11"));
 		tcm.getColumn(2).setHeaderValue(bundle.getString("p01n3"));
 		tcm.getColumn(3).setHeaderValue(bundle.getString("p02n4"));
-		HashSet<String> ssListe = new HashSet<String>();
+		LinkedHashSet<String> ssListe = new LinkedHashSet<String>();
 		LinkedHashMap<String, MCAObject> instanceListe = new LinkedHashMap<String, MCAObject>();
 		ssListe.addAll(FlowValueMapGroup.getAllInstances().keySet());
 		instanceListe.putAll(FlowValueMapGroup.getAllInstances());

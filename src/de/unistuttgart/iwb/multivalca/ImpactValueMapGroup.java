@@ -1,9 +1,7 @@
 package de.unistuttgart.iwb.multivalca;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 
 /**
  * Diese Klasse dient zur Erzeugung und Nutzung
@@ -22,7 +20,7 @@ implements ImpactValueMaps {
 	// Instanzvariablen:	
 
 	private IVMGroupType type;
-	private LinkedList<ImpactValueMaps> ivmList = new LinkedList<ImpactValueMaps>();
+	private LinkedHashSet<ImpactValueMaps> ivmList = new LinkedHashSet<ImpactValueMaps>();
 
 
 	// Konstruktor:
@@ -53,7 +51,7 @@ implements ImpactValueMaps {
 	 * ... alle vorhandenen Wirkungsvektorgruppen
 	 */
 
-	public static HashMap<String, ImpactValueMapGroup> getAllInstances() {
+	public static LinkedHashMap<String, ImpactValueMapGroup> getAllInstances() {
 		LinkedHashMap<String,ImpactValueMapGroup> a = new LinkedHashMap<String,ImpactValueMapGroup>();
 		for (String s : MCAObject.getAllNames(ImpactValueMapGroup.class)) {
 			a.put(s, (ImpactValueMapGroup)MCAObject.getAllInstances(ImpactValueMapGroup.class).get(s));			
@@ -97,7 +95,7 @@ implements ImpactValueMaps {
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap() {
 		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wv =
 				new LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>>();
-		HashSet<String> wkList = new HashSet<String>();
+		LinkedHashSet<String> wkList = new LinkedHashSet<String>();
 		
 		for (ImpactValueMaps ivm : ivmList) {
 			for (ImpactCategory wk : ivm.getImpactValueMap().keySet()) {
@@ -227,7 +225,7 @@ implements ImpactValueMaps {
 	 * zusammensetzt
 	 */
 
-	public LinkedList<ImpactValueMaps> getIVMList(){
+	public LinkedHashSet<ImpactValueMaps> getIVMList(){
 		return ivmList;
 	}
 

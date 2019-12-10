@@ -4,8 +4,8 @@
 
 package de.unistuttgart.iwb.multivalca;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 
 import de.unistuttgart.iwb.ivari.IvariScalar;
 
@@ -24,7 +24,7 @@ implements FlowValueMaps, ImpactValueMaps {
 
 	// Instanzvariablen:
 
-	private HashSet<FlowValueMaps> fvmList = new HashSet<FlowValueMaps>();
+	private LinkedHashSet<FlowValueMaps> fvmList = new LinkedHashSet<FlowValueMaps>();
 
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv 
 	= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
@@ -103,7 +103,7 @@ implements FlowValueMaps, ImpactValueMaps {
 
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getElementarflussvektor() {
-		HashSet<String> flList = new HashSet<String>();
+		LinkedHashSet<String> flList = new LinkedHashSet<String>();
 		for (FlowValueMaps fvm : fvmList) {
 			for (Flow fl : fvm.getElementarflussvektor().keySet()) {
 				flList.add(fl.getName());	
@@ -158,7 +158,7 @@ implements FlowValueMaps, ImpactValueMaps {
 
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor() {
-		HashSet<String> flList = new HashSet<String>();
+		LinkedHashSet<String> flList = new LinkedHashSet<String>();
 		for (FlowValueMaps fvm : fvmList) {
 			for (Flow fl : fvm.getProduktflussvektor().keySet()) {
 				flList.add(fl.getName());	
@@ -257,7 +257,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	 * zusammensetzt
 	 */
 
-	public HashSet<FlowValueMaps> getFVMList(){
+	public LinkedHashSet<FlowValueMaps> getFVMList(){
 		return fvmList;
 	}
 
