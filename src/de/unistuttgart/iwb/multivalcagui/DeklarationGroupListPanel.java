@@ -19,6 +19,7 @@ import javax.swing.table.TableColumnModel;
 import de.unistuttgart.iwb.multivalca.IVMGroupType;
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
 import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
+import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
@@ -78,7 +79,7 @@ public class DeklarationGroupListPanel extends MCAPanel{
 		for(String imvg : imvgListe) {
 			if (IVMGroupType.ProductDeclaration.equals(ImpactValueMapGroup.getInstance(imvg).getType())) {
 			
-			ImpactValueMapGroup im = ImpactValueMapGroup.getInstance(imvg);		
+			ImpactValueMaps im = (ImpactValueMaps)instanceListe.get(imvg);			
 			pdTableModel.addRow(new Object[] {im.getName()});			
 
 			for(ImpactCategory ic : im.getImpactValueMap().keySet()){
