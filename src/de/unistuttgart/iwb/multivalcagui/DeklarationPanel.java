@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,7 +20,6 @@ import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.FlowUnit;
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
-//import de.unistuttgart.iwb.multivalca.LCIAMethod;
 import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
@@ -33,7 +33,6 @@ public class DeklarationPanel extends MCAPanel {
 	private JLabel lblP17n1 = new JLabel();				// "neue Produktdeklaration"
 	private JLabel lblP17n2 = new JLabel();				// "Name des ..."
 	private JLabel lblP17n3 = new JLabel();				// "Einheit"
-//	private JLabel lblP17n4 = new JLabel();				// "Bewertungsmethode"
 	private JLabel lblP17n5 = new JLabel();				// "Wirkungskategorie"
 	private JLabel lblP17n6 = new JLabel();				// "Menge"
 	private JLabel lblP17n7 = new JLabel();				// "Untergrenze"
@@ -46,7 +45,6 @@ public class DeklarationPanel extends MCAPanel {
 	private JButton btnP17n4 = new JButton(); 			// "fertig"
 	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
 	private JTextField txtP17n1 = new JTextField();		// Eingabefeld Produkt-Name
-//	private JTextField txtP17n2 = new JTextField();		// Eingabefeld LCIA-Method
 	private JTextField txtP17n3 = new JTextField();		// Eingabefeld Wirkungskategorie
 	private JTextField txtP17n4 = new JTextField();		// Eingabefeld Menge
 	private JTextField txtP17n5 = new JTextField();		// Eingabefeld Untergrenze
@@ -57,7 +55,6 @@ public class DeklarationPanel extends MCAPanel {
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	private LabeledInputDialog namePNdi = new LabeledInputDialog(lblP17n2, txtP17n1);
-//	private LabeledInputDialog nameBMdi = new LabeledInputDialog(lblP17n4, txtP17n2);
 	private LabeledInputDialog nameWKdi = new LabeledInputDialog(lblP17n5, txtP17n3);
 	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lblP17n6, txtP17n4);
 	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP17n7, lblP17n8, txtP17n5, txtP17n6);
@@ -77,7 +74,6 @@ public class DeklarationPanel extends MCAPanel {
 		add(lblP17n3, "cell 1 "+(++pos).toString()+",grow");	
 		comboBox_2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
 		add(comboBox_2, "cell 2 "+(pos).toString()+",grow");	
-//		pos = nameBMdi.draw(pos, this);	
 		add(btnP17n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");		
 		pos = nameWKdi.draw(pos, this);	
 		pos = wertMEdi.draw(pos, this);					
@@ -90,6 +86,9 @@ public class DeklarationPanel extends MCAPanel {
 		add(btnP17n4, "cell 2 "+(pos).toString()+",alignx center");
 		add(lblP17n9, "cell 0 "+(++pos).toString()+" 4 1,alignx center");	
 		
+		txtP17n3.setEnabled(false);
+		txtP17n4.setEnabled(false);
+		
 		button1();
 		button2();
 		button3();
@@ -101,37 +100,15 @@ public class DeklarationPanel extends MCAPanel {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					String nameProd = txtP17n1.getText();
-//					String nameLCIA = txtP17n2.getText();
 					FlowUnit einheit = comboBox_2.getItemAt(comboBox_2.getSelectedIndex());
-					boolean inputOK = true;
-
-					if (ProductDeclaration.containsName(nameProd)) {
-						lblP17n9.setText(bundle.getString("stat03"));
-						inputOK = false;					
-					}
-
-//					if (!LCIAMethod.containsName(nameLCIA) && inputOK) {
-//						lblP17n9.setText(bundle.getString("stat33"));
-//						inputOK = false;					
-//					}
-
-					if ("".equals(nameProd) && inputOK) {
-						lblP17n9.setText(bundle.getString("stat02"));
-						inputOK = false;
-					}
-
-//					if ("".equals(nameLCIA) && inputOK) {
-//						lblP17n9.setText(bundle.getString("stat32"));
-//						inputOK = false;
-//					}
-					if (inputOK) {
-//						LCIAMethod bm = LCIAMethod.instance(nameLCIA);
-//						ProductDeclaration.instance(nameProd, einheit).setBM(bm);
+					LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
+					testMap1.put(bundle.getString("stat50"), ProductDeclaration.getAllInstances().keySet());
+					String name = namePNdi.getTextNew(testMap1, lblP17n9, bundle.getString("stat02"), bundle.getString("stat03"));	
+					if (!"".equals(name)) {
 						ProductDeclaration.instance(nameProd, einheit);
 						btnP17n1.setEnabled(false);	
 						txtP17n1.setEnabled(false);
 						comboBox_2.setEnabled(false);
-//						txtP17n2.setEnabled(false);
 						btnP17n2.setEnabled(true);
 						txtP17n3.setEnabled(true);
 						txtP17n4.setEnabled(true);
@@ -148,7 +125,6 @@ public class DeklarationPanel extends MCAPanel {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					String nameProd = txtP17n1.getText();
-//					String nameLCIA = txtP17n2.getText();
 					String fname = txtP17n3.getText();
 					String fmenge = txtP17n4.getText();
 					Double menge;
@@ -160,7 +136,6 @@ public class DeklarationPanel extends MCAPanel {
 					if ("".equals(fname) || (menge == 0.0)) {
 						lblP17n9.setText(bundle.getString("stat07"));
 					} else {
-//						if (LCIAMethod.instance(nameLCIA).categoryList().containsKey(fname)) {
 						if (ImpactCategory.containsName(fname)) {
 							ImpactCategory ic = ImpactCategory.getInstance(fname);
 							LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
@@ -173,7 +148,8 @@ public class DeklarationPanel extends MCAPanel {
 							btnP17n2.setEnabled(false);
 							lud.start(txtP17n4.getText());
 							btnP17n3.setEnabled(true);
-							lblP17n9.setText(bundle.getString("stat01"));
+							lblP17n9.setText(bundle.getString("stat51") + " " + nameProd + bundle.getString("stat09") + 
+									ProductDeclaration.getInstance(nameProd).getImpactValueMap().size() + bundle.getString("stat49"));
 							
 						} else {
 							lblP17n9.setText(bundle.getString("stat35"));
@@ -217,7 +193,6 @@ public class DeklarationPanel extends MCAPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				btnP17n1.setEnabled(true);
 				txtP17n1.setText("");
-//				txtP17n2.setText("");
 				txtP17n3.setText("");
 				txtP17n4.setText("");
 				btnP17n2.setEnabled(false);
@@ -226,7 +201,6 @@ public class DeklarationPanel extends MCAPanel {
 				txtP17n1.setEnabled(true);
 				comboBox_2.setEnabled(true);
 				comboBox_2.setSelectedIndex(0);
-//				txtP17n2.setEnabled(true);
 				txtP17n3.setEnabled(false);
 				txtP17n4.setEnabled(false);
 				lud.stop();
@@ -245,7 +219,6 @@ public class DeklarationPanel extends MCAPanel {
 		lblP17n1.setText(bundle.getString("p17n1"));
 		lblP17n2.setText(bundle.getString("p17n2"));
 		lblP17n3.setText(bundle.getString("p01n4"));
-//		lblP17n4.setText(bundle.getString("mp16"));
 		btnP17n1.setText(bundle.getString("mp17e"));
 		lblP17n5.setText(bundle.getString("mp14"));
 		lblP17n6.setText(bundle.getString("p02n4"));

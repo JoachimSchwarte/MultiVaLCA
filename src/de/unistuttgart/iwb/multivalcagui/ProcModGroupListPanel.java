@@ -21,7 +21,6 @@ import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
-//import de.unistuttgart.iwb.multivalca.SubSystemGroup;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
@@ -60,7 +59,7 @@ public class ProcModGroupListPanel extends MCAPanel{
 		pmTable.setModel(pmTableModel);
 		TableColumnModel tcm = pmTable.getColumnModel();
 
-		tcm.getColumn(0).setHeaderValue(bundle.getString("mp122"));
+		tcm.getColumn(0).setHeaderValue(bundle.getString("p06n1"));
 		tcm.getColumn(1).setHeaderValue(bundle.getString("mp11"));
 		tcm.getColumn(2).setHeaderValue(bundle.getString("p01n3"));
 		tcm.getColumn(3).setHeaderValue(bundle.getString("p02n4"));
@@ -70,10 +69,19 @@ public class ProcModGroupListPanel extends MCAPanel{
 		instanceListe.putAll(FlowValueMapGroup.getAllInstances());
 		for(String ss : ssListe) {
 			if (FVMGroupType.ProcessModule.equals(FlowValueMapGroup.getInstance(ss).getType())) {
-
 				FlowValueMaps akSs = (FlowValueMaps)instanceListe.get(ss);
+				LinkedHashSet<String> pml = new LinkedHashSet<String>();
+				for (FlowValueMaps fvml : FlowValueMapGroup.getInstance(akSs.getName()).getFVMList()) {
+					 pml.add(fvml.getName());
+				}
+				String[] str = new String[pml.size()];
+				pml.toArray(str);
+				String str1 = str[0];
+				for (int i = 1; i < str.length; i++) {
+					  str1 = str1 + ", " + str[i];
+					}	
 
-				pmTableModel.addRow(new Object[] {ss, "", "", ""});
+				pmTableModel.addRow(new Object[] {ss + " (" + str1 + ")", "", "", ""});
 				for(Flow pf : akSs.getElementarflussvektor().keySet()){
 					for (ValueType vt : akSs.getElementarflussvektor().get(pf).keySet()) {
 						pmTableModel.addRow(new Object[] {"", pf.getName(), 

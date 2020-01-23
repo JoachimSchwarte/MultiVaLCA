@@ -176,11 +176,11 @@ public class ProcModGroupPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
-		lbl01.setText(bundle.getString("p20n1"));
-		lbl02.setText(bundle.getString("p20n2"));
-		lbl03.setText(bundle.getString("p20n3"));
+		lbl01.setText(bundle.getString("p02n7"));
+		lbl02.setText(bundle.getString("p02n8"));
+		lbl03.setText(bundle.getString("p02n9"));
 		lbl04.setText(bundle.getString("p02n4"));
-		lbl05.setText(bundle.getString("p20n4"));
+		lbl05.setText(bundle.getString("p02n10"));
 		lbl06.setText(bundle.getString("stat01"));
 		btn01.setText(bundle.getString("bt16"));
 		btn02.setText(bundle.getString("bt17"));

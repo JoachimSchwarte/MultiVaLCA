@@ -27,10 +27,14 @@ public class ObjectTypeStringMap {
 		LinkedHashMap<ObjectType, String> r = new LinkedHashMap<ObjectType, String>();
 		r.put(ObjectType.ProcessModule, bundle.getString("mp12"));
 		r.put(ObjectType.ProcessModuleGroup, bundle.getString("mp122"));
-		r.put(ObjectType.SubSystemGroup, bundle.getString("mp23"));
 		r.put(ObjectType.ProductSystem, bundle.getString("mp13"));
+		r.put(ObjectType.ProductSystemGroup, bundle.getString("mp132"));
 		r.put(ObjectType.ProductDeclaration, bundle.getString("mp17"));	
-		r.put(ObjectType.ProductDeclarationGroup, bundle.getString("mp22"));
+		r.put(ObjectType.ProductDeclarationGroup, bundle.getString("mp172"));
+		r.put(ObjectType.Component, bundle.getString("mp18"));
+		r.put(ObjectType.ComponentGroup, bundle.getString("mp182"));
+		r.put(ObjectType.Composition, bundle.getString("mp19"));
+		r.put(ObjectType.CompositionGroup, bundle.getString("mp192"));
 		return r;
 	}
 }

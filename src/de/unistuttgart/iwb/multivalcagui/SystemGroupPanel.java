@@ -30,7 +30,7 @@ import net.miginfocom.swing.MigLayout;
  * @version 0.553
  */
 
-public class SubSystemGroupPanel extends MCAPanel{
+public class SystemGroupPanel extends MCAPanel{
 	
 	private JTextField txt01 = new JTextField();	// Eingabefeld Gruppenname
 	private JTextField txt02 = new JTextField();	// Eingabefeld Flussname
@@ -54,7 +54,7 @@ public class SubSystemGroupPanel extends MCAPanel{
 	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lbl04, txt03);
 	private LabeledInputDialog nameHMdi = new LabeledInputDialog(lbl05, txt04);
 
-	protected SubSystemGroupPanel(String key) {
+	protected SystemGroupPanel(String key) {
 		super(key);
 		initUI();
 	}
@@ -107,7 +107,7 @@ public class SubSystemGroupPanel extends MCAPanel{
 				String name = nameNGdi.getTextNew(testMap1, lbl06, bundle.getString("stat02"), bundle.getString("stat03"));	
 	
 				if (inputOK && !"".equals(flname) && !"".equals(name)) {
-					FlowValueMapGroup.createInstance(name, FVMGroupType.Subsystem, Flow.getInstance(flname), menge);
+					FlowValueMapGroup.createInstance(name, FVMGroupType.ProductSystem, Flow.getInstance(flname), menge);
 					txt01.setEnabled(false);
 					txt02.setEnabled(false);
 					txt03.setEnabled(false);
@@ -177,14 +177,14 @@ public class SubSystemGroupPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
-		lbl01.setText(bundle.getString("p20n11"));
-		lbl02.setText(bundle.getString("p20n2"));
-		lbl03.setText(bundle.getString("p20n3"));
+		lbl01.setText(bundle.getString("p03n7"));
+		lbl02.setText(bundle.getString("p02n8"));
+		lbl03.setText(bundle.getString("p02n9"));
 		lbl04.setText(bundle.getString("p02n4"));
-		lbl05.setText(bundle.getString("p20n41"));
+		lbl05.setText(bundle.getString("p03n8"));
 		lbl06.setText(bundle.getString("stat01"));
 		btn01.setText(bundle.getString("bt16"));
-		btn02.setText(bundle.getString("bt171"));
+		btn02.setText(bundle.getString("bt18"));
 		btn03.setText(bundle.getString("bt04"));
 		
 	}

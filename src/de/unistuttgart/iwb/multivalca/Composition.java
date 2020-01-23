@@ -5,7 +5,6 @@
 package de.unistuttgart.iwb.multivalca;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 
 /**
  * Diese Klasse dient zur Erzeugung und Nutzung von Objekten des Typs
@@ -17,33 +16,20 @@ import java.util.LinkedList;
 
 public class Composition extends MCAObject implements ImpactValueMaps {
 
-	// Klassenvariable:
-
-	private static LinkedHashMap<String, Composition> allInstances = new LinkedHashMap<String, Composition>();
-
 	// Instanzvariablen:
 
-	private LinkedList<ImpactValueMaps> zusammensetzung = new LinkedList<ImpactValueMaps>();
+	private LinkedHashMap<ImpactValueMaps,Integer> zusammensetzung = new LinkedHashMap<ImpactValueMaps,Integer>();
 
 	// Konstruktor:
 
 	private Composition(String name) {
 		super(name);
-		allInstances.put(name, this);
 	}
 
 	// Methoden:
 
 	/**
-	 * Löscht alle Klassenvariablen
-	 */
-
-	public static void clear() {
-		allInstances.clear();
-	}
-
-	/**
-	 * Überprüft, ob bereits eine Composition des genannten Namens existiert.
+	 * Überprüft, ob bereits eine Komposition des genannten Namens existiert.
 	 * 
 	 * @param name
 	 *            ist der zu prüfende Name
@@ -51,71 +37,84 @@ public class Composition extends MCAObject implements ImpactValueMaps {
 	 */
 
 	public static boolean containsName(String name) {
-		return allInstances.containsKey(name);
+		return getAllInstances().containsKey(name);
 	}
 
 	/**
-	 * @return ... alle vorhandenen Compositionen
+	 * @return ... alle vorhandenen Kompositionen
 	 */
 
 	public static LinkedHashMap<String, Composition> getAllInstances() {
-		return allInstances;
+		LinkedHashMap<String,Composition> a = new LinkedHashMap<String,Composition>();
+		for (String s : MCAObject.getAllNames(Composition.class)) {
+			a.put(s, (Composition)MCAObject.getAllInstances(Composition.class).get(s));			
+		}
+		return a;
 	}
 
 	/**
-	 * Liefert eine Composition
-	 * 
+	 * Gibt eine bereits vorhandene Komposition zurück.
 	 * @param name
-	 *            Name der Composition
-	 * @return ... die gesuchte Composition
+	 * Name der gesuchten Komposition
+	 * @return
+	 * ... die gesuchte Komposition
 	 */
 
-	public static Composition getInstance(String name) {
-		return allInstances.get(name);
+	public static Composition getInstance(String name) { 
+		return getAllInstances().get(name);
 	}
 
 	/**
-	 * Die instance-Methode erzeugt unter Verwendung des privaten Konstruktors eine
-	 * neue Composition oder gibt eine bereits existierende Composition zurück.
-	 * 
+	 * Erzeugt eine neue Komposition
 	 * @param name
-	 *            ist der Name der Composition.
-	 * @return ... neue oder bereits zuvor existierende Composition
+	 * Name der Komposition 
+	 * @return
+	 * ... die neue Komposition
 	 */
 
 	public static Composition instance(String name) {
-		if (!allInstances.containsKey(name)) {
-			new Composition(name);
-		}
-		return allInstances.get(name);
+		if (!getAllInstances().containsKey(name)) {
+			new Composition(name);	
+		} 
+		return getAllInstances().get(name);
 	}
 
 	/**
-	 * Ergänzt die Composition um eine weitere Komponente.
+	 * Ergänzt die Komposition um eine weitere Komponente.
 	 * 
 	 * @param teilprodukt
 	 *            ... ist die zu ergänzende Komponente. Dies kann ein beliebiges
 	 *            Objekt einer Klasse, die das Interface ImpactValueMaps
 	 *            implementiert, sein.
+	 * @param anzahl
+	 * 	...ist die Anzahl der hinzuzufügenden Komponenten            
 	 */
 
-	public void addKomponente(ImpactValueMaps teilprodukt) {
-		zusammensetzung.add(teilprodukt);
+	public void addKomponente(ImpactValueMaps teilprodukt, Integer anzahl) {
+		if(!getZusammensetzung().containsKey(teilprodukt)) {
+			zusammensetzung.put(teilprodukt, anzahl);			
+		} else  {
+			zusammensetzung.put(teilprodukt, zusammensetzung.get(teilprodukt)+anzahl);
+		}
 	}
 
 	/**
-	 * @return ... die Anzahl der in der Composition enthaltenden Komponenten
+	 * @return ... die Anzahl der in der Komposition enthaltenden Komponenten
 	 */
 
 	public Integer getKompAnz() {
-		return zusammensetzung.size();
+		Integer size = 0;
+		for(ImpactValueMaps tp : zusammensetzung.keySet()) {
+			size = size+zusammensetzung.get(tp);
+		}
+		return size;
 	}
-	
+
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap() {
 		return null;
 	}
-	
+
 	/**
 	 * Liefert den Wirkungsvektor der Komposition für
 	 * die relevante Bewertungsmethode
@@ -131,30 +130,25 @@ public class Composition extends MCAObject implements ImpactValueMaps {
 		for (String wkName : bm.categoryList().keySet()) {
 			ImpactCategory wk = bm.categoryList().get(wkName);
 			LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
-			for (ValueType vt : values.keySet()) {
-				values.put(vt, 0.);
-			}
-			wv.put(wk, values);
-		}
-		for (ImpactValueMaps wvKomponente : zusammensetzung) {
-			for (ImpactCategory kategorie : wvKomponente.getImpactValueMap(bm).keySet()) {
-				LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+			values.put(ValueType.MeanValue, 0.0);
+			values.put(ValueType.LowerBound, 0.0);
+			values.put(ValueType.UpperBound, 0.0);
+			for (ImpactValueMaps wvKomponente : zusammensetzung.keySet()) {
 				for (ValueType vt : values.keySet()) {
-					values.put(vt,
-							wv.get(kategorie).get(vt) + wvKomponente.getImpactValueMap(bm).get(kategorie).get(vt));
+					values.put(vt, values.get(vt)+wvKomponente.getImpactValueMap(bm).get(wk).get(vt)*zusammensetzung.get(wvKomponente));
 				}
-				wv.put(kategorie, values);
-			}
+			}	
+			wv.put(wk, values);
 		}
 		return wv;
 	}
 
 	/**
-	 * @return ... die Liste der Bestandteile, aus denen sich die Composition
+	 * @return ... die Liste der Bestandteile, aus denen sich die Komposition
 	 *         zusammensetzt
 	 */
 
-	public LinkedList<ImpactValueMaps> getZusammensetzung() {
+	public LinkedHashMap<ImpactValueMaps,Integer> getZusammensetzung() {
 		return zusammensetzung;
 	}
 

@@ -63,6 +63,7 @@ class XMLExportAction extends AbstractAction {
             writeProductDeclarations(document, root);
             writeImpactValueMapGroups(document, root);
             writeComponents(document, root);
+            writeCompositions(document, root);
             
             JFileChooser chooser = new JFileChooser();
 	        FileFilter filter = new FileNameExtensionFilter("XML-Dateien (*.xml)", "xml");
@@ -392,6 +393,9 @@ class XMLExportAction extends AbstractAction {
         	Element name = document.createElement("Component-Name");
         	com1.appendChild(name);
         	name.appendChild(document.createTextNode(comName));
+        	Element unit = document.createElement("Component-Unit");
+        	com1.appendChild(unit);
+        	unit.appendChild(document.createTextNode(thisCom.getEinheit().toString()));
         	Element referenz = document.createElement("Component-Reference");
         	com1.appendChild(referenz);
         	referenz.appendChild(document.createTextNode(thisCom.getKomponente().getName().toString()));
@@ -404,6 +408,35 @@ class XMLExportAction extends AbstractAction {
         	Element uv = document.createElement("ComRef-UpperBound");
         	com1.appendChild(uv);
         	uv.appendChild(document.createTextNode(thisCom.getValues().get(ValueType.UpperBound).toString()));
+        }
+		
+	}
+	
+	private void writeCompositions(Document document, Element root) {
+        Element alleCompositions = document.createElement("Compositions");
+        root.appendChild(alleCompositions);
+        
+        for (String comName : Composition.getAllInstances().keySet()) {
+        	Composition thisCom = Composition.getAllInstances().get(comName);
+        	Element com1 = document.createElement("Composition");
+        	alleCompositions.appendChild(com1);
+        	Element name = document.createElement("Composition-Name");
+        	com1.appendChild(name);
+        	name.appendChild(document.createTextNode(comName));
+        	Element elementlist = document.createElement("Composition-Elements");
+			com1.appendChild(elementlist);
+			for (ImpactValueMaps ivm  : thisCom.getZusammensetzung().keySet()) {
+				String ivmname = ivm.getName();
+				String ivmmenge = thisCom.getZusammensetzung().get(ivm).toString();				
+				Element element = document.createElement("Composition-Element");
+				elementlist.appendChild(element);
+				Element ename = document.createElement("Element-Name");
+				element.appendChild(ename);
+				ename.appendChild(document.createTextNode(ivmname));
+				Element emenge = document.createElement("Element-Number");
+				element.appendChild(emenge);
+				emenge.appendChild(document.createTextNode(ivmmenge));
+			}	
         }
 		
 	}

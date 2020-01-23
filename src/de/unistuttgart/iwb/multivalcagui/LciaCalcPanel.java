@@ -28,6 +28,8 @@ import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
+import de.unistuttgart.iwb.multivalca.Component;
+import de.unistuttgart.iwb.multivalca.Composition;
 import de.unistuttgart.iwb.multivalca.FVMGroupType;
 import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
 import de.unistuttgart.iwb.multivalca.IVMGroupType;
@@ -108,7 +110,7 @@ public class LciaCalcPanel extends MCAPanel {
 					}
 				}
 				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp122")) ||
-						cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp23"))) {
+						cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp132"))) {
 					FlowValueMapGroup akObj = FlowValueMapGroup.getInstance(cobP16n2.getSelectedItem().toString());
 					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
 					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {
@@ -135,8 +137,28 @@ public class LciaCalcPanel extends MCAPanel {
 								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});							
 					}
 				}
-				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp22"))) {
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp172")) ||
+						cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp182")) ||
+								cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp192"))) {
 					ImpactValueMapGroup akObj = ImpactValueMapGroup.getInstance(cobP16n2.getSelectedItem().toString());
+					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
+					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {					
+						waTableModel.addRow(new Object[] {wName.getName(), 
+								wName.getEinheit().getName(),
+								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});							
+					}
+				}
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp18"))) {
+					Component akObj = Component.getInstance(cobP16n2.getSelectedItem().toString());
+					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
+					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {					
+						waTableModel.addRow(new Object[] {wName.getName(), 
+								wName.getEinheit().getName(),
+								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});							
+					}
+				}
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp19"))) {
+					Composition akObj = Composition.getInstance(cobP16n2.getSelectedItem().toString());
 					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
 					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {					
 						waTableModel.addRow(new Object[] {wName.getName(), 
@@ -177,10 +199,10 @@ public class LciaCalcPanel extends MCAPanel {
 					}
 					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
 				}
-				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp23"))) {
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp132"))) {
 					Vector<String> nameVektor = new Vector<String>();
 					for (String obName : FlowValueMapGroup.getAllInstances().keySet()) {
-						if (FVMGroupType.Subsystem.equals(FlowValueMapGroup.getInstance(obName).getType())) {
+						if (FVMGroupType.ProductSystem.equals(FlowValueMapGroup.getInstance(obName).getType())) {
 							nameVektor.addElement(obName);
 						}						
 					}
@@ -200,10 +222,40 @@ public class LciaCalcPanel extends MCAPanel {
 					}
 					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
 				}
-				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp22"))) {
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp172"))) {
 					Vector<String> nameVektor = new Vector<String>();
 					for (String obName : ImpactValueMapGroup.getAllInstances().keySet()) {
 						if (IVMGroupType.ProductDeclaration.equals(ImpactValueMapGroup.getInstance(obName).getType()))
+						nameVektor.addElement(obName);
+					}
+					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
+				}
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp182"))) {
+					Vector<String> nameVektor = new Vector<String>();
+					for (String obName : ImpactValueMapGroup.getAllInstances().keySet()) {
+						if (IVMGroupType.Component.equals(ImpactValueMapGroup.getInstance(obName).getType()))
+						nameVektor.addElement(obName);
+					}
+					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
+				}
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp192"))) {
+					Vector<String> nameVektor = new Vector<String>();
+					for (String obName : ImpactValueMapGroup.getAllInstances().keySet()) {
+						if (IVMGroupType.Composition.equals(ImpactValueMapGroup.getInstance(obName).getType()))
+						nameVektor.addElement(obName);
+					}
+					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
+				}
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp18"))) {
+					Vector<String> nameVektor = new Vector<String>();
+					for (String obName : Component.getAllInstances().keySet()) {
+						nameVektor.addElement(obName);
+					}
+					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));
+				}
+				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp19"))) {
+					Vector<String> nameVektor = new Vector<String>();
+					for (String obName : Composition.getAllInstances().keySet()) {
 						nameVektor.addElement(obName);
 					}
 					cobP16n2.setModel(new DefaultComboBoxModel<String>(nameVektor));

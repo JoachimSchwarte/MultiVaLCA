@@ -51,7 +51,7 @@ public class ProductSystemListPanel extends MCAPanel {
 		Locale locale = MultiVaLCA.LANGUAGES.get(l);
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-		lblP08n1.setText(bundle.getString("mp43e"));
+		lblP08n1.setText(bundle.getString("mp431e"));
 		psTableModel.setRowCount(0);
 		psTable.setModel(psTableModel);
 		TableColumnModel tcm = psTable.getColumnModel();
@@ -72,8 +72,8 @@ public class ProductSystemListPanel extends MCAPanel {
 					if (FVMGroupType.ProcessModule.equals(FlowValueMapGroup.getInstance(mni).getType())) {
 						psTableModel.addRow(new Object[] {"",bundle.getString("mp122"), mni});
 					}
-					if (FVMGroupType.Subsystem.equals(FlowValueMapGroup.getInstance(mni).getType())) {
-						psTableModel.addRow(new Object[] {"",bundle.getString("mp23"), mni});
+					if (FVMGroupType.ProductSystem.equals(FlowValueMapGroup.getInstance(mni).getType())) {
+						psTableModel.addRow(new Object[] {"",bundle.getString("p08n5"), mni});
 					}
 				}				
 			}

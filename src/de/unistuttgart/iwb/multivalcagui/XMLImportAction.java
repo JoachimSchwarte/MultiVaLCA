@@ -45,24 +45,24 @@ class XMLImportAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-        // JFileChooser-Objekt erstellen
-        JFileChooser chooser = new JFileChooser();
-        FileFilter filter = new FileNameExtensionFilter("XML-Dateien (*.xml)", "xml");
-        chooser.setFileFilter(filter);
-        
-        // Dialog zum Laden von Dateien anzeigen
-        int rueckgabeWert = chooser.showOpenDialog(null);
-        if(rueckgabeWert == JFileChooser.APPROVE_OPTION) {
-        	File fileInput = chooser.getSelectedFile();
-        	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        	try {
+		// JFileChooser-Objekt erstellen
+		JFileChooser chooser = new JFileChooser();
+		FileFilter filter = new FileNameExtensionFilter("XML-Dateien (*.xml)", "xml");
+		chooser.setFileFilter(filter);
+
+		// Dialog zum Laden von Dateien anzeigen
+		int rueckgabeWert = chooser.showOpenDialog(null);
+		if(rueckgabeWert == JFileChooser.APPROVE_OPTION) {
+			File fileInput = chooser.getSelectedFile();
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			try {
 				DocumentBuilder db = dbf.newDocumentBuilder();
 				try {
 					Document dom = db.parse(fileInput);
 					Element docEle = dom.getDocumentElement();	
-					
+
 					MCAObject.clear();
-					
+
 					createFlows(docEle);
 					createProcessModules(docEle);
 					createFlowValueMapGroups(docEle);
@@ -72,12 +72,16 @@ class XMLImportAction extends AbstractAction {
 					createLCIAMethods(docEle);
 					createProductDeclarations(docEle);
 					createImpactValueMapGroups(docEle);
+					createComponents(docEle);
+					createCompositions(docEle);
 					fillProcessModules(docEle);
 					fillFlowValueMapGroups(docEle);
 					fillProductSystems(docEle);
 					fillProductDeclarations(docEle);
 					fillImpactValueMapGroups(docEle);
-				
+//					fillComponents(docEle);
+					fillCompositions(docEle);
+
 				} catch (SAXException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -86,7 +90,7 @@ class XMLImportAction extends AbstractAction {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
-        }     
+		}     
 	}
 
 	private void createFlows(Element docEle) {
@@ -112,7 +116,7 @@ class XMLImportAction extends AbstractAction {
 			Flow.instance(flussname, ft, fe);
 		}	
 	}
-	
+
 	private void createProcessModules(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProcessModule");
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -126,7 +130,7 @@ class XMLImportAction extends AbstractAction {
 			ProcessModule.instance(pmname);
 		}
 	}	
-	
+
 	private void fillProcessModules(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProcessModule");
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -189,7 +193,7 @@ class XMLImportAction extends AbstractAction {
 			}
 		}
 	}
-	
+
 	private void fillPMwithPFV(NodeList nlc2, LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pmfv) {
 		String fvename = "";	
 		String fvemenge = "";
@@ -243,11 +247,11 @@ class XMLImportAction extends AbstractAction {
 				if (nlc.item(j).getNodeName().equals("RelevantFlowValue")) {
 					rfvalue = nlc.item(j).getTextContent();
 				}
-				
+
 			}
 			FlowValueMapGroup.createInstance(pmgname, FVMGroupType.ProcessModule, Flow.getInstance(rfname), Double.parseDouble(rfvalue));						
 		}
-		
+
 		NodeList nl1 = docEle.getElementsByTagName("FlowValueMapGroup");
 		for (int i = 0; i < nl1.getLength(); i++) {
 			NodeList nlc = nl1.item(i).getChildNodes();
@@ -268,12 +272,12 @@ class XMLImportAction extends AbstractAction {
 				if (nlc.item(j).getNodeName().equals("RelevantFlowValue")) {
 					rfvalue = nlc.item(j).getTextContent();
 				}
-				
+
 			}
 			FlowValueMapGroup.createInstance(fvmgname, FVMGroupType.valueOf(fvmgtype), Flow.getInstance(rfname), Double.parseDouble(rfvalue));						
 		}
 	}
-	
+
 	private void fillFlowValueMapGroups(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProcessModuleGroup");
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -297,14 +301,14 @@ class XMLImportAction extends AbstractAction {
 							}										
 						}
 					}
-					
+
 				}
 			}
 			for (String mi : mnl) {
 				FlowValueMapGroup.getAllInstances().get(pmgname).addFlowValueMap(ProcessModule.getAllInstances().get(mi));
 			}					
 		}	
-		
+
 		NodeList nl1 = docEle.getElementsByTagName("FlowValueMapGroup");
 		for (int i = 0; i < nl1.getLength(); i++) {
 			NodeList nlc = nl1.item(i).getChildNodes();
@@ -327,7 +331,7 @@ class XMLImportAction extends AbstractAction {
 							}										
 						}
 					}
-					
+
 				}
 			}
 			for (String mi : mnl) {
@@ -345,7 +349,7 @@ class XMLImportAction extends AbstractAction {
 			}					
 		}	
 	}
-	
+
 	private void createProductSystems(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProductSystem");
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -361,7 +365,7 @@ class XMLImportAction extends AbstractAction {
 			ProductSystem.instance(psname, bv, vuk);																	
 		}
 	}
-	
+
 	private void fillProductSystems(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProductSystem");
 		LinkedHashMap<String, LinkedList<String>> mnls = new LinkedHashMap<String, LinkedList<String>>();
@@ -409,7 +413,7 @@ class XMLImportAction extends AbstractAction {
 			}
 		}	
 	}
-	
+
 	private void fillPSwithModules(NodeList nlc2, LinkedList<String> mnl) {
 		for (int k = 0; k < nlc2.getLength(); k++) {
 			if (nlc2.item(k).getNodeName().equals("PS-Module")) {
@@ -476,7 +480,7 @@ class XMLImportAction extends AbstractAction {
 			ImpactCategory.instance(catname, indi);
 		}
 	}
-	
+
 	private void createCFactors(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("CFactor");
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -518,7 +522,7 @@ class XMLImportAction extends AbstractAction {
 			CharacFactor.setUpperBound(cfname, obv);
 		}
 	}
-	
+
 	private void createLCIAMethods(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("LCIAMethod");
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -550,14 +554,14 @@ class XMLImportAction extends AbstractAction {
 			}					
 		}
 	}
-	
+
 	private void createProductDeclarations(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProductDeclaration");
 		for (int i = 0; i < nl.getLength(); i++) {
 			NodeList nlc = nl.item(i).getChildNodes();
 			String nameProd = "";
 			String einheit = "";
-//			String nameLCIA = "";
+			//			String nameLCIA = "";
 			for (int j = 0; j < nlc.getLength(); j++) {
 				if (nlc.item(j).getNodeName().equals("PD-Name")) {
 					nameProd = nlc.item(j).getTextContent();
@@ -565,17 +569,17 @@ class XMLImportAction extends AbstractAction {
 				if (nlc.item(j).getNodeName().equals("PD-Unit")) {
 					einheit = nlc.item(j).getTextContent();
 				}
-//				if (nlc.item(j).getNodeName().equals("PD-Method")) {
-//					nameLCIA = nlc.item(j).getTextContent();
-//				}						
+				//				if (nlc.item(j).getNodeName().equals("PD-Method")) {
+				//					nameLCIA = nlc.item(j).getTextContent();
+				//				}						
 			}
 			FlowUnit einheit2 = FlowUnit.valueOf(einheit);
-//			LCIAMethod bm = LCIAMethod.instance(nameLCIA);
-//			ProductDeclaration.instance(nameProd, einheit2).setBM(bm);		
+			//			LCIAMethod bm = LCIAMethod.instance(nameLCIA);
+			//			ProductDeclaration.instance(nameProd, einheit2).setBM(bm);		
 			ProductDeclaration.instance(nameProd, einheit2);
 		}
 	}
-	
+
 	private void fillProductDeclarations(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProductDeclaration");
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -620,7 +624,7 @@ class XMLImportAction extends AbstractAction {
 			}					
 		}	
 	}
-	
+
 	private void createImpactValueMapGroups(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ImpactValueMapGroup");
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -634,18 +638,18 @@ class XMLImportAction extends AbstractAction {
 				if (nlc.item(j).getNodeName().equals("IVM-Type")) {
 					ivmgtype = nlc.item(j).getTextContent();
 				}
-					
+
 			}
 			ImpactValueMapGroup.instance(ivmgname, IVMGroupType.valueOf(ivmgtype));						
 		}
 	}
-	
+
 	private void fillImpactValueMapGroups(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ImpactValueMapGroup");
 		for (int i = 0; i < nl.getLength(); i++) {
 			NodeList nlc = nl.item(i).getChildNodes();
 			String pdgname = "";	
-			
+
 			LinkedList<String> dnl = new LinkedList<String>();
 			for (int j = 0; j < nlc.getLength(); j++) {
 				if (nlc.item(j).getNodeName().equals("IVMGroupName")) {
@@ -664,10 +668,10 @@ class XMLImportAction extends AbstractAction {
 							}										
 						}
 					}
-					
+
 				}
 			}
-			
+
 			for (String di : dnl) {
 				if (ProductDeclaration.containsName(di)) {
 					ImpactValueMapGroup.getInstance(pdgname).addImpactValueMap(ProductDeclaration.getInstance(di));
@@ -682,6 +686,116 @@ class XMLImportAction extends AbstractAction {
 				}
 			}					
 		}	
+	}
+
+	private void createComponents(Element docEle) {
+		NodeList nl = docEle.getElementsByTagName("Component");
+		for (int i = 0; i < nl.getLength(); i++) {
+			NodeList nlc = nl.item(i).getChildNodes();
+			String coname = "";
+			String coref = "";
+			String mMenge = "";
+			String lMenge = "";
+			String uMenge = "";
+			String unit ="";
+			for (int j = 0; j < nlc.getLength(); j++) {
+				if (nlc.item(j).getNodeName().equals("Component-Name")) {
+					coname = nlc.item(j).getTextContent();
+				}	
+				if (nlc.item(j).getNodeName().equals("Component-Unit")) {
+					unit = nlc.item(j).getTextContent();
+				}
+				if (nlc.item(j).getNodeName().equals("Component-Reference")) {
+					coref = nlc.item(j).getTextContent();
+				}	
+				if (nlc.item(j).getNodeName().equals("ComRef-MainValue")) {
+					mMenge = nlc.item(j).getTextContent();
+				}
+				if (nlc.item(j).getNodeName().equals("ComRef-LowerBound")) {
+					lMenge = nlc.item(j).getTextContent();
+				}
+				if (nlc.item(j).getNodeName().equals("ComRef-UpperBound")) {
+					uMenge = nlc.item(j).getTextContent();
+				}
+			}
+			Component.newInstance(coname,coref);
+			Component.getInstance(coname).setEinheit(FlowUnit.valueOf(unit));
+			LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+			values.put(ValueType.MeanValue, Double.parseDouble(mMenge));
+			values.put(ValueType.LowerBound, Double.parseDouble(lMenge));
+			values.put(ValueType.UpperBound, Double.parseDouble(uMenge));									
+			Component.getInstance(coname).setValues(values);
+		}
+	}
+
+	private void createCompositions(Element docEle) {
+		NodeList nl = docEle.getElementsByTagName("Composition");
+		for (int i = 0; i < nl.getLength(); i++) {
+			NodeList nlc = nl.item(i).getChildNodes();
+			String coname = "";
+			for (int j = 0; j < nlc.getLength(); j++) {
+				if (nlc.item(j).getNodeName().equals("Composition-Name")) {
+					coname = nlc.item(j).getTextContent();
+				}					
+			}
+			Composition.instance(coname);						
+		}
+	}
+
+	private void fillCompositions(Element docEle) {
+		NodeList nl = docEle.getElementsByTagName("Composition");
+		for (int i = 0; i < nl.getLength(); i++) {
+			NodeList nlc = nl.item(i).getChildNodes();
+			String coname = "";				
+			LinkedHashMap<String, Integer> elements = new LinkedHashMap<String, Integer>();
+			for (int j = 0; j < nlc.getLength(); j++) {
+				if (nlc.item(j).getNodeName().equals("Composition-Name")) {
+					coname = nlc.item(j).getTextContent();
+				}			
+				if (nlc.item(j).getNodeName().equals("Composition-Elements")) {	
+					NodeList nlc2 = nlc.item(j).getChildNodes();
+					for (int k = 0; k < nlc2.getLength(); k++) {
+						if (nlc2.item(k).getNodeName().equals("Composition-Element")) {
+							NodeList nlc3 = nlc2.item(k).getChildNodes();
+							String elename = "";
+							Integer elenumber = 0;
+							for (int l = 0; l < nlc3.getLength(); l++) {
+								if (nlc3.item(l).getNodeName().equals("Element-Name")) {
+									elename = nlc3.item(l).getTextContent();
+								}
+								if (nlc3.item(l).getNodeName().equals("Element-Number")) {
+									try {
+										elenumber = Integer.parseInt(nlc3.item(l).getTextContent().toString());
+									} catch (NumberFormatException e){
+										elenumber = 0;
+									}
+								}									
+								
+							}	elements.put(elename, elenumber);									
+						}
+					}
+
+				}
+			}
+
+			for (String el : elements.keySet()) {
+				if (Component.containsName(el)) {
+					Composition.getInstance(coname).addKomponente((ImpactValueMaps)Component.getInstance(el), elements.get(el));
+				} else {
+					if (Composition.containsName(el)) {
+						Composition.getInstance(coname).addKomponente((ImpactValueMaps)Composition.getInstance(el), elements.get(el));
+					} else {
+						if (ImpactValueMapGroup.containsName(el)) {
+							Composition.getInstance(coname).addKomponente((ImpactValueMaps)ImpactValueMapGroup.getInstance(el), elements.get(el));									
+						} else {
+							if (ProductSystem.containsName(el)) {
+								Composition.getInstance(coname).addKomponente((ImpactValueMaps)ProductSystem.getInstance(el), elements.get(el));									
+							}
+						}
+					}
+				}					
+			}	
+		}
 	}
 }
 

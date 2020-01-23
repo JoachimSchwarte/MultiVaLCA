@@ -10,7 +10,7 @@ package de.unistuttgart.iwb.multivalca;
 
 public enum IVMGroupType {
 	ProductDeclaration,
-	Komponent,
-	SubKomposition
+	Component,
+	Composition
 
 }

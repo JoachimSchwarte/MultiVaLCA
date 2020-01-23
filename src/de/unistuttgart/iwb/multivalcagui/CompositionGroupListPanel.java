@@ -16,9 +16,11 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import de.unistuttgart.iwb.multivalca.Component;
+import de.unistuttgart.iwb.multivalca.Composition;
+import de.unistuttgart.iwb.multivalca.IVMGroupType;
+import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
+import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
-import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -26,14 +28,14 @@ import net.miginfocom.swing.MigLayout;
  * @version 0.536
  */
 
-public class ComponentListPanel extends MCAPanel{
+public class CompositionGroupListPanel extends MCAPanel{
 
 	private JLabel lblP21n1 = new JLabel();
 	private JTable pdTable 		= new JTable();
-	private DefaultTableModel pdTableModel 		= new DefaultTableModel(0,5);
+	private DefaultTableModel pdTableModel 		= new DefaultTableModel(0,2);
 
 
-	protected ComponentListPanel(String key) {
+	protected CompositionGroupListPanel(String key) {
 		super(key);
 		initUI();
 	}
@@ -52,30 +54,27 @@ public class ComponentListPanel extends MCAPanel{
 		Locale locale = MultiVaLCA.LANGUAGES.get(l);
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-		lblP21n1.setText(bundle.getString("mp481e"));
+		lblP21n1.setText(bundle.getString("mp492e"));
 		pdTableModel.setRowCount(0);
 		pdTable.setModel(pdTableModel);
 		TableColumnModel tcm = pdTable.getColumnModel();
 		tcm.getColumn(0).setHeaderValue(bundle.getString("p06n1"));
-		tcm.getColumn(1).setHeaderValue(bundle.getString("p01n4"));		
-		tcm.getColumn(2).setHeaderValue(bundle.getString("p18n3"));
-		tcm.getColumn(3).setHeaderValue(bundle.getString("p01n3"));
-		tcm.getColumn(4).setHeaderValue(bundle.getString("p02n4"));
+		tcm.getColumn(1).setHeaderValue(bundle.getString("mp19"));	
 
-		LinkedHashSet<String> kompListe = new LinkedHashSet<String>();
+		LinkedHashSet<String> imvgListe = new LinkedHashSet<String>();
 		LinkedHashMap<String, MCAObject> instanceListe = new LinkedHashMap<String, MCAObject>();
-		kompListe.addAll(Component.getAllInstances().keySet());
-		instanceListe.putAll(Component.getAllInstances());
+		imvgListe.addAll(ImpactValueMapGroup.getAllInstances().keySet());
+		instanceListe.putAll(ImpactValueMapGroup.getAllInstances());
 
-		for(String komp : kompListe) {		
-			Component co = (Component) instanceListe.get(komp);	
-			pdTableModel.addRow(new Object[] {co.getName(), co.getEinheit().toString(), co.getKomponente().getName()});
-			for (ValueType vt : co.getValues().keySet()) {
-				pdTableModel.addRow(new Object[] {"", "", "", 
-						ValueTypeStringMap.getFVTS(l).get(vt),
-						co.getValues().get(vt)});
-			}
-
-		}}	
+		for(String imvg : imvgListe) {
+			if (IVMGroupType.Composition.equals(ImpactValueMapGroup.getInstance(imvg).getType())) {			
+			ImpactValueMaps im = (ImpactValueMaps)instanceListe.get(imvg);	
+			pdTableModel.addRow(new Object[] {im.getName()});		
+			LinkedHashSet<ImpactValueMaps> kompList = ImpactValueMapGroup.getInstance(imvg).getIVMList();
+			for(ImpactValueMaps komp : kompList) {		
+				Composition co = Composition.getInstance(komp.getName());	
+				pdTableModel.addRow(new Object[] {"", co.getName()});
+				
+			}}}}
 
 }

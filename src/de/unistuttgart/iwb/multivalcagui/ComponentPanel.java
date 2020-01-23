@@ -7,7 +7,10 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -16,6 +19,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.Component;
+import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.FlowUnit;
+import de.unistuttgart.iwb.multivalca.IVMGroupType;
+import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
+import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
@@ -54,7 +62,7 @@ public class ComponentPanel extends MCAPanel{
 		super(key);
 		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
 				"[20px][20px][20px][20px][20px][20px][20px][20px][20px]"
-				+ "[20px][20px][20px,grow]"));	
+						+ "[20px][20px][20px,grow]"));	
 		lblP18n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Integer pos=0;
 		add(lblP18n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");
@@ -73,24 +81,14 @@ public class ComponentPanel extends MCAPanel{
 		btnP18n1.setEnabled(true);
 		add(btnP18n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");		
 		pos = lud.draw(pos, this);
-/*		add(lblP18n5, "cell 1 5,grow");		
-		txtP18n4.setText("");
-		txtP18n4.setEnabled(false);
-		add(txtP18n4, "cell 2 5,grow");
-		txtP18n4.setColumns(10);
-		add(lblP18n6, "cell 1 6,grow");		
-		txtP18n5.setText("");
-		add(txtP18n5, "cell 2 6,grow");
-		txtP18n5.setColumns(10);
-		txtP18n5.setEnabled(false); */
 		btnP18n2.setEnabled(false); 
 		add(btnP18n2, "cell 1 "+(++pos).toString()+" 2 1,alignx center");
 		add(lblP18n7, "cell 0 "+(++pos).toString()+" 4 1,alignx center");
-		
+
 		button1();		
 		button2();	
 	}
-	
+
 	private void button1() {
 		btnP18n1.addActionListener(new ActionListener() {
 			@Override
@@ -99,6 +97,7 @@ public class ComponentPanel extends MCAPanel{
 				String refName = txtP18n2.getText();
 				String fmenge = txtP18n3.getText();
 				Double menge;
+				FlowUnit fu = null;
 				if ("".equals(comName)) {
 					lblP18n7.setText(bundle.getString("stat02"));
 					return;
@@ -114,7 +113,8 @@ public class ComponentPanel extends MCAPanel{
 					return;
 				}
 				if (!ProductSystem.getAllInstances().containsKey(refName) &&
-						!ProductDeclaration.getAllInstances().containsKey(refName)) {
+						!ProductDeclaration.getAllInstances().containsKey(refName) && !(
+							ImpactValueMapGroup.getAllInstances().containsKey(refName) && IVMGroupType.ProductDeclaration.equals(ImpactValueMapGroup.getInstance(refName).getType()))) {
 					lblP18n7.setText(bundle.getString("stat42"));
 					return;
 				}
@@ -128,20 +128,35 @@ public class ComponentPanel extends MCAPanel{
 					return;
 				}									
 				Component.newInstance(comName, refName);
+				
+				if (ProductSystem.getAllInstances().containsKey(refName)) {
+					LinkedHashMap<Flow, Double> ps = ProductSystem.getInstance(refName).getBedarfsvektor();
+					List<Flow> keyList = new ArrayList<Flow>(ps.keySet());
+					fu = Flow.getInstance(keyList.get(0).getName()).getEinheit();				
+				}
+				if(ProductDeclaration.getAllInstances().containsKey(refName)) {
+					fu = ProductDeclaration.getInstance(refName).getEinheit();					
+				}
+				if(ImpactValueMapGroup.getAllInstances().containsKey(refName) && IVMGroupType.ProductDeclaration.equals(ImpactValueMapGroup.getInstance(refName).getType())) {
+					LinkedHashSet<String> pdl = new LinkedHashSet<String>();
+					for (ImpactValueMaps ivml : ImpactValueMapGroup.getInstance(refName).getIVMList()) {
+						 pdl.add(ivml.getName());
+					}	
+					String[] str = new String[pdl.size()];
+					pdl.toArray(str);
+					fu = ProductDeclaration.getInstance(str[0]).getEinheit(); 
+				}				
+				Component.getInstance(comName).setEinheit(fu);				
 				txtP18n1.setEnabled(false);
 				txtP18n2.setEnabled(false);
 				txtP18n3.setEnabled(false);
 				btnP18n1.setEnabled(false);
 				lud.start(fmenge);
-/*				txtP18n4.setEnabled(true);
-				txtP18n5.setEnabled(true);
-				txtP18n4.setText(fmenge);
-				txtP18n5.setText(fmenge); */
 				btnP18n2.setEnabled(true);			
 			}		
 		});
 	}
-	
+
 	private void button2() {
 		btnP18n2.addActionListener(new ActionListener() {
 			@Override

@@ -10,6 +10,6 @@ package de.unistuttgart.iwb.multivalca;
 
 public enum FVMGroupType {
 	ProcessModule,
-	Subsystem
+	ProductSystem
 
 }

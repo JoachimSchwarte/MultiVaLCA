@@ -119,7 +119,7 @@ public class ProductSystemPanel extends MCAPanel{
 					if (FVMGroupType.ProcessModule.equals(FlowValueMapGroup.getInstance(fvmname).getType())) {
 						test1.add(fvmname);
 					}
-					if (FVMGroupType.Subsystem.equals(FlowValueMapGroup.getInstance(fvmname).getType())) {
+					if (FVMGroupType.ProductSystem.equals(FlowValueMapGroup.getInstance(fvmname).getType())) {
 						test2.add(fvmname);
 					}
 				}

@@ -21,6 +21,7 @@ import de.unistuttgart.iwb.multivalca.ImpactCategory;
 import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
 import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
+import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
@@ -33,7 +34,7 @@ public class DeklarationGroupListPanel extends MCAPanel{
 
 	private JLabel lblP20n1 = new JLabel();
 	private JTable pdTable 		= new JTable();
-	private DefaultTableModel pdTableModel 		= new DefaultTableModel(0,4);
+	private DefaultTableModel pdTableModel 		= new DefaultTableModel(0,5);
 
 	protected DeklarationGroupListPanel(String key) {
 		super(key);
@@ -60,15 +61,12 @@ public class DeklarationGroupListPanel extends MCAPanel{
 		pdTable.setModel(pdTableModel);
 		TableColumnModel tcm = pdTable.getColumnModel();
 		tcm.getColumn(0).setHeaderValue(bundle.getString("p06n1"));
-//		tcm.getColumn(1).setHeaderValue(bundle.getString("p01n4"));
+		tcm.getColumn(1).setHeaderValue(bundle.getString("p01n4"));		
+		tcm.getColumn(2).setHeaderValue(bundle.getString("mp14"));
+		tcm.getColumn(3).setHeaderValue(bundle.getString("p01n3"));
+		tcm.getColumn(4).setHeaderValue(bundle.getString("p02n4"));
 
-		
-		
-		tcm.getColumn(1).setHeaderValue(bundle.getString("mp14"));
-		tcm.getColumn(2).setHeaderValue(bundle.getString("p01n3"));
-		tcm.getColumn(3).setHeaderValue(bundle.getString("p02n4"));
-
-		pdTable.getColumnModel().getColumn(1).setPreferredWidth(110);
+		pdTable.getColumnModel().getColumn(2).setPreferredWidth(110);
 
 
 		LinkedHashSet<String> imvgListe = new LinkedHashSet<String>();
@@ -77,14 +75,23 @@ public class DeklarationGroupListPanel extends MCAPanel{
 		instanceListe.putAll(ImpactValueMapGroup.getAllInstances());
 
 		for(String imvg : imvgListe) {
-			if (IVMGroupType.ProductDeclaration.equals(ImpactValueMapGroup.getInstance(imvg).getType())) {
-			
-			ImpactValueMaps im = (ImpactValueMaps)instanceListe.get(imvg);			
-			pdTableModel.addRow(new Object[] {im.getName()});			
-
+			if (IVMGroupType.ProductDeclaration.equals(ImpactValueMapGroup.getInstance(imvg).getType())) {			
+			ImpactValueMaps im = (ImpactValueMaps)instanceListe.get(imvg);	
+			LinkedHashSet<String> pdl = new LinkedHashSet<String>();
+			for (ImpactValueMaps ivml : ImpactValueMapGroup.getInstance(im.getName()).getIVMList()) {
+				 pdl.add(ivml.getName());
+			}
+			String[] str = new String[pdl.size()];
+			pdl.toArray(str);
+			String str1 = str[0];
+			for (int i = 1; i < str.length; i++) {
+				  str1 = str1 + ", " + str[i];
+				}
+			String einheit = ProductDeclaration.getInstance(str[0]).getEinheit().toString(); 
+			pdTableModel.addRow(new Object[] {im.getName() + " (" + str1 + ")", einheit});		
 			for(ImpactCategory ic : im.getImpactValueMap().keySet()){
 				for (ValueType vt : im.getImpactValueMap().get(ic).keySet()) {
-					pdTableModel.addRow(new Object[] {"", ic.getName(), 
+					pdTableModel.addRow(new Object[] {"", "", ic.getName(), 
 							ValueTypeStringMap.getFVTS(l).get(vt),
 							im.getImpactValueMap().get(ic).get(vt)});
 				}

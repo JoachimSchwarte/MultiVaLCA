@@ -19,12 +19,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import de.unistuttgart.iwb.multivalca.FlowUnit;
+import de.unistuttgart.iwb.multivalca.Component;
 import de.unistuttgart.iwb.multivalca.IVMGroupType;
 import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
 import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
-import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -32,15 +31,15 @@ import net.miginfocom.swing.MigLayout;
  * @version 0.553
  */
 
-public class DeclarationGroupPanel extends MCAPanel{
+public class ComponentGroupPanel extends MCAPanel{
 
 	private JTextField txt01 = new JTextField();	// Eingabefeld Gruppenname
-	private JComboBox<String> cobP23n1 = new JComboBox<String>(); // Eingabefeld Produktdeklarationname
-	private JLabel lbl01 = new JLabel(); 			// "Neue Produktdeklarationsgruppe"
+	private JComboBox<String> cobP23n1 = new JComboBox<String>(); // Eingabefeld Komponentenname
+	private JLabel lbl01 = new JLabel(); 			// "Neue Komponentengruppe"
 	private JLabel lbl02 = new JLabel(); 			// "Name der Gruppe"
 	private JButton btn01 = new JButton(); 			// "neue Gruppe anlegen"
-	private JLabel lbl05 = new JLabel(); 			// "Name der hinzuzufügenden Porduktdeklaration"
-	private JButton btn02 = new JButton(); 			// "Modul zur Gruppe hinzufügen"
+	private JLabel lbl05 = new JLabel(); 			// "Name der hinzuzufügenden Komponente"
+	private JButton btn02 = new JButton(); 			// "Koponente zur Gruppe hinzufügen"
 	private JButton btn03 = new JButton(); 			// "fertig"
 	private JLabel lbl06 = new JLabel(); 			// Status
 
@@ -50,9 +49,8 @@ public class DeclarationGroupPanel extends MCAPanel{
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	private LabeledInputDialog nameNGdi = new LabeledInputDialog(lbl02, txt01);
 	private LabeledInputComboBox namePDi = new LabeledInputComboBox(lbl05, cobP23n1);
-	private FlowUnit fu;
 
-	protected DeclarationGroupPanel(String key) {
+	protected ComponentGroupPanel(String key) {
 		super(key);
 		initUI();
 	}
@@ -81,16 +79,16 @@ public class DeclarationGroupPanel extends MCAPanel{
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
-				testMap1.put(bundle.getString("stat46"), ImpactValueMapGroup.getAllInstances().keySet());
+				testMap1.put(bundle.getString("stat53"), ImpactValueMapGroup.getAllInstances().keySet());
 				String name = nameNGdi.getTextNew(testMap1, lbl06, bundle.getString("stat02"), bundle.getString("stat03"));					
 				if (!"".equals(name)) {
-					ImpactValueMapGroup.instance(name, IVMGroupType.ProductDeclaration);
+					ImpactValueMapGroup.instance(name, IVMGroupType.Component);
 					txt01.setEnabled(false);
 					btn01.setEnabled(false);
 					cobP23n1.setEnabled(true);
 					btn02.setEnabled(true);
 					lbl06.setText(bundle.getString("stat40") + ImpactValueMapGroup.getAllInstances().get(txt01.getText()).getIVMList().size()
-							+ bundle.getString("stat47"));
+							+ bundle.getString("stat54"));
 				}				
 			}			
 		});
@@ -105,33 +103,21 @@ public class DeclarationGroupPanel extends MCAPanel{
 					nameOk = false;
 					lbl06.setText(bundle.getString("stat02"));
 				} 
-				if (!ProductDeclaration.getAllInstances().containsKey(name)) {
-					lbl06.setText(bundle.getString("stat48"));
+				if (!Component.getAllInstances().containsKey(name)) {
+					lbl06.setText(bundle.getString("stat55"));
 					nameOk = false;
 				}
 				if (nameOk) {
 					ImpactValueMapGroup ivmGroup = ImpactValueMapGroup.getAllInstances().get(txt01.getText());
 					if ("".equals(ivmGroup.getType().toString())) {
-						ivmGroup.setType(IVMGroupType.ProductDeclaration);
+						ivmGroup.setType(IVMGroupType.Component);
 					}
-					if (fu == null) {
-						fu = ProductDeclaration.getInstance(name).getEinheit();
 						ivmGroup.addImpactValueMap((ImpactValueMaps) MCAObject.getAllInstances(MCAObject.getClass(name)).get(name));
 						lbl06.setText(bundle.getString("stat40") + ivmGroup.getIVMList().size()
-								+ bundle.getString("stat47"));
+								+ bundle.getString("stat54"));
 						btn03.setEnabled(true);
-						cobP23n1.setSelectedIndex(0);
-					}
-					if (fu == ProductDeclaration.getInstance(name).getEinheit()) {
-						ivmGroup.addImpactValueMap((ImpactValueMaps) MCAObject.getAllInstances(MCAObject.getClass(name)).get(name));
-						lbl06.setText(bundle.getString("stat40") + ivmGroup.getIVMList().size()
-								+ bundle.getString("stat47"));
-						btn03.setEnabled(true);
-						cobP23n1.setSelectedIndex(0);						
-					}
-					else {
-						lbl06.setText(bundle.getString("stat52"));
-					}
+						cobP23n1.setSelectedIndex(0);					
+					
 				}			
 			}
 		});
@@ -147,7 +133,6 @@ public class DeclarationGroupPanel extends MCAPanel{
 				btn02.setEnabled(false);
 				btn03.setEnabled(false);
 				lbl06.setText(bundle.getString("stat01"));
-				fu = null;
 
 			}
 		});
@@ -159,18 +144,17 @@ public class DeclarationGroupPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
-		lbl01.setText(bundle.getString("p17n3"));
+		lbl01.setText(bundle.getString("p18n4"));
 		lbl02.setText(bundle.getString("p02n8"));
-		lbl05.setText(bundle.getString("p17n4"));
+		lbl05.setText(bundle.getString("p18n5"));
 		lbl06.setText(bundle.getString("stat01"));
 		btn01.setText(bundle.getString("bt16"));
-		btn02.setText(bundle.getString("bt19"));
+		btn02.setText(bundle.getString("bt20"));
 		btn03.setText(bundle.getString("bt04"));
-		fu = null;
 
 		Vector<String> nameVektor = new Vector<String>();
 		nameVektor.addElement("");
-		for (String obName : ProductDeclaration.getAllInstances().keySet()) {
+		for (String obName : Component.getAllInstances().keySet()) {
 			nameVektor.addElement(obName);
 		}			
 		cobP23n1.setModel(new DefaultComboBoxModel<String>(nameVektor));

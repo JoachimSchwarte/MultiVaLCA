@@ -21,6 +21,7 @@ implements ImpactValueMaps {
 	
 	private ImpactValueMaps bezugsKomponente;
 	private LinkedHashMap<ValueType, Double> mengen = new LinkedHashMap<ValueType, Double>();
+	private FlowUnit einheit;
 	
 	// Konstruktor:
 
@@ -30,6 +31,12 @@ implements ImpactValueMaps {
 	}
 
 	// Methoden:
+
+	/**
+	 * Legt die Menge der Bezugskomponente fest.
+	 * @param values
+	 * die festzulegende Menge
+	 */
 	
 	public void setValues(LinkedHashMap<ValueType, Double> values) {
 		mengen.put(ValueType.MeanValue, values.get(ValueType.MeanValue));
@@ -37,12 +44,17 @@ implements ImpactValueMaps {
 		mengen.put(ValueType.UpperBound, values.get(ValueType.UpperBound));
 	}
 	
+	/**
+	 * @return
+	 * die Menge der Bezugskomponente
+	 */
+	
 	public LinkedHashMap<ValueType, Double> getValues() {
 		return mengen;
 	}
 
 	/**
-	 * Überprüft, ob bereits eine Component
+	 * Überprüft, ob bereits eine Komponente
 	 * des genannten Namens existiert.
 	 * @param name
 	 * ist der zu prüfende Name
@@ -56,7 +68,7 @@ implements ImpactValueMaps {
 	
 	/**
 	 * @return
-	 * ... alle vorhandenen Componentn
+	 * ... alle vorhandenen Komponenten
 	 */
 	
 	public static LinkedHashMap<String, Component> getAllInstances() {
@@ -68,11 +80,11 @@ implements ImpactValueMaps {
 	}
 	
 	/**
-	 * Gibt eine bereits vorhandene Component zurück.
+	 * Gibt eine bereits vorhandene Komponente zurück.
 	 * @param name
-	 * Name der gesuchten Component
+	 * Name der gesuchten Komponente
 	 * @return
-	 * ... die gesuchte Component
+	 * ... die gesuchte Komponente
 	 */
 	
 	public static Component getInstance(String name) { 
@@ -97,6 +109,9 @@ implements ImpactValueMaps {
 		}
 		if (ProductDeclaration.containsName(refName)) {
 			komponente = ProductDeclaration.getInstance(refName);
+		}
+		if (ImpactValueMapGroup.containsName(refName) && IVMGroupType.ProductDeclaration.equals(ImpactValueMapGroup.getInstance(refName).getType())) {
+			komponente = ImpactValueMapGroup.getInstance(refName);
 		}
 		if (!getAllInstances().containsKey(name)) {
 			new Component(name, komponente);	
@@ -131,30 +146,46 @@ implements ImpactValueMaps {
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
 		String kompoName = bezugsKomponente.getName();
-		if (ProcessModule.containsName(kompoName)) {
-			bezugsKomponente = ProcessModule.getInstance(kompoName);					
-		}
 		if (ProductSystem.containsName(kompoName)) {
 			bezugsKomponente = ProductSystem.getInstance(kompoName);					
 		}
 		if (ProductDeclaration.containsName(kompoName)) {
 			bezugsKomponente = ProductDeclaration.getInstance(kompoName);					
 		}
-		if (Component.containsName(kompoName)) {
-			bezugsKomponente = Component.getInstance(kompoName);					
-		}
-		if (Composition.containsName(kompoName)) {
-			bezugsKomponente = Composition.getInstance(kompoName);					
+		if (ImpactValueMapGroup.containsName(kompoName)) {
+			bezugsKomponente = ImpactValueMapGroup.getInstance(kompoName);					
 		}
 		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wvKomponente = bezugsKomponente.getImpactValueMap(bm);
 		for (String wkName : bm.categoryList().keySet()){
 			ImpactCategory wk = bm.categoryList().get(wkName);
 			LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+			values.put(ValueType.MeanValue, 0.0);
+			values.put(ValueType.LowerBound, 0.0);
+			values.put(ValueType.UpperBound, 0.0);
 			for (ValueType vt : values.keySet()) {
-				values.put(vt, values.get(vt)*mengen.get(ValueType.MeanValue));
+				values.put(vt, wvKomponente.get(wk).get(vt)*mengen.get(vt));
 			}
 			wvKomponente.put(wk, values);
 		}
 		return wvKomponente;
+	}
+	
+	/**
+	 * Legt die Einheit der Komponente fest.
+	 * @param einheit
+	 * die festzulegende Einheit
+	 */
+	
+	public void setEinheit(FlowUnit einheit) {
+		this.einheit = einheit;
+	}
+	
+	/**
+	 * @return
+	 * die Einheit der Komponente
+	 */
+	
+	public FlowUnit getEinheit() {
+		return einheit;
 	}
 }
