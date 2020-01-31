@@ -51,6 +51,7 @@ public class MultiVaLCA {
 	private final Action newDeclarationAction 	= new newDeclarationAction();
 	private final Action declarationListAction 	= new declarationListAction();
 	private final Action newComponentAction 	= new newComponentAction();
+	private final Action newCompositionAction 	= new newCompositionAction();
 	private final Action componentListAction	= new componentListAction();
 	private final Action compositionListAction = new compositionListAction();
 	private final Action prefsAction 			= new prefsAction();
@@ -74,18 +75,18 @@ public class MultiVaLCA {
 
 		Locale english = new Locale("en", "UK"); //Locale.UK
 		Locale deutsch = new Locale("de", "DE"); //Locale.DE
-		Locale französisch = new Locale ("fr", "FR");
-		Locale russisch = new Locale ("ru", "RU");
-		Locale portugiesisch = new Locale ("pt", "PT");
-		Locale kroatisch = new Locale ("hr", "HR");
+//		Locale französisch = new Locale ("fr", "FR");
+//		Locale russisch = new Locale ("ru", "RU");
+//		Locale portugiesisch = new Locale ("pt", "PT");
+//		Locale kroatisch = new Locale ("hr", "HR");
 		//...
 
 		LANGUAGES.put(Language.Deutsch, deutsch);
 		LANGUAGES.put(Language.English, english);  
-		LANGUAGES.put(Language.Francais, französisch);
-		LANGUAGES.put(Language.Português, portugiesisch);
-		LANGUAGES.put(Language.\u0440\u0443\u0441\u0441\u043A\u0438\u0439, russisch);
-		LANGUAGES.put(Language.Hrvatski, kroatisch);
+//		LANGUAGES.put(Language.Francais, französisch);
+//		LANGUAGES.put(Language.Português, portugiesisch);
+//		LANGUAGES.put(Language.\u0440\u0443\u0441\u0441\u043A\u0438\u0439, russisch);
+//		LANGUAGES.put(Language.Hrvatski, kroatisch);
 	}
 
 	private Locale locale = LANGUAGES.get(l);
@@ -240,6 +241,10 @@ public class MultiVaLCA {
 		// Panel 19; Neue Komposition
 		//
 		panel.add(new CompositionPanel("neuKtion"), "neuKtion");
+		//
+		// Panel 19b; Neue Kompositionsgruppe
+		//
+		panel.add(new CompositionGroupPanel("neuKtionGroup"), "neuKtionGroup");
 		//
 		// Panel 20; Liste der Deklarationen
 		//
@@ -505,9 +510,13 @@ public class MultiVaLCA {
 		};		
 		mntmGroupComponent.setAction(a34);							//Komponentengruppe
 		mntmComponent.add(mntmGroupComponent);
+		
+		JMenu mntmComposition= new JMenu();
+		mntmComposition.setAction(newCompositionAction);				//Neue Komposition
+		mnNew.add(mntmComposition);
 
-		JMenuItem mntmComposition = new JMenuItem();
-		Action a10 = new MCAAction(bundle.getString("mp19"), bundle.getString("mp19e"), "neuKtion") {
+		JMenuItem mntmSingleComposition = new JMenuItem();
+		Action a10 = new MCAAction(bundle.getString("mp191"), bundle.getString("mp191e"), "neuKtion") {
 			/**
 			 * 
 			 */
@@ -519,8 +528,24 @@ public class MultiVaLCA {
 				MCAPanel.get(getKey()).showMe();
 			}			
 		};
-		mntmComposition.setAction(a10);							//Komposition
-		mnNew.add(mntmComposition);	                                                                 
+		mntmSingleComposition.setAction(a10);							//Einzelne Komposition
+		mntmComposition.add(mntmSingleComposition);	  
+		
+		JMenuItem mntmGroupComposition = new JMenuItem();
+		Action a40 = new MCAAction(bundle.getString("mp192"), bundle.getString("mp192e"), "neuKtionGroup") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2733567351856475594L;
+
+			@Override
+			public void performAction(ActionEvent e) {
+				cl.show(panel, getKey());
+				MCAPanel.get(getKey()).showMe();
+			}			
+		};
+		mntmGroupComposition.setAction(a40);							//Kompositionsgruppe
+		mntmComposition.add(mntmGroupComposition);	
 
 		JMenu mnListe = new JMenu(bundle.getString("mp4"));
 		menuBar.add(mnListe);									//Liste
@@ -936,8 +961,16 @@ public class MultiVaLCA {
 				mntmGroupComponentlist.setToolTipText(bundle.getString("mp482e"));
 				mntmComposition.setText(bundle.getString("mp19"));
 				mntmComposition.setToolTipText(bundle.getString("mp19e"));
+				mntmSingleComposition.setText(bundle.getString("mp191"));
+				mntmSingleComposition.setToolTipText(bundle.getString("mp191e"));
+				mntmGroupComposition.setText(bundle.getString("mp192"));
+				mntmGroupComposition.setToolTipText(bundle.getString("mp192e"));
 				mntmCompositionlist.setText(bundle.getString("mp49"));
 				mntmCompositionlist.setToolTipText(bundle.getString("mp49e"));
+				mntmSingleCompositionlist.setText(bundle.getString("mp491"));
+				mntmSingleCompositionlist.setToolTipText(bundle.getString("mp491e"));
+				mntmGroupCompositionlist.setText(bundle.getString("mp492"));
+				mntmGroupCompositionlist.setToolTipText(bundle.getString("mp492e"));
 
 				mntmLCIAcalc.setText(bundle.getString("mp52"));
 				mntmLCIAcalc.setToolTipText(bundle.getString("mp52e"));
@@ -1087,6 +1120,25 @@ public class MultiVaLCA {
 
 			putValue(NAME, bundle.getString("mp48"));
 			putValue(SHORT_DESCRIPTION, bundle.getString("mp48e"));
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+		}
+	}
+	
+	private class newCompositionAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -9107084786986056131L;
+		public newCompositionAction() {
+			locale = LANGUAGES.get(l);
+			baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			bundle = ResourceBundle.getBundle(baseName, locale);
+
+			putValue(NAME, bundle.getString("mp19"));
+			putValue(SHORT_DESCRIPTION, bundle.getString("mp19e"));
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {

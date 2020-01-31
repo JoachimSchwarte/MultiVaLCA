@@ -12,8 +12,8 @@ package de.unistuttgart.iwb.multivalcagui;
 public enum Language {
 	Deutsch,
 	English,
-	Francais,
-	Português,
-	\u0440\u0443\u0441\u0441\u043A\u0438\u0439,
-	Hrvatski
+//	Francais,
+//	Português,
+//	\u0440\u0443\u0441\u0441\u043A\u0438\u0439,
+//	Hrvatski
 }
