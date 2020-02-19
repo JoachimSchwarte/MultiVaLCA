@@ -9,8 +9,8 @@ import java.util.LinkedHashSet;
  * Mit dieser Klasse können alle Objekte, welche das Interface "ImpactValueMaps" implementieren,
  * zu Gruppen zusammengefasst werden.
  * 
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.530
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class ImpactValueMapGroup extends MCAObject 

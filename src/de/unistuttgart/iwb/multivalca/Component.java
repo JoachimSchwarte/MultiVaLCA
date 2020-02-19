@@ -10,8 +10,8 @@ import java.util.LinkedHashMap;
  * Diese Klasse dient zur Erzeugung und Nutzung
  * von Objekten des Typs "Komponente".
  * 
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.540
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class Component extends MCAObject  

@@ -28,8 +28,8 @@ import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * @author HH, JS
- * @version 0.545
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class ProductSystemPanel extends MCAPanel{
@@ -277,7 +277,7 @@ public class ProductSystemPanel extends MCAPanel{
 						ProductSystem.getInstance(txtP03n1.getText()).addVuK(akFlow);
 						txtP03n5.setText("");
 						lblP03n7.setText(bundle.getString("stat19") + 
-								ProductSystem.getInstance(txtP03n1.getText()).getVorUndKoppelprodukte().size() + ("stat10"));										
+								ProductSystem.getInstance(txtP03n1.getText()).getVorUndKoppelprodukte().size() + bundle.getString("stat10"));										
 					} else {
 						lblP03n7.setText(bundle.getString("stat11"));
 					}					

@@ -29,8 +29,8 @@ import org.w3c.dom.Element;
 import de.unistuttgart.iwb.multivalca.*;
 
 /**
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.540
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 class XMLExportAction extends AbstractAction {

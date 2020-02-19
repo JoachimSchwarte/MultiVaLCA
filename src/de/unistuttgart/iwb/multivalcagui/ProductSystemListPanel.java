@@ -23,8 +23,8 @@ import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * @author HH, JS
- * @version 0.545
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class ProductSystemListPanel extends MCAPanel {

@@ -8,8 +8,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 /**
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.610
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class LabeledInputComboBox {

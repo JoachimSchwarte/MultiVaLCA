@@ -25,8 +25,8 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * @author HH, JS, JD
- * @version 0.536
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class ComponentGroupListPanel extends MCAPanel{

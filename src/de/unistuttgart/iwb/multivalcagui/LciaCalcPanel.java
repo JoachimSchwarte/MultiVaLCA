@@ -37,8 +37,8 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.535
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class LciaCalcPanel extends MCAPanel {

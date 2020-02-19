@@ -12,8 +12,8 @@ import java.util.LinkedHashMap;
  * berechnet werden kann, so dass diese Objekte als Komponenten 
  * innerhalb einer Produktkomposition auftreten können.
  * 
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.554
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public interface ImpactValueMaps {

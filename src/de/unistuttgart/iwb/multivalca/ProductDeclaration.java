@@ -11,8 +11,8 @@ import java.util.LinkedHashMap;
  * Diese Klasse dient zur Erzeugung und Nutzung
  * von Objekten des Typs "Produktdeklaration".
  * 
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.530
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class ProductDeclaration extends MCAObject 

@@ -15,8 +15,8 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * Mit dieser Klasse können alle Objekte, welche das Interface "FlowValueMaps" implementieren,
  * zu Gruppen zusammengefasst werden.
  * 
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.530
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class FlowValueMapGroup extends MCAObject  

@@ -28,8 +28,8 @@ import org.xml.sax.SAXException;
 import de.unistuttgart.iwb.multivalca.*;
 
 /**
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.536
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 class XMLImportAction extends AbstractAction {	

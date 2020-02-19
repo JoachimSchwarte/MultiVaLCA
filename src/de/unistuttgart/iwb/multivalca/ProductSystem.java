@@ -12,8 +12,8 @@ import de.unistuttgart.iwb.ivari.*;
  * Diese Klasse dient zur Erzeugung und Nutzung
  * von Objekten des Typs "Produktsystem".
  * 
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.548
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class ProductSystem extends MCAObject

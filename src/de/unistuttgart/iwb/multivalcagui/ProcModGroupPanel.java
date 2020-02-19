@@ -26,8 +26,8 @@ import de.unistuttgart.iwb.multivalca.FVMGroupType;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.553
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class ProcModGroupPanel extends MCAPanel{

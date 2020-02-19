@@ -14,8 +14,8 @@ import de.unistuttgart.iwb.multivalca.ObjectType;
  * Zusammenstellung der Textkonstanten für die
  * multilinguale Realisierung der Enumeration ObjectType
  * 
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.548
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.700
  */
 
 public class ObjectTypeStringMap {
