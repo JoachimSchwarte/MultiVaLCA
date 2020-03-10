@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -59,17 +61,23 @@ public class DeklarationPanel extends MCAPanel {
 	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lblP17n6, txtP17n4);
 	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP17n7, lblP17n8, txtP17n5, txtP17n6);
 
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
+	
 	protected DeklarationPanel(String key) {
 		super(key);
 		initUI();
 	}
 
 	private void initUI() {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));
-		lblP17n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));
+			
 		Integer pos=0;
-		add(lblP17n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		add(lblP17n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		pos = namePNdi.draw(pos, this);	
 		add(lblP17n3, "cell 1 "+(++pos).toString()+",grow");	
 		comboBox_2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
@@ -85,7 +93,6 @@ public class DeklarationPanel extends MCAPanel {
 		btnP17n4.setEnabled(false);
 		add(btnP17n4, "cell 2 "+(pos).toString()+",alignx center");
 		add(lblP17n9, "cell 0 "+(++pos).toString()+" 4 1,alignx center");	
-		
 		txtP17n3.setEnabled(false);
 		txtP17n4.setEnabled(false);
 		
@@ -93,6 +100,7 @@ public class DeklarationPanel extends MCAPanel {
 		button2();
 		button3();
 		button4();	
+		
 	}
 			
 		private void button1() {
@@ -216,6 +224,27 @@ public class DeklarationPanel extends MCAPanel {
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		lblP17n1.setFont(titlefont);
+		lblP17n2.setFont(generalfont);
+		lblP17n3.setFont(generalfont);
+		lblP17n5.setFont(generalfont);
+		lblP17n6.setFont(generalfont);
+		lblP17n7.setFont(generalfont);
+		lblP17n8.setFont(generalfont);
+		lblP17n9.setFont(generalfont);
+		btnP17n1.setFont(generalfont);
+		btnP17n2.setFont(generalfont);
+		btnP17n3.setFont(generalfont);
+		btnP17n4.setFont(generalfont);
+		txtP17n1.setFont(generalfont);
+		txtP17n3.setFont(generalfont);
+		txtP17n4.setFont(generalfont);
+		txtP17n5.setFont(generalfont);
+		txtP17n6.setFont(generalfont);
+		comboBox_2.setFont(generalfont);
+
+		
 		lblP17n1.setText(bundle.getString("p17n1"));
 		lblP17n2.setText(bundle.getString("p17n2"));
 		lblP17n3.setText(bundle.getString("p01n4"));

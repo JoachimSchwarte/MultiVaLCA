@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -44,27 +46,31 @@ public class FlowPanel extends MCAPanel{
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
+	
 	public FlowPanel(String key) {
 		super(key);
 		initUI();
 	}
 	
 	private void initUI( ) {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lblP01n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP01n1, "flowy,cell 1 0 2 1,alignx center,growy");			
-		add(lblP01n2, "cell 1 1,grow");		
-		txtP01n1.setText("");
-		add(txtP01n1, "cell 2 1,grow");
-		txtP01n1.setColumns(10);	
+		
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", "      [8%]2%[4%]2%[4%]2%[4%]8%[4%]2%[4%]2%[4%][grow]"));	
+		add(lblP01n1, "flowy, cell 1 0 2 1, alignx center, growy");						//Spalte 3, Zeile 1
+		add(lblP01n2, "cell 1 1,grow");								//Spalte 2, Zeile 2
+		//txtP01n1.setText("");
+		add(txtP01n1, "cell 2 1,grow");								//Spalte 3, Zeile 3
+		txtP01n1.setColumns(5);	
 		add(lblP01n3, "cell 1 2,grow");	
 		add(cbbP01n1, "cell 2 2,grow");	
 		add(lblP01n4, "cell 1 3,grow");		
 		cbbP01n2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
 		add(cbbP01n2, "cell 2 3,grow");			
-		add(btnP01n1, "cell 1 4 2 1,alignx center");
-		add(lblP01n5, "cell 0 5 4 1,alignx center");		
+		add(btnP01n1, "cell 1 4 2 1, center");			//Spalte 1, Zeile 4, Spalte 2, Zeile 1
+		add(lblP01n5, "cell 1 5 2 1, center");	
 		
 		btnP01n1.addActionListener(new ActionListener() {
 			@Override
@@ -112,6 +118,17 @@ public class FlowPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		lblP01n1.setFont(titlefont);
+		txtP01n1.setFont(generalfont);
+		btnP01n1.setFont(generalfont);
+		lblP01n2.setFont(generalfont);
+		lblP01n3.setFont(generalfont);
+		lblP01n4.setFont(generalfont);
+		lblP01n5.setFont(generalfont);
+		cbbP01n1.setFont(generalfont);
+		cbbP01n2.setFont(generalfont);
+		
 		lblP01n1.setText(bundle.getString("p01n1"));
 		lblP01n2.setText(bundle.getString("p01n2"));
 		lblP01n3.setText(bundle.getString("p01n3"));

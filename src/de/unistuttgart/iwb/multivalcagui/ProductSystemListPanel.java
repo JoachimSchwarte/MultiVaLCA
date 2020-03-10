@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -12,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.FVMGroupType;
@@ -32,6 +35,11 @@ public class ProductSystemListPanel extends MCAPanel {
 	private JLabel lblP08n1 = new JLabel();
 	private JTable psTable 		= new JTable();
 	private DefaultTableModel psTableModel 		= new DefaultTableModel(0,3);
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private int width = (int) screen.getWidth();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	protected ProductSystemListPanel(String key) {
 		super(key);
@@ -39,9 +47,9 @@ public class ProductSystemListPanel extends MCAPanel {
 	}
 
 	private void initUI() {
-		setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
-		lblP08n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP08n1, "cell 0 0,alignx center,aligny top");		
+		setLayout(new MigLayout("", "[grow]", "[16%][grow]"));		
+		lblP08n1.setFont(titlefont);
+		add(lblP08n1, "cell 0 0,alignx center,aligny center");		
 		add(new JScrollPane(psTable), "cell 0 1,alignx center,aligny top");		
 	}
 
@@ -55,6 +63,11 @@ public class ProductSystemListPanel extends MCAPanel {
 		psTableModel.setRowCount(0);
 		psTable.setModel(psTableModel);
 		TableColumnModel tcm = psTable.getColumnModel();
+		psTable.setFont(generalfont);
+		psTable.setRowHeight(height *22/1000);
+		psTable.setPreferredScrollableViewportSize(new Dimension(width*40/100, height*50/100));
+		JTableHeader header = psTable.getTableHeader();
+		header.setFont(generalfont);		
 		tcm.getColumn(0).setHeaderValue(bundle.getString("mp13"));
 		tcm.getColumn(1).setHeaderValue(bundle.getString("p08n1"));
 		tcm.getColumn(2).setHeaderValue(bundle.getString("p08n2"));

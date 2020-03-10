@@ -4,6 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -34,6 +37,10 @@ public class LowerUpperDialog {
 	private JLabel reldifText = new JLabel();			// "Differenz in Prozent"
 	private JTextField reldifValue = new JTextField();	// Eingabefeld Untergrenze
 	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 	
 	public LowerUpperDialog(JLabel reldifText, JButton reldifButton, JLabel lblLower, JLabel lblUpper, JTextField txtLower, JTextField txtUpper) {
 		super();
@@ -46,6 +53,17 @@ public class LowerUpperDialog {
 	}
 	
 	public Integer draw(Integer pos0, MCAPanel panel) {
+		l = GUILanguage.getChosenLanguage();
+		locale = MultiVaLCA.LANGUAGES.get(l);
+		bundle = ResourceBundle.getBundle(baseName, locale);
+		reldifText.setFont(generalfont);
+		reldifButton.setFont(generalfont);
+		txtLower.setFont(generalfont);
+		txtUpper.setFont(generalfont);
+		reldifValue.setFont(generalfont);
+		reldifText.setText(bundle.getString("lbl01"));
+		reldifButton.setText(bundle.getString("btn18"));
+		
 		Integer pos = pos0;
 		LabeledInputDialog reldifDi = new LabeledInputDialog(reldifText, reldifValue);	
 		LabeledInputDialog lowerDi = new LabeledInputDialog(lblLower, txtLower);
@@ -94,7 +112,7 @@ public class LowerUpperDialog {
 		return values;
 	}
 
-	public void start(String fmenge) {
+	public void start(String fmenge) {		
 		reldifValue.setEnabled(true);
 		reldifButton.setEnabled(true);
 		txtLower.setEnabled(true);

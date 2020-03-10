@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -49,6 +51,11 @@ public class ComponentGroupPanel extends MCAPanel{
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	private LabeledInputDialog nameNGdi = new LabeledInputDialog(lbl02, txt01);
 	private LabeledInputComboBox namePDi = new LabeledInputComboBox(lbl05, cobP23n1);
+	
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	protected ComponentGroupPanel(String key) {
 		super(key);
@@ -56,11 +63,10 @@ public class ComponentGroupPanel extends MCAPanel{
 	}
 
 	private void initUI( ) {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lbl01.setFont(new Font("Tahoma", Font.BOLD, 14));
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));	
 		Integer pos=0;
-		add(lbl01, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		add(lbl01, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		pos = nameNGdi.draw(pos, this);			
 		add(btn01, "cell 1 "+(++pos).toString()+" 2 1,alignx center");	
 		pos = namePDi.draw(pos, this);
@@ -144,6 +150,29 @@ public class ComponentGroupPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		txt01.setFont(generalfont);
+		cobP23n1.setFont(generalfont);
+		lbl01.setFont(titlefont);
+		lbl02.setFont(generalfont);
+		btn01.setFont(generalfont);
+		lbl05.setFont(generalfont);
+		btn02.setFont(generalfont);
+		btn03.setFont(generalfont);
+		lbl06.setFont(generalfont);
+		
+		
+		/**
+		 * 	private JTextField txt01 = new JTextField();	// Eingabefeld Gruppenname
+	private JComboBox<String> cobP23n1 = new JComboBox<String>(); // Eingabefeld Komponentenname
+	private JLabel lbl01 = new JLabel(); 			// "Neue Komponentengruppe"
+	private JLabel lbl02 = new JLabel(); 			// "Name der Gruppe"
+	private JButton btn01 = new JButton(); 			// "neue Gruppe anlegen"
+	private JLabel lbl05 = new JLabel(); 			// "Name der hinzuzufügenden Komponente"
+	private JButton btn02 = new JButton(); 			// "Koponente zur Gruppe hinzufügen"
+	private JButton btn03 = new JButton(); 			// "fertig"
+	private JLabel lbl06 = new JLabel(); 			// Status
+		 */
 		lbl01.setText(bundle.getString("p18n4"));
 		lbl02.setText(bundle.getString("p02n8"));
 		lbl05.setText(bundle.getString("p18n5"));

@@ -1,6 +1,8 @@
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -47,6 +49,11 @@ public class CompositionPanel extends MCAPanel{
 	private LabeledInputDialog nameNGdi = new LabeledInputDialog(lblP19n2, txtP19n1);
 	private LabeledInputDialog namePDi = new LabeledInputDialog(lblP19n3, txtP19n2);
 	private LabeledInputDialog Anzahl = new LabeledInputDialog(lblP19n5, txtP19n3);
+	
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 
 	protected CompositionPanel(String key) {
@@ -55,11 +62,11 @@ public class CompositionPanel extends MCAPanel{
 	}
 
 	private void initUI() {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px,grow]"));	
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));	
 		lblP19n1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Integer pos=0;
-		add(lblP19n1, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		add(lblP19n1, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		pos = nameNGdi.draw(pos, this);			
 		add(btnP19n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");	
 		pos = namePDi.draw(pos, this);
@@ -162,6 +169,19 @@ public class CompositionPanel extends MCAPanel{
 		Locale locale = MultiVaLCA.LANGUAGES.get(l);
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		lblP19n1.setFont(titlefont);
+		lblP19n2.setFont(generalfont);
+		lblP19n3.setFont(generalfont);
+		lblP19n4.setFont(generalfont);
+		lblP19n5.setFont(generalfont);
+		txtP19n1.setFont(generalfont);
+		txtP19n2.setFont(generalfont);
+		txtP19n3.setFont(generalfont);
+		btnP19n1.setFont(generalfont);
+		btnP19n2.setFont(generalfont);
+		btnP19n3.setFont(generalfont);
+		
 		lblP19n1.setText(bundle.getString("p19n1"));
 		lblP19n2.setText(bundle.getString("p19n2"));
 		lblP19n3.setText(bundle.getString("p19n3"));

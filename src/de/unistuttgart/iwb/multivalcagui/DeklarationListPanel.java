@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Locale;
@@ -14,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
@@ -33,6 +36,13 @@ public class DeklarationListPanel extends MCAPanel{
 	private JLabel lblP20n1 = new JLabel();
 	private JTable pdTable 		= new JTable();
 	private DefaultTableModel pdTableModel 		= new DefaultTableModel(0,5);
+	
+	
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private int width = (int) screen.getWidth();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	protected DeklarationListPanel(String key) {
 		super(key);
@@ -40,10 +50,9 @@ public class DeklarationListPanel extends MCAPanel{
 	}
 
 	private void initUI() {
-		setLayout(new MigLayout("", "[grow][555][grow]", "[14px][grow]"));
-		lblP20n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP20n1, "cell 1 0,alignx center,aligny top");
-		add(new JScrollPane(pdTable), "cell 1 1,growx,aligny top");
+		setLayout(new MigLayout("", "[grow]", "[16%][grow]"));	
+		add(lblP20n1, "cell 0 0,alignx center,aligny center");
+		add(new JScrollPane(pdTable), "cell 0 1,align x center,aligny top");
 
 	}
 
@@ -63,6 +72,13 @@ public class DeklarationListPanel extends MCAPanel{
 		tcm.getColumn(2).setHeaderValue(bundle.getString("mp14"));
 		tcm.getColumn(3).setHeaderValue(bundle.getString("p01n3"));
 		tcm.getColumn(4).setHeaderValue(bundle.getString("p02n4"));
+		
+		lblP20n1.setFont(titlefont);
+		pdTable.setFont(generalfont);
+		pdTable.setRowHeight(height *22/1000);
+		pdTable.setPreferredScrollableViewportSize(new Dimension(width*40/100, height*50/100));
+		JTableHeader header = pdTable.getTableHeader();
+		header.setFont(generalfont);
 
 		pdTable.getColumnModel().getColumn(2).setPreferredWidth(110);
 

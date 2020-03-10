@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
@@ -62,6 +64,10 @@ public class ProductSystemPanel extends MCAPanel{
 	private LabeledInputDialog nameBVdi = new LabeledInputDialog(lblP03n4, txtP03n3);
 	private LabeledInputDialog wertBVdi = new LabeledInputDialog(lblP03n5, txtP03n4);
 	private LabeledInputDialog nameVKdi = new LabeledInputDialog(lblP03n6, txtP03n5);
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	protected ProductSystemPanel(String key) {
 		super(key);
@@ -69,11 +75,11 @@ public class ProductSystemPanel extends MCAPanel{
 	}
 		
 		private void initUI() {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lblP03n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));		
+		lblP03n1.setFont(titlefont);
 		Integer pos=0;
-		add(lblP03n1, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		add(lblP03n1, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		pos = namePSdi.draw(pos, this);			
 		add(btnP03n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");
 		pos = nameMOdi.draw(pos, this);	
@@ -319,6 +325,26 @@ public class ProductSystemPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		txtP03n1.setFont(generalfont);
+		txtP03n2.setFont(generalfont);
+		txtP03n3.setFont(generalfont);
+		txtP03n4.setFont(generalfont);
+		txtP03n5.setFont(generalfont);
+		lblP03n1.setFont(titlefont);
+		lblP03n2.setFont(generalfont);
+		lblP03n3.setFont(generalfont);
+		lblP03n4.setFont(generalfont);
+		lblP03n5.setFont(generalfont);
+		lblP03n6.setFont(generalfont);
+		lblP03n7.setFont(generalfont);
+		btnP03n1.setFont(generalfont);
+		btnP03n2.setFont(generalfont);
+		btnP03n3.setFont(generalfont);
+		btnP03n4.setFont(generalfont);
+		btnP03n5.setFont(generalfont);
+		btnP03n6.setFont(generalfont);
+		btnP03n7.setFont(generalfont);
+		
 		lblP03n1.setText(bundle.getString("p03n1"));
 		lblP03n2.setText(bundle.getString("p03n2"));
 		lblP03n3.setText(bundle.getString("p03n3"));

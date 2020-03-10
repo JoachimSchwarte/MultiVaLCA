@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -51,17 +53,21 @@ public class ProcessModulePanel extends MCAPanel{
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP02n6, lblP02n7, txtP02n4, txtP02n5);
 
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
+
 	protected ProcessModulePanel(String key) {
 		super(key);
 		initUI();
 	}
 	
 	private void initUI( ) {		
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lblP02n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));		
 		Integer pos=0;
-		add(lblP02n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		add(lblP02n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		add(lblP02n2, "cell 1 "+(++pos).toString()+",grow");		
 		txtP02n1.setText("");
 		add(txtP02n1, "cell 2 "+pos.toString()+",grow");
@@ -85,6 +91,8 @@ public class ProcessModulePanel extends MCAPanel{
 		btnP02n4.setEnabled(false);
 		add(btnP02n4, "cell 2 "+pos.toString()+",alignx center");
 		add(lblP02n5, "cell 0 "+(++pos).toString()+" 4 1,alignx center");		
+		
+		
 		
 		button1();		
 		button2();		
@@ -216,6 +224,22 @@ public class ProcessModulePanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		txtP02n1.setFont(generalfont);
+		txtP02n2.setFont(generalfont);
+		txtP02n3.setFont(generalfont);
+		txtP02n4.setFont(generalfont);
+		txtP02n5.setFont(generalfont);
+		lblP02n1.setFont(titlefont);
+		lblP02n2.setFont(generalfont);
+		lblP02n3.setFont(generalfont);
+		lblP02n4.setFont(generalfont);
+		lblP02n5.setFont(generalfont);
+		lblP02n6.setFont(generalfont);
+		lblP02n7.setFont(generalfont);
+		btnP02n1.setFont(generalfont);
+		btnP02n2.setFont(generalfont);
+		btnP02n4.setFont(generalfont);
+		btnP02n3.setFont(generalfont);
 		lblP02n1.setText(bundle.getString("p02n1"));
 		lblP02n2.setText(bundle.getString("p02n2"));
 		lblP02n3.setText(bundle.getString("p01n2"));

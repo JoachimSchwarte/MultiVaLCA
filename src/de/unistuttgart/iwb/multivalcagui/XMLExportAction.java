@@ -4,12 +4,14 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -68,6 +70,7 @@ class XMLExportAction extends AbstractAction {
             JFileChooser chooser = new JFileChooser();
 	        FileFilter filter = new FileNameExtensionFilter("XML-Dateien (*.xml)", "xml");
 	        chooser.setFileFilter(filter);
+	        chooserSetFont(chooser, new Font("SansSerif", Font.PLAIN, 24));
 
 	        // Dialog zum Speichern von Dateien anzeigen
 	        int rueckgabeWert = chooser.showSaveDialog(null);
@@ -92,6 +95,18 @@ class XMLExportAction extends AbstractAction {
         } catch(Throwable e) {
             e.printStackTrace();
         } 		
+	}
+	
+	private void chooserSetFont(JComponent comp, Font f) {
+		 synchronized(comp) {
+	            comp.setFont(f);
+	            for (int index = 0; index < comp.getComponentCount(); index++) {
+	                java.awt.Component c = comp.getComponent(index);
+	                if (c instanceof JComponent) {
+	                    chooserSetFont((JComponent)c, f);
+	                } //Ends if
+	            } 
+	        } 
 	}
 
 	public void writeFlows(Document document, Element root) {

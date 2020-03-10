@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -19,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.ImpactCategory;
@@ -59,6 +62,11 @@ public class LciaCalcPanel extends MCAPanel {
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	protected LciaCalcPanel(String key) {
 		super(key);
@@ -66,10 +74,10 @@ public class LciaCalcPanel extends MCAPanel {
 	}
 
 	private void initUI() {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px,grow]"));	
-		lblP16n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP16n1, "cell 1 0 2 1,alignx center,aligny top");		
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[grow]"));	
+		lblP16n1.setFont(titlefont);
+		add(lblP16n1, "cell 1 0 2 1,alignx center,aligny center");		
 		add(lblP16n2, "cell 1 1,grow");
 		add(cobP16n1, "cell 2 1,grow");
 		add(lblP16n3, "cell 1 2,grow");
@@ -302,6 +310,18 @@ public class LciaCalcPanel extends MCAPanel {
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		lblP16n1.setFont(titlefont);
+		lblP16n2.setFont(generalfont);
+		lblP16n3.setFont(generalfont);
+		lblP16n4.setFont(generalfont);
+		lblP16n5.setFont(generalfont);
+		btnP16n1.setFont(generalfont);
+		cobP16n1.setFont(generalfont);
+		cobP16n2.setFont(generalfont);
+		cobP16n3.setFont(generalfont);
+		cobP16n4.setFont(generalfont);
+		
 		lblP16n1.setText(bundle.getString("p16n1"));
 		lblP16n2.setText(bundle.getString("p16n2"));
 		lblP16n3.setText(bundle.getString("p16n3"));
@@ -311,6 +331,11 @@ public class LciaCalcPanel extends MCAPanel {
 		waTableModel.setRowCount(0);
 		waTable.setModel(waTableModel);
 		TableColumnModel tcm = waTable.getColumnModel();
+		waTable.setFont(generalfont);
+		waTable.setRowHeight(height *22/1000);
+		waTable.setPreferredScrollableViewportSize(new Dimension(width*40/100, height*50/100));
+		JTableHeader header = waTable.getTableHeader();
+		header.setFont(generalfont);
 		tcm.getColumn(0).setHeaderValue(bundle.getString("mp14"));
 		tcm.getColumn(1).setHeaderValue(bundle.getString("p11n1"));
 		tcm.getColumn(2).setHeaderValue(bundle.getString("p16n5"));

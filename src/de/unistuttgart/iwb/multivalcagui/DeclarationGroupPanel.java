@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -52,17 +54,22 @@ public class DeclarationGroupPanel extends MCAPanel{
 	private LabeledInputComboBox namePDi = new LabeledInputComboBox(lbl05, cobP23n1);
 	private FlowUnit fu;
 
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
+	
 	protected DeclarationGroupPanel(String key) {
 		super(key);
 		initUI();
 	}
 
 	private void initUI( ) {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lbl01.setFont(new Font("Tahoma", Font.BOLD, 14));
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));		
+		lbl01.setFont(titlefont);
 		Integer pos=0;
-		add(lbl01, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		add(lbl01, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		pos = nameNGdi.draw(pos, this);			
 		add(btn01, "cell 1 "+(++pos).toString()+" 2 1,alignx center");	
 		pos = namePDi.draw(pos, this);
@@ -159,6 +166,17 @@ public class DeclarationGroupPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		txt01.setFont(generalfont);
+		cobP23n1.setFont(generalfont);
+		lbl01.setFont(titlefont);
+		lbl02.setFont(generalfont);
+		btn01.setFont(generalfont);
+		lbl05.setFont(generalfont);
+		btn02.setFont(generalfont);
+		btn03.setFont(generalfont);
+		lbl06.setFont(generalfont);
+		
 		lbl01.setText(bundle.getString("p17n3"));
 		lbl02.setText(bundle.getString("p02n8"));
 		lbl05.setText(bundle.getString("p17n4"));

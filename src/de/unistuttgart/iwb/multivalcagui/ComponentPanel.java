@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -58,14 +60,21 @@ public class ComponentPanel extends MCAPanel{
 	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
 	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP18n5, lblP18n6, txtP18n4, txtP18n5);
 
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
+
+	
 	protected ComponentPanel(String key) {
 		super(key);
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px]"
-						+ "[20px][20px][20px,grow]"));	
-		lblP18n1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));	
+
+		
 		Integer pos=0;
-		add(lblP18n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");
+		add(lblP18n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");
 		add(lblP18n2, "cell 1 "+(++pos).toString()+",grow");		
 		txtP18n1.setText("");
 		add(txtP18n1, "cell 2 "+pos.toString()+",grow");
@@ -186,6 +195,22 @@ public class ComponentPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		lblP18n1.setFont(titlefont);
+		lblP18n2.setFont(generalfont);
+		lblP18n3.setFont(generalfont);
+		lblP18n4.setFont(generalfont);
+		lblP18n5.setFont(generalfont);
+		lblP18n6.setFont(generalfont);
+		lblP18n7.setFont(generalfont);
+		txtP18n1.setFont(generalfont);
+		txtP18n2.setFont(generalfont);
+		txtP18n3.setFont(generalfont);
+		txtP18n4.setFont(generalfont);
+		txtP18n5.setFont(generalfont);
+		btnP18n1.setFont(generalfont);
+		btnP18n2.setFont(generalfont);
+		
 		lblP18n1.setText(bundle.getString("p18n1"));
 		lblP18n2.setText(bundle.getString("p18n2"));
 		lblP18n3.setText(bundle.getString("p18n3"));

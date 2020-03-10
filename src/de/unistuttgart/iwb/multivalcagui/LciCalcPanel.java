@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -13,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.Flow;
@@ -30,6 +33,11 @@ public class LciCalcPanel extends MCAPanel {
 	private JLabel lblP09n1 = new JLabel();
 	private JTable lciTable = new JTable();
 	private DefaultTableModel lciTableModel = new DefaultTableModel(0,4);
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private int width = (int) screen.getWidth();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 
 	protected LciCalcPanel(String key) {
@@ -38,9 +46,9 @@ public class LciCalcPanel extends MCAPanel {
 	}
 
 	private void initUI() {
-		setLayout(new MigLayout("", "[74px,grow]", "[14px][grow]"));		
-		lblP09n1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		add(lblP09n1, "cell 0 0,alignx center,aligny top");		
+		setLayout(new MigLayout("", "[grow]", "[16%][grow]"));		
+		lblP09n1.setFont(titlefont);
+		add(lblP09n1, "cell 0 0,alignx center,aligny center");		
 		add(new JScrollPane(lciTable), "cell 0 1,alignx center,aligny top");
 		
 	}
@@ -55,6 +63,11 @@ public class LciCalcPanel extends MCAPanel {
 		lciTableModel.setRowCount(0);
 		lciTable.setModel(lciTableModel);
 		TableColumnModel tcm = lciTable.getColumnModel();
+		lciTable.setFont(generalfont);
+		lciTable.setRowHeight(height *22/1000);
+		lciTable.setPreferredScrollableViewportSize(new Dimension(width*40/100, height*50/100));
+		JTableHeader header = lciTable.getTableHeader();
+		header.setFont(generalfont);
 		tcm.getColumn(0).setHeaderValue(bundle.getString("mp13"));
 		tcm.getColumn(1).setHeaderValue(bundle.getString("mp11"));
 		tcm.getColumn(2).setHeaderValue(bundle.getString("p01n3"));
