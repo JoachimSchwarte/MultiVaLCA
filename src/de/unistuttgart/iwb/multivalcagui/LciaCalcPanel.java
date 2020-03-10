@@ -62,6 +62,7 @@ public class LciaCalcPanel extends MCAPanel {
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	private int width = (int) screen.getWidth();
 	private int height = (int) screen.getHeight();
@@ -75,23 +76,39 @@ public class LciaCalcPanel extends MCAPanel {
 
 	private void initUI() {
 		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
-				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[grow]"));	
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[16%]2%[grow]"));	
 		lblP16n1.setFont(titlefont);
-		add(lblP16n1, "cell 1 0 2 1,alignx center,aligny center");		
-		add(lblP16n2, "cell 1 1,grow");
-		add(cobP16n1, "cell 2 1,grow");
-		add(lblP16n3, "cell 1 2,grow");
-		add(cobP16n2, "cell 2 2,grow");
-		add(lblP16n4, "cell 1 3,grow");
-		add(cobP16n3, "cell 2 3,grow");
-		add(lblP16n5, "cell 1 4,grow");
-		add(cobP16n4, "cell 2 4,grow");	
+		Integer pos=0;
+		add(lblP16n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
+		add(lblP16n2, "cell 1 "+(++pos).toString() + " ,grow");
+		add(cobP16n1, "cell 2 "+pos.toString() +",grow");
+		add(lblP16n3, "cell 1 "+(++pos).toString()+" 2 1,grow");
+		add(cobP16n2, "cell 2 "+pos.toString()+",grow");
+		add(lblP16n4, "cell 1 " +(++pos).toString()+",grow");
+		add(cobP16n3, "cell 2 " +pos.toString()+",grow");
+		add(lblP16n5, "cell 1 "+(++pos).toString()+",grow");
+		add(cobP16n4, "cell 2 "+pos.toString()+",grow");	
+		
 		cobP16n2.setEnabled(false);
 		cobP16n3.setEnabled(false);
 		cobP16n4.setEnabled(false);		
 		btnP16n1.setEnabled(false);
-		add(btnP16n1, "cell 1 5 2 0,alignx center");
-		add(new JScrollPane(waTable), "cell 1 6 2 0,alignx center,aligny top");
+		
+		add(btnP16n1, "cell 1 5 2 0 "+(++pos).toString()+",alignx center,aligny center");
+		
+		
+		add(new JScrollPane(waTable), "cell 1 6 2 0 "+(++pos).toString()+",grow");
+		
+		
+		waTable.setFont(generalfont);
+		waTable.setRowHeight(height *22/1000);
+		waTable.setPreferredScrollableViewportSize(new Dimension(width*40/100, height*50/100));
+		JTableHeader header = waTable.getTableHeader();
+		
+		header.setFont(generalfont);
+	
+
+	
 		
 		
 		btnP16n1.addActionListener(new ActionListener() {
@@ -331,11 +348,6 @@ public class LciaCalcPanel extends MCAPanel {
 		waTableModel.setRowCount(0);
 		waTable.setModel(waTableModel);
 		TableColumnModel tcm = waTable.getColumnModel();
-		waTable.setFont(generalfont);
-		waTable.setRowHeight(height *22/1000);
-		waTable.setPreferredScrollableViewportSize(new Dimension(width*40/100, height*50/100));
-		JTableHeader header = waTable.getTableHeader();
-		header.setFont(generalfont);
 		tcm.getColumn(0).setHeaderValue(bundle.getString("mp14"));
 		tcm.getColumn(1).setHeaderValue(bundle.getString("p11n1"));
 		tcm.getColumn(2).setHeaderValue(bundle.getString("p16n5"));
@@ -362,5 +374,7 @@ public class LciaCalcPanel extends MCAPanel {
 		cobP16n3.setEnabled(false);
 		cobP16n4.setEnabled(false);		
 		btnP16n1.setEnabled(false);
+		
+		
 	}
 }

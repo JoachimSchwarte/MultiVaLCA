@@ -55,6 +55,7 @@ public class FlowListPanel extends MCAPanel {
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		lblP06n1.setText(bundle.getString("mp41e"));
+		
 		flowsTableModel.setRowCount(0);
 		flowsTable.setModel(flowsTableModel);
 		flowsTable.setFont(generalfont);
@@ -63,6 +64,7 @@ public class FlowListPanel extends MCAPanel {
 		TableColumnModel tcm = flowsTable.getColumnModel();
 		JTableHeader header = flowsTable.getTableHeader();
 		header.setFont(generalfont);		
+		
 		tcm.getColumn(0).setHeaderValue(bundle.getString("p06n1"));
 		tcm.getColumn(1).setHeaderValue(bundle.getString("p01n3"));
 		tcm.getColumn(2).setHeaderValue(bundle.getString("p01n4"));

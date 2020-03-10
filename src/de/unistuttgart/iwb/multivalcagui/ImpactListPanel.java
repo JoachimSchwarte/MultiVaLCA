@@ -54,6 +54,7 @@ public class ImpactListPanel extends MCAPanel{
 		Locale locale = MultiVaLCA.LANGUAGES.get(l);
 		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+		
 		lblP11n1.setText(bundle.getString("mp44e"));
 		catTableModel.setRowCount(0);
 		catTable.setModel(catTableModel);
@@ -63,6 +64,7 @@ public class ImpactListPanel extends MCAPanel{
 		catTable.setPreferredScrollableViewportSize(new Dimension(width*40/100, height*50/100));
 		JTableHeader header = catTable.getTableHeader();
 		header.setFont(generalfont);
+		
 		tcm.getColumn(0).setHeaderValue(bundle.getString("mp14"));
 		tcm.getColumn(1).setHeaderValue(bundle.getString("p11n1"));
 		for(String catName : ImpactCategory.getAllInstances().keySet()) {

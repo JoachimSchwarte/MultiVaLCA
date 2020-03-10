@@ -337,9 +337,7 @@ public class MultiVaLCA {
 
 		JMenuItem mntmSingleModule = new JMenuItem();
 		Action a2 = new MCAAction(bundle.getString("mp121"), bundle.getString("mp121e"), "neuModul") {
-			/**
-			 * 
-			 */
+
 			private static final long serialVersionUID = -4250878733464869164L;
 
 			@Override
@@ -373,6 +371,7 @@ public class MultiVaLCA {
 		
 		JMenu mntmProductSystem = new JMenu();
 		mntmProductSystem.setAction(newProductSystemAction);			//Neues Produktsystem
+		mntmProductSystem.setFont(generalfont);
 		mnNew.add(mntmProductSystem);
 		
 		
@@ -392,16 +391,12 @@ public class MultiVaLCA {
 		mntmSingleProductSystem.setAction(a4);						//Einzelnes Produktsystem
 		mntmSingleProductSystem.setFont(generalfont);
 		mntmProductSystem.add(mntmSingleProductSystem);
-		mntmProductSystem.setAction(a4);						//Produktsystem
 		mntmProductSystem.setFont(generalfont);
-		mnNew.add(mntmProductSystem);
 		
+	
 		JMenuItem mntmSystemGroup = new JMenuItem();
 		mntmSystemGroup.setFont(generalfont);
 		Action a31 = new MCAAction(bundle.getString("mp132"), bundle.getString("mp132e"), "neuSystemGroup") {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 426405479780639787L;
 
 			@Override
@@ -410,6 +405,9 @@ public class MultiVaLCA {
 				MCAPanel.get(getKey()).showMe();
 			}		
 		};
+		
+		
+		
 		mntmSystemGroup.setAction(a31);							//Systemgruppe
 		mntmProductSystem.add(mntmSystemGroup);
 
@@ -642,7 +640,7 @@ public class MultiVaLCA {
 				MCAPanel.get(getKey()).showMe();
 			}			
 		};
-		mntmGroupModuleList.setAction(a33);						//Liste der Gruppenmodule
+		mntmGroupModuleList.setAction(a33);							//Liste der Gruppenmodule
 		mntmGroupModuleList.setFont(generalfont);
 		mntmProcessModuleList.add(mntmGroupModuleList);
 
@@ -651,6 +649,7 @@ public class MultiVaLCA {
 		mntmProductSystemList.setAction(productSystemListAction);			//Liste der Produktsysteme
 		mntmProductSystemList.setFont(generalfont);
 		mnListe.add(mntmProductSystemList);
+		
 
 		JMenuItem mntmProduktsysteme = new JMenuItem();
 		Action a15 = new MCAAction(bundle.getString("mp431"), bundle.getString("mp431e"), "listePS") {
@@ -669,8 +668,6 @@ public class MultiVaLCA {
 		mntmProduktsysteme.setAction(a15);						//Liste der einzelnen Produktsysteme
 		mntmProduktsysteme.setFont(generalfont);
 		mntmProductSystemList.add(mntmProduktsysteme);
-																//Liste der Produktsysteme
-		mnListe.add(mntmProduktsysteme);
 		
 		JMenuItem mntmSystemGroupList = new JMenuItem();
 		Action a30 = new MCAAction(bundle.getString("mp432"), bundle.getString("mp432e"), "listSystemGroup") {
@@ -705,7 +702,7 @@ public class MultiVaLCA {
 				cl.show(panel, getKey());
 				MCAPanel.get(getKey()).showMe();
 			}			
-		};		
+		};	
 		mntmCategories.setAction(a16);							//Liste der Wirkungskategorien
 		mntmCategories.setFont(generalfont);
 		mnListe.add(mntmCategories);

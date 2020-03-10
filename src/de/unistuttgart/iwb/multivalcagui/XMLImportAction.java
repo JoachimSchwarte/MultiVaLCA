@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -50,11 +52,19 @@ class XMLImportAction extends AbstractAction {
         // JFileChooser-Objekt erstellen
         JFileChooser chooser = new JFileChooser();
         FileFilter filter = new FileNameExtensionFilter("XML-Dateien (*.xml)", "xml");
+        
+    	final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    	final int width = (int) screen.getWidth();
+    	final int height = (int) screen.getHeight();
+        final Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
+        
         chooser.setFileFilter(filter);
-        chooserSetFont(chooser, new Font("SansSerif", Font.PLAIN, 24));
+        chooserSetFont(chooser, generalfont);
+        chooser.setPreferredSize(new Dimension(width*40/100, height*50/100));
         
         // Dialog zum Laden von Dateien anzeigen
-        int rueckgabeWert = chooser.showOpenDialog(null);
+        int rueckgabeWert = chooser.showDialog(null, "Datei auswählen");
+        
         if(rueckgabeWert == JFileChooser.APPROVE_OPTION) {
         	File fileInput = chooser.getSelectedFile();
         	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

@@ -54,6 +54,9 @@ public class ProcModListPanel extends MCAPanel{
 		add(lblP07n1, "cell 0 0,alignx center,aligny center");		
 		add(new JScrollPane(pmTable), "cell 0 1,alignx center,aligny top");	
 		
+		
+		
+		
 	}
 
 	@Override
@@ -78,6 +81,7 @@ public class ProcModListPanel extends MCAPanel{
 		tcm.getColumn(2).setHeaderValue(bundle.getString("p01n3"));
 		tcm.getColumn(3).setHeaderValue(bundle.getString("p02n4"));
 		HashSet<String> modulListe = new HashSet<String>();
+		
 		LinkedHashMap<String, MCAObject> instanceListe = new LinkedHashMap<String, MCAObject>();
 		modulListe.addAll(ProcessModule.getAllInstances().keySet());
 		instanceListe.putAll(ProcessModule.getAllInstances());
