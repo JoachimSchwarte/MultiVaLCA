@@ -13,11 +13,15 @@ import de.unistuttgart.iwb.ivari.*;
  * von Objekten des Typs "Produktsystem".
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.702
  */
 
 public class ProductSystem extends MCAObject
 implements FlowValueMaps, ImpactValueMaps {
+	
+	// Klassenvariablen:
+	
+	static private Solver so = Solver.siga;
 	
 	// Instanzvariablen:
 	
@@ -43,6 +47,16 @@ implements FlowValueMaps, ImpactValueMaps {
 	}
 	
 	// Methoden:
+	
+	/**
+	 * Wählt einen anderen Gleichhungslöser aus.
+	 * @param soNew
+	 * ist der Solver, der den bisherigen Solver ersetzt.
+	 */
+	
+	public static void setSolver(Solver soNew) {
+		so = soNew;
+	}
 	
 	/**
 	 * Überprüft, ob bereits ein Produktsystem
@@ -223,7 +237,7 @@ implements FlowValueMaps, ImpactValueMaps {
 			System.out.println("A[2,2] = "+imA.getValue(1, 1).getLowerBound()+" , "+imA.getValue(1, 1).getUpperBound());
 			System.out.println("B[1]   = "+ivF.getValue(0).getLowerBound()+" , "+ivF.getValue(0).getUpperBound());
 			System.out.println("B[2]   = "+ivF.getValue(1).getLowerBound()+" , "+ivF.getValue(1).getUpperBound());         */
-			ivS = imA.gauss(ivF);
+			ivS = imA.solve(so, ivF);
 /*			System.out.println("S[1]   = "+ivS.getValue(0).getLowerBound()+" , "+ivS.getValue(0).getUpperBound());
 			System.out.println("S[2]   = "+ivS.getValue(1).getLowerBound()+" , "+ivS.getValue(1).getUpperBound());         */
 		} catch (Exception e) {

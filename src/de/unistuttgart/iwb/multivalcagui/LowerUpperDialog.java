@@ -21,7 +21,7 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.610
+ * @version 0.702
  */
 
 public class LowerUpperDialog {
@@ -39,7 +39,7 @@ public class LowerUpperDialog {
 	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	private int height = (int) screen.getHeight();
-	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+//	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
 	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 	
 	public LowerUpperDialog(JLabel reldifText, JButton reldifButton, JLabel lblLower, JLabel lblUpper, JTextField txtLower, JTextField txtUpper) {

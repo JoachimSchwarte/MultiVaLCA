@@ -30,20 +30,21 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-
+import de.unistuttgart.iwb.ivari.Solver;
+import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
 
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.701
+ * @version 0.702
  */
 
 public class MultiVaLCA {
 
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.701";
-	private String dateString ="10.03.2020";
+	private String versionString ="Version 0.702";
+	private String dateString ="12.03.2020";
 
 	private JFrame frame = new JFrame();
 	private JPanel panel = new JPanel();
@@ -59,6 +60,7 @@ public class MultiVaLCA {
 	private final Action componentListAction	= new componentListAction();
 	private final Action compositionListAction = new compositionListAction();
 	private final Action prefsAction 			= new prefsAction();
+	private final Action prefsAction2 			= new prefsAction2();
 	private final Action xmlExportAction 		= new XMLExportAction(l);
 	private final Action xmlImportAction 		= new XMLImportAction(l);
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -72,10 +74,15 @@ public class MultiVaLCA {
 	// Panel 5; Sprachauswahl
 	//
 	private JPanel panel_5 = new JPanel();
+	private JPanel panel_5b = new JPanel();
 	private JLabel lblP05n1 = new JLabel();				// "Sprachauswahl"
 	private JLabel lblP05n2 = new JLabel();				// "Sprache"
-	private JButton btn05n1 = new JButton();			// "speichern"
+	private JLabel lblP05n3 = new JLabel();				// "Solver"         to do
+	private JLabel lblP05n4 = new JLabel();				// "Solverauswahl"  to do
+	private JButton btn05n1 = new JButton();			// "speichern" (Sprache)
+	private JButton btn05n2 = new JButton();			// "speichern" (Solver)
 	private JComboBox<Language> comboBox2 = new JComboBox<Language>();
+	private JComboBox<Solver> comboBox3 = new JComboBox<Solver>();
 	//
 	public static final Map<Language, Locale> LANGUAGES;
 
@@ -177,7 +184,19 @@ public class MultiVaLCA {
 		panel_5.add(lblP05n2, "cell 1 1,grow");		
 		comboBox2.setModel(new DefaultComboBoxModel<Language>(Language.values()));
 		panel_5.add(comboBox2, "cell 2 1,grow");	
-		panel_5.add(btn05n1, "cell 1 2 2 1,alignx center");		
+		panel_5.add(btn05n1, "cell 1 2 2 1,alignx center");	
+		//
+		// Panel 5b; Solverauswahl          to do!!!!!!!!!
+		//
+		panel.add(panel_5b, "solver");
+		panel_5b.setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));		
+		lblP05n1.setFont(titlefont);
+		panel_5b.add(lblP05n4, "flowy,cell 1 0 2 1,alignx center,growy");		
+		panel_5b.add(lblP05n3, "cell 1 1,grow");		
+		comboBox3.setModel(new DefaultComboBoxModel<Solver>(Solver.values()));
+		panel_5b.add(comboBox3, "cell 2 1,grow");	
+		panel_5b.add(btn05n2, "cell 1 2 2 1,alignx center");	
 		//
 		// Panel 6; Flussliste
 		//
@@ -907,6 +926,11 @@ public class MultiVaLCA {
 		mntmNewMenuItem_3.setAction(prefsAction);
 		mntmNewMenuItem_3.setFont(generalfont);
 		mnPrefs.add(mntmNewMenuItem_3);							//
+		
+		JMenuItem mntmNewMenuItem_Solve = new JMenuItem();
+		mntmNewMenuItem_Solve.setAction(prefsAction2);
+		mntmNewMenuItem_Solve.setFont(generalfont);
+		mnPrefs.add(mntmNewMenuItem_Solve);		
 
 		JMenu mnHilfe = new JMenu(bundle.getString("mp2"));	//Hilfe-Reiter
 		mnHilfe.setFont(generalfont);
@@ -965,6 +989,8 @@ public class MultiVaLCA {
 				mntmSystemGroup.setToolTipText(bundle.getString("mp132e"));
 				mntmNewMenuItem_3.setText(bundle.getString("mp31"));
 				mntmNewMenuItem_3.setToolTipText(bundle.getString("mp31e"));
+				mntmNewMenuItem_Solve.setText("Solver");									// to do
+				mntmNewMenuItem_Solve.setToolTipText(bundle.getString("Solver auswählen")); // to do
 				mntmFlsse.setText(bundle.getString("mp41"));
 				mntmFlsse.setToolTipText(bundle.getString("mp41e"));
 				mntmProcessModuleList.setText(bundle.getString("mp42"));
@@ -1042,6 +1068,16 @@ public class MultiVaLCA {
 				lblP05n2.setText(bundle.getString("mp31"));
 				btn05n1.setText(bundle.getString("bt01"));
 			}
+		});
+		
+		/*
+		 * Solverauswahl
+		 */
+		btn05n2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ProductSystem.setSolver(comboBox3.getItemAt(comboBox3.getSelectedIndex()));
+			}			
 		});
 	}
 
@@ -1251,6 +1287,30 @@ public class MultiVaLCA {
 			lblP05n2.setText(bundle.getString("mp31"));
 			btn05n1.setText(bundle.getString("bt01"));			
 			cl.show(panel, "lang");
+		}
+	}
+	
+	//Solverauswahl 
+
+	private class prefsAction2 extends AbstractAction {
+		private static final long serialVersionUID = 8545097902306476895L;
+		public prefsAction2() {
+			locale = LANGUAGES.get(l);
+			baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+			bundle = ResourceBundle.getBundle(baseName, locale);
+			putValue(NAME, "Solver");								// to do
+			putValue(SHORT_DESCRIPTION, "Solverauswahl");			// to do
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			lblP05n4.setFont(titlefont);
+			lblP05n3.setFont(generalfont);
+			btn05n2.setFont(generalfont);
+			comboBox3.setFont(generalfont);
+			lblP05n3.setText("Solver");								// to do
+			lblP05n4.setText("Solverauswahl");						// to do
+			btn05n2.setText(bundle.getString("bt01"));			
+			cl.show(panel, "solver");
 		}
 	}
 }

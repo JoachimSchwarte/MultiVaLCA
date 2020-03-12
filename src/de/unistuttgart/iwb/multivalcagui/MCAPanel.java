@@ -6,12 +6,11 @@ package de.unistuttgart.iwb.multivalcagui;
 
 import java.util.HashMap;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.511
+ * @version 0.702
  */
 
 public abstract class MCAPanel extends JPanel{ 

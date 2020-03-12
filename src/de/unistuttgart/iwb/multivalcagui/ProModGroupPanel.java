@@ -27,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.553
+ * @version 0.702
  */
 
 public class ProModGroupPanel extends MCAPanel{
@@ -90,9 +90,7 @@ public class ProModGroupPanel extends MCAPanel{
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean inputOK = true;
-				Double menge = 0.0;
 				if (wertMEdi.isPosNum(lbl06, bundle.getString("stat07"), bundle.getString("stat26"))) {
-					menge = wertMEdi.getNum(lbl06, bundle.getString("stat07"), bundle.getString("stat26"));
 				}
 				else {
 					inputOK = false;
