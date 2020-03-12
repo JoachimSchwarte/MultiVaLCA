@@ -37,13 +37,13 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.702
+ * @version 0.703
  */
 
 public class MultiVaLCA {
 
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.702";
+	private String versionString ="Version 0.703";
 	private String dateString ="12.03.2020";
 
 	private JFrame frame = new JFrame();
@@ -989,8 +989,8 @@ public class MultiVaLCA {
 				mntmSystemGroup.setToolTipText(bundle.getString("mp132e"));
 				mntmNewMenuItem_3.setText(bundle.getString("mp31"));
 				mntmNewMenuItem_3.setToolTipText(bundle.getString("mp31e"));
-				mntmNewMenuItem_Solve.setText("Solver");									// to do
-				mntmNewMenuItem_Solve.setToolTipText(bundle.getString("Solver auswählen")); // to do
+//				mntmNewMenuItem_Solve.setText("Solver");									// to do
+//				mntmNewMenuItem_Solve.setToolTipText(bundle.getString("Solver auswählen")); // to do
 				mntmFlsse.setText(bundle.getString("mp41"));
 				mntmFlsse.setToolTipText(bundle.getString("mp41e"));
 				mntmProcessModuleList.setText(bundle.getString("mp42"));
