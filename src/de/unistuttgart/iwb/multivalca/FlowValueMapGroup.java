@@ -42,6 +42,19 @@ implements FlowValueMaps, ImpactValueMaps {
 		this.setType(type);
 	}
 	
+	/**
+	 * Überprüft, ob bereits eine Flussvektorgruppe
+	 * des genannten Namens existiert.
+	 * @param name
+	 * ist der zu prüfende Name
+	 * @return
+	 * ... den Wahrheitswert, den die Überprüfung liefert
+	 */
+
+	public static boolean containsName(String name) {
+		return getAllInstances().containsKey(name);
+	}
+	
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap() {
 		return null;
