@@ -16,7 +16,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * zu Gruppen zusammengefasst werden.
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.710
  */
 
 public class FlowValueMapGroup extends MCAObject  
@@ -40,6 +40,19 @@ implements FlowValueMaps, ImpactValueMaps {
 	private FlowValueMapGroup(String name, FVMGroupType type) {
 		super(name);
 		this.setType(type);
+	}
+	
+	/**
+	 * Überprüft, ob bereits eine Flussvektorgruppe
+	 * des genannten Namens existiert.
+	 * @param name
+	 * ist der zu prüfende Name
+	 * @return
+	 * ... den Wahrheitswert, den die Überprüfung liefert
+	 */
+
+	public static boolean containsName(String name) {
+		return getAllInstances().containsKey(name);
 	}
 	
 	@Override
