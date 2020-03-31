@@ -21,7 +21,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import de.unistuttgart.iwb.multivalca.Component;
 import de.unistuttgart.iwb.multivalca.Composition;
 import de.unistuttgart.iwb.multivalca.IVMGroupType;
 import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
@@ -31,7 +30,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.711
  */
 
 public class CompositionGroupPanel extends MCAPanel{
@@ -111,7 +110,7 @@ public class CompositionGroupPanel extends MCAPanel{
 					nameOk = false;
 					lbl06.setText(bundle.getString("stat02"));
 				} 
-				if (!Component.getAllInstances().containsKey(name)) {
+				if (!Composition.getAllInstances().containsKey(name)) {
 					lbl06.setText(bundle.getString("stat64"));
 					nameOk = false;
 				}
