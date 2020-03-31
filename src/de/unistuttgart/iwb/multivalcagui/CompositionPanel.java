@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.711
  */
 
 public class CompositionPanel extends MCAPanel{
@@ -129,8 +129,8 @@ public class CompositionPanel extends MCAPanel{
 				if (!ProductSystem.getAllInstances().containsKey(name) &&
 						!Component.getAllInstances().containsKey(name) &&
 							!Composition.getAllInstances().containsKey(name) &&!(
-								ImpactValueMapGroup.getAllInstances().containsKey(name) && IVMGroupType.Component.equals(ImpactValueMapGroup.getInstance(name).getType()) && !(
-										ImpactValueMapGroup.getAllInstances().containsKey(name) && IVMGroupType.Composition.equals(ImpactValueMapGroup.getInstance(name).getType())))) {
+								ImpactValueMapGroup.getAllInstances().containsKey(name) && IVMGroupType.Component.equals(ImpactValueMapGroup.getInstance(name).getType())) && !(
+										ImpactValueMapGroup.getAllInstances().containsKey(name) && IVMGroupType.Composition.equals(ImpactValueMapGroup.getInstance(name).getType()))) {
 					lblP19n4.setText(bundle.getString("stat59"));
 					nameOk = false;
 				}
