@@ -29,7 +29,25 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import de.unistuttgart.iwb.multivalca.*;
+import de.unistuttgart.iwb.multivalca.CategoryIndicator;
+import de.unistuttgart.iwb.multivalca.CharacFactor;
+import de.unistuttgart.iwb.multivalca.Component;
+import de.unistuttgart.iwb.multivalca.Composition;
+import de.unistuttgart.iwb.multivalca.FVMGroupType;
+import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.FlowType;
+import de.unistuttgart.iwb.multivalca.FlowUnit;
+import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
+import de.unistuttgart.iwb.multivalca.IVMGroupType;
+import de.unistuttgart.iwb.multivalca.ImpactCategory;
+import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
+import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
+import de.unistuttgart.iwb.multivalca.LCIAMethod;
+import de.unistuttgart.iwb.multivalca.MCAObject;
+import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProductDeclaration;
+import de.unistuttgart.iwb.multivalca.ProductSystem;
+import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon

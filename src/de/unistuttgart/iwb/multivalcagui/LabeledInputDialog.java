@@ -4,13 +4,13 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.util.LinkedHashMap;
+import java.util.Set;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.MCAObject;
-
-import java.util.LinkedHashMap;
-import java.util.Set;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte

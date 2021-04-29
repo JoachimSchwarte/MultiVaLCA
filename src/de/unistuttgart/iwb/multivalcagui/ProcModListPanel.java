@@ -7,10 +7,10 @@ package de.unistuttgart.iwb.multivalcagui;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;

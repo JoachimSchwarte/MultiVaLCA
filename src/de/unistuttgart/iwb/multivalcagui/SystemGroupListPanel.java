@@ -5,11 +5,11 @@
 package de.unistuttgart.iwb.multivalcagui;
 
 import java.awt.Font;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -19,9 +19,9 @@ import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.FVMGroupType;
 import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
-import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 

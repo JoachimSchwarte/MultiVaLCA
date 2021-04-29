@@ -17,12 +17,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import de.unistuttgart.iwb.multivalca.FVMGroupType;
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowType;
-import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
-import de.unistuttgart.iwb.multivalca.FVMGroupType;
+import de.unistuttgart.iwb.multivalca.ProcessModule;
 import net.miginfocom.swing.MigLayout;
 
 /**

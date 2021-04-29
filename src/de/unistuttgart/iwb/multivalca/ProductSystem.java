@@ -5,8 +5,12 @@
 package de.unistuttgart.iwb.multivalca;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+
 import Jama.Matrix;
-import de.unistuttgart.iwb.ivari.*;
+import de.unistuttgart.iwb.ivari.IvariMatrix;
+import de.unistuttgart.iwb.ivari.IvariScalar;
+import de.unistuttgart.iwb.ivari.IvariVector;
+import de.unistuttgart.iwb.ivari.Solver;
 
 /**
  * Diese Klasse dient zur Erzeugung und Nutzung

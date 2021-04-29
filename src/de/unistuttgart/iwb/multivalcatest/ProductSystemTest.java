@@ -7,15 +7,24 @@ package de.unistuttgart.iwb.multivalcatest;
  * @author Dr.-Ing. Joachim Schwarte
  * @version 0.533
  */
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
 
-import de.unistuttgart.iwb.multivalca.*;
+import de.unistuttgart.iwb.multivalca.CategoryIndicator;
+import de.unistuttgart.iwb.multivalca.CharacFactor;
+import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.FlowType;
+import de.unistuttgart.iwb.multivalca.FlowUnit;
+import de.unistuttgart.iwb.multivalca.ImpactCategory;
+import de.unistuttgart.iwb.multivalca.LCIAMethod;
+import de.unistuttgart.iwb.multivalca.MCAObject;
+import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProductSystem;
+import de.unistuttgart.iwb.multivalca.ValueType;
 
 class ProductSystemTest {
 	private Flow e1 = Flow.instance("E1", FlowType.Elementary, FlowUnit.kg);

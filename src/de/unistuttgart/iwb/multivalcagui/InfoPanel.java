@@ -9,7 +9,9 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
 import javax.swing.JLabel;
+
 import net.miginfocom.swing.MigLayout;
 
 /**

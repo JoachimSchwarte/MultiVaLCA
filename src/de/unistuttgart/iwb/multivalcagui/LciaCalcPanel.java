@@ -24,18 +24,18 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
-import de.unistuttgart.iwb.multivalca.ImpactCategory;
-import de.unistuttgart.iwb.multivalca.LCIAMethod;
-import de.unistuttgart.iwb.multivalca.ObjectType;
-import de.unistuttgart.iwb.multivalca.ProcessModule;
-import de.unistuttgart.iwb.multivalca.ProductDeclaration;
-import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
-import de.unistuttgart.iwb.multivalca.ProductSystem;
 import de.unistuttgart.iwb.multivalca.Component;
 import de.unistuttgart.iwb.multivalca.Composition;
 import de.unistuttgart.iwb.multivalca.FVMGroupType;
 import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
 import de.unistuttgart.iwb.multivalca.IVMGroupType;
+import de.unistuttgart.iwb.multivalca.ImpactCategory;
+import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
+import de.unistuttgart.iwb.multivalca.LCIAMethod;
+import de.unistuttgart.iwb.multivalca.ObjectType;
+import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProductDeclaration;
+import de.unistuttgart.iwb.multivalca.ProductSystem;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 

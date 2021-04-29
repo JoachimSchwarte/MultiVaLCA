@@ -30,7 +30,20 @@ import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.unistuttgart.iwb.multivalca.*;
+import de.unistuttgart.iwb.multivalca.CharacFactor;
+import de.unistuttgart.iwb.multivalca.Component;
+import de.unistuttgart.iwb.multivalca.Composition;
+import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
+import de.unistuttgart.iwb.multivalca.FlowValueMaps;
+import de.unistuttgart.iwb.multivalca.ImpactCategory;
+import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
+import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
+import de.unistuttgart.iwb.multivalca.LCIAMethod;
+import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProductDeclaration;
+import de.unistuttgart.iwb.multivalca.ProductSystem;
+import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
