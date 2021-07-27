@@ -5,7 +5,7 @@ package de.unistuttgart.iwb.multivalcatest;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.714
+ * @version 0.715
  */
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +25,7 @@ import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
 import de.unistuttgart.iwb.multivalca.ValueType;
 
-class ModulGruppenText {
+class ModuleGroupTest {
 	private Flow e1 = Flow.instance("E1", FlowType.Elementary, FlowUnit.kg);
 	private Flow e2 = Flow.instance("E2", FlowType.Elementary, FlowUnit.kg);
 	private Flow r1 = Flow.instance("R1", FlowType.Elementary, FlowUnit.kg);
@@ -36,7 +36,6 @@ class ModulGruppenText {
 	private ProcessModule Modul2 = ProcessModule.instance("M2");
 	private ProcessModule Modul3 = ProcessModule.instance("M3");
 	private ProcessModule Modul4 = ProcessModule.instance("M4");
-//	private FlowValueMapGroup Group12 = FlowValueMapGroup.getInstance("G12", FVMGroupType.ProcessModule, p1, 1);
 	private LinkedHashMap<Flow, Double> f = new LinkedHashMap<Flow, Double>();
 	private LinkedList<Flow> vkp = new LinkedList<Flow>();
 	private ProductSystem S1 = ProductSystem.instance("S1", f, vkp);
@@ -58,7 +57,6 @@ class ModulGruppenText {
 	private ProductSystem S123m12 = ProductSystem.instance("S123m12", f, vkp);
 	private ProductSystem S123m13 = ProductSystem.instance("S123m13", f, vkp);
 	private ProductSystem S123m23 = ProductSystem.instance("S123m23", f, vkp);
-	private ProductSystem S123m123 = ProductSystem.instance("S123m123", f, vkp);
 	
 	private void init1() {
 		MCAObject.clear(ProductSystem.class);
@@ -109,19 +107,15 @@ class ModulGruppenText {
 		Modul4.addFluss(p1, ValueType.LowerBound, -101.);
 		Modul4.addFluss(p2, ValueType.MeanValue, 1.);
 		Modul4.addFluss(p2, ValueType.LowerBound, 1.);
-		Modul4.addFluss(p2, ValueType.UpperBound, 1.);
-		f.put(p2, 1.);
-		S1 = ProductSystem.instance("S1", f, vkp);
-		S1.addProzessmodul(Modul1);
-		S1.addProzessmodul(Modul4);	
-		S2 = ProductSystem.instance("S2", f, vkp);
-		S2.addProzessmodul(Modul2);
-		S2.addProzessmodul(Modul4);
+		Modul4.addFluss(p2, ValueType.UpperBound, 1.);	
+		f.put(p2, 1.);	
 	}
 
 	@Test
 	void testS1() {
 		init1();
+		S1.addProzessmodul(Modul1);
+		S1.addProzessmodul(Modul4);	
 		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = S1.getElementarflussvektor();
 		LinkedHashMap<ValueType, Double> vv = efv.get(r1);
 		assertEquals(-750., vv.get(ValueType.MeanValue), .001);
@@ -144,6 +138,8 @@ class ModulGruppenText {
 	@Test
 	void testS2() {
 		init1();
+		S2.addProzessmodul(Modul2);
+		S2.addProzessmodul(Modul4);
 		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = S2.getElementarflussvektor();
 		LinkedHashMap<ValueType, Double> vv = efv.get(r1);
 		assertEquals(-700., vv.get(ValueType.MeanValue), .001);
@@ -162,5 +158,90 @@ class ModulGruppenText {
 		assertEquals(793.02, vv.get(ValueType.LowerBound), .001);
 		assertEquals(807.02, vv.get(ValueType.UpperBound), .001);
 	}
-
+	
+	@Test
+	void testS12() {
+		init1();
+		FlowValueMapGroup.createInstance("G12", FVMGroupType.ProcessModule, p1, 1);
+		FlowValueMapGroup Group12 = FlowValueMapGroup.getInstance("G12");
+		Group12.addFlowValueMap(Modul1);
+		Group12.addFlowValueMap(Modul2);
+		S12.addProzessmodul(Group12);
+		S12.addProzessmodul(Modul4);	
+		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = S12.getElementarflussvektor();
+		LinkedHashMap<ValueType, Double> vv = efv.get(r1);
+		assertEquals(-725., vv.get(ValueType.MeanValue), .001);
+		assertEquals(-754.51, vv.get(ValueType.LowerBound), .001);
+		assertEquals(-695.02, vv.get(ValueType.UpperBound), .001);
+		vv = efv.get(r2);
+		assertEquals(-475., vv.get(ValueType.MeanValue), .001);
+		assertEquals(-505.02, vv.get(ValueType.LowerBound), .001);
+		assertEquals(-446.51, vv.get(ValueType.UpperBound), .001);
+		vv = efv.get(e1);
+		assertEquals(780., vv.get(ValueType.MeanValue), .001);
+		assertEquals(755.42, vv.get(ValueType.LowerBound), .001);
+		assertEquals(804.01, vv.get(ValueType.UpperBound), .001);
+		vv = efv.get(e2);
+		assertEquals(750., vv.get(ValueType.MeanValue), .001);
+		assertEquals(695.01, vv.get(ValueType.LowerBound), .001);
+		assertEquals(807.02, vv.get(ValueType.UpperBound), .001);
+	}
+	
+	@Test
+	void testS12m1() {
+		init1();
+		FlowValueMapGroup.createInstance("G12", FVMGroupType.ProcessModule, p1, 1);
+		FlowValueMapGroup Group12 = FlowValueMapGroup.getInstance("G12");
+		Group12.addFlowValueMap(Modul1);
+		Group12.addFlowValueMap(Modul2);
+		S12m1.addProzessmodul(Group12);
+		S12m1.addProzessmodul(Modul4);	
+		Group12.disableEntry(Modul1);
+		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = S12m1.getElementarflussvektor();
+		LinkedHashMap<ValueType, Double> vv = efv.get(r1);
+		assertEquals(-700., vv.get(ValueType.MeanValue), .001);
+		assertEquals(-705.02, vv.get(ValueType.LowerBound), .001);
+		assertEquals(-695.02, vv.get(ValueType.UpperBound), .001);
+		vv = efv.get(r2);
+		assertEquals(-500., vv.get(ValueType.MeanValue), .001);
+		assertEquals(-505.02, vv.get(ValueType.LowerBound), .001);
+		assertEquals(-495.02, vv.get(ValueType.UpperBound), .001);
+		vv = efv.get(e1);
+		assertEquals(760., vv.get(ValueType.MeanValue), .001);
+		assertEquals(755.42, vv.get(ValueType.LowerBound), .001);
+		assertEquals(764.62, vv.get(ValueType.UpperBound), .001);
+		vv = efv.get(e2);
+		assertEquals(800., vv.get(ValueType.MeanValue), .001);
+		assertEquals(793.02, vv.get(ValueType.LowerBound), .001);
+		assertEquals(807.02, vv.get(ValueType.UpperBound), .001);	
+	}
+	
+	@Test
+	void testS12m2() {
+		init1();
+		FlowValueMapGroup.createInstance("G12", FVMGroupType.ProcessModule, p1, 1);
+		FlowValueMapGroup Group12 = FlowValueMapGroup.getInstance("G12");
+		Group12.addFlowValueMap(Modul1);
+		Group12.addFlowValueMap(Modul2);
+		S12m2.addProzessmodul(Group12);
+		S12m2.addProzessmodul(Modul4);	
+		Group12.disableEntry(Modul2);
+		LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv = S12m2.getElementarflussvektor();
+		LinkedHashMap<ValueType, Double> vv = efv.get(r1);
+		assertEquals(-750., vv.get(ValueType.MeanValue), .001);
+		assertEquals(-754.51, vv.get(ValueType.LowerBound), .001);
+		assertEquals(-745.51, vv.get(ValueType.UpperBound), .001);
+		vv = efv.get(r2);
+		assertEquals(-450., vv.get(ValueType.MeanValue), .001);
+		assertEquals(-453.51, vv.get(ValueType.LowerBound), .001);
+		assertEquals(-446.51, vv.get(ValueType.UpperBound), .001);
+		vv = efv.get(e1);
+		assertEquals(800., vv.get(ValueType.MeanValue), .001);
+		assertEquals(796.01, vv.get(ValueType.LowerBound), .001);
+		assertEquals(804.01, vv.get(ValueType.UpperBound), .001);
+		vv = efv.get(e2);
+		assertEquals(700., vv.get(ValueType.MeanValue), .001);
+		assertEquals(695.01, vv.get(ValueType.LowerBound), .001);
+		assertEquals(705.01, vv.get(ValueType.UpperBound), .001);	
+	}
 }

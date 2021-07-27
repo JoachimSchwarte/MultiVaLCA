@@ -16,7 +16,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * zu Gruppen zusammengefasst werden.
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.714
+ * @version 0.715
  */
 
 public class FlowValueMapGroup extends MCAObject  
@@ -136,7 +136,7 @@ implements FlowValueMaps, ImpactValueMaps {
 				if (fvm.getElementarflussvektor().containsKey(f)) {
 					Double mv = efv.get(f).get(ValueType.MeanValue);
 					mv = mv + fvm.getElementarflussvektor().get(f).get(ValueType.MeanValue)/
-							fvm.getProduktflussvektor().get(refFlow).get(ValueType.MeanValue)*refValue/fvmList.size();
+							fvm.getProduktflussvektor().get(refFlow).get(ValueType.MeanValue)*refValue/getActiveList().size();
 					efv.get(f).put(ValueType.MeanValue, mv);
 					Double lb1 = efv.get(f).get(ValueType.LowerBound);
 					Double lb2 = fvm.getElementarflussvektor().get(f).get(ValueType.LowerBound)/
@@ -192,7 +192,7 @@ implements FlowValueMaps, ImpactValueMaps {
 				if (fvm.getProduktflussvektor().containsKey(f)) {
 					Double mv = pfv.get(f).get(ValueType.MeanValue);
 					mv = mv + fvm.getProduktflussvektor().get(f).get(ValueType.MeanValue)/
-							fvm.getProduktflussvektor().get(refFlow).get(ValueType.MeanValue)*refValue/fvmList.size();
+							fvm.getProduktflussvektor().get(refFlow).get(ValueType.MeanValue)*refValue/getActiveList().size();
 					pfv.get(f).put(ValueType.MeanValue, mv);
 					Double lb1 = pfv.get(f).get(ValueType.LowerBound);
 					Double lb2 = fvm.getProduktflussvektor().get(f).get(ValueType.LowerBound)/
