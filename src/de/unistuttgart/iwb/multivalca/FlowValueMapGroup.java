@@ -16,7 +16,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * zu Gruppen zusammengefasst werden.
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.710
+ * @version 0.713
  */
 
 public class FlowValueMapGroup extends MCAObject  
@@ -25,6 +25,9 @@ implements FlowValueMaps, ImpactValueMaps {
 	// Instanzvariablen:
 
 	private LinkedHashSet<FlowValueMaps> fvmList = new LinkedHashSet<FlowValueMaps>();
+	
+	private LinkedHashMap<FlowValueMaps, Boolean> fvmActive 
+	= new LinkedHashMap<FlowValueMaps, Boolean>();
 
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> efv 
 	= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
@@ -117,7 +120,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getElementarflussvektor() {
 		LinkedHashSet<String> flList = new LinkedHashSet<String>();
-		for (FlowValueMaps fvm : fvmList) {
+		for (FlowValueMaps fvm : getActiveList()) {
 			for (Flow fl : fvm.getElementarflussvektor().keySet()) {
 				flList.add(fl.getName());	
 			}
@@ -129,7 +132,7 @@ implements FlowValueMaps, ImpactValueMaps {
 			valueMap.put(ValueType.LowerBound, Double.POSITIVE_INFINITY);
 			valueMap.put(ValueType.UpperBound, Double.NEGATIVE_INFINITY);
 			efv.put(f, valueMap);		
-			for (FlowValueMaps fvm : fvmList) {
+			for (FlowValueMaps fvm : getActiveList()) {
 				if (fvm.getElementarflussvektor().containsKey(f)) {
 					Double mv = efv.get(f).get(ValueType.MeanValue);
 					mv = mv + fvm.getElementarflussvektor().get(f).get(ValueType.MeanValue)/
@@ -172,7 +175,7 @@ implements FlowValueMaps, ImpactValueMaps {
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor() {
 		LinkedHashSet<String> flList = new LinkedHashSet<String>();
-		for (FlowValueMaps fvm : fvmList) {
+		for (FlowValueMaps fvm : getActiveList()) {
 			for (Flow fl : fvm.getProduktflussvektor().keySet()) {
 				flList.add(fl.getName());	
 			}
@@ -184,7 +187,7 @@ implements FlowValueMaps, ImpactValueMaps {
 			valueMap.put(ValueType.LowerBound, Double.POSITIVE_INFINITY);
 			valueMap.put(ValueType.UpperBound, Double.NEGATIVE_INFINITY);
 			pfv.put(f, valueMap);
-			for (FlowValueMaps fvm : fvmList) {
+			for (FlowValueMaps fvm : getActiveList()) {
 				
 				if (fvm.getProduktflussvektor().containsKey(f)) {
 					Double mv = pfv.get(f).get(ValueType.MeanValue);
@@ -259,9 +262,19 @@ implements FlowValueMaps, ImpactValueMaps {
 	 * implementiert, sein.
 	 */
 
-
 	public void addFlowValueMap(FlowValueMaps fvm) {
 		fvmList.add(fvm);
+		fvmActive.put(fvm, true);
+	}
+	
+	public LinkedHashSet<FlowValueMaps> getActiveList(){
+		LinkedHashSet<FlowValueMaps> returnList = new LinkedHashSet<FlowValueMaps>();
+		for (FlowValueMaps fvm : fvmList) {
+			if (fvmActive.get(fvm).equals(true)) {
+				returnList.add(fvm);
+			}
+		}
+		return returnList;		
 	}
 
 	/**
