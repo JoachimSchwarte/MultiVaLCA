@@ -16,7 +16,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * zu Gruppen zusammengefasst werden.
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.713
+ * @version 0.714
  */
 
 public class FlowValueMapGroup extends MCAObject  
@@ -275,6 +275,18 @@ implements FlowValueMaps, ImpactValueMaps {
 			}
 		}
 		return returnList;		
+	}
+	
+	public void enableEntry(FlowValueMaps fvm) {
+		if (fvmList.contains(fvm)) {
+			fvmActive.put(fvm, true);
+		}				
+	}
+	
+	public void disableEntry(FlowValueMaps fvm) {
+		if (fvmList.contains(fvm)) {
+			fvmActive.put(fvm, false);
+		}				
 	}
 
 	/**
