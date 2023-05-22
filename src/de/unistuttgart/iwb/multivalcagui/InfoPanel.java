@@ -16,7 +16,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.8
+ * @version 0.801
  */
 
 public class InfoPanel extends MCAPanel{
