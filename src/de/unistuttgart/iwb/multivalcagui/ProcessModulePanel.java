@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.541
+ * @version 0.802
  */
 
 public class ProcessModulePanel extends MCAPanel{
@@ -51,6 +51,9 @@ public class ProcessModulePanel extends MCAPanel{
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private LabeledInputDialog namePMdi = new LabeledInputDialog(lblP02n2, txtP02n1);
+	private LabeledInputDialog nameFLdi = new LabeledInputDialog(lblP02n3, txtP02n2);
+	private LabeledInputDialog mENGEdi = new LabeledInputDialog(lblP02n4, txtP02n3);
 	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP02n6, lblP02n7, txtP02n4, txtP02n5);
 
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -68,32 +71,21 @@ public class ProcessModulePanel extends MCAPanel{
 				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));		
 		Integer pos=0;
 		add(lblP02n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
-		add(lblP02n2, "cell 1 "+(++pos).toString()+",grow");		
-		txtP02n1.setText("");
-		add(txtP02n1, "cell 2 "+pos.toString()+",grow");
-		txtP02n1.setColumns(10);		
+		pos = namePMdi.draw(pos, this);
 		add(btnP02n1, "cell 1 "+(++pos).toString()+" 2 1,alignx center");		
-		add(lblP02n3, "cell 1 "+(++pos).toString()+",grow");	
-		txtP02n2.setText("");
-		add(txtP02n2, "cell 2 "+pos.toString()+",grow");
-		txtP02n2.setColumns(10);
-		txtP02n2.setEnabled(false);	
-		add(lblP02n4, "cell 1 "+(++pos).toString()+",grow");
-		txtP02n3.setText("");
-		add(txtP02n3, "cell 2 "+pos.toString()+",grow");
-		txtP02n3.setColumns(10);
-		txtP02n3.setEnabled(false);		
-		btnP02n2.setEnabled(false);
+		pos = nameFLdi.draw(pos, this);
+		pos = mENGEdi.draw(pos, this);	
 		add(btnP02n2, "cell 1 "+(++pos).toString()+" 2 1,alignx center");
 		pos = lud.draw(pos, this);
-		btnP02n3.setEnabled(false);
 		add(btnP02n3, "cell 1 "+(++pos).toString()+",alignx center");
-		btnP02n4.setEnabled(false);
 		add(btnP02n4, "cell 2 "+pos.toString()+",alignx center");
-		add(lblP02n5, "cell 0 "+(++pos).toString()+" 4 1,alignx center");		
-		
-		
-		
+		add(lblP02n5, "cell 0 "+(++pos).toString()+" 4 1,alignx center");
+		txtP02n2.setEnabled(false);	
+		txtP02n3.setEnabled(false);	
+		btnP02n2.setEnabled(false);
+		btnP02n3.setEnabled(false);
+		btnP02n4.setEnabled(false);
+			
 		button1();		
 		button2();		
 		button3();		
