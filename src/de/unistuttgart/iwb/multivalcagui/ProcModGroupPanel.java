@@ -4,7 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
@@ -27,7 +29,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.803
  */
 
 public class ProcModGroupPanel extends MCAPanel{
@@ -53,6 +55,11 @@ public class ProcModGroupPanel extends MCAPanel{
 	private LabeledInputDialog nameRPdi = new LabeledInputDialog(lbl03, txt02);
 	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lbl04, txt03);
 	private LabeledInputDialog nameHMdi = new LabeledInputDialog(lbl05, txt04);
+	
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int height = (int) screen.getHeight();
+	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
+	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	protected ProcModGroupPanel(String key) {
 		super(key);
@@ -60,11 +67,10 @@ public class ProcModGroupPanel extends MCAPanel{
 	}
 	
 	private void initUI( ) {
-		setLayout(new MigLayout("", "[108px,grow][108px][108px][108px,grow]", 
-				"[20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px][20px,grow]"));		
-		lbl01.setFont(new Font("Tahoma", Font.BOLD, 14));
+		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));			
 		Integer pos=0;
-		add(lbl01, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny top");	
+		add(lbl01, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		pos = nameNGdi.draw(pos, this);			
 		pos = nameRPdi.draw(pos, this);		
 		pos = wertMEdi.draw(pos, this);	
@@ -176,6 +182,21 @@ public class ProcModGroupPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		
+		txt01.setFont(generalfont);
+		txt02.setFont(generalfont);
+		txt03.setFont(generalfont);
+		txt04.setFont(generalfont);
+		lbl01.setFont(titlefont);
+		lbl02.setFont(generalfont);
+		lbl03.setFont(generalfont);
+		lbl04.setFont(generalfont);
+		lbl05.setFont(generalfont);
+		lbl06.setFont(generalfont);
+		btn01.setFont(generalfont);
+		btn02.setFont(generalfont);
+		btn03.setFont(generalfont);
+		
 		lbl01.setText(bundle.getString("p02n7"));
 		lbl02.setText(bundle.getString("p02n8"));
 		lbl03.setText(bundle.getString("p02n9"));

@@ -27,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.537
+ * @version 0.803
  */
 
 public class FlowPanel extends MCAPanel{
@@ -59,7 +59,7 @@ public class FlowPanel extends MCAPanel{
 	private void initUI( ) {
 		
 		setLayout(new MigLayout("", "[grow][20%][20%][grow]", "      [8%]2%[4%]2%[4%]2%[4%]8%[4%]2%[4%]2%[4%][grow]"));	
-		add(lblP01n1, "flowy, cell 1 0 2 1, alignx center, growy");						//Spalte 3, Zeile 1
+		add(lblP01n1, "flowy, cell 1 0 2 1, alignx center,aligny center");						//Spalte 3, Zeile 1
 		add(lblP01n2, "cell 1 1,grow");								//Spalte 2, Zeile 2
 		//txtP01n1.setText("");
 		add(txtP01n1, "cell 2 1,grow");								//Spalte 3, Zeile 3

@@ -28,7 +28,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.803
  */
 
 public class DeklarationPanel extends MCAPanel {
@@ -74,10 +74,10 @@ public class DeklarationPanel extends MCAPanel {
 	private void initUI() {
 		
 		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
-				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));
-			
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));
+		
 		Integer pos=0;
-		add(lblP17n1, "cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
+		add(lblP17n1, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		pos = namePNdi.draw(pos, this);	
 		add(lblP17n3, "cell 1 "+(++pos).toString()+",grow");	
 		comboBox_2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
