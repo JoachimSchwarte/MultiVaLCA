@@ -24,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.804
+ * @version 0.805
  */
 
 public class FlowPanel extends MCAPanel{
@@ -38,6 +38,9 @@ public class FlowPanel extends MCAPanel{
 	private JButton btnP01n1 = new JButton();			// "speichern" 
 	private JComboBox<String> cbbP01n1 = new JComboBox<String>();
 	private JComboBox<FlowUnit> cbbP01n2 = new JComboBox<FlowUnit>();
+	private LabeledInputDialog nameFLdi = new LabeledInputDialog(lblP01n2, txtP01n1);
+	private LabeledInputComboBox<String> nameMOdi = new LabeledInputComboBox<String>(lblP01n3, cbbP01n1);
+	private LabeledInputComboBox<FlowUnit> namePSdi = new LabeledInputComboBox<FlowUnit>(lblP01n4, cbbP01n2);
 	
 	public FlowPanel(String key) {
 		super(key);
@@ -47,18 +50,13 @@ public class FlowPanel extends MCAPanel{
 	private void initUI( ) {
 		
 		setLayout(new MigLayout("", "[grow][20%][20%][grow]", "      [8%]2%[4%]2%[4%]2%[4%]8%[4%]2%[4%]2%[4%][grow]"));	
-		add(lblP01n1, "flowy, cell 1 0 2 1, alignx center,aligny center");						//Spalte 3, Zeile 1
-		add(lblP01n2, "cell 1 1,grow");								//Spalte 2, Zeile 2
-		//txtP01n1.setText("");
-		add(txtP01n1, "cell 2 1,grow");								//Spalte 3, Zeile 3
-		txtP01n1.setColumns(5);	
-		add(lblP01n3, "cell 1 2,grow");	
-		add(cbbP01n1, "cell 2 2,grow");	
-		add(lblP01n4, "cell 1 3,grow");		
-		cbbP01n2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
-		add(cbbP01n2, "cell 2 3,grow");			
-		add(btnP01n1, "cell 1 4 2 1, center");			//Spalte 1, Zeile 4, Spalte 2, Zeile 1
-		add(lblP01n5, "cell 1 5 2 1, center");	
+		add(lblP01n1, "flowy, cell 1 0 2 1, alignx center,aligny center");	
+		Integer pos=0;
+		pos = nameFLdi.draw(pos, this);
+		pos = nameMOdi.draw(pos, this);
+		pos = namePSdi.draw(pos, this);		
+		add(btnP01n1, "cell 1 "+(++pos).toString()+" 2 1, center");			
+		add(lblP01n5, "cell 1 "+(++pos).toString()+" 2 1, center");	
 		
 		btnP01n1.addActionListener(new ActionListener() {
 			@Override
@@ -131,6 +129,8 @@ public class FlowPanel extends MCAPanel{
 			fta[i] = ftl;
 			i++;
 		}
+		cbbP01n2.setModel(new DefaultComboBoxModel<FlowUnit>(FlowUnit.values()));
 		cbbP01n1.setModel(new DefaultComboBoxModel<String>(fta));
+//		cbbP01n1.setModel(new DefaultComboBoxModel<String>(fta));
 	}
 }

@@ -4,15 +4,11 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -31,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.804
+ * @version 0.805
  */
 
 public class ProductSystemPanel extends MCAPanel{
@@ -55,10 +51,6 @@ public class ProductSystemPanel extends MCAPanel{
 	private JButton btnP03n5 = new JButton();			// "weiter"
 	private JButton btnP03n6 = new JButton();			// "VK-Flow hinzufügen"
 	private JButton btnP03n7 = new JButton();			// "fertig"
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	private LabeledInputDialog namePSdi = new LabeledInputDialog(lblP03n2, txtP03n1);
 	private LabeledInputDialog nameMOdi = new LabeledInputDialog(lblP03n3, txtP03n2);
 	private LabeledInputDialog nameBVdi = new LabeledInputDialog(lblP03n4, txtP03n3);

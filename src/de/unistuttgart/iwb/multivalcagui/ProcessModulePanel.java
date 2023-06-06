@@ -4,13 +4,9 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -25,7 +21,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.804
+ * @version 0.805
  */
 
 public class ProcessModulePanel extends MCAPanel{
@@ -47,10 +43,7 @@ public class ProcessModulePanel extends MCAPanel{
 	private JButton btnP02n4 = new JButton();			// "fertig"
 	private JButton btnP02n3 = new JButton();			// "Fluss hinzufügen"
 	private JButton reldifButton = new JButton(); 		// "Prozentsatz anwenden"
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+
 	private LabeledInputDialog namePMdi = new LabeledInputDialog(lblP02n2, txtP02n1);
 	private LabeledInputDialog nameFLdi = new LabeledInputDialog(lblP02n3, txtP02n2);
 	private LabeledInputDialog mENGEdi = new LabeledInputDialog(lblP02n4, txtP02n3);

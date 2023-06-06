@@ -4,14 +4,10 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -29,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.804
+ * @version 0.805
  */
 
 public class ProcModGroupPanel extends MCAPanel{
@@ -47,10 +43,7 @@ public class ProcModGroupPanel extends MCAPanel{
 	private JButton btn02 = new JButton(); 			// "Modul zur Gruppe hinzufügen"
 	private JButton btn03 = new JButton(); 			// "fertig"
 	private JLabel lbl06 = new JLabel(); 			// Status
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+
 	private LabeledInputDialog nameNGdi = new LabeledInputDialog(lbl02, txt01);
 	private LabeledInputDialog nameRPdi = new LabeledInputDialog(lbl03, txt02);
 	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lbl04, txt03);

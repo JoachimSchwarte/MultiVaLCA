@@ -4,9 +4,7 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -30,7 +28,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.711
+ * @version 0.805
  */
 
 public class CompositionGroupPanel extends MCAPanel{
@@ -50,12 +48,7 @@ public class CompositionGroupPanel extends MCAPanel{
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 	private LabeledInputDialog nameNGdi = new LabeledInputDialog(lbl02, txt01);
-	private LabeledInputComboBox namePDi = new LabeledInputComboBox(lbl05, cobP23n1);
-	
-	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	private int height = (int) screen.getHeight();
-	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
-	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
+	private LabeledInputComboBox<String> namePDi = new LabeledInputComboBox<String>(lbl05, cobP23n1);
 
 	protected CompositionGroupPanel(String key) {
 		super(key);
