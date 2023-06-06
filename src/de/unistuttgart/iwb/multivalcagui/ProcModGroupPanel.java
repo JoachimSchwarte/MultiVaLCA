@@ -29,7 +29,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.803
+ * @version 0.804
  */
 
 public class ProcModGroupPanel extends MCAPanel{
@@ -55,11 +55,6 @@ public class ProcModGroupPanel extends MCAPanel{
 	private LabeledInputDialog nameRPdi = new LabeledInputDialog(lbl03, txt02);
 	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lbl04, txt03);
 	private LabeledInputDialog nameHMdi = new LabeledInputDialog(lbl05, txt04);
-	
-	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	private int height = (int) screen.getHeight();
-	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
-	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	protected ProcModGroupPanel(String key) {
 		super(key);

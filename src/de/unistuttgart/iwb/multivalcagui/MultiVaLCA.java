@@ -37,32 +37,32 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.803
+ * @version 0.804
  */
 
 public class MultiVaLCA {
 
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.803";
-	private String dateString ="05.06.2023";
+	private String versionString ="Version 0.804";
+	private String dateString ="06.06.2023";
 
-	private JFrame frame = new JFrame();
-	private JPanel panel = new JPanel();
+	private JFrame frame  = new JFrame();
+	private JPanel panel  = new JPanel();
 	private CardLayout cl = new CardLayout(0, 0);
-	private final Action newModuleAction 		= new newModuleAction();
-	private final Action newProductSystemAction = new newProductSystemAction();
-	private final Action processModuleListAction 		= new processModuleListAction();
+	private final Action newModuleAction 		 = new newModuleAction();
+	private final Action newProductSystemAction  = new newProductSystemAction();
+	private final Action processModuleListAction = new processModuleListAction();
 	private final Action productSystemListAction = new productSystemListAction(); 
-	private final Action newDeclarationAction 	= new newDeclarationAction();
-	private final Action declarationListAction 	= new declarationListAction();
-	private final Action newComponentAction 	= new newComponentAction();
-	private final Action newCompositionAction 	= new newCompositionAction();
-	private final Action componentListAction	= new componentListAction();
-	private final Action compositionListAction = new compositionListAction();
-	private final Action prefsAction 			= new prefsAction();
-	private final Action prefsAction2 			= new prefsAction2();
-	private final Action xmlExportAction 		= new XMLExportAction(l);
-	private final Action xmlImportAction 		= new XMLImportAction(l);
+	private final Action newDeclarationAction 	 = new newDeclarationAction();
+	private final Action declarationListAction 	 = new declarationListAction();
+	private final Action newComponentAction 	 = new newComponentAction();
+	private final Action newCompositionAction 	 = new newCompositionAction();
+	private final Action componentListAction	 = new componentListAction();
+	private final Action compositionListAction   = new compositionListAction();
+	private final Action prefsAction 			 = new prefsAction();
+	private final Action prefsAction2 			 = new prefsAction2();
+	private final Action xmlExportAction 		 = new XMLExportAction(l);
+	private final Action xmlImportAction 		 = new XMLImportAction(l);
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	private int width = (int) screen.getWidth();
 	private int height = (int) screen.getHeight();
@@ -73,7 +73,7 @@ public class MultiVaLCA {
 	//
 	// Panel 5; Sprachauswahl
 	//
-	private JPanel panel_5 = new JPanel();
+	private JPanel panel_5  = new JPanel();
 	private JPanel panel_5b = new JPanel();
 	private JLabel lblP05n1 = new JLabel();				// "Sprachauswahl"
 	private JLabel lblP05n2 = new JLabel();				// "Sprache"
@@ -168,7 +168,7 @@ public class MultiVaLCA {
 		// 
 		// Panel 3b; Neue Systemgruppe
 		//
-		panel.add(new SystemGroupPanel("neuSystemGroup"), "neuSystemGroup");
+		panel.add(new ProdSysGroupPanel("neuSystemGroup"), "neuSystemGroup");
 		//
 		// Panel 4; Info
 		//
@@ -212,11 +212,11 @@ public class MultiVaLCA {
 		//
 		// Panel 8; Produktsystemliste
 		//
-		panel.add(new ProductSystemListPanel("listePS"), "listePS");	
+		panel.add(new ProdSysListPanel("listePS"), "listePS");	
         //		
 		// Panel 8b; Liste der Systemgruppen
 		//
-		panel.add(new SystemGroupListPanel("listSystemGroup"), "listSystemGroup");
+		panel.add(new ProdSysGroupListPanel("listSystemGroup"), "listSystemGroup");
 		//
 		// Panel 9; LCI Berechnung
 		//

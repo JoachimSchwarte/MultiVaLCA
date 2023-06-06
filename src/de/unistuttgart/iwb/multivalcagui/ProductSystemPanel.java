@@ -31,7 +31,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.804
  */
 
 public class ProductSystemPanel extends MCAPanel{
@@ -64,10 +64,6 @@ public class ProductSystemPanel extends MCAPanel{
 	private LabeledInputDialog nameBVdi = new LabeledInputDialog(lblP03n4, txtP03n3);
 	private LabeledInputDialog wertBVdi = new LabeledInputDialog(lblP03n5, txtP03n4);
 	private LabeledInputDialog nameVKdi = new LabeledInputDialog(lblP03n6, txtP03n5);
-	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	private int height = (int) screen.getHeight();
-	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
-	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	protected ProductSystemPanel(String key) {
 		super(key);

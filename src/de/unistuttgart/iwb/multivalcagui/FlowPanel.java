@@ -4,9 +4,6 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -27,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.803
+ * @version 0.804
  */
 
 public class FlowPanel extends MCAPanel{
@@ -41,15 +38,6 @@ public class FlowPanel extends MCAPanel{
 	private JButton btnP01n1 = new JButton();			// "speichern" 
 	private JComboBox<String> cbbP01n1 = new JComboBox<String>();
 	private JComboBox<FlowUnit> cbbP01n2 = new JComboBox<FlowUnit>();
-	private Language l = GUILanguage.getChosenLanguage();
-	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
-	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
-	
-	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	private int height = (int) screen.getHeight();
-	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
-	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 	
 	public FlowPanel(String key) {
 		super(key);
@@ -114,10 +102,10 @@ public class FlowPanel extends MCAPanel{
 	
 	@Override
 	public void showSelf() {
-		l = GUILanguage.getChosenLanguage();
-		locale = MultiVaLCA.LANGUAGES.get(l);
-		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
-		bundle = ResourceBundle.getBundle(baseName, locale);
+		Language l = GUILanguage.getChosenLanguage();
+		Locale locale = MultiVaLCA.LANGUAGES.get(l);
+		String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
+		ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
 		
 		lblP01n1.setFont(titlefont);
 		txtP01n1.setFont(generalfont);

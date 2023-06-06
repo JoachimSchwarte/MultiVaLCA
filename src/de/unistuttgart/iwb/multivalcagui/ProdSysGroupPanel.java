@@ -19,30 +19,32 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import de.unistuttgart.iwb.multivalca.FVMGroupType;
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowType;
-import de.unistuttgart.iwb.multivalca.ProcessModule;
-//import de.unistuttgart.iwb.multivalca.ProcessModuleGroup;
+import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
+import de.unistuttgart.iwb.multivalca.FlowValueMaps;
+import de.unistuttgart.iwb.multivalca.ProductSystem;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * @author Dr.-Ing. Joachim Schwarte
- * @version 0.702
+ * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
+ * @version 0.804
  */
 
-public class ProModGroupPanel extends MCAPanel{
+public class ProdSysGroupPanel extends MCAPanel{
 	
 	private JTextField txt01 = new JTextField();	// Eingabefeld Gruppenname
 	private JTextField txt02 = new JTextField();	// Eingabefeld Flussname
 	private JTextField txt03 = new JTextField();	// Eingabefeld Menge
-	private JTextField txt04 = new JTextField();	// Eingabefeld Modulname
-	private JLabel lbl01 = new JLabel(); 			// "Neue Prozessmodulgruppe"
+	private JTextField txt04 = new JTextField();	// Eingabefeld Modul-/Subsystemname
+	private JLabel lbl01 = new JLabel(); 			// "Neue Subsystemgruppe"
 	private JLabel lbl02 = new JLabel(); 			// "Name der Gruppe"
 	private JLabel lbl03 = new JLabel(); 			// "relevanter Produktfluss"
 	private JLabel lbl04 = new JLabel(); 			// "Menge"
 	private JButton btn01 = new JButton(); 			// "neue Gruppe anlegen"
-	private JLabel lbl05 = new JLabel(); 			// "Name des hinzuzufügenden Moduls"
-	private JButton btn02 = new JButton(); 			// "Modul zur Gruppe hinzufügen"
+	private JLabel lbl05 = new JLabel(); 			// "Name des hinzuzufügenden Subsystem"
+	private JButton btn02 = new JButton(); 			// "Modul/Subsystem zur Gruppe hinzufügen"
 	private JButton btn03 = new JButton(); 			// "fertig"
 	private JLabel lbl06 = new JLabel(); 			// Status
 	private Language l = GUILanguage.getChosenLanguage();
@@ -53,20 +55,15 @@ public class ProModGroupPanel extends MCAPanel{
 	private LabeledInputDialog nameRPdi = new LabeledInputDialog(lbl03, txt02);
 	private LabeledInputDialog wertMEdi = new LabeledInputDialog(lbl04, txt03);
 	private LabeledInputDialog nameHMdi = new LabeledInputDialog(lbl05, txt04);
-	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	private int height = (int) screen.getHeight();
-	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
-	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
-	protected ProModGroupPanel(String key) {
+	protected ProdSysGroupPanel(String key) {
 		super(key);
 		initUI();
 	}
 	
 	private void initUI( ) {
 		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
-				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));		
-		lbl01.setFont(titlefont);
+				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));	
 		Integer pos=0;
 		add(lbl01, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		pos = nameNGdi.draw(pos, this);			
@@ -90,7 +87,9 @@ public class ProModGroupPanel extends MCAPanel{
 		btn01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean inputOK = true;
+				Double menge = 0.0;
 				if (wertMEdi.isPosNum(lbl06, bundle.getString("stat07"), bundle.getString("stat26"))) {
+					menge = wertMEdi.getNum(lbl06, bundle.getString("stat07"), bundle.getString("stat26"));
 				}
 				else {
 					inputOK = false;
@@ -105,19 +104,19 @@ public class ProModGroupPanel extends MCAPanel{
 				String flname = nameRPdi.getTextOld(bundle.getString("stat37"), testSet2, lbl06, bundle.getString("stat07"));
 	
 				LinkedHashMap<String, Set<String>> testMap1 = new LinkedHashMap<String, Set<String>>();
-			//	testMap1.put(bundle.getString("stat44"), ProcessModuleGroup.getAllInstances().keySet());
+				testMap1.put(bundle.getString("stat441"), FlowValueMapGroup.getAllInstances().keySet());
 				String name = nameNGdi.getTextNew(testMap1, lbl06, bundle.getString("stat02"), bundle.getString("stat03"));	
 	
 				if (inputOK && !"".equals(flname) && !"".equals(name)) {
-				//	ProcessModuleGroup.createInstance(name, Flow.getInstance(flname), menge);
+					FlowValueMapGroup.createInstance(name, FVMGroupType.ProductSystem, Flow.getInstance(flname), menge);
 					txt01.setEnabled(false);
 					txt02.setEnabled(false);
 					txt03.setEnabled(false);
 					btn01.setEnabled(false);
 					txt04.setEnabled(true);
 					btn02.setEnabled(true);
-				//	lbl06.setText(bundle.getString("stat40") + ProcessModuleGroup.getAllInstances().get(txt01.getText()).getModList().size()
-				//			+ bundle.getString("stat41"));
+					lbl06.setText(bundle.getString("stat40") + FlowValueMapGroup.getAllInstances().get(txt01.getText()).getFVMList().size()
+							+ bundle.getString("stat41"));
 				}				
 			}			
 		});
@@ -133,21 +132,22 @@ public class ProModGroupPanel extends MCAPanel{
 					nameOk = false;
 					lbl06.setText(bundle.getString("stat02"));
 				} 
-				if (nameOk && !ProcessModule.getAllInstances().containsKey(name)) {
+				if (nameOk && !ProductSystem.getAllInstances().containsKey(name)) {
 					nameOk = false;
-					lbl06.setText(bundle.getString("stat38"));
-				}
-				if (nameOk && !ProcessModule.getAllInstances().get(name).getProduktflussvektor().containsKey(Flow.getAllInstances().get(flname))) {
+					lbl06.setText(bundle.getString("stat381"));
+				}				
+				if (nameOk && !ProductSystem.getAllInstances().get(name).getProduktflussvektor().containsKey(Flow.getAllInstances().get(flname))) {
 					nameOk = false;
-					lbl06.setText(bundle.getString("stat39"));					
+					lbl06.setText(bundle.getString("stat391"));					
 				}
+				
 				if (nameOk) {
-				//	ProcessModuleGroup.getAllInstances().get(txt01.getText()).addModule(ProcessModule.getAllInstances().get(txt04.getText()));
-				//	lbl06.setText(bundle.getString("stat40") + ProcessModuleGroup.getAllInstances().get(txt01.getText()).getModList().size()
-			//				+ bundle.getString("stat41"));
+					FlowValueMapGroup.getAllInstances().get(txt01.getText()).addFlowValueMap((FlowValueMaps)ProductSystem.getAllInstances().get(txt04.getText()));
+					lbl06.setText(bundle.getString("stat40") + FlowValueMapGroup.getAllInstances().get(txt01.getText()).getFVMList().size()
+							+ bundle.getString("stat41"));
 					btn03.setEnabled(true);
 					txt04.setText("");
-				}			
+				}	
 			}
 		});
 	}
@@ -178,6 +178,7 @@ public class ProModGroupPanel extends MCAPanel{
 		locale = MultiVaLCA.LANGUAGES.get(l);
 		baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 		bundle = ResourceBundle.getBundle(baseName, locale);
+		
 		txt01.setFont(generalfont);
 		txt02.setFont(generalfont);
 		txt03.setFont(generalfont);
@@ -186,21 +187,20 @@ public class ProModGroupPanel extends MCAPanel{
 		lbl02.setFont(generalfont);
 		lbl03.setFont(generalfont);
 		lbl04.setFont(generalfont);
-		btn01.setFont(generalfont);
 		lbl05.setFont(generalfont);
+		lbl06.setFont(generalfont);
+		btn01.setFont(generalfont);
 		btn02.setFont(generalfont);
 		btn03.setFont(generalfont);
-		lbl06.setFont(generalfont);
 		
-		lbl01.setText(bundle.getString("p20n1"));
-		lbl02.setText(bundle.getString("p20n2"));
-		lbl03.setText(bundle.getString("p20n3"));
+		lbl01.setText(bundle.getString("p03n7"));
+		lbl02.setText(bundle.getString("p02n8"));
+		lbl03.setText(bundle.getString("p02n9"));
 		lbl04.setText(bundle.getString("p02n4"));
-		lbl05.setText(bundle.getString("p20n4"));
+		lbl05.setText(bundle.getString("p03n8"));
 		lbl06.setText(bundle.getString("stat01"));
 		btn01.setText(bundle.getString("bt16"));
-		btn02.setText(bundle.getString("bt17"));
-		btn02.setText(bundle.getString("bt17"));
+		btn02.setText(bundle.getString("bt18"));
 		btn03.setText(bundle.getString("bt04"));
 		
 	}

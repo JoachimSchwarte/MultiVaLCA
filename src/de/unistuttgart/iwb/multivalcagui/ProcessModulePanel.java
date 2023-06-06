@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.802
+ * @version 0.804
  */
 
 public class ProcessModulePanel extends MCAPanel{
@@ -55,11 +55,6 @@ public class ProcessModulePanel extends MCAPanel{
 	private LabeledInputDialog nameFLdi = new LabeledInputDialog(lblP02n3, txtP02n2);
 	private LabeledInputDialog mENGEdi = new LabeledInputDialog(lblP02n4, txtP02n3);
 	private LowerUpperDialog lud = new LowerUpperDialog(reldifText, reldifButton, lblP02n6, lblP02n7, txtP02n4, txtP02n5);
-
-	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	private int height = (int) screen.getHeight();
-	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
-	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
 	protected ProcessModulePanel(String key) {
 		super(key);

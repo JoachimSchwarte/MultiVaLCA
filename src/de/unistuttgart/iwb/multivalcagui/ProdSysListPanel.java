@@ -27,10 +27,10 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.804
  */
 
-public class ProductSystemListPanel extends MCAPanel {
+public class ProdSysListPanel extends MCAPanel {
 	
 	private JLabel lblP08n1 = new JLabel();
 	private JTable psTable 		= new JTable();
@@ -41,7 +41,7 @@ public class ProductSystemListPanel extends MCAPanel {
 	private Font titlefont = new Font ("Tahoma", Font.BOLD, height *22/1000);
 	private Font generalfont = new Font ("Tahoma", Font.LAYOUT_LEFT_TO_RIGHT, height *15/1000);
 
-	protected ProductSystemListPanel(String key) {
+	protected ProdSysListPanel(String key) {
 		super(key);
 		initUI();
 	}
