@@ -37,8 +37,9 @@ public class EvalMethodPanel extends MCAPanel{
 	private JLabel lblP14n4 = new JLabel(); 			// "Charakterisierungsfaktor"
 	private JLabel lblP14n5 = new JLabel(); 			// Status
 	private JButton btnP14n1 = new JButton(); 			// "neue Bewertungsmethode anlegen"
-	private JButton btnP14n2 = new JButton(); 			// Wirkungskategorie "hinzuf�gen"
-	private JButton btnP14n3 = new JButton(); 			// Charakterisierungsfaktor "hinzuf�gen"
+	private JButton btnP14n2 = new JButton(); 			// Wirkungskategorie "hinzufügen"
+ 	private JButton btnP14n5 = new JButton();           // "Weiter"
+	private JButton btnP14n3 = new JButton(); 			// Charakterisierungsfaktor "hinzufügen"
 	private JButton btnP14n4 = new JButton(); 			// "fertig"
 	private Language l = GUILanguage.getChosenLanguage();
 	private Locale locale = MultiVaLCA.LANGUAGES.get(l);
@@ -71,7 +72,9 @@ public class EvalMethodPanel extends MCAPanel{
 		txtP14n2.setColumns(10);	
 		txtP14n2.setEnabled(false);		
 		btnP14n2.setEnabled(false);
-		add(btnP14n2, "cell 1 4 2 1,alignx center");				
+		add(btnP14n2, "cell 1 4,alignx center");
+		btnP14n5.setEnabled(false);
+		add(btnP14n5, "cell 2 4,alignx center");  //"Weiter"
 		add(lblP14n4, "cell 1 5,grow");		
 		txtP14n3.setText("");
 		add(txtP14n3, "cell 2 5,grow");
@@ -87,6 +90,7 @@ public class EvalMethodPanel extends MCAPanel{
 		button2();
 		button3();
 		button4();
+		button5();
 	}
 	
 	private void button1() {
@@ -109,6 +113,7 @@ public class EvalMethodPanel extends MCAPanel{
 					txtP14n2.setEnabled(true);
 					txtP14n3.setEnabled(true);
 					btnP14n1.setEnabled(false);
+					btnP14n5.setEnabled(false);
 					btnP14n2.setEnabled(true);
 					btnP14n3.setEnabled(true);
 					lblP14n5.setText(bundle.getString("stat28") + 
@@ -135,11 +140,13 @@ public class EvalMethodPanel extends MCAPanel{
 				if (inputOK) {
 					LCIAMethod.instance(nameILCA).addCategory(ImpactCategory.getInstance(nameWK));
 					btnP14n4.setEnabled(true);
+					btnP14n5.setEnabled(true);
 					lblP14n5.setText(bundle.getString("stat28") + 
 							LCIAMethod.instance(nameILCA).categoryList().size() +
 							bundle.getString("stat29") +
 							LCIAMethod.instance(nameILCA).getFactorSet().size() +
 							bundle.getString("stat05"));
+					txtP14n2.setText("");//Wirkungskategorie löschen
 				}			
 			}
 		});
@@ -164,6 +171,7 @@ public class EvalMethodPanel extends MCAPanel{
 							bundle.getString("stat29") +
 							LCIAMethod.instance(nameILCA).getFactorSet().size() +
 							bundle.getString("stat05"));
+					txtP14n3.setText("");//Charakterisierungsfaktor löschen
 				}
 			}
 		});
@@ -174,6 +182,7 @@ public class EvalMethodPanel extends MCAPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				btnP14n1.setEnabled(true);
+				btnP14n5.setEnabled(false);
 				btnP14n2.setEnabled(false);
 				btnP14n3.setEnabled(false);
 				btnP14n4.setEnabled(false);
@@ -187,6 +196,19 @@ public class EvalMethodPanel extends MCAPanel{
 			}
 		});	
 	}		
+	
+	private void button5() {
+		btnP14n5.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			btnP14n2.setEnabled(false);
+			txtP14n2.setEnabled(false);
+			btnP14n5.setEnabled(false);
+			}
+			});
+		
+		
+	}//Weiter botton
 
 	@Override
 	public void showSelf() {
@@ -207,6 +229,7 @@ public class EvalMethodPanel extends MCAPanel{
 		btnP14n2.setFont(generalfont);
 		btnP14n3.setFont(generalfont);
 		btnP14n4.setFont(generalfont);
+		btnP14n5.setFont(generalfont);
 		
 		lblP14n1.setText(bundle.getString("p14n1"));
 		lblP14n2.setText(bundle.getString("p14n2"));
@@ -216,7 +239,8 @@ public class EvalMethodPanel extends MCAPanel{
 		btnP14n1.setText(bundle.getString("bt01"));
 		btnP14n2.setText(bundle.getString("bt11"));	
 		btnP14n3.setText(bundle.getString("bt11"));	
-		btnP14n4.setText(bundle.getString("bt04"));		
+		btnP14n4.setText(bundle.getString("bt04"));
+		btnP14n5.setText(bundle.getString("bt07"));
 	}
 }
 
