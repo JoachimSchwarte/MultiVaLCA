@@ -4,7 +4,6 @@
 
 package de.unistuttgart.iwb.multivalcagui;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -28,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.805
+ * @version 0.810
  */
 
 public class CompositionGroupPanel extends MCAPanel{
@@ -58,7 +57,6 @@ public class CompositionGroupPanel extends MCAPanel{
 	private void initUI( ) {
 		setLayout(new MigLayout("", "[grow][20%][20%][grow]", 
 				"[8%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%]2%[4%][grow]"));	
-		lbl01.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Integer pos=0;
 		add(lbl01, "flowy,cell 1 "+pos.toString()+" 2 1,alignx center,aligny center");	
 		pos = nameNGdi.draw(pos, this);			
@@ -146,12 +144,14 @@ public class CompositionGroupPanel extends MCAPanel{
 		bundle = ResourceBundle.getBundle(baseName, locale);
 		
 		lbl01.setFont(titlefont);
+		txt01.setFont(generalfont);
 		lbl02.setFont(generalfont);
 		lbl05.setFont(generalfont);
 		lbl06.setFont(generalfont);
 		btn01.setFont(generalfont);
 		btn02.setFont(generalfont);
 		btn03.setFont(generalfont);
+		cobP23n1.setFont(generalfont);
 
 		lbl01.setText(bundle.getString("p19n5"));
 		lbl02.setText(bundle.getString("p02n8"));
@@ -168,8 +168,4 @@ public class CompositionGroupPanel extends MCAPanel{
 		}			
 		cobP23n1.setModel(new DefaultComboBoxModel<String>(nameVektor));
 	}
-
-
-
-
 }

@@ -27,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.805
+ * @version 0.810
  */
 
 public class ComponentGroupPanel extends MCAPanel{
@@ -180,8 +180,4 @@ public class ComponentGroupPanel extends MCAPanel{
 		}			
 		cobP23n1.setModel(new DefaultComboBoxModel<String>(nameVektor));
 	}
-
-
-
-
 }
