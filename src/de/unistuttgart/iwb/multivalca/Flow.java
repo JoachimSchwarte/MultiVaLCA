@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
  * von Objekten des Typs "Fluss".
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.532
+ * @version 0.811
  */
 
 public class Flow extends MCAObject {	
@@ -92,5 +92,18 @@ public class Flow extends MCAObject {
 	
 	public FlowType getType() {
 		return typ;
+	}
+	
+	/**
+	 * Überprüft, ob ein Fluss
+	 * des genannten Namens existiert.
+	 * @param name
+	 * ist der zu prüfende Name
+	 * @return
+	 * ... den Wahrheitswert, den die Überprüfung liefert
+	 */
+	
+	public static boolean containsName(String name) {
+		return getAllInstances().containsKey(name);
 	}
 }
