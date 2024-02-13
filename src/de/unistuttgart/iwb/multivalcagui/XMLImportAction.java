@@ -51,7 +51,7 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.812
  */
 
 class XMLImportAction extends AbstractAction {	
@@ -159,7 +159,7 @@ class XMLImportAction extends AbstractAction {
 			Flow.instance(flussname, ft, fe);
 		}	
 	}
-
+	
 	private void createProcessModules(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ProcessModule");
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -179,7 +179,8 @@ class XMLImportAction extends AbstractAction {
 		for (int i = 0; i < nl.getLength(); i++) {
 			NodeList nlc = nl.item(i).getChildNodes();
 			String pmname = "";	
-			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pmfv = new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();						
+			LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pmfv = new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();	
+			LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> dmfv = new LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>>();
 			for (int j = 0; j < nlc.getLength(); j++) {							
 				if (nlc.item(j).getNodeName().equals("ModuleName")) {									
 					pmname = nlc.item(j).getTextContent();
@@ -192,11 +193,20 @@ class XMLImportAction extends AbstractAction {
 					NodeList nlc2 = nlc.item(j).getChildNodes();
 					fillPMwithPFV(nlc2, pmfv);				
 				}
+				if (nlc.item(j).getNodeName().equals("DeclaredFlowVector")) {	
+					NodeList nlc2 = nlc.item(j).getChildNodes();
+					fillPMwithDFV(nlc2, dmfv);				
+				}
 			}
 			for (Flow akFluss : pmfv.keySet()) {
 				ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.MeanValue, pmfv.get(akFluss).get(ValueType.MeanValue));
 				ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.LowerBound, pmfv.get(akFluss).get(ValueType.LowerBound));
 				ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.UpperBound, pmfv.get(akFluss).get(ValueType.UpperBound));
+			}
+			for (ProductDeclaration akFluss : dmfv.keySet()) {
+				ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.MeanValue, dmfv.get(akFluss).get(ValueType.MeanValue));
+				ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.LowerBound, dmfv.get(akFluss).get(ValueType.LowerBound));
+				ProcessModule.getInstance(pmname).addFluss(akFluss, ValueType.UpperBound, dmfv.get(akFluss).get(ValueType.UpperBound));
 			}
 		}
 	}
@@ -267,6 +277,42 @@ class XMLImportAction extends AbstractAction {
 						LinkedHashMap<ValueType, Double> vt = pmfv.get(akFluss);
 						vt.put(ValueType.UpperBound, Double.parseDouble(fvemenge));
 						pmfv.put(akFluss, vt);
+					}
+				}											
+			}
+		}
+	}
+	
+	private void fillPMwithDFV(NodeList nlc2, LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> dmfv) {
+		String fvename = "";	
+		String fvemenge = "";
+		for (int k = 0; k < nlc2.getLength(); k++) {
+			if (nlc2.item(k).getNodeName().equals("DFV-Entry")) {											
+				NodeList nlc3 = nlc2.item(k).getChildNodes();
+				for (int l = 0; l < nlc3.getLength(); l++) {
+					if (nlc3.item(l).getNodeName().equals("DFV-Name")) {
+						fvename = nlc3.item(l).getTextContent();
+					}
+					if (nlc3.item(l).getNodeName().equals("DFV-MainValue")) {
+						fvemenge = nlc3.item(l).getTextContent();
+						ProductDeclaration akFluss = ProductDeclaration.getInstance(fvename);
+						LinkedHashMap<ValueType, Double> vt = new LinkedHashMap<ValueType, Double>();
+						vt.put(ValueType.MeanValue, Double.parseDouble(fvemenge));
+						dmfv.put(akFluss, vt);
+					}
+					if (nlc3.item(l).getNodeName().equals("DFV-LowerBound")) {
+						fvemenge = nlc3.item(l).getTextContent();
+						ProductDeclaration akFluss = ProductDeclaration.getInstance(fvename);
+						LinkedHashMap<ValueType, Double> vt = dmfv.get(akFluss);
+						vt.put(ValueType.LowerBound, Double.parseDouble(fvemenge));
+						dmfv.put(akFluss, vt);
+					}
+					if (nlc3.item(l).getNodeName().equals("DFV-UpperBound")) {
+						fvemenge = nlc3.item(l).getTextContent();
+						ProductDeclaration akFluss = ProductDeclaration.getInstance(fvename);
+						LinkedHashMap<ValueType, Double> vt = dmfv.get(akFluss);
+						vt.put(ValueType.UpperBound, Double.parseDouble(fvemenge));
+						dmfv.put(akFluss, vt);
 					}
 				}											
 			}
@@ -504,7 +550,7 @@ class XMLImportAction extends AbstractAction {
 			}
 		}		
 	}
-
+	
 	private void createImpactCategories(Element docEle) {
 		NodeList nl = docEle.getElementsByTagName("ImpactCategory");
 		for (int i = 0; i < nl.getLength(); i++) {

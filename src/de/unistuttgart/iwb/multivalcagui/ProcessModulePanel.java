@@ -16,12 +16,13 @@ import javax.swing.JTextField;
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.805
+ * @version 0.812
  */
 
 public class ProcessModulePanel extends MCAPanel{
@@ -129,12 +130,19 @@ public class ProcessModulePanel extends MCAPanel{
 				if ("".equals(fname) || (menge == 0.0)) {
 					lblP02n5.setText(bundle.getString("stat07"));
 				} else {
-					if (Flow.containsName(fname)) {
-						Flow akFlow = Flow.getInstance(fname);
+					if (MCAObject.containsName(fname)) {
 						String mname = txtP02n1.getText();
-						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.MeanValue, menge);
-						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, menge);
-						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, menge);
+						if (Flow.containsName(fname)) {
+							Flow akFlow = Flow.getInstance(fname);					
+							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.MeanValue, menge);
+							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, menge);
+							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, menge);
+						} else {																// Verallgemeinerung fehlt!!
+							ProductDeclaration akFlow = ProductDeclaration.getInstance(fname);					
+							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.MeanValue, menge);
+							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, menge);
+							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, menge);
+						}
 						txtP02n2.setEnabled(false);
 						txtP02n3.setEnabled(false);
 						btnP02n2.setEnabled(false);
@@ -143,10 +151,10 @@ public class ProcessModulePanel extends MCAPanel{
 						btnP02n4.setEnabled(false);
 						int anzPFlow = ProcessModule.getInstance(mname).getProduktflussvektor().size();
 						int anzEFlow = ProcessModule.getInstance(mname).getElementarflussvektor().size();
-						int anzGesamt = anzPFlow + anzEFlow;
+						int anzDFlow = ProcessModule.getInstance(mname).getEPDFlussvektor().size();
+						int anzGesamt = anzPFlow + anzEFlow + anzDFlow;
 						lblP02n5.setText(bundle.getString("stat08") + mname + bundle.getString("stat09") +
-								anzGesamt + bundle.getString("stat10"));
-						
+								anzGesamt + bundle.getString("stat10"));					
 					} else {
 						lblP02n5.setText(bundle.getString("stat11"));
 					}					
@@ -162,9 +170,15 @@ public class ProcessModulePanel extends MCAPanel{
 				if (mengen.size() == 3) {
 					String mname = txtP02n1.getText();
 					String fname = txtP02n2.getText();
-					Flow akFlow = Flow.getInstance(fname);
-					ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, mengen.get(ValueType.LowerBound));
-					ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, mengen.get(ValueType.UpperBound));
+					if (Flow.containsName(fname)) {
+						Flow akFlow = Flow.getInstance(fname);
+						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, mengen.get(ValueType.LowerBound));
+						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, mengen.get(ValueType.UpperBound));
+					} else {																// Verallgemeinerung fehlt!!
+						ProductDeclaration akFlow = ProductDeclaration.getInstance(fname);	
+						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, mengen.get(ValueType.LowerBound));
+						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, mengen.get(ValueType.UpperBound));
+					}
 					txtP02n2.setText("");
 					txtP02n3.setText("");
 					txtP02n2.setEnabled(true);

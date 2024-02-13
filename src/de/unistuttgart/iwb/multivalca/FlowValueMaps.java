@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
  * auftreten können.
  * 
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.495
+ * @version 0.812
  */
 
 public interface FlowValueMaps {
@@ -38,4 +38,6 @@ public interface FlowValueMaps {
 	 */
 	
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor();
+
+	public LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> getEPDFlussvektor();
 }

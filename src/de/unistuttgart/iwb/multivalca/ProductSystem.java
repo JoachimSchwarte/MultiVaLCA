@@ -17,7 +17,7 @@ import de.unistuttgart.iwb.ivari.Solver;
  * von Objekten des Typs "Produktsystem".
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.702
+ * @version 0.812
  */
 
 public class ProductSystem extends MCAObject
@@ -39,6 +39,8 @@ implements FlowValueMaps, ImpactValueMaps {
 			= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pfv 
 			= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
+	private LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> dfv = 
+			new LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>>(); //Deklarierte Flüsse
 	
 	// Konstruktor:
 
@@ -321,6 +323,17 @@ implements FlowValueMaps, ImpactValueMaps {
 			e.printStackTrace();
 		}		
 		return efv;
+	}
+	
+	@Override
+	public LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> getEPDFlussvektor() throws ArithmeticException {
+		try {
+			aktualisiere();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return dfv;
 	}
 	
 	/**

@@ -47,7 +47,7 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.812
  */
 
 class XMLExportAction extends AbstractAction {
@@ -196,6 +196,24 @@ class XMLExportAction extends AbstractAction {
             	Element menge3 = document.createElement("PFV-UpperBound");
             	fluss.appendChild(menge3);
             	menge3.appendChild(document.createTextNode(akModul.getProduktflussvektor().get(pf).get(ValueType.UpperBound).toString()));
+            }
+            Element dfv = document.createElement("DeclaredFlowVector");
+			prozessmodul.appendChild(dfv);	  
+            for(ProductDeclaration pf : akModul.getEPDFlussvektor().keySet()){
+            	Element fluss = document.createElement("DFV-Entry");
+				dfv.appendChild(fluss);
+            	Element fname = document.createElement("DFV-Name");
+            	fluss.appendChild(fname);
+            	fname.appendChild(document.createTextNode(pf.getName()));
+            	Element menge = document.createElement("DFV-MainValue");
+            	fluss.appendChild(menge);
+            	menge.appendChild(document.createTextNode(akModul.getEPDFlussvektor().get(pf).get(ValueType.MeanValue).toString()));
+            	Element menge2 = document.createElement("DFV-LowerBound");
+            	fluss.appendChild(menge2);
+            	menge2.appendChild(document.createTextNode(akModul.getEPDFlussvektor().get(pf).get(ValueType.LowerBound).toString()));
+            	Element menge3 = document.createElement("DFV-UpperBound");
+            	fluss.appendChild(menge3);
+            	menge3.appendChild(document.createTextNode(akModul.getEPDFlussvektor().get(pf).get(ValueType.UpperBound).toString()));
             }
 		}	
 	}

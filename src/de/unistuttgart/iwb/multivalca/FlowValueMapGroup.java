@@ -33,6 +33,8 @@ implements FlowValueMaps, ImpactValueMaps {
 	= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pfv 
 	= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
+	private LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> dfv 
+	= new LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>>();
 
 	private FVMGroupType type;
 	private Flow refFlow;
@@ -221,6 +223,58 @@ implements FlowValueMaps, ImpactValueMaps {
 			}
 		}
 		return pfv;
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	@Override
+	public LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> getEPDFlussvektor() {
+		LinkedHashSet<String> flList = new LinkedHashSet<String>();
+		for (FlowValueMaps fvm : getActiveList()) {
+			for (ProductDeclaration fl : fvm.getEPDFlussvektor().keySet()) {
+				flList.add(fl.getName());	
+			}
+		}
+		for (String fName : flList) {
+			ProductDeclaration f = ProductDeclaration.getInstance(fName);
+			LinkedHashMap<ValueType, Double> valueMap = new LinkedHashMap<ValueType, Double>();
+			valueMap.put(ValueType.MeanValue, 0.0);
+			valueMap.put(ValueType.LowerBound, Double.POSITIVE_INFINITY);
+			valueMap.put(ValueType.UpperBound, Double.NEGATIVE_INFINITY);
+			dfv.put(f, valueMap);
+			for (FlowValueMaps fvm : getActiveList()) {
+				
+				if (fvm.getEPDFlussvektor().containsKey(f)) {
+					Double mv = dfv.get(f).get(ValueType.MeanValue);
+					mv = mv + fvm.getEPDFlussvektor().get(f).get(ValueType.MeanValue)/
+							fvm.getEPDFlussvektor().get(refFlow).get(ValueType.MeanValue)*refValue/getActiveList().size();
+					dfv.get(f).put(ValueType.MeanValue, mv);
+					Double lb1 = dfv.get(f).get(ValueType.LowerBound);
+					Double lb2 = fvm.getEPDFlussvektor().get(f).get(ValueType.LowerBound)/
+							fvm.getEPDFlussvektor().get(refFlow).get(ValueType.LowerBound)*refValue;
+					if (lb2 < lb1) {
+						dfv.get(f).put(ValueType.LowerBound, lb2);
+					}
+					Double ub1 = dfv.get(f).get(ValueType.UpperBound);
+					Double ub2 = fvm.getEPDFlussvektor().get(f).get(ValueType.UpperBound)/
+							fvm.getEPDFlussvektor().get(refFlow).get(ValueType.UpperBound)*refValue;
+					if (ub2 > ub1) {
+						dfv.get(f).put(ValueType.UpperBound, ub2);
+					} 							
+				} else {
+					Double lb1 = dfv.get(f).get(ValueType.LowerBound);
+					Double lb2 = 0.0;
+					if (lb2 < lb1) {
+						dfv.get(f).put(ValueType.LowerBound, lb2);
+					}
+					Double ub1 = dfv.get(f).get(ValueType.UpperBound);
+					Double ub2 = 0.0;
+					if (ub2 > ub1) {
+						dfv.get(f).put(ValueType.UpperBound, ub2);
+					} 
+				}
+			}
+		}
+		return dfv;
 	}
 
 	/**

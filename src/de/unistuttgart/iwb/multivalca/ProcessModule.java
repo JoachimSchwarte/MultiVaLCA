@@ -12,7 +12,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * von Objekten des Typs "Prozessmodul".
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.812
  */
 
 public class ProcessModule extends MCAObject 
@@ -24,6 +24,8 @@ implements FlowValueMaps, ImpactValueMaps {
 			new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); //Elementarflüsse
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pfv = 
 			new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>(); //Produktflüsse
+	private LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> dfv = 
+			new LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>>(); //Deklarierte Flüsse
 	
 	// Konstruktor:
 			
@@ -125,6 +127,15 @@ implements FlowValueMaps, ImpactValueMaps {
 		}
 	}
 	
+	public void addFluss(ProductDeclaration fluss, ValueType fvt, Double wert) {
+		LinkedHashMap<ValueType, Double> valueMap = dfv.get(fluss);
+		if (valueMap == null) {
+			valueMap = new LinkedHashMap<ValueType, Double>();
+		}
+		valueMap.put(fvt, wert);
+		dfv.put(fluss, valueMap);
+	}
+	
 	
 	/**
 	 * @return
@@ -144,6 +155,12 @@ implements FlowValueMaps, ImpactValueMaps {
 	@Override
 	public LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> getProduktflussvektor() {
 		return pfv; 
+	}
+	
+	
+	@Override
+	public LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> getEPDFlussvektor() {
+		return dfv; 
 	}
 	
 	/**

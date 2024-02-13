@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
  * innerhalb einer Produktkomposition auftreten können.
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.812
  */
 
 public interface ImpactValueMaps {

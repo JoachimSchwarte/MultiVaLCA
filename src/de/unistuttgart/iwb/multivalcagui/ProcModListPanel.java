@@ -23,12 +23,13 @@ import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
+import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.812
  */
 
 public class ProcModListPanel extends MCAPanel{
@@ -52,11 +53,7 @@ public class ProcModListPanel extends MCAPanel{
 		setLayout(new MigLayout("", "[grow]", "[16%][grow]"));		
 		lblP07n1.setFont(titlefont);
 		add(lblP07n1, "cell 0 0,alignx center,aligny center");		
-		add(new JScrollPane(pmTable), "cell 0 1,alignx center,aligny top");	
-		
-		
-		
-		
+		add(new JScrollPane(pmTable), "cell 0 1,alignx center,aligny top");		
 	}
 
 	@Override
@@ -101,6 +98,13 @@ public class ProcModListPanel extends MCAPanel{
 					pmTableModel.addRow(new Object[] {"", pf.getName(), 
 							ValueTypeStringMap.getFVTS(l).get(vt),
 							akModul.getProduktflussvektor().get(pf).get(vt)});							
+				}							
+			}
+			for(ProductDeclaration pf : akModul.getEPDFlussvektor().keySet()){						// Verallgemeinerung to do!!
+				for (ValueType vt : akModul.getEPDFlussvektor().get(pf).keySet()) {
+					pmTableModel.addRow(new Object[] {"", pf.getName(), 
+							ValueTypeStringMap.getFVTS(l).get(vt),
+							akModul.getEPDFlussvektor().get(pf).get(vt)});							
 				}							
 			}
 		}			
