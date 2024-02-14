@@ -47,7 +47,7 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.812
+ * @version 0.813
  */
 
 class XMLExportAction extends AbstractAction {
@@ -199,7 +199,7 @@ class XMLExportAction extends AbstractAction {
             }
             Element dfv = document.createElement("DeclaredFlowVector");
 			prozessmodul.appendChild(dfv);	  
-            for(ProductDeclaration pf : akModul.getEPDFlussvektor().keySet()){
+            for(ImpactValueMaps pf : akModul.getEPDFlussvektor().keySet()){
             	Element fluss = document.createElement("DFV-Entry");
 				dfv.appendChild(fluss);
             	Element fname = document.createElement("DFV-Name");

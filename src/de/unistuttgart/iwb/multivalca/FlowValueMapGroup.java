@@ -16,7 +16,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * zu Gruppen zusammengefasst werden.
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.715
+ * @version 0.813
  */
 
 public class FlowValueMapGroup extends MCAObject  
@@ -33,8 +33,8 @@ implements FlowValueMaps, ImpactValueMaps {
 	= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
 	private LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>> pfv 
 	= new LinkedHashMap<Flow, LinkedHashMap<ValueType, Double>>();
-	private LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> dfv 
-	= new LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>>();
+	private LinkedHashMap<ImpactValueMaps, LinkedHashMap<ValueType, Double>> dfv 
+	= new LinkedHashMap<ImpactValueMaps, LinkedHashMap<ValueType, Double>>();
 
 	private FVMGroupType type;
 	private Flow refFlow;
@@ -227,10 +227,10 @@ implements FlowValueMaps, ImpactValueMaps {
 	
 	@SuppressWarnings("unlikely-arg-type")
 	@Override
-	public LinkedHashMap<ProductDeclaration, LinkedHashMap<ValueType, Double>> getEPDFlussvektor() {
+	public LinkedHashMap<ImpactValueMaps, LinkedHashMap<ValueType, Double>> getEPDFlussvektor() {
 		LinkedHashSet<String> flList = new LinkedHashSet<String>();
 		for (FlowValueMaps fvm : getActiveList()) {
-			for (ProductDeclaration fl : fvm.getEPDFlussvektor().keySet()) {
+			for (ImpactValueMaps fl : fvm.getEPDFlussvektor().keySet()) {
 				flList.add(fl.getName());	
 			}
 		}

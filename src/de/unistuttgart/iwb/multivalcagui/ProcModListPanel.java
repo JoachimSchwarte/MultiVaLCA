@@ -21,15 +21,15 @@ import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
+import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
-import de.unistuttgart.iwb.multivalca.ProductDeclaration;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.812
+ * @version 0.813
  */
 
 public class ProcModListPanel extends MCAPanel{
@@ -100,7 +100,7 @@ public class ProcModListPanel extends MCAPanel{
 							akModul.getProduktflussvektor().get(pf).get(vt)});							
 				}							
 			}
-			for(ProductDeclaration pf : akModul.getEPDFlussvektor().keySet()){						// Verallgemeinerung to do!!
+			for(ImpactValueMaps pf : akModul.getEPDFlussvektor().keySet()){						// Verallgemeinerung to do!!
 				for (ValueType vt : akModul.getEPDFlussvektor().get(pf).keySet()) {
 					pmTableModel.addRow(new Object[] {"", pf.getName(), 
 							ValueTypeStringMap.getFVTS(l).get(vt),
