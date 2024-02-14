@@ -19,13 +19,14 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.ProductSystem;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.547
+ * @version 0.814
  */
 
 public class LciCalcPanel extends MCAPanel {
@@ -78,6 +79,7 @@ public class LciCalcPanel extends MCAPanel {
 				ProductSystem sysAktuell = ProductSystem.getAllInstances().get(sysName);
 				LinkedHashMap<Flow,LinkedHashMap<ValueType,Double>> efvAktuell = sysAktuell.getElementarflussvektor();
 				LinkedHashMap<Flow,LinkedHashMap<ValueType,Double>> pfvAktuell = sysAktuell.getProduktflussvektor();
+				LinkedHashMap<ImpactValueMaps,LinkedHashMap<ValueType,Double>> dfvAktuell = sysAktuell.getEPDFlussvektor();
 				try {
 					if (efvAktuell.size() > 0) {
 						for(Flow sysFluss : efvAktuell.keySet()){
@@ -90,17 +92,26 @@ public class LciCalcPanel extends MCAPanel {
 					}
 					if (pfvAktuell.size() > 0) {
 						for(Flow sysFluss : pfvAktuell.keySet()){
-							boolean ausgabe = false;
+//							boolean ausgabe = false;
 							if (sysAktuell.getVorUndKoppelprodukte().contains(sysFluss)) {
-								ausgabe = true;
-							}
-							if (ausgabe) {
+//								ausgabe = true;
+//							}
+//							if (ausgabe) {
 								for (ValueType vt : pfvAktuell.get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 											ValueTypeStringMap.getFVTS(l).get(vt),								
 											pfvAktuell.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
 								}
 							}
+						}
+					} 
+					if (dfvAktuell.size() > 0) {
+						for(ImpactValueMaps sysFluss : dfvAktuell.keySet()){
+								for (ValueType vt : dfvAktuell.get(sysFluss).keySet()) {
+									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
+											ValueTypeStringMap.getFVTS(l).get(vt),								
+											dfvAktuell.get(sysFluss).get(vt) + " tdu"});
+								}
 						}
 					} 
 				} catch (ArithmeticException vz) {
