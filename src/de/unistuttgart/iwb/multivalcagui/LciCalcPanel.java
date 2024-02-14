@@ -26,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.814
+ * @version 0.815
  */
 
 public class LciCalcPanel extends MCAPanel {
@@ -50,8 +50,7 @@ public class LciCalcPanel extends MCAPanel {
 		setLayout(new MigLayout("", "[grow]", "[16%][grow]"));		
 		lblP09n1.setFont(titlefont);
 		add(lblP09n1, "cell 0 0,alignx center,aligny center");		
-		add(new JScrollPane(lciTable), "cell 0 1,alignx center,aligny top");
-		
+		add(new JScrollPane(lciTable), "cell 0 1,alignx center,aligny top");		
 	}
 
 	@Override
@@ -92,11 +91,7 @@ public class LciCalcPanel extends MCAPanel {
 					}
 					if (pfvAktuell.size() > 0) {
 						for(Flow sysFluss : pfvAktuell.keySet()){
-//							boolean ausgabe = false;
 							if (sysAktuell.getVorUndKoppelprodukte().contains(sysFluss)) {
-//								ausgabe = true;
-//							}
-//							if (ausgabe) {
 								for (ValueType vt : pfvAktuell.get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 											ValueTypeStringMap.getFVTS(l).get(vt),								

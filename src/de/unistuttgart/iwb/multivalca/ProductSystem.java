@@ -17,7 +17,7 @@ import de.unistuttgart.iwb.ivari.Solver;
  * von Objekten des Typs "Produktsystem".
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.813
+ * @version 0.815
  */
 
 public class ProductSystem extends MCAObject
@@ -214,6 +214,16 @@ implements FlowValueMaps, ImpactValueMaps {
 				arrayBu[elementarFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.UpperBound);	
 			}
 		}
+		LinkedList<ImpactValueMaps> EPDFlussliste = new LinkedList<ImpactValueMaps>();
+		for(FlowValueMaps m : modulliste){
+			LinkedHashMap<ImpactValueMaps, LinkedHashMap<ValueType, Double>> modulVektor = m.getEPDFlussvektor();
+			for (ImpactValueMaps key : modulVektor.keySet()) {
+				if (!EPDFlussliste.contains(key)){
+					EPDFlussliste.add(key);					
+				}				
+			}
+		}
+
 		double[][] arrayF = new double[produktFlussliste.size()][1];
 		for(Flow pf : produktFlussliste) {
 			if (bedarfsvektor.containsKey(pf)){
@@ -236,16 +246,7 @@ implements FlowValueMaps, ImpactValueMaps {
 		Matrix matrixS = matrixA.solve(matrixF);
 		IvariVector ivS = new IvariVector(arrayA.length);
 		try {
-/*			System.out.println();
-			System.out.println("A[1,1] = "+imA.getValue(0, 0).getLowerBound()+" , "+imA.getValue(0, 0).getUpperBound());
-			System.out.println("A[1,2] = "+imA.getValue(0, 1).getLowerBound()+" , "+imA.getValue(0, 1).getUpperBound());
-			System.out.println("A[2,1] = "+imA.getValue(1, 0).getLowerBound()+" , "+imA.getValue(1, 0).getUpperBound());
-			System.out.println("A[2,2] = "+imA.getValue(1, 1).getLowerBound()+" , "+imA.getValue(1, 1).getUpperBound());
-			System.out.println("B[1]   = "+ivF.getValue(0).getLowerBound()+" , "+ivF.getValue(0).getUpperBound());
-			System.out.println("B[2]   = "+ivF.getValue(1).getLowerBound()+" , "+ivF.getValue(1).getUpperBound());         */
 			ivS = imA.solve(so, ivF);
-/*			System.out.println("S[1]   = "+ivS.getValue(0).getLowerBound()+" , "+ivS.getValue(0).getUpperBound());
-			System.out.println("S[2]   = "+ivS.getValue(1).getLowerBound()+" , "+ivS.getValue(1).getUpperBound());         */
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -281,8 +282,7 @@ implements FlowValueMaps, ImpactValueMaps {
 					arrayA1[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=0;
 					arrayA1l[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=0;
 					arrayA1u[produktFlussliste.indexOf(key)][modulliste.indexOf(m)]=0;
-				}
-								
+				}							
 			}
 		}
 		Matrix matrixA1 = new Matrix(arrayA1);
@@ -295,7 +295,31 @@ implements FlowValueMaps, ImpactValueMaps {
 			valueMap.put(ValueType.LowerBound, ivG1.getValue(produktFlussliste.indexOf(pf)).getLowerBound());
 			valueMap.put(ValueType.UpperBound, ivG1.getValue(produktFlussliste.indexOf(pf)).getUpperBound());
 			pfv.put(pf, valueMap);
-		}			
+		}
+		if (EPDFlussliste.size()!=0) {
+			double[][] arrayC = new double[EPDFlussliste.size()][modulliste.size()];
+			double[][] arrayCl = new double[EPDFlussliste.size()][modulliste.size()];
+			double[][] arrayCu = new double[EPDFlussliste.size()][modulliste.size()];
+			for(FlowValueMaps m : modulliste){
+				LinkedHashMap<ImpactValueMaps, LinkedHashMap<ValueType, Double>> modulVektor = m.getEPDFlussvektor();
+				for (ImpactValueMaps key : modulVektor.keySet()) {
+					arrayC[EPDFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.MeanValue);		
+					arrayCl[EPDFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.LowerBound);	
+					arrayCu[EPDFlussliste.indexOf(key)][modulliste.indexOf(m)]=modulVektor.get(key).get(ValueType.UpperBound);	
+				}
+			}
+			Matrix matrixC = new Matrix(arrayC);
+			IvariMatrix imC = new IvariMatrix(arrayCl, arrayCu);
+			Matrix matrixC2 = matrixC.times(matrixS);
+			IvariVector imC2 = imC.multVector(ivS);
+			for(ImpactValueMaps ef : EPDFlussliste) {
+				LinkedHashMap<ValueType, Double> valueMap = new LinkedHashMap<ValueType, Double>();
+				valueMap.put(ValueType.MeanValue, matrixC2.get(EPDFlussliste.indexOf(ef),0));
+				valueMap.put(ValueType.LowerBound, imC2.getValue(EPDFlussliste.indexOf(ef)).getLowerBound());
+				valueMap.put(ValueType.UpperBound, imC2.getValue(EPDFlussliste.indexOf(ef)).getUpperBound());
+				dfv.put(ef, valueMap);
+			}
+		}
 	}
 	
 	/**
@@ -381,8 +405,6 @@ implements FlowValueMaps, ImpactValueMaps {
 	public LinkedList<Flow> getVorUndKoppelprodukte() {
 		return vorUndKoppelProdukte;
 	}
-	
-
 	
 	/**
 	 * Überschreibt den vorhandenen Bedarfsvektor

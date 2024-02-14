@@ -37,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.814
+ * @version 0.815
  */
 
 public class MultiVaLCA {
