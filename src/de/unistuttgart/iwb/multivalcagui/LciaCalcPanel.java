@@ -41,7 +41,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.816
  */
 
 public class LciaCalcPanel extends MCAPanel {
@@ -95,22 +95,16 @@ public class LciaCalcPanel extends MCAPanel {
 		btnP16n1.setEnabled(false);
 		
 		add(btnP16n1, "cell 1 5 2 0 "+(++pos).toString()+",alignx center,aligny center");
-		
-		
+			
 		add(new JScrollPane(waTable), "cell 1 6 2 0 "+(++pos).toString()+",grow");
-		
-		
+				
 		waTable.setFont(generalfont);
 		waTable.setRowHeight(height *22/1000);
 		waTable.setPreferredScrollableViewportSize(new Dimension(width*40/100, height*50/100));
 		JTableHeader header = waTable.getTableHeader();
 		
 		header.setFont(generalfont);
-	
-
-	
-		
-		
+			
 		btnP16n1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -127,11 +121,12 @@ public class LciaCalcPanel extends MCAPanel {
 				}
 				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp12"))) {
 					ProcessModule akObj = ProcessModule.getInstance(cobP16n2.getSelectedItem().toString());
-					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());
-					for (ImpactCategory wName : akObj.getImpactValueMap(akMeth).keySet()) {
+					LCIAMethod akMeth = LCIAMethod.instance(cobP16n3.getSelectedItem().toString());								// to do:			
+					LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> akOM = akObj.getImpactValueMap(akMeth); 
+					for (ImpactCategory wName : akOM.keySet()) {																// akOM in allen weiteren
 						waTableModel.addRow(new Object[] {wName.getName(), 
 								wName.getEinheit().getName(),
-								akObj.getImpactValueMap(akMeth).get(wName).get(vt)});
+								akOM.get(wName).get(vt)});																		// Blöcken einführen
 					}
 				}
 				if (cobP16n1.getSelectedItem().toString().equals(bundle.getString("mp122")) ||
