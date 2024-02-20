@@ -41,7 +41,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.816
+ * @version 0.820
  */
 
 public class LciaCalcPanel extends MCAPanel {
@@ -91,7 +91,7 @@ public class LciaCalcPanel extends MCAPanel {
 		
 		cobP16n2.setEnabled(false);
 		cobP16n3.setEnabled(false);
-		cobP16n4.setEnabled(false);		
+//		cobP16n4.setEnabled(false);		
 		btnP16n1.setEnabled(false);
 		
 		add(btnP16n1, "cell 1 5 2 0 "+(++pos).toString()+",alignx center,aligny center");
@@ -110,7 +110,7 @@ public class LciaCalcPanel extends MCAPanel {
 			public void actionPerformed(ActionEvent e) {
 				cobP16n2.setEnabled(false);
 				cobP16n3.setEnabled(false);
-				cobP16n4.setEnabled(false);
+//				cobP16n4.setEnabled(false);
 				btnP16n1.setEnabled(false);
 				ValueType vt = ValueType.MeanValue;
 				if (ValueTypeStringMap.getFVTS(l).get(ValueType.UpperBound).equals(cobP16n4.getSelectedItem().toString())) {
@@ -311,6 +311,7 @@ public class LciaCalcPanel extends MCAPanel {
 		cobP16n4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				waTableModel.setRowCount(0);
 				btnP16n1.setEnabled(true);
 			}
 		});
@@ -367,7 +368,7 @@ public class LciaCalcPanel extends MCAPanel {
 		cobP16n4.setModel(new DefaultComboBoxModel<String>(vta));
 		cobP16n2.setEnabled(false);
 		cobP16n3.setEnabled(false);
-		cobP16n4.setEnabled(false);		
+//		cobP16n4.setEnabled(false);		
 		btnP16n1.setEnabled(false);
 		
 		
