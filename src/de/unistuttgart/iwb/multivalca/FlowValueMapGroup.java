@@ -16,7 +16,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * zu Gruppen zusammengefasst werden.
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.813
+ * @version 0.818
  */
 
 public class FlowValueMapGroup extends MCAObject  
@@ -225,7 +225,6 @@ implements FlowValueMaps, ImpactValueMaps {
 		return pfv;
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public LinkedHashMap<ImpactValueMaps, LinkedHashMap<ValueType, Double>> getEPDFlussvektor() {
 		LinkedHashSet<String> flList = new LinkedHashSet<String>();
@@ -246,17 +245,17 @@ implements FlowValueMaps, ImpactValueMaps {
 				if (fvm.getEPDFlussvektor().containsKey(f)) {
 					Double mv = dfv.get(f).get(ValueType.MeanValue);
 					mv = mv + fvm.getEPDFlussvektor().get(f).get(ValueType.MeanValue)/
-							fvm.getEPDFlussvektor().get(refFlow).get(ValueType.MeanValue)*refValue/getActiveList().size();
+							fvm.getProduktflussvektor().get(refFlow).get(ValueType.MeanValue)*refValue/getActiveList().size();
 					dfv.get(f).put(ValueType.MeanValue, mv);
 					Double lb1 = dfv.get(f).get(ValueType.LowerBound);
 					Double lb2 = fvm.getEPDFlussvektor().get(f).get(ValueType.LowerBound)/
-							fvm.getEPDFlussvektor().get(refFlow).get(ValueType.LowerBound)*refValue;
+							fvm.getProduktflussvektor().get(refFlow).get(ValueType.LowerBound)*refValue;
 					if (lb2 < lb1) {
 						dfv.get(f).put(ValueType.LowerBound, lb2);
 					}
 					Double ub1 = dfv.get(f).get(ValueType.UpperBound);
 					Double ub2 = fvm.getEPDFlussvektor().get(f).get(ValueType.UpperBound)/
-							fvm.getEPDFlussvektor().get(refFlow).get(ValueType.UpperBound)*refValue;
+							fvm.getProduktflussvektor().get(refFlow).get(ValueType.UpperBound)*refValue;
 					if (ub2 > ub1) {
 						dfv.get(f).put(ValueType.UpperBound, ub2);
 					} 							

@@ -23,13 +23,14 @@ import de.unistuttgart.iwb.multivalca.FVMGroupType;
 import de.unistuttgart.iwb.multivalca.Flow;
 import de.unistuttgart.iwb.multivalca.FlowValueMapGroup;
 import de.unistuttgart.iwb.multivalca.FlowValueMaps;
+import de.unistuttgart.iwb.multivalca.ImpactValueMaps;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ValueType;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.818
  */
 
 public class ProcModGroupListPanel extends MCAPanel{
@@ -111,6 +112,13 @@ public class ProcModGroupListPanel extends MCAPanel{
 						pmTableModel.addRow(new Object[] {"", pf.getName(), 
 								ValueTypeStringMap.getFVTS(l).get(vt),
 								akSs.getProduktflussvektor().get(pf).get(vt)});							
+					}							
+				}
+				for(ImpactValueMaps pf : akSs.getEPDFlussvektor().keySet()){						// Verallgemeinerung to do!!
+					for (ValueType vt : akSs.getEPDFlussvektor().get(pf).keySet()) {
+						pmTableModel.addRow(new Object[] {"", pf.getName(), 
+								ValueTypeStringMap.getFVTS(l).get(vt),
+								akSs.getEPDFlussvektor().get(pf).get(vt)});							
 					}							
 				}
 			}		
