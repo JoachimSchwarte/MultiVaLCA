@@ -30,7 +30,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.818
+ * @version 0.819
  */
 
 public class ProcModGroupListPanel extends MCAPanel{

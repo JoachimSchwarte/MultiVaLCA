@@ -6,6 +6,7 @@ package de.unistuttgart.iwb.multivalca;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 import de.unistuttgart.iwb.ivari.IvariScalar;
 
@@ -16,7 +17,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * zu Gruppen zusammengefasst werden.
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.818
+ * @version 0.819
  */
 
 public class FlowValueMapGroup extends MCAObject  
@@ -78,6 +79,8 @@ implements FlowValueMaps, ImpactValueMaps {
 
 	@Override
 	public LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> getImpactValueMap(LCIAMethod bm) {
+		getElementarflussvektor();
+		getEPDFlussvektor();
 		LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wv =
 				new LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>>();					
 		LinkedHashMap<ValueType, Double> values0 = new LinkedHashMap<ValueType, Double>();	
@@ -86,7 +89,8 @@ implements FlowValueMaps, ImpactValueMaps {
 		values0.put(ValueType.UpperBound, 0.);	
 		for (String wk : bm.categoryList().keySet()){	
 			wv.put(bm.categoryList().get(wk), values0);	
-		}	
+		}
+		LinkedList<ImpactCategory> kategorienListe = new LinkedList<ImpactCategory>(); 
 		for (String cfName : bm.getFactorSet().keySet()){	
 			CharacFactor cf = bm.getFactorSet().get(cfName);	
 			if (efv.containsKey(cf.getFlow())) {	
@@ -109,7 +113,21 @@ implements FlowValueMaps, ImpactValueMaps {
 				values.put(ValueType.LowerBound, iv0.getLowerBound() + ivr.getLowerBound());	
 				values.put(ValueType.UpperBound, iv0.getUpperBound() + ivr.getUpperBound());	
 				wv.put(cf.getWirkung(), values);	
-			}			
+			}
+			for (ImpactValueMaps epd : dfv.keySet()) {
+				if (!kategorienListe.contains(cf.getWirkung())) {
+					kategorienListe.add(cf.getWirkung());
+					LinkedHashMap<ImpactCategory, LinkedHashMap<ValueType, Double>> wvKomponente = epd.getImpactValueMap(bm);
+					LinkedHashMap<ValueType, Double> values = new LinkedHashMap<ValueType, Double>();
+					values.put(ValueType.MeanValue, 0.0);
+					values.put(ValueType.LowerBound, 0.0);
+					values.put(ValueType.UpperBound, 0.0);
+					for (ValueType vt : values.keySet()) {
+						values.put(vt, wv.get(cf.getWirkung()).get(vt) + wvKomponente.get(cf.getWirkung()).get(vt) * dfv.get(epd).get(vt));
+					}
+					wv.put(cf.getWirkung(), values);
+				}
+			} 
 		}		
 		return wv;
 	}

@@ -51,7 +51,7 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.812
+ * @version 0.819
  */
 
 class XMLImportAction extends AbstractAction {	
