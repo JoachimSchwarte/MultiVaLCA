@@ -37,16 +37,16 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.820
+ * @version 0.821
  */
 
 public class MultiVaLCA {
 
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.820";
-	private String dateString ="20.02.2024";
+	private String versionString ="Version 0.821";
+	private String dateString ="21.02.2024";
 
-	private JFrame frame  = new JFrame();
+	private static JFrame frame  = new JFrame();
 	private JPanel panel  = new JPanel();
 	private CardLayout cl = new CardLayout(0, 0);
 	private final Action newModuleAction 		 = new newModuleAction();
@@ -108,6 +108,7 @@ public class MultiVaLCA {
 	private Locale locale = LANGUAGES.get(l);
 	private String baseName = "de.unistuttgart.iwb.multivalcagui.messages";
 	private ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+	private static String baseTitle;
 
 
 	/**
@@ -118,8 +119,8 @@ public class MultiVaLCA {
 			@Override
 			public void run() {
 				try {
-					MultiVaLCA window = new MultiVaLCA();
-					window.frame.setVisible(true);
+					new MultiVaLCA();
+					MultiVaLCA.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -139,7 +140,8 @@ public class MultiVaLCA {
 	 */
 	private void initialize() {
 		frame.setFont(generalfont);
-		frame.setTitle(bundle.getString("head1")+"   "+versionString);
+		baseTitle  = bundle.getString("head1") + "   " + versionString;
+		frame.setTitle(baseTitle);
 		frame.setSize(width *48/100, height * 60/100);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
 		frame.getContentPane().add(panel, BorderLayout.CENTER);	
@@ -1312,5 +1314,13 @@ public class MultiVaLCA {
 			btn05n2.setText(bundle.getString("bt01"));			
 			cl.show(panel, "solver");
 		}
+	}
+	
+	public static String getTitle() {
+		return baseTitle;
+	}
+	
+	public static void setTitle(String frameTitle) {
+		frame.setTitle(frameTitle);
 	}
 }

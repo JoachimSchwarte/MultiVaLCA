@@ -51,7 +51,7 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.819
+ * @version 0.821
  */
 
 class XMLImportAction extends AbstractAction {	
@@ -85,6 +85,7 @@ class XMLImportAction extends AbstractAction {
         
         if(rueckgabeWert == JFileChooser.APPROVE_OPTION) {
         	File fileInput = chooser.getSelectedFile();
+        	MultiVaLCA.setTitle(MultiVaLCA.getTitle()+"   -   "+fileInput.getName());
         	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         	try {
 				DocumentBuilder db = dbf.newDocumentBuilder();

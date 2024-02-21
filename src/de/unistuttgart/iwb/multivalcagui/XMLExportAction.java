@@ -47,7 +47,7 @@ import de.unistuttgart.iwb.multivalca.ValueType;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.813
+ * @version 0.821
  */
 
 class XMLExportAction extends AbstractAction {
@@ -98,6 +98,7 @@ class XMLExportAction extends AbstractAction {
 	        if(rueckgabeWert == JFileChooser.APPROVE_OPTION) {	        	
 	        	DOMSource domSource = new DOMSource(document);
 	        	File fileOutput = chooser.getSelectedFile();
+	        	MultiVaLCA.setTitle(MultiVaLCA.getTitle()+"   -   "+fileOutput.getName());
 	        	if (!FilenameUtils.getExtension(fileOutput.getName()).equalsIgnoreCase("xml")) {
 	        		fileOutput = new File(fileOutput.toString() + ".xml");  // append .xml if "foo.jpg.xml" is OK
 	        	}
