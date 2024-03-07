@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import de.unistuttgart.iwb.multivalca.Flow;
+import de.unistuttgart.iwb.multivalca.ImpactValueMapGroup;
 import de.unistuttgart.iwb.multivalca.MCAObject;
 import de.unistuttgart.iwb.multivalca.ProcessModule;
 import de.unistuttgart.iwb.multivalca.ProductDeclaration;
@@ -22,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte
- * @version 0.812
+ * @version 0.822
  */
 
 public class ProcessModulePanel extends MCAPanel{
@@ -137,8 +138,15 @@ public class ProcessModulePanel extends MCAPanel{
 							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.MeanValue, menge);
 							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, menge);
 							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, menge);
-						} else {																// Verallgemeinerung fehlt!!
+						} 
+						if (ProductDeclaration.containsName(fname)) {
 							ProductDeclaration akFlow = ProductDeclaration.getInstance(fname);					
+							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.MeanValue, menge);
+							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, menge);
+							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, menge);
+						}
+						if (ImpactValueMapGroup.containsName(fname)) {
+							ImpactValueMapGroup akFlow = ImpactValueMapGroup.getInstance(fname);					
 							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.MeanValue, menge);
 							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, menge);
 							ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, menge);
@@ -174,8 +182,14 @@ public class ProcessModulePanel extends MCAPanel{
 						Flow akFlow = Flow.getInstance(fname);
 						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, mengen.get(ValueType.LowerBound));
 						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, mengen.get(ValueType.UpperBound));
-					} else {																// Verallgemeinerung fehlt!!
+					} 
+					if (ProductDeclaration.containsName(fname)) {
 						ProductDeclaration akFlow = ProductDeclaration.getInstance(fname);	
+						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, mengen.get(ValueType.LowerBound));
+						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, mengen.get(ValueType.UpperBound));
+					}
+					if (ImpactValueMapGroup.containsName(fname)) {
+						ImpactValueMapGroup akFlow = ImpactValueMapGroup.getInstance(fname);	
 						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.LowerBound, mengen.get(ValueType.LowerBound));
 						ProcessModule.getInstance(mname).addFluss(akFlow, ValueType.UpperBound, mengen.get(ValueType.UpperBound));
 					}
