@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
  * von Objekten des Typs "Komponente".
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.700
+ * @version 0.824
  */
 
 public class Component extends MCAObject  
@@ -163,7 +163,11 @@ implements ImpactValueMaps {
 			values.put(ValueType.LowerBound, 0.0);
 			values.put(ValueType.UpperBound, 0.0);
 			for (ValueType vt : values.keySet()) {
-				values.put(vt, wvKomponente.get(wk).get(vt)*mengen.get(vt));
+				try {
+					values.put(vt, wvKomponente.get(wk).get(vt)*mengen.get(vt));
+				} catch (Exception e) {
+					values.put(vt, 0.0);
+				}
 			}
 			wvKomponente.put(wk, values);
 		}
