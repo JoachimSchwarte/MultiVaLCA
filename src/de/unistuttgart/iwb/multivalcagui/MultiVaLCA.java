@@ -37,13 +37,13 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.825
+ * @version 0.826
  */
 
 public class MultiVaLCA {
 
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.825";
+	private String versionString ="Version 0.826";
 	private String dateString ="14.03.2024";
 
 	private static JFrame frame  = new JFrame();
