@@ -37,14 +37,14 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.824
+ * @version 0.825
  */
 
 public class MultiVaLCA {
 
 	private Language l = GUILanguage.getChosenLanguage();
-	private String versionString ="Version 0.824";
-	private String dateString ="08.03.2024";
+	private String versionString ="Version 0.825";
+	private String dateString ="14.03.2024";
 
 	private static JFrame frame  = new JFrame();
 	private JPanel panel  = new JPanel();
@@ -968,7 +968,7 @@ public class MultiVaLCA {
 				locale = LANGUAGES.get(l); 
 				bundle = ResourceBundle.getBundle(baseName, locale);
 
-				frame.setTitle(bundle.getString("head1")+"   "+versionString);
+//				frame.setTitle(bundle.getString("head1")+"   "+versionString);
 				mnDatei.setText(bundle.getString("mp6"));
 				mnNew.setText(bundle.getString("mp1"));
 				mnListe.setText(bundle.getString("mp4"));
