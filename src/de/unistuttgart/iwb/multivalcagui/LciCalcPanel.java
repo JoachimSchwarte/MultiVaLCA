@@ -26,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * @author HH, JS
- * @version 0.815
+ * @version 0.827
  */
 
 public class LciCalcPanel extends MCAPanel {
@@ -85,7 +85,7 @@ public class LciCalcPanel extends MCAPanel {
 							for (ValueType vt : efvAktuell.get(sysFluss).keySet()) {
 								lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 										ValueTypeStringMap.getFVTS(l).get(vt),								
-										efvAktuell.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
+										Math.round(efvAktuell.get(sysFluss).get(vt)*100000)/100000.0 + " " + sysFluss.getEinheit() + ""});
 							}
 						}
 					}
@@ -95,7 +95,7 @@ public class LciCalcPanel extends MCAPanel {
 								for (ValueType vt : pfvAktuell.get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 											ValueTypeStringMap.getFVTS(l).get(vt),								
-											pfvAktuell.get(sysFluss).get(vt) + " " + sysFluss.getEinheit() + ""});
+											Math.round(pfvAktuell.get(sysFluss).get(vt)*100000)/100000.0 + " " + sysFluss.getEinheit() + ""});
 								}
 							}
 						}
@@ -105,7 +105,7 @@ public class LciCalcPanel extends MCAPanel {
 								for (ValueType vt : dfvAktuell.get(sysFluss).keySet()) {
 									lciTableModel.addRow(new Object[] {"",sysFluss.getName(),"" + 
 											ValueTypeStringMap.getFVTS(l).get(vt),								
-											dfvAktuell.get(sysFluss).get(vt) + " tdu"});
+											Math.round(dfvAktuell.get(sysFluss).get(vt)*100000)/100000.0 + " tdu"});
 								}
 						}
 					} 

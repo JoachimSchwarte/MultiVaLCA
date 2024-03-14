@@ -17,7 +17,7 @@ import de.unistuttgart.iwb.ivari.Solver;
  * von Objekten des Typs "Produktsystem".
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.826
+ * @version 0.827
  */
 
 public class ProductSystem extends MCAObject
@@ -363,7 +363,14 @@ implements FlowValueMaps, ImpactValueMaps {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
+		// Rundung (ab Version 0.827):
+		for(ImpactValueMaps fl : dfv.keySet()) {
+			for(ValueType vt : dfv.get(fl).keySet()){
+				dfv.get(fl).put(vt, Math.round(dfv.get(fl).get(vt)*100000)/100000.0);
+			}
+		
+		}
 		return dfv;
 	}
 	
@@ -400,7 +407,14 @@ implements FlowValueMaps, ImpactValueMaps {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
+		// Rundung (ab Version 0.827):
+		for(Flow fl : pfv.keySet()) {
+			for(ValueType vt : pfv.get(fl).keySet()){
+				pfv.get(fl).put(vt, Math.round(pfv.get(fl).get(vt)*100000)/100000.0);
+			}
+		
+		}
 		return pfv;
 	}
 	

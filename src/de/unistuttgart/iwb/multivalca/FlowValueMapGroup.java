@@ -17,7 +17,7 @@ import de.unistuttgart.iwb.ivari.IvariScalar;
  * zu Gruppen zusammengefasst werden.
  * 
  * @author Dr.-Ing. Joachim Schwarte, Helen Hein, Johannes Dippon
- * @version 0.819
+ * @version 0.827
  */
 
 public class FlowValueMapGroup extends MCAObject  
@@ -184,6 +184,13 @@ implements FlowValueMaps, ImpactValueMaps {
 				}
 			}
 		}
+		// Rundung (ab Version 0.827):
+		for(Flow fl : efv.keySet()) {
+			for(ValueType vt : efv.get(fl).keySet()){
+				efv.get(fl).put(vt, Math.round(efv.get(fl).get(vt)*100000)/100000.0);
+			}
+		
+		}
 		return efv;
 	}
 
@@ -240,6 +247,13 @@ implements FlowValueMaps, ImpactValueMaps {
 				}
 			}
 		}
+		// Rundung (ab Version 0.827):
+		for(Flow fl : pfv.keySet()) {
+			for(ValueType vt : pfv.get(fl).keySet()){
+				pfv.get(fl).put(vt, Math.round(pfv.get(fl).get(vt)*100000)/100000.0);
+			}
+		
+		}
 		return pfv;
 	}
 	
@@ -290,6 +304,13 @@ implements FlowValueMaps, ImpactValueMaps {
 					} 
 				}
 			}
+		}
+		// Rundung (ab Version 0.827):
+		for(ImpactValueMaps fl : dfv.keySet()) {
+			for(ValueType vt : dfv.get(fl).keySet()){
+				dfv.get(fl).put(vt, Math.round(dfv.get(fl).get(vt)*100000)/100000.0);
+			}
+		
 		}
 		return dfv;
 	}
